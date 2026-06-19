@@ -6,12 +6,16 @@ step** so the following run can resume instantly.
 
 ---
 
-### 2026-06-19 (run 26 — Phase 2 setup: push to GitHub for Kaggle training)
-- **Worked on:** Prepared GPU machine + repo for Kaggle free compute training.
-- **Verified:** Local CUDA (RTX 4070 Ti SUPER, torch 2.11.0+cu128, CUDA available).
-- **Installed:** Training stack (torch, gymnasium, stable-baselines3, sb3-contrib).
-- **Pushed to GitHub:** `best_deck.csv`, `report/rl_deck_validation.md`, supporting files.
-- **NEXT:** Launch Kaggle notebook with `train_track_b_deck.py` pipeline:
+### 2026-06-19 (run 26 — Phase 2 RL deck training: GATE FAILED)
+- **Executed:** Full Track B pipeline on best_deck.csv (RL + distill + SPRT gate @40g).
+- **Trained:** MaskablePPO 100k steps, 6 envs, 10 benchmark opponents, CUDA.
+- **Distilled:** `distilled_rl_deck_v1.npz` (1592 decisions, 0.04 ms/move).
+- **Gate result:** Learned **57/240 = 23.8%** vs pool; Search **205/240 = 85.4%**. 
+  SPRT **accept_a** → **GATE FAILED**. Huge drop from heuristic's 87.1%.
+- **Analysis:** RL deck architecture (optimized for rule-based pilot) doesn't distill well to 
+  neural policy. Options: (a) retry with longer training (200k+ steps), (b) try different deck, 
+  (c) fall back to Kyogre Learned (490 μ) or another high-performer.
+- **NEXT DECISION:** User call on retry strategy or pivot to backup deck.
   ```
   git clone https://github.com/TomBombadyl/kaggle_pokemon.git
   cd kaggle_pokemon
