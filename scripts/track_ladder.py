@@ -7,6 +7,12 @@ parses the CSV it prints, and appends any new rows into
 
 This script NEVER submits anything. It only reads the existing submissions.
 
+**Submission rules (read before upload):** ``data/SUBMISSION_PLAYBOOK.md``
+- 5 uploads / team / day (hard cap)
+- Only latest 2 COMPLETE submissions are **active** for standings; older ones show
+  "Disabled due to active submission limit" in Kaggle UI (not timeout/ERROR)
+- Upload probes first; re-upload best mu last so it stays in the active pair
+
 Safe to run repeatedly: it dedupes by (ref, status, publicScore), so re-running
 appends status transitions, new submissions, and ladder mu updates when the
 public score changes for an existing ref.

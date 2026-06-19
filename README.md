@@ -64,3 +64,13 @@ pokemon/
 ├─ data/              ← downloaded card DB / simulator assets (git-ignored)
 └─ report/            ← strategy report drafts
 ```
+
+---
+
+## Testing & submission
+
+| Doc | Purpose |
+|-----|---------|
+| [`data/EVAL_PROTOCOL.md`](data/EVAL_PROTOCOL.md) | **How to test** — three optimization loops (Search / Policy RL / Deck RL), L0–L4 pyramid, brain×deck matrix |
+| [`data/SUBMISSION_PLAYBOOK.md`](data/SUBMISSION_PLAYBOOK.md) | Kaggle upload rules (5/day, 2 Finals) |
+| [`report/ladder_history.csv`](report/ladder_history.csv) | Ladder μ history |

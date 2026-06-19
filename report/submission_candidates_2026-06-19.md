@@ -36,16 +36,17 @@ simulates Kaggle's loader. Tar packaging deduplicated (files only, was ~2 MiB �
 
 ## Ladder scoring notes (verified 2026-06-19)
 
+See **[`data/SUBMISSION_PLAYBOOK.md`](../data/SUBMISSION_PLAYBOOK.md)** for full workflow.
+
 - **600.0 is starting μ, not failure.** After COMPLETE, the public score is the
   post-validation baseline (~600), not a rank vs the field.
 - **Validation episode:** agent plays **against itself** (pass/fail gate only).
-- **Ladder matchmaking** (~40+ min): score moves to real W/L vs other submitted
-  agents (A2 observed **670.3**, later **672.7** as more matches finish).
-- **Field context:** top ladder ~1350; mid-pack ~1100+. Local random-gate % does
-  not predict ladder rank.
-- Most new submissions likely start near 600 then spread as matches complete.
-- Only **2 final** submissions count for standings; daily Simulation submits still
-  play ladder games.
+- **Ladder matchmaking** (~40+ min): score moves to real W/L vs other submitted agents.
+- **Daily quota:** 5 uploads/team/day.
+- **Active limit:** only **latest 2** COMPLETE submissions count for standings; older
+  ones show “Disabled due to active submission limit” (not timeout/ERROR).
+- **2026-06-19:** 5 probes in one day; active pair = TA1 (625.7) + TA2 (580.2); best
+  overall Kyogre heuristic (633.0) was disabled because uploaded first.
 
 ## Candidate Set
 

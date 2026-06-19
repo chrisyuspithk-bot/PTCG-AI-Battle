@@ -233,7 +233,10 @@ def pool_decks() -> dict[str, list[int]]:
 
 def _play_game_scored(job: tuple) -> tuple[int, int]:
     """Like ``_play_game`` but allows per-seat scorer names (search/learned/None)."""
-    deck0, deck1, seed0, seed1, path0, path1, max_steps, scorer0, scorer1 = job
+    (
+        deck0, deck1, seed0, seed1, path0, path1, max_steps,
+        scorer0, scorer1, model0, model1,
+    ) = job
     if str(ENGINE_DIR) not in sys.path:
         sys.path.insert(0, str(ENGINE_DIR))
     if str(ROOT) not in sys.path:
@@ -243,17 +246,18 @@ def _play_game_scored(job: tuple) -> tuple[int, int]:
     from cg.sim import Battle, lib
     from agent.agent import Agent
 
-    def _agent(seed: int, path: str, scorer_name: str | None):
+    def _agent(seed: int, path: str, scorer_name: str | None, model_path: str | None):
         if scorer_name == "search":
             from agent.search_policy import SearchScorer
             return Agent(seed=seed, deck_path=path, scorer=SearchScorer())
         if scorer_name == "learned":
             from agent.learned_policy import LearnedScorer
-            return Agent(seed=seed, deck_path=path, scorer=LearnedScorer())
+            kwargs = {"model_path": model_path} if model_path else {}
+            return Agent(seed=seed, deck_path=path, scorer=LearnedScorer(**kwargs))
         return Agent(seed=seed, deck_path=path)
 
-    pol0 = _agent(seed0, path0, scorer0)
-    pol1 = _agent(seed1, path1, scorer1)
+    pol0 = _agent(seed0, path0, scorer0, model0)
+    pol1 = _agent(seed1, path1, scorer1, model1)
     policies = (pol0, pol1)
 
     obs, start = game.battle_start(list(deck0), list(deck1))
@@ -284,8 +288,10 @@ def play_matchup(
     workers: int = 1,
     scorer_a: str | None = None,
     deck_path_a: str | None = None,
+    model_path_a: str | None = None,
     scorer_b: str | None = None,
     deck_path_b: str | None = None,
+    model_path_b: str | None = None,
     seed: int = 42,
 ) -> dict[str, int]:
     """Play ``games`` A-vs-B games (seats swapped); return win tallies for side A."""
@@ -298,12 +304,12 @@ def play_matchup(
         seed1 = seed + 2 * i + 1
         if i % 2 == 0:
             jobs.append((deck_a, deck_b, seed0, seed1, path_a, path_b,
-                         max_steps, scorer_a, scorer_b, "a0"))
+                         max_steps, scorer_a, scorer_b, model_path_a, model_path_b, "a0"))
         else:
             jobs.append((deck_b, deck_a, seed0, seed1, path_b, path_a,
-                         max_steps, scorer_b, scorer_a, "a1"))
+                         max_steps, scorer_b, scorer_a, model_path_b, model_path_a, "a1"))
     with ProcessPoolExecutor(max_workers=max(1, workers)) as pool:
-        futs = {pool.submit(_play_game_scored, j[:9]): j[9] for j in jobs}
+        futs = {pool.submit(_play_game_scored, j[:11]): j[11] for j in jobs}
         for fut, tag in futs.items():
             winner, _ = fut.result()
             a_is_seat0 = tag == "a0"

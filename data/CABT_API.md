@@ -132,4 +132,5 @@ open("result.html","w").write(env.render(mode="html"))
 
 ## Submission *(community-sourced, reconfirm on official Data/Rules tab)*
 - `submission.tar.gz` = `main.py` + `deck.csv` + engine `cg/`.
-- 5 submissions/day; latest 2 are scored on the ladder.
+- **5 submissions/day** (upload cap) | **Latest 2 active** for tracked standings.
+- Full playbook with worked example: `data/SUBMISSION_PLAYBOOK.md`.

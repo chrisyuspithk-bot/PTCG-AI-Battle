@@ -49,12 +49,36 @@ Run in this order unless a prior step is clearly fresh enough:
 |------|---------|--------|
 | 1. Traces | `python scripts/collect_traces.py --games 100 --shards 4` | `data/traces/traces_*.npz` |
 | 2. BC | `python scripts/train_bc.py` | `agent/models/bc_v1.npz` |
-| 3. RL | `python rl/train_rl.py --timesteps 50000` | `agent/models/rl_policy.pt`, `report/rl_train/checkpoint.json` |
-| 4. League | PFSP sampling in `rl/league.py` (used by env/training loop) | league checkpoints as configured |
-| 5. Distill | `python scripts/distill_policy.py` | `agent/models/distilled_v1.npz` |
-| 6. Gate | `python scripts/gate_track_b.py --games 40` (smoke: `--games 20`) | `report/track_b_gate.md` |
+| 3. RL | `python rl/train_rl.py --deck <path> --opponents benchmark --timesteps 50000` | `agent/models/rl_policy.zip`, `report/rl_train/checkpoint.json` |
+| 4. **Track B pipeline** | `python scripts/train_track_b_deck.py --deck <path> --timesteps 100000 --gate-games 40 --package` | per-deck `distilled_<slug>_v1.npz`, tarball |
+| 5. Distill (manual) | `python scripts/distill_policy.py --deck <path> --opponents benchmark` | `agent/models/distilled_v1.npz` or `--out` path |
+| 6. Gate | `python scripts/gate_track_b.py --games 40 --deck <path> --model <npz>` | `report/track_b_gates/` |
+| 7. Deck RL | `python rl/train_deck_campaign.py --phase full` or `scripts/run_overnight_deck_rl.bat` | `report/rl_deck_campaign/best_deck.csv` |
 
 Scale `--games` and `--timesteps` when GPU/time allows. Prefer deterministic RNG where the code controls it so win-rate comparisons are fair.
+
+## Deck + policy RL campaign
+
+Two-level optimization for deck discovery (local only):
+
+- **Benchmark:** `agent_decks/benchmark/suite.json` — meta pool as Worlds-field proxy
+- **Policy phase:** MaskablePPO vs rotating benchmark opponents (CUDA, SubprocVecEnv)
+- **Deck phase:** Genetic search; fitness = weighted benchmark win rate
+
+```bash
+python rl/train_deck_campaign.py --phase full --cycles 2 --timesteps 100000 --resume
+scripts/run_overnight_deck_rl.bat   # Windows overnight launcher (includes --resume)
+```
+
+**GPU (RTX 4070 Ti SUPER):** policy trains on **CUDA**; cabt sim runs in **CPU worker processes** (6 envs). Checkpoints every **10k** PPO steps. Deck GA saves after **each generation**.
+
+**Resume after interrupt:** re-run the same command with `--resume`. State files:
+- `report/rl_deck_campaign/checkpoint.json` — campaign progress, timesteps done
+- `report/rl_deck_campaign/policy_checkpoints/` — PPO snapshots
+- `report/rl_deck_campaign/deck_ga.json` — deck population for GA resume
+- `agent/models/rl_policy_campaign.zip` — latest policy weights
+
+Outputs: `report/rl_deck_campaign/best_deck.csv`
 
 ## Key files
 

@@ -6,6 +6,52 @@ step** so the following run can resume instantly.
 
 ---
 
+### 2026-06-19 (run 23 — Track B Kyogre pipeline + submit blocked)
+- **Worked on:** Full Track B per-deck pipeline (train → distill → gate → package); Kaggle upload attempted.
+- **Command:** `scripts/train_track_b_deck.py --deck a2_kyogre --timesteps 100k --n-envs 6 --gate-games 40 --package --promote`
+- **Train:** MaskablePPO 100k steps, CUDA, vs 10 benchmark opponents; deck Kyogre.
+- **Distill:** `distilled_kyogre_v1.npz` (1788 decisions, 0.01 ms/move); promoted → `distilled_v1.npz`.
+- **Gate @40g/pool:** Learned **206/240**, Search 212/240, SPRT **accept_b**, **PASS**.
+- **Package:** `dist/candidates/track_b_learned_kyogre.tar.gz` (5.4 MiB).
+- **Submit:** **BLOCKED** — 5/5 daily Simulation uploads already used; API 400 after upload.
+- **Pending:** `report/submission_pending_kyogre.md` — submit command for next quota window.
+- **NEXT:** Upload Kyogre Learned tarball (1 slot); pin **Final 1**; `train_track_b_deck.py` Crustle/Dragapult for Final 2.
+
+- **Stopped:** Deck RL campaign crashed gen 5 with `arena.py` job tuple bug (9 vs 11
+  fields). Fixed on disk; `best_deck.csv` fitness **0.898** still valid.
+- **Progress saved:** deck GA cycle 1 / gen 5 of 20; policy 100k steps on CUDA done.
+- **Fixed:** `genome_from_dict` drops negative counts; GA resume re-repairs population.
+- **NEXT:** `scripts\run_overnight_deck_rl.bat` (resume) to finish gens 5–19 + cycle 2.
+
+### 2026-06-19 (run 21 — overnight campaign audit + resume fixes)
+- **Worked on:** Verified live overnight run; fixed campaign cycle/resume bugs.
+- **Live run:** `run_overnight_deck_rl.bat` active — CUDA policy ~1300 fps; deck GA cycle 2
+  gen 2+; best fitness **0.823** (`mut_a2_kyogre_33_energy`).
+- **Fixed:** Per-cycle policy timesteps (`policy_steps_by_cycle`); separate
+  `policy_cycles_done` / `deck_cycles_done`; SB3 `num_timesteps` on resume; `--fresh` flag.
+- **Note:** Legacy `cycles_done=1` had skipped deck cycle 0 early — current run still valid
+  on cycle 1 deck GA; fixes apply on next resume/restart.
+- **NEXT:** Let overnight finish; then validate `best_deck.csv`, gate, package probe.
+
+### 2026-06-19 (run 20 — deck RL campaign setup + overnight launch)
+- **Worked on:** Local RL pipeline for deck optimization vs benchmark meta pool.
+- **Changed:** `rl/benchmark.py`, `rl/deck_genome.py`, `rl/train_deck_campaign.py`,
+  `rl/cabt_env.py`, `agent_decks/benchmark/suite.json`, `scripts/run_overnight_deck_rl.bat`.
+- **Approach:** MaskablePPO (GPU) vs 10-deck benchmark + genetic deck search; fitness =
+  weighted win rate (meta pool = Worlds-field proxy).
+- **Smoke:** GA 2 gen → fitness **0.898** (kyogre×big_basic crossover).
+- **Running:** `scripts/run_overnight_deck_rl.bat` (full mode, 2 cycles).
+- **NEXT:** `report/rl_deck_campaign/best_deck.csv`; gate + package when fitness plateaus.
+
+### 2026-06-19 (run 20 — submission playbook)
+- **Worked on:** Document Kaggle active-submission-limit + daily quota from live probes.
+- **Changed:** `data/SUBMISSION_PLAYBOOK.md` (new), `META_NOTES.md`, `PROJECT_RULES.md`,
+  `finals_strategy.md`, `submission_candidates_2026-06-19.md`, `CABT_API.md`,
+  `scripts/track_ladder.py` docstring.
+- **Key rule:** 5 uploads/day; only **latest 2** active for standings; “disabled” ≠ timeout;
+  upload probes first, **best artifact last**.
+- **NEXT:** Before next upload day, read playbook; re-submit Kyogre heuristic last if still best μ.
+
 ### 2026-06-19 (run 19 — 5/5 daily ladder slots live)
 - **Worked on:** Handoff after full daily submit quota.
 - **Ladder μ (latest sync):** Kyogre heuristic **633.0** (#53854707); Learned alakazam
@@ -26,6 +72,19 @@ step** so the following run can resume instantly.
 - **Already today:** dragapult #53856590, alakazam #53856584 @ validation 600.
 - **NEXT:** ~40 min → `track_ladder.py --fetch-logs`; compare TA2 μ vs Kyogre; optional
   **crustle** or **starmie** Track B for 5th slot (not TA1).
+
+---
+
+### 2026-06-19 (run 19 — deck RL campaign setup)
+- **Worked on:** Overnight deck + policy RL pipeline with benchmark fitness.
+- **Changed:** `rl/benchmark.py`, `rl/deck_genome.py`, `rl/train_deck_campaign.py`,
+  `rl/cabt_env.py` (league opponents), `agent_decks/benchmark/suite.json`,
+  `scripts/run_overnight_deck_rl.bat`.
+- **Approach:** MaskablePPO vs meta benchmark (PFSP-style rotation) + genetic deck
+  search; fitness = weighted win rate vs pool/worlds-proxy decks.
+- **Smoke:** 2 GA generations → best fitness **0.898** hybrid kyogre×big_basic.
+- **Running:** `scripts/run_overnight_deck_rl.bat` (full mode, 2 cycles).
+- **NEXT:** Check `report/rl_deck_campaign/`; package best deck when fitness plateaus.
 
 ### 2026-06-19 (run 17b — Track A two ladder probes)
 - **Worked on:** Multi-base deck grid; package two SearchScorer ladder probes.

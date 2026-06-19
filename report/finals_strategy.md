@@ -1,21 +1,36 @@
 # Finals strategy (massive-jump plan)
 
-## Portfolio recommendation (2026-06-19 run 13)
+**Full test workflow:** [`data/EVAL_PROTOCOL.md`](../data/EVAL_PROTOCOL.md)  
+**Upload rules:** [`data/SUBMISSION_PLAYBOOK.md`](../data/SUBMISSION_PLAYBOOK.md)
 
-Pending SPRT gates with larger game counts and user-approved Kaggle uploads.
+## Portfolio recommendation — **Track B priority (2026-06-19+)**
+
+Use **both Final Submission slots** for LearnedScorer agents after per-deck train+distill+gate.
 
 | Slot | Agent | Deck | Rationale |
 |------|-------|------|-----------|
-| Generalist | Heuristic + SearchScorer (Track A) | `agent/deck.csv` (Abomasnow) | Best packaged random gate (A2 963/1000); search augments high-leverage turns |
-| Exploiter-resistant | LearnedScorer / distilled numpy | `agent_decks/pool_crustle.csv` or best `deck_search` variant | Anti-ex line; diversify matchup coverage vs spread/aggro pool |
+| **Final 1** | LearnedScorer | Kyogre (`a2_kyogre_33_energy.csv`) | Best ladder signal (633 μ heuristic); retrain policy on this deck first |
+| **Final 2** | LearnedScorer | Second meta archetype (Crustle or Dragapult) | Diversify matchup coverage; requires separate `train_track_b_deck.py` run |
+
+Track A (Search) and heuristic Kyogre remain **local baselines** and ladder probes — not Finals unless Track B gates fail.
+
+```bash
+# First production Track B run (no Kaggle submit in script)
+python scripts/train_track_b_deck.py \
+  --deck agent_decks/a2_kyogre_33_energy.csv \
+  --slug kyogre --timesteps 100000 --gate-games 40 --package --promote
+```
 
 ## Ladder probes (do not auto-submit)
 
+**Read [`data/SUBMISSION_PLAYBOOK.md`](../data/SUBMISSION_PLAYBOOK.md) before every upload.**
+
 - Record all submission IDs in `report/ladder_history.csv`
-- Use `scripts/track_ladder.py` after each upload
-- Five Simulation slots/day; two finals at deadline
-- **μ interpretation:** ~600 on COMPLETE is post-validation starting μ (self-play
-  gate), not field rank; real ladder W/L updates after matchmaking (~40+ min)
+- Use `scripts/track_ladder.py` after each upload; `--fetch-logs` when COMPLETE
+- **5 uploads/day** (hard cap) | **Latest 2 active** for standings (older show “disabled”)
+- **Probe order:** experiments first → **best μ last** so it stays in the active pair
+- **μ interpretation:** ~600 on COMPLETE = validation baseline; real W/L after ~40 min
+- **2026-06-19 lesson:** Kyogre 633.0 was best μ but disabled after 3 later probes
 
 ## Local gates (SPRT)
 

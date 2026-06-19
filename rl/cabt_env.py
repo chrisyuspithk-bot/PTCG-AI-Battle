@@ -62,18 +62,22 @@ if gym is not None:
             self,
             deck_path: str | Path | None = None,
             opp_deck_path: str | Path | None = None,
+            opponent_decks: list[list[int]] | None = None,
             seed: int = 0,
             max_steps: int = 6000,
             shaped_reward: bool = True,
         ) -> None:
             super().__init__()
             self._deck = _load_deck(Path(deck_path or ROOT / "agent" / "deck.csv"))
-            self._opp_deck = _load_deck(Path(opp_deck_path or ROOT / "agent" / "deck.csv"))
+            default_opp = _load_deck(Path(opp_deck_path or ROOT / "agent" / "deck.csv"))
+            self._opp_decks = opponent_decks if opponent_decks else [default_opp]
+            self._opp_deck = self._opp_decks[0]
             self._seed = seed
             self._max_steps = max_steps
             self._shaped = shaped_reward
             self._agent = build_agent(seed=seed)
             self._opp = build_agent(seed=seed + 9000)
+            self._rng = __import__("random").Random(seed + 777)
             self.observation_space = spaces.Box(
                 low=-np.inf, high=np.inf, shape=(OBS_DIM,), dtype=np.float32,
             )
@@ -91,6 +95,9 @@ if gym is not None:
                 game.battle_finish()
             except Exception:
                 pass
+            if len(self._opp_decks) > 1:
+                idx = self._rng.randrange(len(self._opp_decks))
+                self._opp_deck = self._opp_decks[idx]
             obs, start = game.battle_start(self._deck, self._opp_deck)
             if obs is None:
                 raise RuntimeError(f"battle_start failed: {start.errorType}")

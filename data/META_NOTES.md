@@ -71,16 +71,22 @@ steps; each step is `[{duration, stdout, stderr}]` (one dict per agent decision)
 First successful submit: A2 Kyogre ref **53854707** (failed first attempt ref
 53854588 — `__file__` bug in `main.py`, fixed in packager).
 
+**Full submit workflow:** [`data/SUBMISSION_PLAYBOOK.md`](SUBMISSION_PLAYBOOK.md) — daily
+quota (5/day), **active top-2 limit**, disabled tooltip, finals strategy. **Read before every upload.**
+
 - **Validation vs ladder:** On COMPLETE, the agent first runs a **validation
   episode against itself** (pass/fail only). The public score shown immediately
   (**~600.0 μ**) is the **starting μ after validation**, not performance vs the
   field. Do **not** treat 600 as failure.
 - **Ladder matchmaking:** After ~40+ minutes, μ updates to real W/L vs other
-  submitted agents (A2: 600.0 → **670.3** → **672.7** as matches finish).
+  submitted agents (A2: 600.0 → **670.3** → **672.7** → **633.0** as more games finish).
 - **Field scale:** top ~1350; mid-pack ~1100+. Local random-gate win % does not
   predict ladder rank.
-- **Submission rules:** only **2 finals** tracked for standings; daily Simulation
-  submits still play ladder games. Most new entries likely start near 600 then spread.
+- **Daily uploads (§2.2a):** **5 / team / day** — all can COMPLETE and play ladder games.
+- **Final Submissions (§2.2b, §3.18c):** **select up to 2** for final leaderboard placement;
+  Kaggle auto-selects (observed: latest 2) if you don’t. UI “disabled” = not a Final
+  Submission — **not** timeout/ERROR. **Manually pin your best two** before deadline.
+  Full playbook: [`data/SUBMISSION_PLAYBOOK.md`](SUBMISSION_PLAYBOOK.md).
 
 ## Submission runtime — no online RL (verified 2026-06-19)
 

@@ -1,0 +1,20 @@
+{
+  "description": "RL deck fitness benchmark. Meta pool = championship-field proxies (wmh ladder write-up). Add real Worlds lists here when sourced.",
+  "tags": {
+    "meta": "Common ladder archetypes from agent_decks/pool_*.csv",
+    "high_performer": "Local pool winners from deck search / candidate matrix",
+    "baseline": "Current pilot lists for sanity"
+  },
+  "decks": [
+    {"name": "pool_dragapult", "path": "agent_decks/pool_dragapult.csv", "tag": "meta", "weight": 1.2},
+    {"name": "pool_crustle", "path": "agent_decks/pool_crustle.csv", "tag": "meta", "weight": 1.2},
+    {"name": "pool_alakazam_dudunsparce", "path": "agent_decks/pool_alakazam_dudunsparce.csv", "tag": "meta", "weight": 1.0},
+    {"name": "pool_bellibolt", "path": "agent_decks/pool_bellibolt.csv", "tag": "meta", "weight": 1.0},
+    {"name": "pool_greninja", "path": "agent_decks/pool_greninja.csv", "tag": "meta", "weight": 0.9},
+    {"name": "pool_mega_greninja", "path": "agent_decks/pool_mega_greninja.csv", "tag": "meta", "weight": 0.9},
+    {"name": "a2_kyogre", "path": "agent_decks/a2_kyogre_33_energy.csv", "tag": "high_performer", "weight": 1.1},
+    {"name": "a2_big_basic", "path": "agent_decks/a2_big_basic_29_energy.csv", "tag": "high_performer", "weight": 1.0},
+    {"name": "a3_starmie", "path": "agent_decks/a3_starmie_spread_33_energy.csv", "tag": "high_performer", "weight": 1.0},
+    {"name": "pilot_abomasnow", "path": "agent/deck.csv", "tag": "baseline", "weight": 0.5}
+  ]
+}

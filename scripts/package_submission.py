@@ -82,6 +82,7 @@ def build(
     agent_module: str = "agent.agent",
     archive_path: Path = ARCHIVE,
     scorer: str = "heuristic",
+    model_path: Path | None = None,
 ) -> Path:
     if not (ENGINE_SAMPLE / "cg").exists():
         raise FileNotFoundError(f"missing engine directory: {ENGINE_SAMPLE / 'cg'}")
@@ -114,6 +115,13 @@ def build(
     )
     shutil.copy2(deck, build_dir / "deck.csv")
     _copytree(ROOT / "agent", build_dir / "agent")
+    if scorer == "learned" and model_path is not None:
+        src_model = model_path if model_path.is_absolute() else ROOT / model_path
+        if not src_model.exists():
+            raise FileNotFoundError(f"learned model not found: {src_model}")
+        dest = build_dir / "agent" / "models" / "distilled_v1.npz"
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src_model, dest)
     if agent_module.startswith("agent_snapshots."):
         _copytree(ROOT / "agent_snapshots", build_dir / "agent_snapshots")
     _copytree(ENGINE_SAMPLE / "cg", build_dir / "cg")
@@ -182,6 +190,10 @@ def main() -> int:
         default="heuristic",
         help="Agent brain wired in main.py (search = SearchScorer, learned = LearnedScorer).",
     )
+    parser.add_argument(
+        "--model",
+        help="For --scorer learned: npz copied into package as agent/models/distilled_v1.npz",
+    )
     args = parser.parse_args()
 
     archive_path = ARCHIVE if args.name == "submission" else ARCHIVE_DIR / f"{args.name}.tar.gz"
@@ -190,6 +202,7 @@ def main() -> int:
         agent_module=args.agent_module,
         archive_path=archive_path,
         scorer=args.scorer,
+        model_path=_resolve_path(args.model),
     )
     dry_run_import(archive)
     size_kb = archive.stat().st_size / 1024

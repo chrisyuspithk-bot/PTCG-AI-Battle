@@ -27,6 +27,8 @@ This folder is the single source of truth for the Kaggle competition project:
 ## Verification
 - Ground competition-specific facts in official competition docs, official cabt docs, or downloaded competition artifacts. Label assumptions clearly in `PROGRESS.md`.
 - Do not submit to Kaggle or perform external irreversible actions unless an explicit task calls for it. For first submission work, dry-run packaging first and leave actual submission for user confirmation.
+- **Testing workflow:** read [`data/EVAL_PROTOCOL.md`](data/EVAL_PROTOCOL.md) — three loops (Search / Policy RL / Deck RL), test pyramid L0–L4, brain×deck matrix.
+- **Before every Simulation upload:** read [`data/SUBMISSION_PLAYBOOK.md`](data/SUBMISSION_PLAYBOOK.md). **5/day uploads**; **2 Final Submissions** for judging (§2.2 — select manually); “disabled” ≠ timeout.
 - Keep RNG deterministic where the code controls randomness so win-rate comparisons are fair.
 - Use local self-play as a sanity filter, not final ladder truth. Record game counts and matchup definitions with every reported win-rate.
 

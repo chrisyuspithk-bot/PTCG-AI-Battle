@@ -40,33 +40,14 @@ def _base_env(env):
     return env
 
 
-def _make_teacher_env():
-    from sb3_contrib.common.wrappers import ActionMasker
+def _make_teacher_env(deck_path: Path | None = None, opponents: str = "benchmark"):
+    from rl.env_factory import make_masked_cabt_env, resolve_deck_path
 
-    from rl.cabt_env import CabtEnv
-
-    def mask_fn(env):
-        info = getattr(env.unwrapped, "_last_info", {})
-        mask = info.get("action_mask") if isinstance(info, dict) else None
-        if mask is None:
-            return None
-        return np.asarray(mask, dtype=bool)
-
-    class MaskedCabtEnv(CabtEnv):
-        def reset(self, *, seed=None, options=None):
-            obs, info = super().reset(seed=seed, options=options)
-            self._last_info = info
-            return obs, info
-
-        def step(self, action):
-            obs, reward, terminated, truncated, info = super().step(action)
-            self._last_info = info
-            return obs, reward, terminated, truncated, info
-
-    return ActionMasker(MaskedCabtEnv(), mask_fn)
+    deck = resolve_deck_path(deck_path)
+    return make_masked_cabt_env(deck, opponents=opponents, seed=0)
 
 
-def _load_teacher(path: Path):
+def _load_teacher(path: Path, deck_path: Path | None = None, opponents: str = "benchmark"):
     try:
         from sb3_contrib import MaskablePPO
     except ImportError:
@@ -76,7 +57,7 @@ def _load_teacher(path: Path):
     stem = _rl_checkpoint_stem(path)
     if stem is None:
         return None, None
-    env = _make_teacher_env()
+    env = _make_teacher_env(deck_path, opponents)
     try:
         model = MaskablePPO.load(stem, env=env)
         return model, env
@@ -183,9 +164,11 @@ def distill_from_maskable_ppo(
     init: Path | None,
     episodes: int,
     epochs: int,
+    deck_path: Path | None = None,
+    opponents: str = "benchmark",
 ) -> tuple[dict | None, int]:
     """Teacher rollout + student train. Returns (weights, n_decisions)."""
-    model, env = _load_teacher(src)
+    model, env = _load_teacher(src, deck_path, opponents)
     if model is None or env is None:
         return None, 0
     try:
@@ -220,12 +203,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", default=str(OUT_MODEL))
     parser.add_argument("--episodes", type=int, default=100)
     parser.add_argument("--epochs", type=int, default=30)
+    parser.add_argument("--deck", default=str(ROOT / "agent" / "deck.csv"), help="Must match RL training deck")
+    parser.add_argument("--opponents", choices=("benchmark", "pool"), default="benchmark")
     parser.add_argument("--package-dry-run", action="store_true")
     args = parser.parse_args(argv)
 
+    deck_path = Path(args.deck)
+    if not deck_path.is_absolute():
+        deck_path = ROOT / deck_path
+
     init_path = Path(args.fallback) if Path(args.fallback).exists() else None
     weights, n_decisions = distill_from_maskable_ppo(
-        Path(args.src), init_path, args.episodes, args.epochs,
+        Path(args.src), init_path, args.episodes, args.epochs, deck_path, args.opponents,
     )
     source = "torch_distill"
     if weights is None and Path(args.fallback).exists():
