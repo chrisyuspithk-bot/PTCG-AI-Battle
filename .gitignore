@@ -21,3 +21,7 @@ dist/
 *.log
 report/agent_logs/*.json
 .DS_Store
+
+# Large downloaded Kaggle reference (episodes/notebooks) — keep out of git
+data/kaggle_ref/episodes/
+data/kaggle_ref/*.ipynb
