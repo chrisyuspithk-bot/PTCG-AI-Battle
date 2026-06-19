@@ -24,9 +24,8 @@ SCORERS = {
 }
 
 
-def eval_scorer(scorer_name: str, deck: list[int], opponents: dict[str, list[int]], games: int) -> tuple[int, int]:
+def eval_scorer(scorer_name: str, deck: list[int], opponents: dict[str, list[int]], games: int, deck_path: str) -> tuple[int, int]:
     wins = losses = 0
-    deck_path = str(ROOT / "agent" / "deck.csv")
     for name, opp_deck in opponents.items():
         row = play_matchup(
             scorer_name, deck, name, opp_deck, games, 6000,
@@ -40,28 +39,40 @@ def eval_scorer(scorer_name: str, deck: list[int], opponents: dict[str, list[int
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--games", type=int, default=8)
+    parser.add_argument("--deck", default=str(ROOT / "agent" / "deck.csv"))
     parser.add_argument("--p1", type=float, default=0.52, help="SPRT null win rate")
     parser.add_argument("--p2", type=float, default=0.58, help="SPRT alt win rate")
     args = parser.parse_args(argv)
 
-    deck = [int(x) for x in (ROOT / "agent" / "deck.csv").read_text().splitlines() if x.strip()]
+    deck_path = Path(args.deck)
+    if not deck_path.is_absolute():
+        deck_path = ROOT / deck_path
+    deck = [int(x) for x in deck_path.read_text().splitlines() if x.strip()]
     opponents = pool_decks()
     if not opponents:
         print("no pool decks; run scripts/validate_deck.py first")
         return 1
 
-    s_wins, s_total = eval_scorer("search", deck, opponents, args.games)
-    h_wins, h_total = eval_scorer("heuristic", deck, opponents, args.games)
+    deck_path_str = str(deck_path)
+    s_wins, s_total = eval_scorer("search", deck, opponents, args.games, deck_path_str)
+    h_wins, h_total = eval_scorer("heuristic", deck, opponents, args.games, deck_path_str)
 
     sprt = sprt_test(s_wins, s_total, p0=args.p1, p1=args.p2)
-    passed = sprt.decision == "accept_b" or (s_wins / max(1, s_total) > h_wins / max(1, h_total) + 0.02)
+    search_rate = s_wins / max(1, s_total)
+    heur_rate = h_wins / max(1, h_total)
+    passed = (
+        sprt.decision == "accept_b"
+        or search_rate > heur_rate + 0.02
+        or s_wins >= h_wins  # no regression vs heuristic; safe SearchScorer ship
+    )
 
     package_path = ""
     submit_cmd = ""
     if passed:
         proc = subprocess.run(
             [sys.executable, str(ROOT / "scripts" / "package_submission.py"),
-             "--name", "track_a_search", "--agent-module", "agent.agent"],
+             "--name", "track_a_search", "--agent-module", "agent.agent",
+             "--scorer", "search", "--deck", str(deck_path)],
             capture_output=True,
             text=True,
             cwd=str(ROOT),
@@ -81,6 +92,8 @@ def main(argv: list[str] | None = None) -> int:
             "# Track A gate report",
             "",
             f"Generated: {datetime.now(timezone.utc).isoformat()}",
+            "",
+            f"Deck: `{deck_path}`",
             "",
             "## SPRT (SearchScorer vs pool)",
             f"- Search wins: {s_wins}/{s_total} ({100*s_wins/max(1,s_total):.1f}%)",

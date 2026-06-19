@@ -240,7 +240,7 @@ class HeuristicScorer(OptionScorer):
         if sel_type == SEL_YES_NO:
             return self._pick_yes_no(options, context, min_count)
         if sel_type == SEL_ATTACK:
-            return [self._best_attack_index(options)]
+            return [self._best_attack_index(options, current)]
         return self._take_min(options, min_count, select.get("maxCount"))
 
     def _pick_main(self, options, current):
@@ -326,8 +326,8 @@ class HeuristicScorer(OptionScorer):
             return [idx]
         return self._take_min(options, min_count, 1)
 
-    def _best_attack_index(self, options):
-        return max(range(len(options)), key=lambda i: self._attack_score(options[i]))
+    def _best_attack_index(self, options, current=None):
+        return max(range(len(options)), key=lambda i: self._attack_score(options[i], current))
 
     def _play_score(self, opt, current):
         card = self._hand_card_for_option(opt, current)

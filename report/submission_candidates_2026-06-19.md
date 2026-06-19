@@ -21,7 +21,11 @@ direct page fetch timed out — use browser before upload):
 | # | Ref | Archive | Date (UTC) | Description | Status | Score | Notes |
 |---:|---|---|---|---|---|---:|---|
 | 1 | 53854588 | `a2_kyogre.tar.gz` | 2026-06-19 16:04 | A2 Kyogre deck — 963/1000 local gate | **ERROR** | — | `main.py` used `Path(__file__)`; Kaggle exec has no `__file__` |
-| 2 | 53854707 | `a2_kyogre.tar.gz` | 2026-06-19 16:08 | A2 Kyogre — fix main.py __file__ for Kaggle exec | **COMPLETE** | **672.7** | Initial μ 600.0 after validation; **670.3** after ~40 min ladder matchmaking (2026-06-19 sync: 672.7) |
+| 2 | 53854707 | `a2_kyogre.tar.gz` | 2026-06-19 16:08 | A2 Kyogre heuristic (live) | **COMPLETE** | **633.0** | Peak **672.7**; regressed as ladder W/L accumulated; logs clean |
+| 3 | 53856584 | `track_b_learned_alakazam.tar.gz` | 2026-06-19 17:24 | Track B LearnedScorer + alakazam | **COMPLETE** | **600.0** | Validation μ; ladder TBD |
+| 4 | 53856590 | `track_b_learned_dragapult.tar.gz` | 2026-06-19 17:24 | Track B LearnedScorer + dragapult | **COMPLETE** | **600.0** | Validation μ; ladder TBD |
+| 5 | 53856676 | `track_a_probe_2.tar.gz` | 2026-06-19 17:29 | Track A TA2 Abomasnow+4e SearchScorer | **PENDING** | — | Different archetype from live Kyogre |
+| 6 | *(pending ref)* | `track_a_probe_1.tar.gz` | 2026-06-19 | Track A TA1 Kyogre+2e SearchScorer | **PENDING** | — | +1 Water vs live (34 vs 33), SearchScorer vs heuristic |
 
 **Root cause (sub #1):** Kaggle loads `main.py` via `exec()` without defining `__file__`.
 Module-level `Path(__file__).with_name("deck.csv")` raised `NameError` before deck selection.
@@ -53,7 +57,19 @@ simulates Kaggle's loader. Tar packaging deduplicated (files only, was ~2 MiB �
 | A3 | `dist/candidates/a3_starmie.tar.gz` | `agent.agent` | `agent_decks/a3_starmie_spread_33_energy.csv` | Mega Starmie spread pressure | Packaged artifact vs default random deck: 283/300 = 94.3%; mirror package check: 291/300 = 97.0% |
 | A4 | `dist/candidates/a4_big_basic.tar.gz` | `agent.agent` | `agent_decks/a2_big_basic_29_energy.csv` | Black Kyurem ex robustness probe | Packaged vs default random: **965/1000 = 96.50%** (Wilson 95.17–97.47); 300-game gate 291/300 = 97.0% |
 
-## Package Artifact Verification
+## Track A ladder probes (ready 2026-06-19)
+
+Two SearchScorer packages from multi-base deck grid (`scripts/prepare_track_a_probes.py`).
+Full manifest: `report/track_a/ladder_probes.md`.
+
+| Slot | Archive | Agent | Deck | Pool vs meta @12g | Random verify @50g |
+|---|---|---|---|---:|---:|
+| **TA1** | `track_a_probe_1.tar.gz` | SearchScorer | Kyogre +2 energy | **91.7%** | 46/50 (92%) |
+| **TA2** | `track_a_probe_2.tar.gz` | SearchScorer | Abomasnow +4 energy | **87.5%** | 47/50 (94%) |
+
+Submit TA1 first (best pool score), then TA2 (second archetype). After each:
+`python scripts/track_ladder.py --fetch-logs`. Compare ladder μ ~40 min after COMPLETE.
+
 
 Command shape:
 

@@ -1,30 +1,29 @@
-"""Time-budgeted search-augmented OptionScorer with heuristic fallback."""
+"""Time-budgeted search-augmented OptionScorer with heuristic fallback.
+
+Track A design: keep the full heuristic policy as the default brain and only
+layer shallow search on high-leverage card picks (promotion / switch). The prior
+evalfn rerank on MAIN skipped EVOLVE/ATTACH and regressed badly vs heuristic.
+"""
 
 from __future__ import annotations
 
 import json
 import time
-from typing import Any
 
 from agent.agent import (
+    CTX_SETUP_ACTIVE_POKEMON,
+    CTX_SWITCH,
     CTX_TO_ACTIVE,
     HeuristicScorer,
-    OPT_ATTACK,
-    OPT_END,
-    OPT_PLAY,
-    SEL_ATTACK,
-    SEL_MAIN,
-    _get,
-    _option_type,
+    SEL_CARD,
 )
-from agent.evalfn import board_value
 
 SEARCH_BUDGET_MS = 200
-HIGH_LEVERAGE_CONTEXTS = {CTX_TO_ACTIVE, 35}  # promotion + ATTACK context
+HIGH_LEVERAGE_CONTEXTS = {CTX_TO_ACTIVE, CTX_SWITCH, CTX_SETUP_ACTIVE_POKEMON}
 
 
 class SearchScorer(HeuristicScorer):
-    """Rerank high-leverage decisions with evalfn; optional cg search_* when available."""
+    """Heuristic baseline + optional cg search_* on promotion/switch picks."""
 
     def __init__(self, rng=None, budget_ms: float = SEARCH_BUDGET_MS) -> None:
         super().__init__(rng=rng)
@@ -32,6 +31,24 @@ class SearchScorer(HeuristicScorer):
         self._budget_ms = budget_ms
         self._lib = None
         self._battle_ptr = None
+
+    def choose(self, obs_dict, select, current, options):
+        if not options:
+            return []
+        try:
+            context = select.get("context")
+            if (
+                select.get("type") == SEL_CARD
+                and context in HIGH_LEVERAGE_CONTEXTS
+                and int(select.get("minCount", 1) or 0) <= 1
+            ):
+                deadline = time.monotonic() + self._budget_ms / 1000.0
+                picked = self._ctypes_search(obs_dict, options, deadline)
+                if picked is not None:
+                    return picked
+        except Exception:
+            pass
+        return self._fallback.choose(obs_dict, select, current, options)
 
     def _ensure_engine(self) -> bool:
         if self._lib is not None:
@@ -45,80 +62,10 @@ class SearchScorer(HeuristicScorer):
         except Exception:
             return False
 
-    def choose(self, obs_dict, select, current, options):
-        if not options:
-            return []
-        try:
-            if self._should_search(select, options):
-                choice = self._search_choose(obs_dict, select, current, options)
-                if choice is not None:
-                    return choice
-        except Exception:
-            pass
-        return self._fallback.choose(obs_dict, select, current, options)
-
-    def _should_search(self, select, options) -> bool:
-        sel_type = select.get("type")
-        context = select.get("context")
-        if sel_type == SEL_MAIN and any(_option_type(o) in (OPT_ATTACK, OPT_PLAY) for o in options):
-            return True
-        if sel_type == SEL_ATTACK:
-            return True
-        if context in HIGH_LEVERAGE_CONTEXTS:
-            return True
-        return False
-
-    def _search_choose(self, obs_dict, select, current, options):
-        deadline = time.monotonic() + self._budget_ms / 1000.0
-        sel_type = select.get("type")
-
-        if sel_type == SEL_MAIN:
-            candidates = [
-                i for i, opt in enumerate(options)
-                if _option_type(opt) in (OPT_ATTACK, OPT_PLAY, OPT_END)
-            ]
-            if not candidates:
-                return None
-            return self._evalfn_pick(obs_dict, options, candidates, deadline)
-
-        if sel_type == SEL_ATTACK:
-            return self._evalfn_pick(obs_dict, options, list(range(len(options))), deadline)
-
-        if select.get("context") in HIGH_LEVERAGE_CONTEXTS:
-            min_count = int(select.get("minCount", 1) or 0)
-            if min_count <= 1:
-                pick = self._evalfn_pick(obs_dict, options, list(range(len(options))), deadline)
-                return pick
-
-        if self._ensure_engine() and time.monotonic() < deadline:
-            return self._ctypes_search(obs_dict, options, deadline)
-        return None
-
-    def _evalfn_pick(self, obs_dict, options, indices, deadline):
-        best_idx = None
-        best_val = float("-inf")
-        base = board_value(obs_dict)
-        for i in indices:
-            if time.monotonic() >= deadline:
-                break
-            opt = options[i]
-            bonus = 0.0
-            if _option_type(opt) == OPT_ATTACK:
-                attack_id = _get(opt, "attackId", 0) or 0
-                bonus += self._attack_score(opt, obs_dict.get("current") or {}) / 100.0
-                bonus += attack_id * 1e-6
-            elif _option_type(opt) == OPT_PLAY:
-                bonus += self._play_score(opt, obs_dict.get("current") or {}) / 500.0
-            val = base + bonus
-            if val > best_val:
-                best_val = val
-                best_idx = i
-        if best_idx is None:
-            return None
-        return [best_idx]
-
     def _ctypes_search(self, obs_dict, options, deadline) -> list[int] | None:
         """Best-effort wrapper around cg search_*; returns None on failure."""
+        if not self._ensure_engine() or time.monotonic() >= deadline:
+            return None
         try:
             lib = self._lib
             ptr = self._battle_ptr
@@ -130,8 +77,8 @@ class SearchScorer(HeuristicScorer):
             n_opts = len(options)
             if n_opts <= 0:
                 return None
-            indices = (ctypes := __import__("ctypes")).c_int * n_opts
-            idx_arr = indices(*range(n_opts))
+            ctypes = __import__("ctypes")
+            idx_arr = (ctypes.c_int * n_opts)(*range(n_opts))
             out_idx = (ctypes.c_int * 1)(0)
             out_score = (ctypes.c_int * 1)(0)
             out_depth = (ctypes.c_int * 1)(0)

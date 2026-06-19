@@ -20,37 +20,182 @@ BC_MODEL = ROOT / "agent" / "models" / "bc_v1.npz"
 OUT_MODEL = ROOT / "agent" / "models" / "distilled_v1.npz"
 REPORT = ROOT / "report" / "distill_gate.md"
 
+IN_DIM = STATE_DIM + OPTION_DIM
+HIDDEN = 64
 
-def load_torch_weights(path: Path) -> dict | None:
-    if not path.exists():
-        return None
-    try:
-        import torch
-    except ImportError:
-        return None
-    try:
-        from stable_baselines3 import PPO
-    except ImportError:
-        return None
-    try:
-        model = PPO.load(str(path.with_suffix("")))
-        state_dict = model.policy.state_dict()
-        # Best-effort: extract first two linear layers if shapes match
-        keys = list(state_dict.keys())
-        w_keys = [k for k in keys if k.endswith("weight")]
-        b_keys = [k for k in keys if k.endswith("bias")]
-        if len(w_keys) < 2:
+
+def _rl_checkpoint_stem(path: Path) -> str | None:
+    """Return SB3 load stem if rl_policy.zip or .pt exists."""
+    if path.exists() or path.with_suffix(".zip").exists():
+        return str(path.with_suffix(""))
+    alt = path.parent / f"{path.stem}.zip"
+    if alt.exists():
+        return str(alt.with_suffix(""))
+    return None
+
+
+def _base_env(env):
+    while hasattr(env, "env"):
+        env = env.env
+    return env
+
+
+def _make_teacher_env():
+    from sb3_contrib.common.wrappers import ActionMasker
+
+    from rl.cabt_env import CabtEnv
+
+    def mask_fn(env):
+        info = getattr(env.unwrapped, "_last_info", {})
+        mask = info.get("action_mask") if isinstance(info, dict) else None
+        if mask is None:
             return None
-        w1 = state_dict[w_keys[0]].detach().cpu().numpy().T.astype(np.float32)
-        b1 = state_dict[b_keys[0]].detach().cpu().numpy().astype(np.float32)
-        w2 = state_dict[w_keys[1]].detach().cpu().numpy().T.astype(np.float32)
-        b2 = state_dict[b_keys[1]].detach().cpu().numpy().astype(np.float32)
-        in_dim = STATE_DIM + OPTION_DIM
-        if w1.shape[0] != in_dim:
-            return None
-        return {"w1": w1, "b1": b1, "w2": w2.squeeze(), "b2": b2}
+        return np.asarray(mask, dtype=bool)
+
+    class MaskedCabtEnv(CabtEnv):
+        def reset(self, *, seed=None, options=None):
+            obs, info = super().reset(seed=seed, options=options)
+            self._last_info = info
+            return obs, info
+
+        def step(self, action):
+            obs, reward, terminated, truncated, info = super().step(action)
+            self._last_info = info
+            return obs, reward, terminated, truncated, info
+
+    return ActionMasker(MaskedCabtEnv(), mask_fn)
+
+
+def _load_teacher(path: Path):
+    try:
+        from sb3_contrib import MaskablePPO
+    except ImportError:
+        return None, None
+    if not path.exists() and path.with_suffix(".zip").exists():
+        path = path.with_suffix(".zip")
+    stem = _rl_checkpoint_stem(path)
+    if stem is None:
+        return None, None
+    env = _make_teacher_env()
+    try:
+        model = MaskablePPO.load(stem, env=env)
+        return model, env
     except Exception:
-        return None
+        return None, env
+
+
+def collect_teacher_labels(model, env, episodes: int) -> list[tuple[np.ndarray, np.ndarray]]:
+    """Roll out teacher; return list of (option_inputs, teacher_probs) per decision."""
+    import torch
+
+    base = _base_env(env)
+    groups: list[tuple[np.ndarray, np.ndarray]] = []
+    device = model.policy.device
+
+    for ep in range(episodes):
+        obs, info = env.reset(seed=ep)
+        terminated = truncated = False
+        while not (terminated or truncated):
+            raw = base._obs
+            if raw is None:
+                break
+            sel = raw.get("select")
+            mask = info.get("action_mask")
+            if sel is not None and mask is not None and base._select_player() == 0:
+                opts = sel.get("option") or []
+                n = len(opts)
+                if n > 0:
+                    obs_t = torch.as_tensor(obs, device=device).float().unsqueeze(0)
+                    mask_t = torch.as_tensor(mask, device=device).bool().unsqueeze(0)
+                    with torch.no_grad():
+                        dist = model.policy.get_distribution(obs_t, action_masks=mask_t)
+                        probs = dist.distribution.probs.squeeze(0).cpu().numpy()
+                    probs = probs[:n]
+                    probs = probs / max(probs.sum(), 1e-8)
+                    state = state_features(raw)
+                    xs = np.stack(
+                        [np.concatenate([state, option_features(raw, opts[i])]) for i in range(n)],
+                    ).astype(np.float32)
+                    groups.append((xs, probs.astype(np.float32)))
+
+            action, _ = model.predict(obs, action_masks=mask, deterministic=True)
+            obs, _reward, terminated, truncated, info = env.step(int(action))
+
+    return groups
+
+
+def _init_student_from_npz(model, path: Path) -> bool:
+    import torch
+
+    data = np.load(path)
+    if data["w1"].shape[0] != IN_DIM:
+        return False
+    device = next(model.parameters()).device
+    model[0].weight.data = torch.tensor(data["w1"].T, dtype=torch.float32, device=device)
+    model[0].bias.data = torch.tensor(data["b1"], dtype=torch.float32, device=device)
+    w2 = np.asarray(data["w2"], dtype=np.float32).reshape(-1, 1)
+    b2 = np.asarray(data["b2"], dtype=np.float32).reshape(-1)
+    model[2].weight.data = torch.tensor(w2.T, dtype=torch.float32, device=device)
+    model[2].bias.data = torch.tensor(b2, dtype=torch.float32, device=device)
+    return True
+
+
+def train_student(
+    groups: list[tuple[np.ndarray, np.ndarray]],
+    init: Path | None,
+    epochs: int,
+) -> dict:
+    import torch
+    import torch.nn as nn
+
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = nn.Sequential(
+        nn.Linear(IN_DIM, HIDDEN),
+        nn.Tanh(),
+        nn.Linear(HIDDEN, 1),
+    ).to(device)
+    if init is not None and init.exists():
+        _init_student_from_npz(model, init)
+
+    opt = torch.optim.Adam(model.parameters(), lr=1e-3)
+    model.train()
+    for _ in range(epochs):
+        for xs, teacher_probs in groups:
+            xt = torch.tensor(xs, device=device)
+            target = torch.tensor(teacher_probs, device=device)
+            target = target / target.sum().clamp(min=1e-8)
+            scores = model(xt).squeeze(-1)
+            log_probs = torch.log_softmax(scores, dim=0)
+            loss = -(target * log_probs).sum()
+            opt.zero_grad()
+            loss.backward()
+            opt.step()
+
+    w1 = model[0].weight.detach().cpu().numpy().T.astype(np.float32)
+    b1 = model[0].bias.detach().cpu().numpy().astype(np.float32)
+    w2 = model[2].weight.detach().cpu().numpy().T.astype(np.float32)
+    b2 = model[2].bias.detach().cpu().numpy().astype(np.float32)
+    return {"w1": w1, "b1": b1, "w2": w2.squeeze(), "b2": b2}
+
+
+def distill_from_maskable_ppo(
+    src: Path,
+    init: Path | None,
+    episodes: int,
+    epochs: int,
+) -> tuple[dict | None, int]:
+    """Teacher rollout + student train. Returns (weights, n_decisions)."""
+    model, env = _load_teacher(src)
+    if model is None or env is None:
+        return None, 0
+    try:
+        groups = collect_teacher_labels(model, env, episodes)
+        if not groups:
+            return None, 0
+        weights = train_student(groups, init, epochs)
+        return weights, len(groups)
+    finally:
+        env.close()
 
 
 def latency_check(scorer: LearnedScorer, n: int = 200) -> float:
@@ -73,15 +218,21 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--src", default=str(TORCH_MODEL))
     parser.add_argument("--fallback", default=str(BC_MODEL))
     parser.add_argument("--out", default=str(OUT_MODEL))
+    parser.add_argument("--episodes", type=int, default=100)
+    parser.add_argument("--epochs", type=int, default=30)
     parser.add_argument("--package-dry-run", action="store_true")
     args = parser.parse_args(argv)
 
-    weights = load_torch_weights(Path(args.src))
-    source = "torch"
+    init_path = Path(args.fallback) if Path(args.fallback).exists() else None
+    weights, n_decisions = distill_from_maskable_ppo(
+        Path(args.src), init_path, args.episodes, args.epochs,
+    )
+    source = "torch_distill"
     if weights is None and Path(args.fallback).exists():
         data = np.load(args.fallback)
         weights = {k: data[k] for k in ("w1", "b1", "w2", "b2")}
         source = "bc_fallback"
+        n_decisions = 0
 
     if weights is None:
         print("no torch or BC weights found")
@@ -105,6 +256,7 @@ def main(argv: list[str] | None = None) -> int:
         "# Distill policy gate",
         "",
         f"- Source: {source}",
+        f"- Teacher decisions: {n_decisions}",
         f"- Output: `{out}`",
         f"- Latency: {ms_per_move:.2f} ms/move (budget <50 ms)",
         f"- Gate: **{'PASS' if gate_ok else 'FAIL'}**",
@@ -125,7 +277,8 @@ def main(argv: list[str] | None = None) -> int:
         lines.append(f"- Package dry-run: {'OK' if proc.returncode == 0 else proc.stderr}")
         REPORT.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
-    print(f"distilled to {out}; latency={ms_per_move:.2f}ms gate={gate_ok}")
+    print(f"distilled to {out}; source={source} decisions={n_decisions} "
+          f"latency={ms_per_move:.2f}ms gate={gate_ok}")
     return 0
 
 

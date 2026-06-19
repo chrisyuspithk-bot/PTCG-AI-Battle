@@ -2,3 +2,10 @@ recorded_at,ref,fileName,date,description,status,publicScore,privateScore
 2026-06-19T00:00:00+00:00,53854707,a2_kyogre.tar.gz,2026-06-19,A2 Kyogre probe,COMPLETE,600.0,600.0
 2026-06-19T00:00:00+00:00,53854588,a2_kyogre.tar.gz,2026-06-19,A2 Kyogre __file__ bug,ERROR,,
 2026-06-19T17:30:00+00:00,53854707,a2_kyogre.tar.gz,2026-06-19,A2 Kyogre — fix main.py __file__ for Kaggle exec,COMPLETE,672.7,
+2026-06-19T17:25:01+00:00,53856590,track_b_learned_dragapult.tar.gz,2026-06-19 17:24:51.200000,Track B LearnedScorer + dragapult spread meta probe,PENDING,,
+2026-06-19T17:25:01+00:00,53856584,track_b_learned_alakazam.tar.gz,2026-06-19 17:24:33.930000,Track B LearnedScorer + alakazam single-prize meta probe,PENDING,,
+2026-06-19T17:25:01+00:00,53854707,a2_kyogre.tar.gz,2026-06-19 16:08:26.997000,A2 Kyogre — fix main.py __file__ for Kaggle exec,COMPLETE,645.7,
+2026-06-19T17:26:47+00:00,53856584,track_b_learned_alakazam.tar.gz,2026-06-19 17:24:33.930000,Track B LearnedScorer + alakazam single-prize meta probe,COMPLETE,600.0,
+2026-06-19T17:29:22+00:00,53856676,track_a_probe_2.tar.gz,2026-06-19 17:29:19.023000,Track A TA2: Abomasnow+4e SearchScorer meta probe,PENDING,,
+2026-06-19T17:29:22+00:00,53856590,track_b_learned_dragapult.tar.gz,2026-06-19 17:24:51.200000,Track B LearnedScorer + dragapult spread meta probe,COMPLETE,600.0,
+2026-06-19T17:29:22+00:00,53854707,a2_kyogre.tar.gz,2026-06-19 16:08:26.997000,A2 Kyogre — fix main.py __file__ for Kaggle exec,COMPLETE,633.0,

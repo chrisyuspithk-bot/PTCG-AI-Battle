@@ -15,7 +15,7 @@ from scripts.arena import play_matchup, pool_decks  # noqa: E402
 from scripts.stats_utils import sprt_test  # noqa: E402
 
 REPORT = ROOT / "report" / "track_b_gate.md"
-MODEL = ROOT / "agent" / "models" / "bc_v1.npz"
+MODEL = ROOT / "agent" / "models" / "distilled_v1.npz"
 
 
 def eval_learned(deck: list[int], opponents: dict[str, list[int]], games: int) -> tuple[int, int]:
@@ -37,16 +37,17 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if not MODEL.exists():
-        print(f"missing BC model: {MODEL}; run scripts/train_bc.py first")
+        print(f"missing distilled model: {MODEL}; run scripts/distill_policy.py first")
         return 1
 
+    deck_path = str(ROOT / "agent" / "deck.csv")
     deck = [int(x) for x in (ROOT / "agent" / "deck.csv").read_text().splitlines() if x.strip()]
     opponents = pool_decks()
     l_wins, l_total = eval_learned(deck, opponents, args.games)
 
     from scripts.gate_track_a import eval_scorer
 
-    s_wins, s_total = eval_scorer("search", deck, opponents, args.games)
+    s_wins, s_total = eval_scorer("search", deck, opponents, args.games, deck_path)
     sprt = sprt_test(l_wins, l_total)
     passed = l_wins >= s_wins or sprt.decision == "accept_b"
 
@@ -54,7 +55,7 @@ def main(argv: list[str] | None = None) -> int:
     if passed:
         proc = subprocess.run(
             [sys.executable, str(ROOT / "scripts" / "package_submission.py"),
-             "--name", "track_b_learned"],
+             "--name", "track_b_learned", "--scorer", "learned", "--deck", deck_path],
             capture_output=True,
             text=True,
             cwd=str(ROOT),

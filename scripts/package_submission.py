@@ -32,6 +32,7 @@ from __future__ import annotations
 import os
 
 from {agent_module} import build_agent
+{scorer_import}
 
 # Kaggle loads this module via exec() without __file__; use cwd + known paths only.
 KAGGLE_DECK = "/kaggle_simulations/agent/deck.csv"
@@ -49,7 +50,7 @@ def read_deck_csv() -> list[int]:
     return deck
 
 
-_AGENT = build_agent(seed=0, deck_path=KAGGLE_DECK)
+{agent_init}
 
 
 def agent(obs_dict: dict) -> list[int]:
@@ -57,6 +58,16 @@ def agent(obs_dict: dict) -> list[int]:
         return read_deck_csv()
     return _AGENT.act(obs_dict)
 '''
+
+MAIN_AGENT_INIT = "_AGENT = build_agent(seed=0, deck_path=KAGGLE_DECK)"
+SEARCH_AGENT_INIT = (
+    "from agent.search_policy import SearchScorer\n\n"
+    "_AGENT = build_agent(seed=0, deck_path=KAGGLE_DECK, scorer=SearchScorer())"
+)
+LEARNED_AGENT_INIT = (
+    "from agent.learned_policy import LearnedScorer\n\n"
+    "_AGENT = build_agent(seed=0, deck_path=KAGGLE_DECK, scorer=LearnedScorer())"
+)
 
 
 def _copytree(src: Path, dst: Path) -> None:
@@ -70,6 +81,7 @@ def build(
     deck_path: Path | None = None,
     agent_module: str = "agent.agent",
     archive_path: Path = ARCHIVE,
+    scorer: str = "heuristic",
 ) -> Path:
     if not (ENGINE_SAMPLE / "cg").exists():
         raise FileNotFoundError(f"missing engine directory: {ENGINE_SAMPLE / 'cg'}")
@@ -82,8 +94,22 @@ def build(
         shutil.rmtree(build_dir)
     build_dir.mkdir(parents=True, exist_ok=True)
 
+    if scorer == "search":
+        scorer_import = ""
+        agent_init = SEARCH_AGENT_INIT
+    elif scorer == "learned":
+        scorer_import = ""
+        agent_init = LEARNED_AGENT_INIT
+    else:
+        scorer_import = ""
+        agent_init = MAIN_AGENT_INIT
+
     (build_dir / "main.py").write_text(
-        MAIN_PY.format(agent_module=agent_module),
+        MAIN_PY.format(
+            agent_module=agent_module,
+            scorer_import=scorer_import,
+            agent_init=agent_init,
+        ),
         encoding="utf-8",
     )
     shutil.copy2(deck, build_dir / "deck.csv")
@@ -150,6 +176,12 @@ def main() -> int:
         default="submission",
         help="Archive basename. Use a candidate name for dist/candidates/<name>.tar.gz.",
     )
+    parser.add_argument(
+        "--scorer",
+        choices=("heuristic", "search", "learned"),
+        default="heuristic",
+        help="Agent brain wired in main.py (search = SearchScorer, learned = LearnedScorer).",
+    )
     args = parser.parse_args()
 
     archive_path = ARCHIVE if args.name == "submission" else ARCHIVE_DIR / f"{args.name}.tar.gz"
@@ -157,6 +189,7 @@ def main() -> int:
         deck_path=_resolve_path(args.deck),
         agent_module=args.agent_module,
         archive_path=archive_path,
+        scorer=args.scorer,
     )
     dry_run_import(archive)
     size_kb = archive.stat().st_size / 1024

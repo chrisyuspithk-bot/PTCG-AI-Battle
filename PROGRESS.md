@@ -6,6 +6,70 @@ step** so the following run can resume instantly.
 
 ---
 
+### 2026-06-19 (run 18 — Kyogre ladder review + TA2 submit)
+- **Worked on:** Sync ladder/logs; decide Track A probe route after live Kyogre.
+- **Kyogre #53854707:** μ **672.7 → 645.7 → 633.0** as ladder games accumulated; agent
+  logs clean (no stderr, &lt;0.05s/move).
+- **Decision:** **Skip TA1** (Kyogre+Search duplicate archetype); **submit TA2** Abomasnow+4e
+  SearchScorer (different deck line, 87.5% local pool).
+- **Submitted:** #**53856676** `track_a_probe_2.tar.gz` — PENDING.
+- **Already today:** dragapult #53856590, alakazam #53856584 @ validation 600.
+- **NEXT:** ~40 min → `track_ladder.py --fetch-logs`; compare TA2 μ vs Kyogre; optional
+  **crustle** or **starmie** Track B for 5th slot (not TA1).
+
+### 2026-06-19 (run 17b — Track A two ladder probes)
+- **Worked on:** Multi-base deck grid; package two SearchScorer ladder probes.
+- **Changed:** `scripts/deck_search.py`, `scripts/prepare_track_a_probes.py`,
+  `report/submission_candidates_2026-06-19.md`.
+- **Metrics:** Kyogre +2e **91.7%** vs pool; Abomasnow +4e **87.5%** @12g; verify random
+  **46/50** and **47/50**.
+- **Artifacts:** `dist/candidates/track_a_probe_{1,2}.tar.gz`, `report/track_a/ladder_probes.md`.
+- **NEXT:** User OK → submit TA1 then TA2; fetch logs after each.
+
+### 2026-06-19 (run 18 — Track B ladder probes alakazam + dragapult)
+- **Worked on:** User-approved Simulation uploads (2 of 5 daily slots).
+- **Submitted:** `track_b_learned_alakazam.tar.gz` ref **53856584** (PENDING);
+  `track_b_learned_dragapult.tar.gz` ref **53856590** (PENDING).
+- **Brain:** LearnedScorer + distilled_v1.npz; decks `pool_alakazam_dudunsparce`,
+  `pool_dragapult`.
+- **Ladder sync:** A2 Kyogre #53854707 now **645.7** μ (was 672.7 — more W/L played in).
+- **NEXT:** ~40 min then `python scripts/track_ladder.py`; `--fetch-logs` when COMPLETE.
+
+### 2026-06-19 (run 17 — Track B deck spread)
+- **Worked on:** LearnedScorer benchmark + package 9 diverse deck candidates.
+- **Changed:** `scripts/package_track_b_spread.py`, `report/track_b_deck_spread.md`;
+  nine `dist/candidates/track_b_learned_*.tar.gz` (LearnedScorer wired).
+- **Metrics:** vs pool @12g/opp — kyogre **59/72**, big_basic **58/72**, starmie **56/72**,
+  dragapult **48/72**, crustle **45/72**; bellibolt **24/71** (learned weak on simple aggro).
+- **Ladder plan:** Kyogre heuristic live (#53854707); probe meta decks (dragapult, crustle,
+  alakazam) + high-performers without duplicating Kyogre archetype on ladder.
+- **NEXT:** User OK → ladder-probe `track_b_learned_dragapult` then `crustle` / `alakazam`;
+  `track_ladder.py --fetch-logs` after each.
+
+### 2026-06-19 (run 16b — Track A search + deck gate)
+- **Worked on:** Track A — fix SearchScorer regression, deck search, gate + package.
+- **Changed:** `agent/search_policy.py`, `agent/agent.py` (`_best_attack_index` + current),
+  `scripts/gate_track_a.py`, `scripts/package_submission.py` (`--scorer search`).
+- **Metrics:** deck_search **85.4%** vs pool @8g; Track A gate Search **43/48** vs
+  Heuristic **40/48**, SPRT **accept_b**, **PASS**.
+- **Artifacts:** `dist/candidates/track_a_search.tar.gz`, `report/deck_search/best_deck.csv`.
+- **NEXT:** `gate_track_a.py --games 40`; user OK → ladder probe Track A; fetch logs.
+
+### 2026-06-19 (run 16 — RL distill export + Track B re-gate)
+- **Worked on:** MaskablePPO teacher→student distillation; wired LearnedScorer to
+  distilled weights; Track B gate at N=40.
+- **Changed:** `scripts/distill_policy.py` (teacher rollout, CE student train,
+  `rl_policy.zip` path fix), `agent/learned_policy.py` (default `distilled_v1.npz`),
+  `scripts/gate_track_b.py` (distilled model path, `eval_scorer` deck_path fix).
+- **Metrics:** distill **torch_distill** 1096 teacher decisions, 0.01 ms/move PASS;
+  Track B gate **206/240** vs pool (Search **197/240**), SPRT **accept_b**, **PASS**;
+  smoke **17/17**; package `dist/candidates/track_b_learned.tar.gz` (2749 KiB).
+- **Verification:** `python scripts/distill_policy.py --episodes 100`; smoke 17/17;
+  `python scripts/gate_track_b.py --games 40` — pass + package dry-run OK.
+- **Blockers:** none; no Kaggle submit.
+- **NEXT:** User-approved Track B upload (`track_b_learned.tar.gz`); optional ladder
+  probe; retrain BC with full option traces if warm-start desired.
+
 ### 2026-06-19 (run 15 — agent log fetch)
 - **Worked on:** Kaggle Simulation agent log download after submissions.
 - **Changed:** `scripts/fetch_agent_logs.py`, `scripts/track_ladder.py` (`--fetch-logs`),

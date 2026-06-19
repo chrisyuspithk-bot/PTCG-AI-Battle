@@ -9,7 +9,7 @@ import numpy as np
 from agent.agent import HeuristicScorer
 from agent.features import FEATURE_VERSION, OPTION_DIM, STATE_DIM, option_features, state_features
 
-DEFAULT_MODEL = Path(__file__).resolve().parent / "models" / "bc_v1.npz"
+DEFAULT_MODEL = Path(__file__).resolve().parent / "models" / "distilled_v1.npz"
 
 
 class LearnedScorer(HeuristicScorer):
