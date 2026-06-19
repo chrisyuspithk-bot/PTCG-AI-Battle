@@ -91,11 +91,21 @@ CARD_WATER_ENERGY = 3
 CARD_KYOGRE = 721
 CARD_SNOVER = 722
 CARD_MEGA_ABOMASNOW_EX = 723
+CARD_BLACK_KYUREM_EX = 179
+CARD_VELUZA = 159
+CARD_CHIEN_PAO = 209
+CARD_STARYU = 1030
+CARD_MEGA_STARMIE_EX = 1031
 CARD_MEGA_SIGNAL = 1145
 CARD_MAXIMUM_BELT = 1158
 CARD_CYRANO = 1205
 CARD_LILLIE = 1227
 CARD_WAITRESS = 1235
+
+BASIC_POKEMON_FALLBACK = {
+    CARD_BLACK_KYUREM_EX, CARD_CHIEN_PAO, CARD_KYOGRE, CARD_SNOVER,
+    CARD_STARYU, CARD_VELUZA,
+}
 
 _ATTACK_DATA: "dict[int, Any] | None" = None
 _CARD_DATA: "dict[int, Any] | None" = None
@@ -222,6 +232,8 @@ class Agent:
         return 0
 
     def _best_option_index(self, opt_type, indices, options, current):
+        if opt_type == OPT_PLAY:
+            return max(indices, key=lambda i: self._play_score(options[i], current))
         if opt_type == OPT_ATTACH:
             return max(indices, key=lambda i: self._attach_score(options[i], current))
         if opt_type == OPT_ATTACK:
@@ -283,10 +295,8 @@ class Agent:
         prefer_yes = context in {
             CTX_MULLIGAN, CTX_ACTIVATE, 44, 45, 46,
         }
-        # Going second is usually better for this simple pilot: it can attack on
-        # its first turn and the old policy already measured poorly going first.
         if context == CTX_IS_FIRST:
-            prefer_yes = False
+            prefer_yes = True
         if min_count <= 0 and context not in {CTX_ACTIVATE, 44, 45, 46}:
             prefer_yes = False
         idx = self._yes_no_index(options, prefer_yes=prefer_yes)
@@ -296,6 +306,29 @@ class Agent:
 
     def _best_attack_index(self, options):
         return max(range(len(options)), key=lambda i: self._attack_score(options[i]))
+
+    def _play_score(self, opt, current):
+        card = self._hand_card_for_option(opt, current)
+        card_id = _get(card, "id", 0) or 0
+        data = _card_data(card_id)
+        score = self._card_id_score(card_id, current)
+        is_basic = (
+            bool(_get(data, "basic", False)) if data is not None
+            else card_id in BASIC_POKEMON_FALLBACK
+        )
+        if is_basic:
+            bench_count, bench_max = self._bench_counts(current)
+            if bench_count < bench_max:
+                score += 2600
+                if bench_count == 0:
+                    score += 3500
+        if card_id == CARD_MEGA_SIGNAL:
+            score += 1500
+        if card_id in (CARD_LILLIE, CARD_WAITRESS, CARD_CYRANO):
+            score += 900
+        if card_id == CARD_MAXIMUM_BELT:
+            score += 300
+        return score
 
     def _attack_score(self, opt, current=None):
         attack_id = _get(opt, "attackId", 0) or 0
@@ -330,10 +363,12 @@ class Agent:
             pokemon = self._pokemon_at(current, target_area, target_index)
             energy_count = len(_get(pokemon, "energies", []) or []) if pokemon else 0
             score += max(0, 4 - energy_count) * 10
+            score += self._pokemon_role_bonus(_get(pokemon, "id", 0) or 0) / 20
         elif target_area == 5:  # BENCH
             pokemon = self._pokemon_at(current, target_area, target_index)
             energy_count = len(_get(pokemon, "energies", []) or []) if pokemon else 0
             score += 20 + max(0, 3 - energy_count) * 8
+            score += self._pokemon_role_bonus(_get(pokemon, "id", 0) or 0) / 25
         return score
 
     def _card_option_score(self, opt, current, select=None):
@@ -398,8 +433,18 @@ class Agent:
     def _pokemon_role_bonus(self, card_id):
         if card_id == CARD_MEGA_ABOMASNOW_EX:
             return 900
+        if card_id == CARD_BLACK_KYUREM_EX:
+            return 820
+        if card_id == CARD_MEGA_STARMIE_EX:
+            return 880
         if card_id == CARD_KYOGRE:
             return 500
+        if card_id == CARD_CHIEN_PAO:
+            return 440
+        if card_id == CARD_VELUZA:
+            return 400
+        if card_id == CARD_STARYU:
+            return 260
         if card_id == CARD_SNOVER:
             return 180
         card = _card_data(card_id)
@@ -423,10 +468,20 @@ class Agent:
     def _card_id_score(self, card_id, current):
         if card_id == CARD_MEGA_ABOMASNOW_EX:
             return 1000 if self._has_snover_in_play(current) else 420
+        if card_id == CARD_MEGA_STARMIE_EX:
+            return 980 if self._has_pokemon_in_play(current, CARD_STARYU) else 440
+        if card_id == CARD_STARYU:
+            return 870
         if card_id == CARD_SNOVER:
             return 850
         if card_id == CARD_KYOGRE:
             return 720
+        if card_id == CARD_BLACK_KYUREM_EX:
+            return 760
+        if card_id == CARD_CHIEN_PAO:
+            return 700
+        if card_id == CARD_VELUZA:
+            return 660
         if card_id == CARD_MEGA_SIGNAL:
             return 680
         if card_id in (CARD_LILLIE, CARD_WAITRESS, CARD_CYRANO):
@@ -438,9 +493,12 @@ class Agent:
         return card_id % 1000
 
     def _has_snover_in_play(self, current):
+        return self._has_pokemon_in_play(current, CARD_SNOVER)
+
+    def _has_pokemon_in_play(self, current, card_id):
         your = self._your_player(current)
         for pokemon in (_get(your, "active", []) or []) + (_get(your, "bench", []) or []):
-            if pokemon is not None and _get(pokemon, "id") == CARD_SNOVER:
+            if pokemon is not None and _get(pokemon, "id") == card_id:
                 return True
         return False
 
@@ -453,6 +511,12 @@ class Agent:
             return {}
         your_index = _get(current, "yourIndex", 0) or 0
         return players[your_index] if 0 <= your_index < len(players) else {}
+
+    def _bench_counts(self, current):
+        your = self._your_player(current)
+        bench = _get(your, "bench", []) or []
+        bench_max = int(_get(your, "benchMax", 5) or 5)
+        return len(bench), bench_max
 
     def _opponent_active(self, current):
         players = _get(current, "players", []) or []
@@ -511,6 +575,12 @@ class Agent:
             prize = _get(player, "prize", []) or []
             return prize[index] if 0 <= index < len(prize) else None
         return None
+
+    def _hand_card_for_option(self, opt, current):
+        index = _get(opt, "index", 0) or 0
+        your = self._your_player(current)
+        hand = _get(your, "hand", []) or []
+        return hand[index] if 0 <= index < len(hand) else None
 
     def _take_min(self, options, min_count, max_count):
         """Return a legal count of indices. For optional YES/NO, decline (NO)."""

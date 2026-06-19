@@ -25,6 +25,7 @@ from agent.agent import (  # noqa: E402
     CTX_SETUP_BENCH_POKEMON, CTX_DRAW_COUNT, CTX_TO_HAND, CTX_ATTACH_TO,
     CTX_TO_ACTIVE, CTX_DAMAGE_COUNTER,
     CARD_MEGA_ABOMASNOW_EX, CARD_WATER_ENERGY, CARD_KYOGRE, CARD_SNOVER,
+    CARD_LILLIE,
 )
 
 PASS, FAIL = 0, 0
@@ -123,6 +124,24 @@ opts = [{"type": OPT_ATTACK, "attackId": 1}, {"type": OPT_ATTACK, "attackId": 2}
 s = sel(SEL_ATTACK, opts, mn=1, mx=1)
 o = agent({"logs": [], "current": {}, "select": s})
 check("attack select returns one index", legal(o, s))
+
+# 7a. MAIN PLAY should bench a Basic before playing draw support when exposed.
+opts = [{"type": OPT_PLAY, "index": 0}, {"type": OPT_PLAY, "index": 1}]
+s = sel(SEL_MAIN, opts, mn=1, mx=1)
+cur = {
+    "yourIndex": 0,
+    "players": [
+        {
+            "active": [{"id": CARD_SNOVER, "hp": 90, "maxHp": 90, "energies": []}],
+            "bench": [],
+            "benchMax": 5,
+            "hand": [{"id": CARD_LILLIE}, {"id": CARD_KYOGRE}],
+        },
+        {"active": [], "bench": []},
+    ],
+}
+o = agent({"logs": [], "current": cur, "select": s})
+check("MAIN PLAY benches Basic before support", o == [1] and legal(o, s))
 
 # 7b. Active promotion should prefer the developed attacker, not just first slot.
 opts = [{"type": OPT_CARD, "area": 5, "index": 0},

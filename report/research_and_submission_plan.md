@@ -4,13 +4,17 @@ Date: 2026-06-19
 
 ## Current Position
 
-Current kept agent: deterministic rule-based Water Mega Abomasnow pilot.
+Current kept agent: deterministic rule-based Water Mega Abomasnow pilot with
+A1 attack/targeting, safer Basic benching, and first-player preference.
 
-Current local best: **88.7% over 300 games** against legal random, mirror deck,
-sides swapped. This is a sanity benchmark, not a ladder claim.
+Current local best: **96.3% over 600 agent-perspective games** against legal
+random, mirror deck, sides swapped
+(`report/eval/matrix_300_current_pref_first.md`). This is a sanity benchmark,
+not a ladder claim.
 
-Current package: `dist/submission.tar.gz`, dry-run validated locally. No Kaggle
-submission has been made.
+Current package: `dist/submission.tar.gz`, dry-run validated locally. Five local
+candidate archives also exist under `dist/candidates/`; see
+`report/submission_candidates_2026-06-19.md`. No Kaggle submission has been made.
 
 ## Official Constraints To Preserve
 
@@ -147,9 +151,13 @@ Each package should record:
 
 ## Immediate Next Work
 
-1. Build an evaluation matrix harness that can compare multiple local agent
-   snapshots and deck files.
-2. Add telemetry logging for why games are won/lost.
-3. Freeze the current v2 as `agent_snapshots/v2_safety.py` or equivalent.
-4. Prepare A0 as the first user-confirmed Simulation submission candidate.
-5. Only then start RL/search work, using the matrix as the gatekeeper.
+1. Re-open the official Kaggle Simulation and Strategy pages in a browser before
+   upload; text fetches can return JavaScript shells.
+2. If the user confirms using Simulation slots, submit A1 first and record ladder
+   submission ID/score in `report/submission_candidates_2026-06-19.md`.
+3. Use remaining daily slots deliberately: A0 for baseline, A4 for robustness,
+   A2/A3 only if diversity is worth their weaker local evidence.
+4. Continue reducing `no_active` losses; the best A1 300-game telemetry still has
+   22 `no_active` losses.
+5. Start RL/search only after candidate ladder evidence or if local heuristic
+   improvements plateau.

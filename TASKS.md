@@ -84,6 +84,12 @@ under any task. Do not skip ahead unless a task is blocked (mark `[blocked]` + r
     metadata scoring, KO-aware attack choice, powered-attacker promotion, healing
     target scoring, and opponent KO/damage target scoring. Verified on the
     requested 20-game matrix; keep testing before packaging as a submission.
+  - [x] 2026-06-19: Prepared five local dry-run Simulation candidate archives in
+    `dist/candidates/` and documented them in
+    `report/submission_candidates_2026-06-19.md`. Current best A1 package is
+    `a1_current_963.tar.gz`, with 96.3% over 600 local agent-perspective games vs
+    legal random. Actual Kaggle upload remains blocked pending explicit user
+    confirmation and a browser-visible official rules check.
 - [ ] **T16. Research-backed search/RL prototype.** Start with narrow cabt
   `search_*` tactical checks and offline behavior-cloning traces before PPO or
   heavier self-play RL.

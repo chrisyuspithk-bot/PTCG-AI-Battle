@@ -19,6 +19,80 @@ step** so the following run can resume instantly.
 
 ---
 
+### 2026-06-19 (run 8 - T15 five dry-run candidates)
+- **Worked on:** T15 five distinct Simulation submission candidates. No Kaggle
+  submission attempted.
+- **Changed:** extended `scripts/package_submission.py` with `--deck`,
+  `--agent-module`, and `--name`, and isolated per-archive build directories so
+  candidate packages do not clobber each other. Added
+  `report/submission_candidates_2026-06-19.md` with the five-slot portfolio and
+  updated `report/research_and_submission_plan.md` from the stale 88.7% state to
+  the current 96.3% local gate. Added/kept deck probes under `agent_decks/`.
+- **Candidate archives:** dry-run built and import/deck-selection checked:
+  `dist/candidates/a0_safety.tar.gz`,
+  `dist/candidates/a1_current_963.tar.gz`,
+  `dist/candidates/a2_kyogre.tar.gz`,
+  `dist/candidates/a3_starmie.tar.gz`, and
+  `dist/candidates/a4_big_basic.tar.gz`.
+- **Metrics:** A1 is the recommended first slot if the user confirms submission:
+  `matrix_300_current_pref_first` measured 578/600 = 96.3% vs legal random, and
+  `matrix_120_current_pref_first_matrix` measured current beating safety 152/240
+  across ordered rows. A4 had a promising 120-game gate but did not hold 95% on a
+  300-game rerun; A2/A3 are diversity probes, not local-best candidates.
+- **Verification:** `python scripts\smoke_test.py` = 17/17 pass;
+  `python -m py_compile agent\agent.py agent_snapshots\v2_safety.py
+  scripts\eval_matrix.py scripts\smoke_test.py scripts\selfplay.py
+  scripts\package_submission.py` passed; all five candidate packages dry-run
+  imported and returned 60-card decks. Official rules still require browser-visible
+  recheck immediately before any upload.
+- **NEXT (T15):** if the user explicitly confirms, open the Kaggle pages in browser
+  for final rules/slot check, submit A1 first, and record submission ID/score.
+  Otherwise continue reducing `no_active` losses and/or prepare a stronger A4
+  anti-ex/basic candidate.
+
+### 2026-06-19 (run 7 - T15 local 95% gate reached)
+- **Worked on:** continued T15 toward a validated 95%+ local candidate while
+  re-checking official/API constraints. No Kaggle submission attempted.
+- **Changed:** kept the A1 current agent path and added two practical improvements:
+  MAIN `PLAY` now scores playable cards and prioritizes benching Basic Pokémon
+  when the bench is thin, and `IS_FIRST` now chooses to go first because current
+  telemetry showed the upgraded pilot performs better from first-player tempo.
+  Added role scoring for additional Water candidates (Black Kyurem ex, Veluza,
+  Chien-Pao, Staryu/Mega Starmie ex) and smoke coverage for benching Basics before
+  draw support. `scripts/eval_matrix.py` now supports `--tag` so candidate evidence
+  is no longer overwritten by repeated `matrix_<games>` runs.
+- **Deck probes added:** `agent_decks/a2_kyogre_33_energy.csv`,
+  `agent_decks/a2_basic_heavy_31_energy.csv`,
+  `agent_decks/a2_big_basic_31_energy.csv`,
+  `agent_decks/a2_big_basic_29_energy.csv`,
+  `agent_decks/a3_starmie_spread_33_energy.csv`, and
+  `agent_decks/a4_basic_water_33_energy.csv`. These are test candidates only;
+  `agent/deck.csv` remains the current submission deck.
+- **Metrics:** best verified local random gate is now
+  `report/eval/matrix_300_current_pref_first.*`: current vs random 289/300 and
+  reciprocal random vs current 11/300, so current won **578/600 = 96.3%** over
+  600 agent-perspective games, sides swapped. Broader tagged matrix
+  `report/eval/matrix_120_current_pref_first_matrix.*`: current beat safety
+  75/120 and reciprocal safety vs current 43/120, and beat random 235/240 across
+  both ordered rows. Remaining losses in the 300-game telemetry are still
+  `no_active` (22 losses), not deck-out.
+- **Verification:** `python scripts\smoke_test.py` = 17/17 pass;
+  `python -m py_compile agent\agent.py agent_snapshots\v2_safety.py
+  scripts\eval_matrix.py scripts\smoke_test.py scripts\selfplay.py
+  scripts\package_submission.py` passed; `python scripts\package_submission.py`
+  built `dist/submission.tar.gz` and dry-run import/deck selection succeeded.
+  Official Kaggle Simulation/Strategy rules pages were reopened on 2026-06-19 but
+  returned only JavaScript page shells in the fetch; implementation/API grounding
+  remains `data/CABT_API.md` plus downloaded `data/sim/sample_submission/cg/api.py`.
+- **Blockers / notes:** the local 95% random benchmark is achieved, but the full
+  goal is not complete: ladder/submission performance is still unproven and needs
+  explicit user confirmation before any Kaggle upload. Pre-submit still requires a
+  browser-visible official page check for current limits/rules.
+- **NEXT (T15):** create a named submission candidate snapshot/package for the
+  current 96.3% agent, then, only with explicit user confirmation, submit one
+  Simulation slot and record ladder ID/score; otherwise continue reducing
+  `no_active` losses and testing candidate diversity.
+
 ### 2026-06-19 (run 6 - T15 A1 initial candidate)
 - **Worked on:** T15 first Simulation candidates, specifically A1
   attack/targeting upgrade. No Kaggle submission attempted.

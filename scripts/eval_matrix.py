@@ -399,10 +399,16 @@ def apply_deck_overrides(specs: list[AgentSpec], values: list[str]) -> list[Agen
     return result
 
 
-def write_outputs(rows: list[dict[str, object]], games: int) -> tuple[Path, Path]:
+def _output_stem(kind: str, games: int, tag: str = "") -> str:
+    suffix = f"_{tag}" if tag else ""
+    return f"{kind}_{games}{suffix}"
+
+
+def write_outputs(rows: list[dict[str, object]], games: int, tag: str = "") -> tuple[Path, Path]:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    csv_path = OUT_DIR / f"matrix_{games}.csv"
-    md_path = OUT_DIR / f"matrix_{games}.md"
+    stem = _output_stem("matrix", games, tag)
+    csv_path = OUT_DIR / f"{stem}.csv"
+    md_path = OUT_DIR / f"{stem}.md"
     fields = [
         "agent_a", "agent_b", "games", "a_wins", "b_wins", "draws",
         "unfinished", "a_win_rate_decided", "avg_steps",
@@ -427,10 +433,13 @@ def write_outputs(rows: list[dict[str, object]], games: int) -> tuple[Path, Path
     return csv_path, md_path
 
 
-def write_telemetry_outputs(rows: list[dict[str, object]], games: int) -> tuple[Path, Path]:
+def write_telemetry_outputs(
+    rows: list[dict[str, object]], games: int, tag: str = ""
+) -> tuple[Path, Path]:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    csv_path = OUT_DIR / f"telemetry_{games}.csv"
-    md_path = OUT_DIR / f"telemetry_{games}.md"
+    stem = _output_stem("telemetry", games, tag)
+    csv_path = OUT_DIR / f"{stem}.csv"
+    md_path = OUT_DIR / f"{stem}.md"
     fields = [
         "game", "matchup", "agent", "opponent", "seat", "order", "result",
         "winner", "reason", "turns", "steps", "prizes_left", "opp_prizes_left",
@@ -584,8 +593,13 @@ def main(argv: list[str] | None = None) -> int:
         "--no-telemetry", action="store_true",
         help="Skip per-game telemetry CSV/Markdown output.",
     )
+    parser.add_argument(
+        "--tag", default="",
+        help="Optional safe suffix for output filenames, e.g. a2_big_basic.",
+    )
     args = parser.parse_args(argv)
 
+    tag = "".join(ch if ch.isalnum() or ch in "-_" else "_" for ch in args.tag.strip())
     specs = apply_deck_overrides(parse_agents(args.agents), args.deck)
     rows = []
     telemetry_rows: list[dict[str, object]] = []
@@ -607,11 +621,11 @@ def main(argv: list[str] | None = None) -> int:
                 f"{row['a_wins']}/{args.games} wins, "
                 f"{row['a_win_rate_decided']:.1f}% decided"
             )
-    csv_path, md_path = write_outputs(rows, args.games)
+    csv_path, md_path = write_outputs(rows, args.games, tag)
     print(f"wrote {csv_path}")
     print(f"wrote {md_path}")
     if not args.no_telemetry:
-        tel_csv_path, tel_md_path = write_telemetry_outputs(telemetry_rows, args.games)
+        tel_csv_path, tel_md_path = write_telemetry_outputs(telemetry_rows, args.games, tag)
         print(f"wrote {tel_csv_path}")
         print(f"wrote {tel_md_path}")
     return 0

@@ -10,6 +10,7 @@ Run:
 from __future__ import annotations
 
 import importlib.util
+import argparse
 import shutil
 import sys
 import tarfile
@@ -19,8 +20,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE_SAMPLE = ROOT / "data" / "sim" / "sample_submission"
-BUILD_DIR = ROOT / "dist" / "submission_build"
+BUILD_ROOT = ROOT / "dist" / "submission_build"
 ARCHIVE = ROOT / "dist" / "submission.tar.gz"
+ARCHIVE_DIR = ROOT / "dist" / "candidates"
 
 
 MAIN_PY = '''"""Kaggle cabt submission entry point."""
@@ -29,7 +31,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from agent.agent import build_agent
+from {agent_module} import build_agent
 
 
 _AGENT = build_agent(seed=0, deck_path=str(Path(__file__).with_name("deck.csv")))
@@ -47,28 +49,39 @@ def _copytree(src: Path, dst: Path) -> None:
     shutil.copytree(src, dst, ignore=ignore)
 
 
-def build() -> Path:
+def build(
+    deck_path: Path | None = None,
+    agent_module: str = "agent.agent",
+    archive_path: Path = ARCHIVE,
+) -> Path:
     if not (ENGINE_SAMPLE / "cg").exists():
         raise FileNotFoundError(f"missing engine directory: {ENGINE_SAMPLE / 'cg'}")
-    deck = ROOT / "agent" / "deck.csv"
+    deck = deck_path or ROOT / "agent" / "deck.csv"
     if not deck.exists():
         raise FileNotFoundError(f"missing deck: {deck}")
 
-    if BUILD_DIR.exists():
-        shutil.rmtree(BUILD_DIR)
-    BUILD_DIR.mkdir(parents=True, exist_ok=True)
+    build_dir = BUILD_ROOT / archive_path.stem
+    if build_dir.exists():
+        shutil.rmtree(build_dir)
+    build_dir.mkdir(parents=True, exist_ok=True)
 
-    (BUILD_DIR / "main.py").write_text(MAIN_PY, encoding="utf-8")
-    shutil.copy2(deck, BUILD_DIR / "deck.csv")
-    _copytree(ROOT / "agent", BUILD_DIR / "agent")
-    _copytree(ENGINE_SAMPLE / "cg", BUILD_DIR / "cg")
+    (build_dir / "main.py").write_text(
+        MAIN_PY.format(agent_module=agent_module),
+        encoding="utf-8",
+    )
+    shutil.copy2(deck, build_dir / "deck.csv")
+    _copytree(ROOT / "agent", build_dir / "agent")
+    if agent_module.startswith("agent_snapshots."):
+        _copytree(ROOT / "agent_snapshots", build_dir / "agent_snapshots")
+    _copytree(ENGINE_SAMPLE / "cg", build_dir / "cg")
 
-    if ARCHIVE.exists():
-        ARCHIVE.unlink()
-    with tarfile.open(ARCHIVE, "w:gz") as tar:
-        for path in sorted(BUILD_DIR.rglob("*")):
-            tar.add(path, arcname=path.relative_to(BUILD_DIR))
-    return ARCHIVE
+    archive_path.parent.mkdir(parents=True, exist_ok=True)
+    if archive_path.exists():
+        archive_path.unlink()
+    with tarfile.open(archive_path, "w:gz") as tar:
+        for path in sorted(build_dir.rglob("*")):
+            tar.add(path, arcname=path.relative_to(build_dir))
+    return archive_path
 
 
 def dry_run_import(archive: Path) -> None:
@@ -98,8 +111,30 @@ def dry_run_import(archive: Path) -> None:
             raise RuntimeError(f"deck-selection smoke failed: got {len(deck_out) if isinstance(deck_out, list) else type(deck_out)}")
 
 
+def _resolve_path(value: str | None) -> Path | None:
+    if not value:
+        return None
+    path = Path(value)
+    return path if path.is_absolute() else ROOT / path
+
+
 def main() -> int:
-    archive = build()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--deck", help="Deck CSV to package. Defaults to agent/deck.csv.")
+    parser.add_argument("--agent-module", default="agent.agent")
+    parser.add_argument(
+        "--name",
+        default="submission",
+        help="Archive basename. Use a candidate name for dist/candidates/<name>.tar.gz.",
+    )
+    args = parser.parse_args()
+
+    archive_path = ARCHIVE if args.name == "submission" else ARCHIVE_DIR / f"{args.name}.tar.gz"
+    archive = build(
+        deck_path=_resolve_path(args.deck),
+        agent_module=args.agent_module,
+        archive_path=archive_path,
+    )
     dry_run_import(archive)
     size_kb = archive.stat().st_size / 1024
     print(f"built {archive} ({size_kb:.1f} KiB)")
