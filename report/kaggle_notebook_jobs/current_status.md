@@ -186,3 +186,49 @@ Default next run:
 
 The selection rule prefers passing gates, then higher learned-vs-search margin,
 then more learned wins, then fewer timesteps to avoid overtraining.
+
+## 3M Ramp Run Imported
+
+User downloaded the 3M ramp output bundle from Kaggle.
+
+- Imported to: `report/kaggle_notebook_jobs/rl_deck_ramp_3m_20260620/`
+- Local candidate copy:
+  `dist/candidates/track_b_learned_rl_deck_ramp_3m_20260620.tar.gz`
+- Local gate copy:
+  `report/track_b_gates/track_b_learned_rl_deck_ramp_3m_20260620_gate.md`
+- Training: `status=ok`, `timesteps=3000000`, `device=cuda`, `n_envs=16`,
+  `opponents=benchmark`, holdout `a2_kyogre`
+- Gate: Learned `201/240 = 83.8%`, Search `210/240 = 87.5%`,
+  SPRT `accept_b`, dry-run import OK
+- Best raw eval averages in the saved curve appeared near cumulative
+  `1.58M`, `1.88M`, and `3.40M` steps, but final-only distillation still did
+  not beat the earlier 100k learned candidate.
+
+Decision: this 3M ramp package is valid and stronger than the 1M ramp, but still
+weaker than the earlier 100k Kaggle candidate (`210/240 = 87.5%`). Keep the
+checkpoint sweep as the next run; do not submit the 3M ramp unless intentionally
+probing.
+
+## EOD 2026-06-20 — local notebook job status
+
+### Alakazam Track B 1M (local GPU) — **retired**
+
+- Command: `train_track_b_deck.py --timesteps 1000000 --holdout a2_kyogre` on
+  `pool_alakazam_dudunsparce.csv`
+- Train: **complete** | Distill/gate: **not run** on 1M weights
+- Final: train WR **30.8%**, Kyogre holdout **0%** (peak holdout **21.1%** @ 120k)
+- Verdict: **not submission-worthy** — see
+  [`report/handoffs/alakazam_track_b_1m_status.md`](../../handoffs/alakazam_track_b_1m_status.md)
+
+### Lucario RL+MCTS (Kaggle GPU notebook)
+
+- Downloads iter 0–3 in `report/kaggle_notebook_jobs/lucario/kaggle_download_iter3_20260620/`
+- Champion: **iter 2** | Iter 3 **not promoted** (`gate=0.175`)
+- Packaged locally: `dist/candidates/track_d_lucario_rl_mcts_iter2.tar.gz`
+- **Blocked for upload** until notebook finishes iter 4+ and L1 clears Search Lucario baseline
+- See [`report/kaggle_notebook_jobs/lucario/iter3_import_assessment_20260620.md`](../lucario/iter3_import_assessment_20260620.md)
+
+### Active ladder recommendation
+
+- **Finals:** ref **53869254** Search Lucario **668 μ** (both slots)
+- **Next code:** `LucarioSearchScorer` hybrid — no Alakazam Learned, no Lucario RL upload yet

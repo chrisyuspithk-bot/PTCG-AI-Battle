@@ -250,6 +250,15 @@ def _play_game_scored(job: tuple) -> tuple[int, int]:
         if scorer_name == "search":
             from agent.search_policy import SearchScorer
             return Agent(seed=seed, deck_path=path, scorer=SearchScorer())
+        if scorer_name == "lucario":
+            from agent.lucario_policy import LucarioScorer
+            return Agent(seed=seed, deck_path=path, scorer=LucarioScorer(deck_path=path))
+        if scorer_name == "lucario_search":
+            from agent.search_policy import LucarioSearchScorer
+            return Agent(seed=seed, deck_path=path, scorer=LucarioSearchScorer(deck_path=path))
+        if scorer_name == "rulecore":
+            from agent.rule_core import RuleCoreScorer
+            return Agent(seed=seed, deck_path=path, scorer=RuleCoreScorer(deck_path=path))
         if scorer_name == "learned":
             from agent.learned_policy import LearnedScorer
             kwargs = {"model_path": model_path} if model_path else {}

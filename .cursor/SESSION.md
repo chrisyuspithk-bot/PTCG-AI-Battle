@@ -2,39 +2,38 @@
 
 ## Current focus
 
-**Goal:** Chase leader μ (1252+) via ladder probes + Lucario RL; keep **53869254** (660.5 μ) as Final
-until beaten. **53890064** Alakazam leader probe is **COMPLETE @ 600.0** (validation baseline —
-re-check μ after ~40+ min ladder games). **Daily quota 5/5 used** (Trevenant packaged locally,
-not uploaded). Kaggle Lucario RL notebook running **iter 6**; user has **`model_iter4.pth`** +
-**`model_iter5.pth`** (both promoted per notebook) — import when idle, **do not submit RL until
-L1 beats Search Lucario**. **Next:** `analyze_submission.py --ref 53890064`; import iter4/5 when
-training pauses; pin Finals manually.
+**Goal:** Climb ladder μ toward leaders (1252+); keep **53869254** (660.5 μ) as Final until beaten.
+**53890064** Alakazam probe settled at **512.1 μ** (below Lucario — do not pin). **5/5 uploads
+used 2026-06-20**; Trevenant packaged locally for tomorrow. **Lucario RL iter4/5** checkpoints
+staged at `kaggle_download_iter45_20260620/` (`model_best.pth` = iter5). **Lucario v2** passes
+expanded leader-suite gate **69.6%** locally but no slot today. **Next:** `import_lucario_rl_outputs`
+on iter5 + L1 gate; `analyze_submission.py --ref 53890064`; pin Finals (**53869254**).
 
 ## Key context
 
-- **Repo:** `Z:\kaggle\pokemon` | **Branch:** `main` (ahead 2, dirty → commit pending)
+- **Repo:** `Z:\kaggle\pokemon` | **Branch:** `main` (ahead 3, dirty post-`f14455b`)
 - **Limits:** **5/5 uploads used 2026-06-20** — [`data/SUBMISSION_PLAYBOOK.md`](data/SUBMISSION_PLAYBOOK.md)
-- **Best ladder μ:** **53869254** Search Lucario **660.5** — keep Final 1 — [`report/FINALS_PIN.md`](report/FINALS_PIN.md)
-- **New upload:** **53890064** Alakazam + SearchScorer + `top_mined_alakazam.csv` — COMPLETE **600.0**
-- **Not uploaded:** `track_a_trevenant_leader_search.tar.gz` (400 on retry; quota full)
-- **Do not submit:** v2 hybrid (8.3% L1); Alakazam @600 ≠ beat Lucario yet
-- **Lucario RL (Kaggle GPU):** iter **6** self-play; promoted iters **0,2,4,5** — import iter4/5 next
-- **Prior RL:** iter2 champion only validated locally — [`report/kaggle_notebook_jobs/lucario/iter3_import_assessment_20260620.md`](report/kaggle_notebook_jobs/lucario/iter3_import_assessment_20260620.md)
-- **Leader mining:** [`report/top_performer_reverse_engineering_20260620.md`](report/top_performer_reverse_engineering_20260620.md)
-- **Analyze fix:** per-episode `agent_index` — [`scripts/analyze_submission.py`](scripts/analyze_submission.py)
-- **GPU box:** `C:\Users\tobin\AppData\Local\Programs\Python\Python313\python.exe` (cu128)
-- **User away:** notebook may keep training; import checkpoints when downloads land
+- **Best ladder μ:** **53869254** Search Lucario **660.5** — Final 1 — [`report/FINALS_PIN.md`](report/FINALS_PIN.md)
+- **53890064** Alakazam + SearchScorer — **512.1 μ** (COMPLETE; below 69254)
+- **Not uploaded:** `track_a_trevenant_leader_search.tar.gz` (quota full)
+- **Lucario v2 gate:** 313/450 = **69.6%** expanded suite — [`report/LUCARIO_V2_GATE.md`](report/LUCARIO_V2_GATE.md); weak vs Trevenant (~40–47%)
+- **RL checkpoints:** [`report/kaggle_notebook_jobs/lucario/kaggle_download_iter45_20260620/`](report/kaggle_notebook_jobs/lucario/kaggle_download_iter45_20260620/) — iter4/5 + `model_best.pth` (iter5)
+- **RL upload blocked:** L1 must beat Search Lucario before Kaggle — [`report/handoffs/lucario_rl_reimport_status.md`](report/handoffs/lucario_rl_reimport_status.md)
+- **Leader intel:** [`report/top_performer_reverse_engineering_20260620.md`](report/top_performer_reverse_engineering_20260620.md)
+- **Analyze tooling:** per-episode seat fix — [`scripts/analyze_submission.py`](scripts/analyze_submission.py)
+- **GPU:** `C:\Users\tobin\AppData\Local\Programs\Python\Python313\python.exe` (cu128)
+- **Upload policy:** explicit user OK required; no slots until next day
 
 ## Continue prompt
 
 ```text
-Continue ladder + Lucario RL import. Read first: @C:\Users\tobin\.cursor\USER-RULES-PASTE-THIS.txt, @.cursor/SESSION.md, @data/SUBMISSION_PLAYBOOK.md, @report/kaggle_notebook_jobs/lucario/iter3_import_assessment_20260620.md, @scripts/import_lucario_rl_outputs.py
+Continue ladder + Lucario RL packaging. Read first: @C:\Users\tobin\.cursor\USER-RULES-PASTE-THIS.txt, @.cursor/SESSION.md, @data/SUBMISSION_PLAYBOOK.md, @report/LUCARIO_V2_GATE.md, @scripts/import_lucario_rl_outputs.py
 
-Goal: Track 53890064 ladder μ; import model_iter4/5 when training pauses; no RL upload until L1 beats 53869254.
-Status: Alakazam ref 53890064 COMPLETE @600; 5/5 daily slots used; Kaggle RL at iter 6; iter4+5 promoted.
-Next: python scripts/analyze_submission.py --ref 53890064 — then import iter4/5 from Downloads when ready.
+Goal: Package iter5 RL locally and gate; track 53890064 episodes; keep 53869254 as Final until beaten.
+Status: Alakazam 53890064 @512.1 μ; iter4/5 in kaggle_download_iter45_20260620; v2 lucario_search 69.6% local; 5/5 uploads used.
+Next: python scripts/import_lucario_rl_outputs.py --source report/kaggle_notebook_jobs/lucario/kaggle_download_iter45_20260620 --name track_d_lucario_rl_mcts_iter5 --gate-games 12
 
-Branch: main (ahead 2) | Env: Python313 cu128 | No upload until user OK + quota
+Branch: main (ahead 3, dirty) | Env: Python313 cu128 | No upload without user OK
 ```
 
 ## Timeline
@@ -47,3 +46,4 @@ Branch: main (ahead 2) | Env: Python313 cu128 | No upload until user OK + quota
 - **2026-06-20** | Top-performer Kaggle CLI analysis — refs 53802029–53800247
 - **2026-06-20T17:35:00Z** | handoff by user | conv `high-mu-submission-plan`
 - **2026-06-20T18:00:00Z** | handoff by user | conv `alakazam-upload-iter45-rl`
+- **2026-06-20T18:45:00Z** | handoff by user | conv `iter45-staged-handoff`

@@ -48,7 +48,7 @@ def build_policy(name: str, deck_path: Path, seed: int):
     from agent.learned_policy import LearnedScorer
     from agent.lucario_policy import LucarioScorer
     from agent.rule_core import RuleCoreScorer
-    from agent.search_policy import SearchScorer
+    from agent.search_policy import LucarioSearchScorer, SearchScorer
 
     dp = str(deck_path)
     if name == "heuristic":
@@ -59,6 +59,8 @@ def build_policy(name: str, deck_path: Path, seed: int):
         return build_agent(seed=seed, deck_path=dp, scorer=RuleCoreScorer(deck_path=dp)).act
     if name == "lucario":
         return build_agent(seed=seed, deck_path=dp, scorer=LucarioScorer(deck_path=dp)).act
+    if name == "lucario_search":
+        return build_agent(seed=seed, deck_path=dp, scorer=LucarioSearchScorer(deck_path=dp)).act
     if name == "learned":
         return build_agent(seed=seed, deck_path=dp, scorer=LearnedScorer(deck_path=dp)).act
     raise ValueError(f"unknown agent: {name}")
@@ -183,9 +185,9 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--agent-a", default="lucario",
-                        choices=("heuristic", "search", "rulecore", "lucario", "learned"))
+                        choices=("heuristic", "search", "rulecore", "lucario", "lucario_search", "learned"))
     parser.add_argument("--agent-b", default="search",
-                        choices=("heuristic", "search", "rulecore", "lucario", "learned"))
+                        choices=("heuristic", "search", "rulecore", "lucario", "lucario_search", "learned"))
     parser.add_argument("--deck-a", default=str(DEFAULT_DECK))
     parser.add_argument("--deck-b", default=str(DEFAULT_DECK))
     parser.add_argument("--games", type=int, default=10)

@@ -6,6 +6,24 @@ step** so the following run can resume instantly.
 
 ---
 
+### 2026-06-20 (handoff reconciliation - expanded leader suite + v2 gate/audit)
+- **Worked on:** Reconciled stale Lucario v2 handoff against current repo state; filled missing artifacts for mined leader decks, expanded-suite gate, and search audit.
+- **Changed:** [`scripts/arena.py`](scripts/arena.py), [`scripts/gate_track_a.py`](scripts/gate_track_a.py),
+  [`scripts/record_local_battle.py`](scripts/record_local_battle.py), [`agent/search_policy.py`](agent/search_policy.py),
+  [`agent_decks/benchmark/suite.json`](agent_decks/benchmark/suite.json),
+  [`report/mined_decks_20260620.md`](report/mined_decks_20260620.md),
+  [`report/LUCARIO_V2_GATE.md`](report/LUCARIO_V2_GATE.md),
+  [`report/search_audit_20260620.md`](report/search_audit_20260620.md),
+  [`report/public_gate/lucario_v2_vs_leader_suite_20260620.txt`](report/public_gate/lucario_v2_vs_leader_suite_20260620.txt).
+- **Leader decks mined:** 3 Alakazam variants + 2 Trevenant variants written under `agent_decks/benchmark/`; all pass `validate_deck.py --deck`.
+- **Lucario v2 expanded L1 @ 30g:** `lucario_search` **313/450 = 69.6%**, heuristic **281/450 = 62.4%**, SPRT `accept_b`; weakest matchups are Trevenant control **46.7%** and Trevenant Dunsparce **40.0%**.
+- **Search audit:** local `lucario_search` vs `search` 5-game audit produced 55/55 eligible opportunities with `search_begin_input`, 55 search results, and 26 Lucario top-2 guard accepts.
+- **Verification:** setup script hit Windows `--break-system-packages` incompatibility; fallback `python -m pip install -r requirements.txt` succeeded. `smoke_test.py` **17/17**, `smoke_replay.py` **16/16**, `pytest tests/test_episode_stats.py -q` **5 passed**, touched scripts `py_compile` OK, arena pool smoke OK.
+- **No Kaggle upload:** daily quota remains **5/5 used** per current session state; no external irreversible action was attempted.
+- **NEXT:** Analyze live Alakazam probe `python scripts/analyze_submission.py --ref 53890064`; import Lucario RL iter4/5 only when downloads are ready; use Trevenant losses as the next `lucario_search` tactical fix.
+
+---
+
 ### 2026-06-20 (Alakazam upload #5 + Lucario RL iter 4/5 — user stepping away)
 - **Submitted:** **53890064** `track_a_alakazam_leader_search` — COMPLETE **600.0** (validation); ladder μ TBD.
 - **Daily quota:** **5/5** used (69254, 68798, 85445, 86522, 90064). Trevenant probe **not** uploaded (400 + quota).
