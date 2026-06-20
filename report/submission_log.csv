@@ -1,5 +1,5 @@
 ref,date,scorer,deck,mu_initial,mu_24h,episodes_total,wins,losses,draws,win_rate,avg_turns,median_turns,fast_loss_pct,top_loss_reason,gate_l1_pct,notes
-53869254,2026-06-20,SearchScorer,real_mega_lucario_ex.csv,600.0,668.0,33,16,17,0,48.48,13.36,13,58.82,unknown,29/30 local benchmark; best Lucario rules,
+53869254,2026-06-20,SearchScorer,real_mega_lucario_ex.csv,600.0,668.0,33,18,15,0,54.55,13.36,13,66.67,prize,29/30 local benchmark; best Lucario rules,
 53854707,2026-06-19,HeuristicScorer,a2_kyogre_33_energy.csv,600.0,633.0,,,,,,,,,,,A2 Kyogre heuristic baseline
 53856711,2026-06-19,SearchScorer,track_a_probes/probe_1_a2_kyogre_33_energy_e+2.csv,600.0,626.0,,,,,,,,,,,Track A TA1 Kyogre+2e Search
 53886522,2026-06-20,LucarioScorer+SmartBench,real_mega_lucario_ex.csv,600.0,600.0,2,1,1,0,50.0,10.5,10.5,100.0,unknown,9.0,Official sample + smart bench; analyze ASAP
@@ -8,3 +8,4 @@ ref,date,scorer,deck,mu_initial,mu_24h,episodes_total,wins,losses,draws,win_rate
 53856584,2026-06-19,LearnedScorer,pool_alakazam_dudunsparce.csv,600.0,490.4,,,,,,,,,,,Shared distill mistake; do not resubmit weak Learned
 53856590,2026-06-19,LearnedScorer,pool_dragapult.csv,600.0,468.9,,,,,,,,,,,Learned spread meta probe
 53885445,2026-06-20,LucarioMCTSScorer,real_mega_lucario_ex.csv,600.0,324.6,,,,,,,,,,8.3,Early RL iter-0; empty bench retired
+53890064,2026-06-20,SearchScorer,top_mined_alakazam.csv,600.0,,,,,,,,,,,Leader Alakazam probe #5 today; COMPLETE @600 validation — analyze ladder @40min

@@ -3,11 +3,15 @@
 Track A design: keep the full heuristic policy as the default brain and only
 layer shallow search on high-leverage card picks (promotion / switch). The prior
 evalfn rerank on MAIN skipped EVOLVE/ATTACH and regressed badly vs heuristic.
+
+LucarioSearchScorer merges SearchScorer's cg search_* layer with LucarioScorer
+MAIN/meta (668 mu search + SmartBench mirror gains).
 """
 
 from __future__ import annotations
 
 import json
+import os
 import time
 
 from agent.agent import (
@@ -26,35 +30,64 @@ HIGH_LEVERAGE_CONTEXTS = {
     CTX_SETUP_ACTIVE_POKEMON,
     CTX_SETUP_BENCH_POKEMON,
 }
+# Lucario hybrid: search on promote/switch/setup-active (SETUP_BENCH is bench_guard → Lucario).
+# Search picks must land in Lucario top-2 or we keep LucarioScorer (mirror guard).
+LUCARIO_SEARCH_CONTEXTS = {
+    CTX_TO_ACTIVE,
+    CTX_SWITCH,
+    CTX_SETUP_ACTIVE_POKEMON,
+}
+SEARCH_GUARD_TOP_K = 2
 
 
-class SearchScorer(HeuristicScorer):
-    """Heuristic baseline + optional cg search_* on promotion/switch picks."""
+class _CgSearchMixin:
+    """Shared cg search_* wrapper for high-leverage card picks."""
 
-    def __init__(self, rng=None, budget_ms: float = SEARCH_BUDGET_MS) -> None:
-        super().__init__(rng=rng)
-        self._fallback = HeuristicScorer(rng=rng)
+    def _init_search(
+        self,
+        budget_ms: float = SEARCH_BUDGET_MS,
+        *,
+        search_contexts: set | None = None,
+    ) -> None:
         self._budget_ms = budget_ms
+        self._search_contexts = search_contexts or HIGH_LEVERAGE_CONTEXTS
         self._lib = None
         self._battle_ptr = None
 
-    def choose(self, obs_dict, select, current, options):
-        if not options:
-            return []
+    def _audit_search(self, event: str, **payload) -> None:
+        path = os.environ.get("SEARCH_AUDIT_LOG")
+        if not path:
+            return
         try:
-            context = select.get("context")
-            if (
-                select.get("type") == SEL_CARD
-                and context in HIGH_LEVERAGE_CONTEXTS
-                and int(select.get("minCount", 1) or 0) <= 1
-            ):
-                deadline = time.monotonic() + self._budget_ms / 1000.0
-                picked = self._ctypes_search(obs_dict, options, deadline)
-                if picked is not None:
-                    return picked
+            with open(path, "a", encoding="utf-8") as fh:
+                fh.write(json.dumps({"event": event, **payload}, sort_keys=True) + "\n")
         except Exception:
             pass
-        return self._fallback.choose(obs_dict, select, current, options)
+
+    def _try_search(self, obs_dict, select, options) -> list[int] | None:
+        if not options:
+            return None
+        try:
+            context = select.get("context")
+            eligible = (
+                select.get("type") == SEL_CARD
+                and context in self._search_contexts
+                and int(select.get("minCount", 1) or 0) <= 1
+            )
+            self._audit_search(
+                "try_search",
+                context=context,
+                eligible=eligible,
+                has_begin=bool(obs_dict.get("search_begin_input")),
+                options=len(options),
+                select_type=select.get("type"),
+            )
+            if eligible:
+                deadline = time.monotonic() + self._budget_ms / 1000.0
+                return self._ctypes_search(obs_dict, options, deadline)
+        except Exception:
+            pass
+        return None
 
     def _ensure_engine(self) -> bool:
         if self._lib is not None:
@@ -71,17 +104,21 @@ class SearchScorer(HeuristicScorer):
     def _ctypes_search(self, obs_dict, options, deadline) -> list[int] | None:
         """Best-effort wrapper around cg search_*; returns None on failure."""
         if not self._ensure_engine() or time.monotonic() >= deadline:
+            self._audit_search("search_result", fired=False, reason="engine_or_budget")
             return None
         try:
             lib = self._lib
             ptr = self._battle_ptr
             if lib is None or ptr is None:
+                self._audit_search("search_result", fired=False, reason="missing_engine_ptr")
                 return None
             begin_input = obs_dict.get("search_begin_input", "")
             if not begin_input:
+                self._audit_search("search_result", fired=False, reason="missing_begin_input")
                 return None
             n_opts = len(options)
             if n_opts <= 0:
+                self._audit_search("search_result", fired=False, reason="no_options")
                 return None
             ctypes = __import__("ctypes")
             idx_arr = (ctypes.c_int * n_opts)(*range(n_opts))
@@ -104,6 +141,7 @@ class SearchScorer(HeuristicScorer):
                 n_opts,
             )
             if not search_ptr:
+                self._audit_search("search_result", fired=False, reason="search_begin_failed")
                 return None
             handle = int(search_ptr, 16) if isinstance(search_ptr, str) else 0
             try:
@@ -112,13 +150,66 @@ class SearchScorer(HeuristicScorer):
                     data = json.loads(step.decode()) if isinstance(step, bytes) else {}
                     pick = data.get("index", out_idx[0])
                     if isinstance(pick, int) and 0 <= pick < n_opts:
+                        self._audit_search("search_result", fired=True, pick=pick, source="json")
                         return [pick]
                 if 0 <= out_idx[0] < n_opts:
+                    self._audit_search("search_result", fired=True, pick=out_idx[0], source="out_idx")
                     return [out_idx[0]]
             finally:
                 lib.SearchEnd(ptr)
                 if handle:
                     lib.SearchRelease(ptr, handle)
         except Exception:
+            self._audit_search("search_result", fired=False, reason="exception")
             return None
+        self._audit_search("search_result", fired=False, reason="no_pick")
         return None
+
+
+class SearchScorer(_CgSearchMixin, HeuristicScorer):
+    """Heuristic baseline + optional cg search_* on promotion/switch picks."""
+
+    def __init__(self, rng=None, budget_ms: float = SEARCH_BUDGET_MS) -> None:
+        super().__init__(rng=rng)
+        self._fallback = HeuristicScorer(rng=rng)
+        self._init_search(budget_ms)
+
+    def choose(self, obs_dict, select, current, options):
+        if not options:
+            return []
+        picked = self._try_search(obs_dict, select, options)
+        if picked is not None:
+            return picked
+        return self._fallback.choose(obs_dict, select, current, options)
+
+
+class LucarioSearchScorer(_CgSearchMixin):
+    """Lucario meta MAIN + cg search_* on setup/switch/to-active picks."""
+
+    def __init__(
+        self,
+        rng=None,
+        deck_path: str | None = None,
+        budget_ms: float = SEARCH_BUDGET_MS,
+    ) -> None:
+        from agent.lucario_policy import LucarioScorer
+
+        self._lucario = LucarioScorer(rng=rng, deck_path=deck_path)
+        self._init_search(budget_ms, search_contexts=LUCARIO_SEARCH_CONTEXTS)
+
+    def choose(self, obs_dict, select, current, options):
+        if not options:
+            return []
+        lucario_pick = self._lucario.choose(obs_dict, select, current, options)
+        picked = self._try_search(obs_dict, select, options)
+        if picked is None or len(picked) != 1:
+            return lucario_pick
+        ranked = self._lucario.rank_options(obs_dict, select, current, options)
+        if not ranked:
+            return lucario_pick
+        top_k = set(ranked[: min(SEARCH_GUARD_TOP_K, len(ranked))])
+        if picked[0] in top_k:
+            self._audit_search("lucario_guard", accepted=True, pick=picked[0], top_k=sorted(top_k))
+            return picked
+        self._audit_search("lucario_guard", accepted=False, pick=picked[0], top_k=sorted(top_k))
+        return lucario_pick

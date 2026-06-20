@@ -80,30 +80,25 @@ class LucarioScorer(HeuristicScorer):
         self._ability_used = False
         self._deck_path = deck_path
 
+    def rank_options(self, obs_dict, select, current, options) -> list[int]:
+        """All option indices sorted best-first (same scoring as choose)."""
+        ranked = self._compute_ranked(obs_dict, select, current, options)
+        if ranked is not None:
+            return ranked
+        return list(range(len(options)))
+
     def choose(self, obs_dict, select, current, options):
         if not options:
             return []
         try:
-            api = _load_api()
-            obs = api.to_observation_class(obs_dict)
-            if obs.select is None or not obs.select.option:
+            ranked = self._compute_ranked(obs_dict, select, current, options)
+            if ranked is None:
                 return self._fallback.choose(obs_dict, select, current, options)
 
-            state = obs.current
+            api = _load_api()
+            obs = api.to_observation_class(obs_dict)
             sel = obs.select
-            if state.turn != self._plan_turn:
-                self._plan_turn = state.turn
-                self._plan = LucarioPlan()
-                self._ability_used = False
-
-            ctx = self._scan(obs)
-            if _enum_val(sel.context) == api.SelectContext.MAIN.value:
-                self._build_plan(obs, ctx)
-
-            scores = [self._score_option(obs, ctx, o) for o in sel.option]
-            ranked = [
-                i for i, _ in sorted(enumerate(scores), key=lambda x: x[1], reverse=True)
-            ]
+            state = obs.current
             min_count = int(getattr(sel, "minCount", 0) or 0)
             max_count = int(getattr(sel, "maxCount", len(sel.option)) or len(sel.option))
 
@@ -132,6 +127,33 @@ class LucarioScorer(HeuristicScorer):
             return ranked[: min(count, max_count)]
         except Exception:
             return self._fallback.choose(obs_dict, select, current, options)
+
+    def _compute_ranked(self, obs_dict, select, current, options) -> list[int] | None:
+        if not options:
+            return []
+        try:
+            api = _load_api()
+            obs = api.to_observation_class(obs_dict)
+            if obs.select is None or not obs.select.option:
+                return None
+
+            state = obs.current
+            sel = obs.select
+            if state.turn != self._plan_turn:
+                self._plan_turn = state.turn
+                self._plan = LucarioPlan()
+                self._ability_used = False
+
+            ctx = self._scan(obs)
+            if _enum_val(sel.context) == api.SelectContext.MAIN.value:
+                self._build_plan(obs, ctx)
+
+            scores = [self._score_option(obs, ctx, o) for o in sel.option]
+            return [
+                i for i, _ in sorted(enumerate(scores), key=lambda x: x[1], reverse=True)
+            ]
+        except Exception:
+            return None
 
     # --- scan ----------------------------------------------------------------
     def _scan(self, obs):
@@ -521,6 +543,10 @@ class LucarioScorer(HeuristicScorer):
             if card is not None and card.id == LUMIOSE_CITY:
                 return 1.0
             if card is not None and card.id == Lunatone and field_counts[Solrock] >= 1:
+                if ctx["deck_count"] <= 10:
+                    return -1.0
+                if ctx["deck_count"] <= 15:
+                    return 4000.0
                 if ctx["discard_energy"] <= 1 or state.turn <= 8:
                     return 35000.0
                 return 28000.0
@@ -607,6 +633,7 @@ class LucarioScorer(HeuristicScorer):
         score = 10000.0
         field_counts = ctx["field_counts"]
         low_deck = ctx["deck_count"] <= 10
+        thin_deck = ctx["deck_count"] <= 15
         early = state.turn <= 6
         needs_line = ctx["riolu_line"] == 0
         needs_ex = ctx["has_riolu_in_play"] and not ctx["has_mega_lucario"]
@@ -682,10 +709,18 @@ class LucarioScorer(HeuristicScorer):
         if card_id == Boss_Orders:
             return 3400.0 if plan.target >= 1 else -1.0
         if card_id == Carmine:
+            if low_deck:
+                return -1.0
+            if thin_deck:
+                return 800.0
             if early and not ctx.get("has_solrock_lunatone_engine"):
                 return 2800.0
             return 3000.0
         if card_id == Lillie_Determination:
+            if low_deck:
+                return -1.0
+            if thin_deck:
+                return 900.0
             if early and not ctx.get("has_solrock_lunatone_engine"):
                 return 8600.0
             if ctx.get("has_solrock_lunatone_engine") and ctx["discard_energy"] <= 1:

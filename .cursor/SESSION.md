@@ -2,54 +2,48 @@
 
 ## Current focus
 
-**Lucario SmartBench + meta tactics complete; report written.** `LucarioScorer` on
-`real_mega_lucario_ex.csv` with bench guard, search/energy line setup, and
-competitive meta (Solrock/Lunatone, Jab/Brave, Hariyama gust). L1 @ 30 games:
-**10% overall**, **43.3% vs Lucario sample** — mirror strong, cross-archetype weak
-without search. **Do not replace Finals Search (668 μ, ref 53869254).** **Next:**
-implement `LucarioSearchScorer` hybrid (Search lookahead + Lucario MAIN), L1 @ 30g,
-compare to 53869254.
+**Goal:** Chase leader μ (1252+) via ladder probes + Lucario RL; keep **53869254** (660.5 μ) as Final
+until beaten. **53890064** Alakazam leader probe is **COMPLETE @ 600.0** (validation baseline —
+re-check μ after ~40+ min ladder games). **Daily quota 5/5 used** (Trevenant packaged locally,
+not uploaded). Kaggle Lucario RL notebook running **iter 6**; user has **`model_iter4.pth`** +
+**`model_iter5.pth`** (both promoted per notebook) — import when idle, **do not submit RL until
+L1 beats Search Lucario**. **Next:** `analyze_submission.py --ref 53890064`; import iter4/5 when
+training pauses; pin Finals manually.
 
 ## Key context
 
-- **Repo:** `Z:\kaggle\pokemon` | **Branch:** `main` (dirty, uncommitted Lucario + tooling)
-- **Report:** `report/lucario_smartbench_report_20260620.md` — full write-up of this pass
-- **Candidate:** `dist/candidates/track_c_lucario_rulecore_smartbench.tar.gz` (`--scorer lucario --gate` OK)
-- **Policy:** `agent/lucario_policy.py`, `agent/bench_guard.py`, `agent/smart_bench.py`, `scripts/smoke_replay.py` (12/12)
-- **Best ladder:** ref **53869254** SearchScorer Lucario **668 μ** — keep Finals until hybrid beats L1+L4
-- **SmartBench ladder:** ref **53886522** **600 μ** — too few L4 episodes; re-analyze after more games
-- **Retired:** ref **53885445** RL iter-0 **324 μ** (empty bench); RL re-import blocked until iter≥4
-- **L1 gate cmd:** `python scripts/gate_vs_public.py --agent dist/candidates/track_c_lucario_rulecore_smartbench.tar.gz --games 30`
-- **Episode stats:** `python scripts/analyze_submission.py --ref <ref>` — win_rate, avg_turns, fast_loss_pct
-- **Submission log:** `report/submission_log.csv` | **Finals guide:** `report/FINALS_PIN.md`
-- **Blocker:** no Kaggle upload without explicit user OK
-- **Env:** Windows; **GPU RL:** `C:\Users\tobin\AppData\Local\Programs\Python\Python313\python.exe` (cu128). Miniconda `(base)` OK for packaging/gates; avoid miniconda for Track B GPU train (CPU torch).
+- **Repo:** `Z:\kaggle\pokemon` | **Branch:** `main` (ahead 2, dirty → commit pending)
+- **Limits:** **5/5 uploads used 2026-06-20** — [`data/SUBMISSION_PLAYBOOK.md`](data/SUBMISSION_PLAYBOOK.md)
+- **Best ladder μ:** **53869254** Search Lucario **660.5** — keep Final 1 — [`report/FINALS_PIN.md`](report/FINALS_PIN.md)
+- **New upload:** **53890064** Alakazam + SearchScorer + `top_mined_alakazam.csv` — COMPLETE **600.0**
+- **Not uploaded:** `track_a_trevenant_leader_search.tar.gz` (400 on retry; quota full)
+- **Do not submit:** v2 hybrid (8.3% L1); Alakazam @600 ≠ beat Lucario yet
+- **Lucario RL (Kaggle GPU):** iter **6** self-play; promoted iters **0,2,4,5** — import iter4/5 next
+- **Prior RL:** iter2 champion only validated locally — [`report/kaggle_notebook_jobs/lucario/iter3_import_assessment_20260620.md`](report/kaggle_notebook_jobs/lucario/iter3_import_assessment_20260620.md)
+- **Leader mining:** [`report/top_performer_reverse_engineering_20260620.md`](report/top_performer_reverse_engineering_20260620.md)
+- **Analyze fix:** per-episode `agent_index` — [`scripts/analyze_submission.py`](scripts/analyze_submission.py)
+- **GPU box:** `C:\Users\tobin\AppData\Local\Programs\Python\Python313\python.exe` (cu128)
+- **User away:** notebook may keep training; import checkpoints when downloads land
 
 ## Continue prompt
 
 ```text
-Continue Lucario hybrid agent. Read first: @C:\Users\tobin\.cursor\USER-RULES-PASTE-THIS.txt, @.cursor/SESSION.md, @report/lucario_smartbench_report_20260620.md, @agent/lucario_policy.py, @agent/search_policy.py
+Continue ladder + Lucario RL import. Read first: @C:\Users\tobin\.cursor\USER-RULES-PASTE-THIS.txt, @.cursor/SESSION.md, @data/SUBMISSION_PLAYBOOK.md, @report/kaggle_notebook_jobs/lucario/iter3_import_assessment_20260620.md, @scripts/import_lucario_rl_outputs.py
 
-Goal: LucarioSearchScorer — Search on setup/switch/to-active + LucarioScorer MAIN/meta; beat 668 μ baseline on L1 @ 30 games.
-Status: SmartBench tarball built; L1 10% overall, 43.3% vs Lucario sample; report done; Finals still 53869254.
-Next: Implement LucarioSearchScorer, package track_a_lucario_ex_search_v2, run gate_vs_public --games 30; no Kaggle submit without user OK.
+Goal: Track 53890064 ladder μ; import model_iter4/5 when training pauses; no RL upload until L1 beats 53869254.
+Status: Alakazam ref 53890064 COMPLETE @600; 5/5 daily slots used; Kaggle RL at iter 6; iter4+5 promoted.
+Next: python scripts/analyze_submission.py --ref 53890064 — then import iter4/5 from Downloads when ready.
 
-Branch: main (dirty) | Env: Python 3.13 for GPU RL; (base) OK for gates
+Branch: main (ahead 2) | Env: Python313 cu128 | No upload until user OK + quota
 ```
 
 ## Timeline
 
-- **2026-06-20T18:45:00Z** | handoff by user | conv `9d3d5932`
-- **2026-06-20T17:30:00Z** | handoff by user | conv `deck-rl-phase2d`
-- **2026-06-20T16:00:00Z** | run 47 | Phase 2d collapse penalty + 20-gen GA
-- **2026-06-20T15:00:00Z** | handoff by user | conv `deck-rl-phase2c`
-- **2026-06-20T14:30:00Z** | run 45 | Phase 2c role/chain mutations + 10-gen GA
-- **2026-06-20T14:00:00Z** | handoff by user | conv `deck-rl-phase2b`
-- **2026-06-20T13:30:00Z** | run 44 | Phase 2b per-lane GA selection implemented and verified
-- **2026-06-20T13:25:00Z** | handoff by user | conv `deck-rl-phase2a`
-- **2026-06-19T18:15:00Z** | handoff by user | conv `586c52cd`
-- **2026-06-19T17:35:00Z** | handoff by user | 5/5 ladder slots live
-- **2026-06-19T17:33:00Z** | run 18 | TA1+TA2 submitted; ladder sync dragapult 468.9, alakazam 490.4
-- **2026-06-19T17:24:00Z** | run 18 | Track B alakazam + dragapult submitted
-- **2026-06-19** | run 16–17 | RL distill export; Track B deck spread; Track A probe tooling
-- **2026-06-19T16:08:00Z** | A2 Kyogre #53854707 first successful upload
+- **2026-06-20T17:05:00Z** | handoff by user | conv `lucario-top-performer-v1`
+- **2026-06-20T20:30:00Z** | handoff by user | conv `lucario-hybrid-v2`
+- **2026-06-20 EOD** | LucarioSearchScorer impl + partial L1; deck-out insight; strategy doc refresh
+- **2026-06-20 EOD** | Alakazam 1M retired; Lucario iter3 assessed; repo cleanup
+- **2026-06-20** | SmartBench + meta tactics; ref 53886522 submitted
+- **2026-06-20** | Top-performer Kaggle CLI analysis — refs 53802029–53800247
+- **2026-06-20T17:35:00Z** | handoff by user | conv `high-mu-submission-plan`
+- **2026-06-20T18:00:00Z** | handoff by user | conv `alakazam-upload-iter45-rl`

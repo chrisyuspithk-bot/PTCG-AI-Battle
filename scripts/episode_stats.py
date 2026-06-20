@@ -66,16 +66,89 @@ class SubmissionStats:
         self.episodes_total = len(self.rows)
 
 
+def team_names_from_replay(data: dict[str, Any]) -> list[str]:
+    info = data.get("info") or {}
+    names = info.get("TeamNames") or info.get("teamNames") or info.get("teams") or []
+    if isinstance(names, list):
+        return [str(n) for n in names]
+    return []
+
+
+def winner_from_rewards(rewards: list[Any]) -> int | None:
+    numeric: list[tuple[int, float]] = []
+    for i, reward in enumerate(rewards):
+        try:
+            numeric.append((i, float(reward)))
+        except (TypeError, ValueError):
+            continue
+    if not numeric:
+        return None
+    best = max(numeric, key=lambda x: x[1])
+    if sum(1 for _i, reward in numeric if reward == best[1]) > 1:
+        return 2
+    return best[0]
+
+
+def resolve_agent_index(
+    data: dict[str, Any],
+    *,
+    manifest_index: int | None = None,
+    team_name: str | None = None,
+    default: int = 0,
+) -> int:
+    """Pick our agent seat for one episode (manifest > team name > default)."""
+    if manifest_index is not None:
+        return manifest_index
+    if team_name:
+        needle = team_name.strip().casefold()
+        for i, name in enumerate(team_names_from_replay(data)):
+            if name.strip().casefold() == needle:
+                return i
+    return default
+
+
+def _terminal_players(data: dict[str, Any]) -> tuple[int, list[dict]]:
+    """Return (turn_count, players) from the latest step exposing player state."""
+    steps = data.get("steps")
+    if not isinstance(steps, list):
+        return 0, []
+    best_turn = 0
+    best_players: list[dict] = []
+    for step in steps:
+        if not isinstance(step, list):
+            continue
+        for player_state in step:
+            if not isinstance(player_state, dict):
+                continue
+            obs = player_state.get("observation") or player_state
+            if not isinstance(obs, dict):
+                continue
+            current = obs.get("current") or {}
+            players = current.get("players") or []
+            if len(players) < 2:
+                continue
+            turn = int(current.get("turn", 0) or 0)
+            if turn >= best_turn:
+                best_turn = turn
+                best_players = players
+    return best_turn, best_players
+
+
 def infer_result_reason(winner: int, players: list[dict]) -> str:
     if winner in (0, 1) and winner < len(players):
-        if len(players[winner].get("prize") or []) == 0:
-            return "prize"
-    loser = 1 - winner if winner in (0, 1) else None
-    if loser is not None and loser < len(players):
-        if int(players[loser].get("deckCount", 1) or 0) <= 0:
-            return "deck_out"
-        if not (players[loser].get("active") or []):
-            return "no_active"
+        loser = 1 - winner
+        if loser < len(players):
+            lp = players[loser]
+            wp = players[winner]
+            if int(lp.get("deckCount", 1) or 0) <= 0:
+                return "deck_out"
+            w_prizes = len(wp.get("prize") or [])
+            l_prizes = len(lp.get("prize") or [])
+            if w_prizes < l_prizes or w_prizes == 0:
+                return "prize"
+            if not (lp.get("active") or []):
+                return "no_active"
+        return "prize"
     return "draw" if winner == 2 else "unknown"
 
 
@@ -104,11 +177,18 @@ def parse_replay(data: dict[str, Any], our_agent_index: int = 0) -> EpisodeRow |
     if not isinstance(steps, list) or not steps:
         return None
     rewards = data.get("rewards") or []
-    episode_id = str(data.get("episodeId") or data.get("episode_id") or data.get("id") or "")
+    episode_id = str(
+        (data.get("info") or {}).get("EpisodeId")
+        or data.get("episodeId")
+        or data.get("episode_id")
+        or data.get("id")
+        or ""
+    )
 
     turn_count = 0
     winner = -1
     reason = "unknown"
+    terminal_players: list[dict] = []
     for step in reversed(steps):
         if not isinstance(step, list):
             continue
@@ -122,11 +202,29 @@ def parse_replay(data: dict[str, Any], our_agent_index: int = 0) -> EpisodeRow |
             if t > turn_count:
                 turn_count = t
             cur = obs.get("current") or {}
+            players = cur.get("players") or []
+            if len(players) >= 2:
+                terminal_players = players
             if int(cur.get("result", -1)) != -1:
                 winner, reason = _parse_result_from_obs(obs)
                 break
         if winner != -1:
             break
+
+    if winner == -1:
+        inferred = winner_from_rewards(rewards)
+        if inferred is not None:
+            winner = inferred
+            term_turn, terminal_players = _terminal_players(data)
+            if term_turn > turn_count:
+                turn_count = term_turn
+            if terminal_players:
+                reason = infer_result_reason(winner, terminal_players)
+            elif winner in (0, 1):
+                reason = "prize"
+
+    if turn_count <= 0:
+        turn_count, terminal_players = _terminal_players(data)
 
     try:
         reward = float(rewards[our_agent_index]) if our_agent_index < len(rewards) else 0.0
@@ -140,14 +238,19 @@ def parse_replay(data: dict[str, Any], our_agent_index: int = 0) -> EpisodeRow |
     else:
         outcome = "draw"
 
-    if outcome == "loss" and reason != "unknown":
-        pass
-    elif winner == our_agent_index:
+    if winner == our_agent_index:
         outcome = "win"
     elif winner in (0, 1):
         outcome = "loss"
     elif winner == 2:
         outcome = "draw"
+
+    if outcome == "win" and reason in ("unknown", "draw"):
+        reason = "prize"
+    if outcome == "loss" and reason == "unknown" and terminal_players:
+        winner_idx = 1 - our_agent_index if winner in (0, 1) else winner
+        if winner_idx in (0, 1):
+            reason = infer_result_reason(winner_idx, terminal_players)
 
     return EpisodeRow(
         episode_id=episode_id,

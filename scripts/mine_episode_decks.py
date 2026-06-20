@@ -26,8 +26,11 @@ MARKERS = {
     "dragapult_ex": 121,
     "mega_lucario_ex": 678,
     "mega_abomasnow_ex": 723,
+    "alakazam": 741,  # Abra — TrustHub / Kadoraba line
+    "trevenant": 879,  # Hop's Trevenant — Debauchery / foo_foo line
 }
 TARGETS = ["iono", "dragapult_ex", "mega_abomasnow_ex", "mega_lucario_ex"]
+LEADER_TARGETS = ["alakazam", "trevenant"]
 
 
 def _card_names() -> dict[int, str]:
@@ -68,7 +71,17 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out-dir", default=str(ROOT / "agent_decks"))
     ap.add_argument("--report", default=str(ROOT / "report" / "real_decks_mined.md"))
     ap.add_argument("--prefix", default="real_", help="Output CSV filename prefix")
+    ap.add_argument(
+        "--leaders", action="store_true",
+        help="Also mine alakazam/trevenant leader decks (writes top_mined_*.csv)",
+    )
     args = ap.parse_args(argv)
+
+    targets = list(TARGETS)
+    prefix = args.prefix
+    if args.leaders:
+        targets = list(LEADER_TARGETS)
+        prefix = "top_mined_"
 
     cardname = _card_names()
     files = sorted(Path(args.episodes).glob("*.json"))
@@ -95,12 +108,12 @@ def main(argv: list[str] | None = None) -> int:
         "| Archetype | seen | wins | written |", "|---|---|---|---|",
     ]
     written: dict[str, str] = {}
-    for arch in TARGETS:
+    for arch in targets:
         pool = winners[arch] or allseen[arch]
         note = ""
         if pool:
             sig, _cnt = pool.most_common(1)[0]
-            csv_path = out_dir / f"{args.prefix}{arch}.csv"
+            csv_path = out_dir / f"{prefix}{arch}.csv"
             csv_path.write_text("\n".join(str(c) for c in sig) + "\n", encoding="utf-8")
             written[arch] = csv_path.name
             note = csv_path.name
@@ -109,7 +122,7 @@ def main(argv: list[str] | None = None) -> int:
     Path(args.report).parent.mkdir(parents=True, exist_ok=True)
     Path(args.report).write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines))
-    print(f"\nwrote {len(written)}/{len(TARGETS)} target decks to {out_dir}")
+    print(f"\nwrote {len(written)}/{len(targets)} target decks to {out_dir}")
     return 0
 
 

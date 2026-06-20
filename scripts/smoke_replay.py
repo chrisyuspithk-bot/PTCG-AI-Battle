@@ -197,6 +197,26 @@ def test_lucario_search_trainer_scoring():
         f"gravity={gravity}",
     )
 
+    low = _ctx(deck=8)
+    check(
+        "carmine_blocked_at_low_deck",
+        scorer._score_play_trainer(1192, plan, False, hand, 0, state, low) < 0,
+        "carmine should be -1 at deck<=10",
+    )
+    check(
+        "lillie_blocked_at_low_deck",
+        scorer._score_play_trainer(1227, plan, False, hand, 0, state, low) < 0,
+        "lillie should be -1 at deck<=10",
+    )
+    thin = _ctx(deck=14)
+    dusk_thin = scorer._score_play_trainer(1102, plan, False, hand, 0, state, thin)
+    carmine_thin = scorer._score_play_trainer(1192, plan, False, hand, 0, state, thin)
+    check(
+        "carmine_throttled_at_thin_deck",
+        carmine_thin < dusk_thin,
+        f"carmine={carmine_thin} dusk={dusk_thin}",
+    )
+
 
 def test_lucario_line_energy_scoring():
     """Feed Riolu/Mega early: attach and search beat generic targets."""
@@ -310,10 +330,22 @@ def test_lucario_empty_bench_attack_scoring():
     )
 
 
+def test_lucario_search_scorer_instantiates():
+    from agent.search_policy import LucarioSearchScorer
+
+    scorer = LucarioSearchScorer(deck_path=DECK)
+    check(
+        "lucario_search_scorer_instantiates",
+        scorer is not None and hasattr(scorer, "choose"),
+        "missing choose",
+    )
+
+
 def main() -> int:
     print("bench-guard golden replay tests")
     test_empty_bench_must_play()
     test_smart_bench_caps_at_2()
+    test_lucario_search_scorer_instantiates()
     test_lucario_search_trainer_scoring()
     test_lucario_line_energy_scoring()
     test_lucario_empty_bench_attack_scoring()

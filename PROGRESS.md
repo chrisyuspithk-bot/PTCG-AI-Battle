@@ -6,7 +6,103 @@ step** so the following run can resume instantly.
 
 ---
 
-### 2026-06-20 (run 53 - Lucario search + energy line tuning)
+### 2026-06-20 (Alakazam upload #5 + Lucario RL iter 4/5 — user stepping away)
+- **Submitted:** **53890064** `track_a_alakazam_leader_search` — COMPLETE **600.0** (validation); ladder μ TBD.
+- **Daily quota:** **5/5** used (69254, 68798, 85445, 86522, 90064). Trevenant probe **not** uploaded (400 + quota).
+- **Lucario RL (Kaggle):** notebook at **iter 6** self-play; **iter 4** (gate 0.55, promoted) + **iter 5** (gate 0.675, promoted) checkpoints in Downloads — import when idle; **no RL ladder upload** until L1 beats 53869254.
+- **NEXT:** `analyze_submission.py --ref 53890064`; import `model_iter4.pth`/`model_iter5.pth`; pin Finals (keep **53869254** until 90064 beats 660.5).
+
+---
+- **Worked on:** `analyze_submission.py` per-episode seat; batch leader replays; mine Alakazam/Trevenant; full L1 gate v2.
+- **Changed:** [`scripts/episode_stats.py`](scripts/episode_stats.py), [`scripts/analyze_submission.py`](scripts/analyze_submission.py),
+  [`scripts/mine_episode_decks.py`](scripts/mine_episode_decks.py), [`tests/test_episode_stats.py`](tests/test_episode_stats.py),
+  [`agent_decks/benchmark/suite.json`](agent_decks/benchmark/suite.json),
+  [`agent_decks/top_mined_alakazam.csv`](agent_decks/top_mined_alakazam.csv),
+  [`agent_decks/top_mined_trevenant.csv`](agent_decks/top_mined_trevenant.csv),
+  [`.cursor/SESSION.md`](.cursor/SESSION.md).
+- **53869254 (fixed stats):** **54.55%** WR (was 48.48% with global agent_index), avg **13.36** turns, **66.7%** fast_loss, top loss **prize**.
+- **Leader replays:** `--fetch-only` top-5 refs → **84 new** + 41 local; mined leader decks validated OK.
+- **L1 v2 @ 30g:** suite mean **8.3%** (30/360) — mirror Lucario **10%**, Abomasnow **20%**; **do not submit**.
+- **NEXT:** Port Alakazam ~20-turn wall tempo into `LucarioScorer`; audit `search_begin_input` on 53869254 logs; optional public opponents from mined leader decks.
+
+---
+- **Worked on:** Kaggle CLI leaderboard + replay mining; Lucario hybrid tuning (search-guard, deck-out throttle).
+- **Changed:** [`report/top_performer_reverse_engineering_20260620.md`](report/top_performer_reverse_engineering_20260620.md);
+  [`agent/search_policy.py`](agent/search_policy.py), [`agent/lucario_policy.py`](agent/lucario_policy.py);
+  [`.cursor/SESSION.md`](.cursor/SESSION.md).
+- **Top refs (μ):** 53802029 (1312.7), 53880887 (1304.2), 53876944 (1284.6), 53878567 (1261.3), 53800247 (1252.0).
+- **Insight:** Leaders use Alakazam/Trevenant (~20+ turn wins); our 53869254 at 660.5 μ, ~13 turns, 59% fast_loss.
+- **NEXT:** Batch leader replays; fix `analyze_submission.py` per-episode agent_index; mined decks → L1 suite; full L1 gate search-guard v2.
+
+---
+### 2026-06-20T16:51Z (Robust deck-search ready to run — handoff + continuation prompt)
+- **State:** Robust deck-optimisation subsystem is BUILT + UNIT-TESTED on CPU (8/8 pass)
+  and untouched by later runs. Goal: maximise win rate vs the WHOLE field (maximin/CVaR),
+  not mean-vs-fixed-suite. Standalone; does not touch `report/rl_deck_campaign/`.
+- **Files:** `rl/robust_fitness.py`, `rl/meta_solver.py`, `rl/gauntlet.py`,
+  `rl/winrate_surrogate.py`, `rl/robust_search.py`, `scripts/robust_deck_search.py`,
+  `scripts/extract_gauntlet_from_replays.py`; tests `tests/test_robust_core.py` +
+  `tests/test_surrogate.py`. Docs: `report/robust_deck_optimization_design.md`,
+  `report/robust_deck_rl/README.md`. Handoff: `ROBUST_DECK_HANDOFF.md`. Continuation
+  prompt: `report/CONTINUE_ROBUST_PROMPT.md`. (Detailed build log: run 39 entry below.)
+- **Verified:** CLI smoke (10 games, clean 17-opp field) → best_robust=0.113, legal
+  60-card `report/robust_deck_rl/best_deck.csv`. RPS Nash→uniform(1/3); surrogate learns
+  (corr>0.6). NOT run at scale; surrogate GPU path + real-episode mining need user's box.
+- **Episode data:** `report/deck_rl/episode_dataset_manifest.csv` indexes daily ladder
+  episode datasets (the real field). Extractor wired to mine them into the gauntlet.
+- **Blockers:** none for the subsystem. Real-field gauntlet + GPU surrogate require the
+  user's GPU box + Kaggle download (sandbox is CPU-only, no egress).
+- **NEXT (single exact action):** on the GPU box run
+  `python scripts/robust_deck_search.py --generations 30 --population 16 --games 10 --surrogate`,
+  then read `report/robust_deck_rl/metrics.csv` (best_robust climbing? holdout_robust
+  keeping up?). Full plan: `report/CONTINUE_ROBUST_PROMPT.md`.
+
+---
+
+### 2026-06-20 (Lucario best-approach refresh — hybrid impl, deck-out, partial L1)
+- **Worked on:** Implement `LucarioSearchScorer`; refresh Lucario strategy doc with today's insights.
+- **Changed:**
+  - [`agent/search_policy.py`](agent/search_policy.py) — `_CgSearchMixin`, **`LucarioSearchScorer`**
+    (search on setup/switch/to-active + `LucarioScorer` fallback).
+  - [`scripts/package_submission.py`](scripts/package_submission.py) — `--scorer lucario_search`.
+  - [`scripts/smoke_replay.py`](scripts/smoke_replay.py) — hybrid instantiate test (**13/13** golden).
+  - [`report/lucario_smartbench_report_20260620.md`](report/lucario_smartbench_report_20260620.md) —
+    authoritative best-approach doc: portfolio, loss modes, deck-out, hybrid partial L1.
+  - [`.cursor/SESSION.md`](.cursor/SESSION.md) — updated focus + continue prompt.
+- **Packaged:** `dist/candidates/track_a_lucario_ex_search_v2.tar.gz` (dry-run OK).
+- **L1 (partial, interrupted):** v2 vs 7/12 opponents — mirror **23.3%** (SmartBench was **43.3%**);
+  cross-archetype ~10%. **Do not submit hybrid.**
+- **Insight:** Simulator `deck_out` when `deckCount` ≤ 0; Lucario thins aggressively — Dusk/Pad
+  blocked at deck ≤10 but Carmine/Lillie/Lunatone still thin; next lever for wall/long games.
+- **Finals:** unchanged — **53869254** Search Lucario **668 μ**.
+- **NEXT:** Complete `gate_vs_public.py --games 30` for v2 vs v1; deck-out throttling in
+  `LucarioScorer`; try search without `SETUP_BENCH_POKEMON` if mirror stays low.
+
+---
+### 2026-06-20 (EOD wrap-up — Alakazam 1M failed, repo cleanup)
+- **Worked on:** Record Alakazam 1M GPU verdict; end-of-day handoff + gitignore cleanup.
+- **Alakazam 1M:** Train **complete** (1M steps, CUDA); distill/gate **not run**. Verdict: **not
+  submission-worthy** — final train WR **30.8%**, Kyogre holdout **0%** @ 1M (peak holdout **21.1%**
+  @ 120k). Prior 100k gate **32/110** failed. Handoff:
+  [`report/handoffs/alakazam_track_b_1m_status.md`](report/handoffs/alakazam_track_b_1m_status.md).
+- **Lucario RL:** iter 3 imported; iter **2** champion only; blocked for ladder until iter 4+ + L1.
+- **Finals:** unchanged — **53869254** Search Lucario **668 μ** (both slots).
+- **Cleanup:** [`.gitignore`](.gitignore) — ignore `.claude/`, `agent/models/*.npz`, `rl_policy.zip`,
+  `report/public_gate/`, GA `population/`, model backups. Updated [`.cursor/SESSION.md`](.cursor/SESSION.md).
+- **NEXT:** `LucarioSearchScorer` hybrid → L1 @ 30g vs 53869254; no Alakazam Learned; no Kaggle upload without user OK.
+
+---
+- **Worked on:** Import Kaggle Lucario RL checkpoints from Downloads; assess iter 3 vs champion.
+- **Moved:** `Downloads/model_iter{0-3}.pth` → [`report/kaggle_notebook_jobs/lucario/kaggle_download_iter3_20260620/`](report/kaggle_notebook_jobs/lucario/kaggle_download_iter3_20260620/).
+  Repaired stale `model_best.pth` with **iter 2 champion**; recorded metrics in
+  [`iter3_import_assessment_20260620.md`](report/kaggle_notebook_jobs/lucario/iter3_import_assessment_20260620.md).
+- **Verdict:** **Iter 3 is NOT an improvement** — `gate=0.175`, `promoted=0`. Champion = **iter 2**
+  (`vs_random=1.0`, `gate=0.975`). Notebook was starting iter 4 when captured.
+- **Packaged:** `dist/candidates/track_d_lucario_rl_mcts_iter2.tar.gz` (dry-run OK); **no Kaggle upload**.
+- **NEXT:** Let notebook finish iter 4+; re-download full `metrics.csv`; L1 gate iter2 champion vs
+  Search Lucario baseline before any upload.
+
+---
 - **Worked on:** Lucario early-game line setup — search trainers, energy feed, evolve priority.
 - **Changed:** [`agent/lucario_policy.py`](agent/lucario_policy.py) — Dusk Ball/Poke Pad/Gong/PPP timing;
   boosted `_energy_score` + ATTACH bonuses for Riolu/Mega; Riolu evolve +2500 when ≥2 energy;
@@ -441,6 +537,39 @@ step** so the following run can resume instantly.
   `scripts/build_card_registry.py`, generate `report/deck_rl/registry.json`, add
   a `scripts/mine_episode_replays.py` stub for downloaded replay/log JSON, and
   seed `report/deck_rl/archetype_seed_notes.md`.
+
+---
+
+### 2026-06-20 (run 39 - Robust deck-search subsystem: maximin/CVaR + PSRO + GPU surrogate)
+- **Worked on:** User goal "win rate vs anything". Built a self-contained robust
+  deck-optimisation system (does NOT touch report/rl_deck_campaign/). Reframed the
+  objective from mean-vs-fixed-suite to maximin/CVaR over an expanding adversarial field.
+- **Design doc:** `report/robust_deck_optimization_design.md` (+ inline architecture
+  diagram). Grounded in comp facts: cabt CPU engine, agent(obs_dict) contract, 10-min/game,
+  60/<=4 deck rules, ~2090-team Simulation mu ladder, 23 ms/game/core measured.
+- **New modules (all CPU-verified):**
+  - `rl/robust_fitness.py` - weighted mean + CVaR + maximin objective.
+  - `rl/meta_solver.py` - zero-sum regret-matching Nash; adversarial opponent weights (PSRO-lite).
+  - `rl/gauntlet.py` - opponent field = benchmark + agent_decks + mined ladder decks + self elites; train/holdout split; CRN pairwise eval via scripts.arena.play_matchup.
+  - `rl/winrate_surrogate.py` - P(A beats B) model; PyTorch-CUDA if available else NumPy MLP; prunes O(D^2) matchups.
+  - `rl/robust_search.py` + `scripts/robust_deck_search.py` (CLI) - PSRO-lite GA loop with co-evolution, holdout validation, checkpoints to report/robust_deck_rl/.
+  - `scripts/extract_gauntlet_from_replays.py` - downloaded episode replays -> report/deck_rl/mined_decks/ (auto-consumed by gauntlet).
+- **Episode data:** user supplied `report/deck_rl/episode_dataset_manifest.csv` (daily
+  ladder episode datasets, 1.2k-7.8k episodes/day, ~3-21GB each; median avg score
+  627->1013 over 4 days = field strengthening fast). Extractor wired to mine these into
+  the gauntlet; user downloads datasets locally (sandbox has no Kaggle egress / 4GB disk).
+- **Verification:** `tests/test_robust_core.py` (6) + `tests/test_surrogate.py` (2) =
+  8/8 pass (RPS Nash -> uniform 1/3, value 0.5; CVaR lower-tail; robust prefers no-collapse
+  deck; surrogate learns synthetic matchup corr>0.6). End-to-end CLI smoke OK; 10-game run
+  gave best_robust=0.113 (non-zero, worst-case-weighted), legal 60-card best_deck.csv.
+- **Could NOT run in sandbox:** torch CUDA (4GB disk / proxy-blocked CPU index) and real
+  ladder mining (no egress). Surrogate GPU path + replay mining must run on the user's box.
+- **Blockers:** none for the subsystem. Real-field gauntlet needs the user to download a
+  daily episode dataset + run the extractor.
+- **NEXT (user):** (a) `python scripts/robust_deck_search.py --generations 30 --population 16
+  --games 10 --surrogate` on the GPU box; (b) for the real field, download one daily episode
+  dataset, run `scripts/extract_gauntlet_from_replays.py --min-score 900`, then re-run search;
+  (c) watch holdout_robust vs best_robust in metrics.csv for overfitting.
 
 ---
 
@@ -1576,27 +1705,4 @@ step** so the following run can resume instantly.
   - **Kaggle token RECEIVED** (new `KGAT_` format) and stored at
     `.kaggle/access_token` (gitignored). `setup_env.sh` updated to use it.
   - **[BLOCKED] data download:** sandbox proxy returns **403 Forbidden** for
-    `api.kaggle.com` AND `www.kaggle.com` — no Kaggle egress from this sandbox,
-    even with a valid token. So card DB + `cg/` engine cannot be fetched here.
-  - **[CONSTRAINT]** `kaggle-environments==1.30.1` needs **Python >= 3.11**;
-    sandbox is **3.10.12** → exact ladder harness won't install here.
-- **T6 — done:** `data/META_NOTES.md` (never-crash scaffold, per-context dispatch,
-  MAIN priority, simple-deck-wins, fast meta + Crustle anti-ex, single-prize aggro).
-- **Metrics:** none yet (no engine/data to measure win-rate).
-- **Blockers:** (1) no Kaggle egress from sandbox (403) → blocks T3/T4/T5 here.
-  (2) Python 3.10 vs required 3.11 for ladder harness. Both are ENVIRONMENT issues,
-  not token issues. ASSUMPTION (label): submission format `submission.tar.gz` =
-  main.py+deck.csv+cg/ is community-sourced; reconfirm on official Data/Rules tab.
-- **NEXT:** Unblock data — either (a) run in an environment with kaggle.com egress
-  + Python 3.11 and run `scripts/setup_env.sh` to download the card DB & `cg/`
-  engine, or (b) have Dylan drop the competition download into `data/`. Then do
-  **T3**: parse `all_card_data()` (~2,000 cards) and write `data/CARDS_SUMMARY.md`.
-
----
-
-## Setup notes
-- Project scaffolded 2026-06-19.
-- Kaggle token (new `KGAT_` format) stored at `.kaggle/access_token` (gitignored).
-- **Sandbox cannot reach kaggle.com (403 proxy block);** download/submit must run
-  where kaggle.com egress is allowed (and Python >= 3.11 for the ladder harness).
-- Folder must be connected/accessible when the 9pm run fires.
+    `api.kaggle.com` AND `www.kag

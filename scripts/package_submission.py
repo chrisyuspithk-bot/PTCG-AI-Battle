@@ -78,6 +78,11 @@ LUCARIO_AGENT_INIT = (
     "_AGENT = build_agent(seed=0, deck_path=KAGGLE_DECK, "
     "scorer=LucarioScorer(deck_path=KAGGLE_DECK))"
 )
+LUCARIO_SEARCH_AGENT_INIT = (
+    "from agent.search_policy import LucarioSearchScorer\n\n"
+    "_AGENT = build_agent(seed=0, deck_path=KAGGLE_DECK, "
+    "scorer=LucarioSearchScorer(deck_path=KAGGLE_DECK))"
+)
 LUCARIO_MCTS_AGENT_INIT = (
     "from agent.lucario_mcts_policy import build_lucario_mcts_scorer\n\n"
     "_AGENT = build_agent(seed=0, deck_path=KAGGLE_DECK, "
@@ -143,6 +148,9 @@ def build(
     elif scorer == "lucario":
         scorer_import = ""
         agent_init = LUCARIO_AGENT_INIT
+    elif scorer == "lucario_search":
+        scorer_import = ""
+        agent_init = LUCARIO_SEARCH_AGENT_INIT
     elif scorer == "lucario_mcts":
         scorer_import = ""
         agent_init = LUCARIO_MCTS_AGENT_INIT
@@ -280,7 +288,15 @@ def main() -> int:
     )
     parser.add_argument(
         "--scorer",
-        choices=("heuristic", "search", "learned", "rulecore", "lucario", "lucario_mcts"),
+        choices=(
+            "heuristic",
+            "search",
+            "learned",
+            "rulecore",
+            "lucario",
+            "lucario_search",
+            "lucario_mcts",
+        ),
         default="heuristic",
         help="Agent brain wired in main.py.",
     )
