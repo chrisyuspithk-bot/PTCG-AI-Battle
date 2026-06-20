@@ -75,6 +75,8 @@ if not REPO.exists():
         next(Path("/kaggle/working").glob("kaggle_pokemon-*")).rename(REPO)
 
 os.chdir(REPO)
+run(["git", "fetch", "--depth", "1", "origin", "main"], check=False)
+run(["git", "reset", "--hard", "origin/main"], check=False)
 run(["git", "log", "--oneline", "-1"], check=False)
 
 print("=== 2/5: deps ===", flush=True)
