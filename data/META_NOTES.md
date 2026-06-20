@@ -78,6 +78,9 @@ quota (5/day), **active top-2 limit**, disabled tooltip, finals strategy. **Read
   episode against itself** (pass/fail only). The public score shown immediately
   (**~600.0 μ**) is the **starting μ after validation**, not performance vs the
   field. Do **not** treat 600 as failure.
+- **How μ updates:** Gaussian skill rating — each episode moves μ on **win/loss/draw
+  only** (official: margin does not affect updates). Full model:
+  [`data/COMPETITION_SCORING.md`](COMPETITION_SCORING.md).
 - **Ladder matchmaking:** After ~40+ minutes, μ updates to real W/L vs other
   submitted agents (A2: 600.0 → **670.3** → **672.7** → **633.0** as more games finish).
 - **Field scale:** top ~1350; mid-pack ~1100+. Local random-gate win % does not

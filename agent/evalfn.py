@@ -72,6 +72,11 @@ def board_value(obs_dict: dict) -> float:
     value -= 0.06 * _bench_strength(opp)
 
     turn = int(_get(current, "turn", 0) or 0)
+    our_bench = len(_get(me, "bench", []) or [])
+    if our_bench == 0:
+        # Empty bench is a fast-loss vector on ladder (no promotion after active KO).
+        value -= 180.0 if turn <= 25 else 90.0
+
     if our_prize < opp_prize:
         value += 2.0 * turn
     elif our_prize > opp_prize:

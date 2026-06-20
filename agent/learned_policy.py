@@ -7,7 +7,9 @@ from pathlib import Path
 import numpy as np
 
 from agent.agent import HeuristicScorer
+from agent.bench_guard import bench_critical
 from agent.features import FEATURE_VERSION, OPTION_DIM, STATE_DIM, option_features, state_features
+from agent.rule_core import RuleCoreScorer
 
 DEFAULT_MODEL = Path(__file__).resolve().parent / "models" / "distilled_v1.npz"
 
@@ -15,9 +17,11 @@ DEFAULT_MODEL = Path(__file__).resolve().parent / "models" / "distilled_v1.npz"
 class LearnedScorer(HeuristicScorer):
     """Score each legal option with a small MLP; fall back to heuristic on error."""
 
-    def __init__(self, model_path: str | Path = DEFAULT_MODEL, rng=None) -> None:
+    def __init__(self, model_path: str | Path = DEFAULT_MODEL, rng=None,
+                 deck_path: str | None = None) -> None:
         super().__init__(rng=rng)
         self._fallback = HeuristicScorer(rng=rng)
+        self._rulecore = RuleCoreScorer(rng=rng, deck_path=deck_path) if deck_path else None
         self._w1 = self._b1 = self._w2 = self._b2 = None
         self._feature_version = None
         self._load(model_path)
@@ -47,6 +51,9 @@ class LearnedScorer(HeuristicScorer):
         return float(h @ self._w2 + self._b2)
 
     def choose(self, obs_dict, select, current, options):
+        if bench_critical(obs_dict, select, current, options):
+            scorer = self._rulecore or self._fallback
+            return scorer.choose(obs_dict, select, current, options)
         if not options or not self.ready:
             return self._fallback.choose(obs_dict, select, current, options)
         try:

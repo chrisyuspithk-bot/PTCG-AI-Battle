@@ -248,6 +248,23 @@ class HeuristicScorer(OptionScorer):
         by_type: dict[int | None, list[int]] = {}
         for i, opt in enumerate(options):
             by_type.setdefault(_option_type(opt), []).append(i)
+        # Never attack/end with an empty bench if we can still bench a Basic.
+        bench_count, bench_max = self._bench_counts(current)
+        if (
+            bench_count == 0
+            and bench_max > 0
+            and OPT_PLAY in by_type
+            and (_get(current, "players", []) or [])
+        ):
+            from agent.deck_tech import tech_for_deck
+            from agent.smart_bench import should_play_basic_to_bench
+
+            tech = tech_for_deck(self._visible_card_ids(current))
+            play_idx = self._best_option_index(OPT_PLAY, by_type[OPT_PLAY], options, current)
+            card = self._hand_card_for_option(options[play_idx], current)
+            card_id = int(_get(card, "id", 0) or 0)
+            if should_play_basic_to_bench(card_id, current, tech):
+                return play_idx
         for pref in self.MAIN_PRIORITY:
             if pref in by_type:
                 return self._best_option_index(pref, by_type[pref], options, current)
@@ -276,11 +293,19 @@ class HeuristicScorer(OptionScorer):
             ranked = sorted(range(len(options)),
                             key=lambda i: self._card_option_score(options[i], current, select),
                             reverse=True)
-            count = min(max_count, len(ranked))
-            if min_count <= 0:
-                # Bench all available setup Basics up to the legal cap.
-                return ranked[:count]
-            return ranked[:max(min_count, min(count, max_count))]
+            from agent.deck_tech import tech_for_deck
+            from agent.smart_bench import setup_bench_target_count
+
+            deck_ids = [int(_get(o, "id", 0) or 0) for o in options]
+            tech = tech_for_deck(deck_ids)
+            target = setup_bench_target_count(
+                ranked, options, current, tech,
+                min_count, max_count,
+            )
+            bench_count, _ = self._bench_counts(current)
+            if min_count <= 0 and bench_count == 0 and ranked:
+                target = max(1, target)
+            return ranked[:target]
 
         if context in (CTX_SETUP_ACTIVE_POKEMON, CTX_TO_ACTIVE, CTX_SWITCH):
             return [max(range(len(options)),
@@ -339,11 +364,18 @@ class HeuristicScorer(OptionScorer):
             else card_id in BASIC_POKEMON_FALLBACK
         )
         if is_basic:
-            bench_count, bench_max = self._bench_counts(current)
-            if bench_count < bench_max:
+            from agent.deck_tech import tech_for_deck
+            from agent.smart_bench import bench_counts as sb_bench_counts
+            from agent.smart_bench import should_play_basic_to_bench
+
+            bench_count, bench_max = sb_bench_counts(current)
+            tech = tech_for_deck(self._visible_card_ids(current))
+            if bench_count == 0:
+                score += 6100
+            elif bench_count < bench_max and should_play_basic_to_bench(card_id, current, tech):
                 score += 2600
-                if bench_count == 0:
-                    score += 3500
+            else:
+                score -= 4000
         if card_id == CARD_MEGA_SIGNAL:
             score += 1500
         if card_id in (CARD_LILLIE, CARD_WAITRESS, CARD_CYRANO):
@@ -534,6 +566,21 @@ class HeuristicScorer(OptionScorer):
         your_index = _get(current, "yourIndex", 0) or 0
         return players[your_index] if 0 <= your_index < len(players) else {}
 
+    def _visible_card_ids(self, current) -> list[int]:
+        ids: list[int] = []
+        your = self._your_player(current)
+        for poke in (_get(your, "active", []) or []) + (_get(your, "bench", []) or []):
+            if poke is not None:
+                cid = int(_get(poke, "id", 0) or 0)
+                if cid:
+                    ids.append(cid)
+        for card in _get(your, "hand", []) or []:
+            if card is not None:
+                cid = int(_get(card, "id", 0) or 0)
+                if cid:
+                    ids.append(cid)
+        return ids
+
     def _bench_counts(self, current):
         your = self._your_player(current)
         bench = _get(your, "bench", []) or []
@@ -640,6 +687,9 @@ class Agent:
     pick* to its `scorer` (default `HeuristicScorer`). Swapping the scorer (e.g.
     a future search or learned policy) changes decisions but never the guarantee
     that a legal selection is always returned.
+
+    Bench-critical decisions (empty bench, setup bench) always route through
+    RuleCore so MCTS/Learned cannot skip basic development (see bench_guard.py).
     """
 
     def __init__(self, seed=0, deck_path: str = _DEFAULT_DECK_PATH,
@@ -647,6 +697,23 @@ class Agent:
         self._rng = random.Random(seed)
         self._deck_path = deck_path
         self._scorer = scorer if scorer is not None else HeuristicScorer(self._rng)
+        self._bench_scorer = None
+
+    def _bench_scorer_for(self, deck_path: str):
+        if self._bench_scorer is None:
+            from agent.deck_tech import tech_for_deck
+            from agent.agent import load_deck
+
+            deck_ids = load_deck(deck_path)
+            if tech_for_deck(deck_ids).name == "mega_lucario_ex":
+                from agent.lucario_policy import LucarioScorer
+
+                self._bench_scorer = LucarioScorer(rng=self._rng, deck_path=deck_path)
+            else:
+                from agent.rule_core import RuleCoreScorer
+
+                self._bench_scorer = RuleCoreScorer(rng=self._rng, deck_path=deck_path)
+        return self._bench_scorer
 
     def __call__(self, obs_dict):
         return self.act(obs_dict)
@@ -662,6 +729,15 @@ class Agent:
         try:
             current = obs_dict.get("current") or {}
             options = select.get("option") or []
+            from agent.bench_guard import bench_critical
+
+            deck_path = self._deck_path
+            if not os.path.exists(deck_path) and os.path.exists("deck.csv"):
+                deck_path = "deck.csv"
+            if bench_critical(obs_dict, select, current, options):
+                return self._bench_scorer_for(deck_path).choose(
+                    obs_dict, select, current, options
+                )
             return self._scorer.choose(obs_dict, select, current, options)
         except Exception:
             return self._legal_fallback(select)

@@ -26,6 +26,8 @@ PROGRESS = ROOT / "PROGRESS.md"
 TASKS = ROOT / "TASKS.md"
 SESSION = ROOT / ".cursor" / "SESSION.md"
 PYTHON = sys.executable
+PROTECTED_TAR = ROOT / "dist" / "candidates" / "track_c_lucario_rulecore_smartbench.tar.gz"
+ACTIVE_REF = "53886522"
 
 
 @dataclass(frozen=True)
@@ -56,6 +58,17 @@ STEPS: list[Step] = [
         "--agents", "current,pool_dragapult", "--no-telemetry",
     ]),
     Step("finals_log", "finals", [PYTHON, "scripts/track_ladder.py", "--dry-run"]),
+    Step("smoke_replay", "p0-refactor", [PYTHON, "scripts/smoke_replay.py"]),
+    Step("nightly_l1", "p0-arena", [
+        PYTHON, "scripts/gate_vs_public.py",
+        "--agent", str(PROTECTED_TAR),
+        "--games", "12",
+    ]),
+    Step("analyze_active", "finals", [
+        PYTHON, "scripts/analyze_submission.py",
+        "--ref", ACTIVE_REF,
+        "--skip-fetch",
+    ]),
 ]
 
 
@@ -67,6 +80,8 @@ def load_checkpoint() -> dict:
 
 def save_checkpoint(data: dict) -> None:
     CHECKPOINT.parent.mkdir(parents=True, exist_ok=True)
+    data["protected_tar"] = str(PROTECTED_TAR)
+    data["active_ref"] = ACTIVE_REF
     CHECKPOINT.write_text(json.dumps(data, indent=2), encoding="utf-8")
 
 

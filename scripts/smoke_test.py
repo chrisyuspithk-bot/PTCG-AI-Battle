@@ -92,11 +92,11 @@ s = sel(SEL_CARD, opts, mn=2, mx=3)
 o = agent({"logs": [], "current": {}, "select": s})
 check("multi-select returns 2..3 distinct in-range", legal(o, s))
 
-# 6b. Optional setup bench should fill legal slots instead of declining.
+# 6b. Optional setup bench: smart depth (1–2), not fill-all-five exposure.
 opts = [{"type": OPT_CARD, "index": i} for i in range(3)]
 s = sel(SEL_CARD, opts, mn=0, mx=3, context=CTX_SETUP_BENCH_POKEMON)
 o = agent({"logs": [], "current": {}, "select": s})
-check("optional setup bench fills slots", len(o) == 3 and legal(o, s))
+check("optional setup bench picks smart depth", 1 <= len(o) <= 2 and legal(o, s))
 
 # 6c. Draw-count prompts should choose the largest available number.
 opts = [{"type": OPT_NUMBER, "number": n} for n in [0, 1, 2]]

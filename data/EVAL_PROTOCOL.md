@@ -45,6 +45,7 @@ Related: [`SUBMISSION_PLAYBOOK.md`](SUBMISSION_PLAYBOOK.md) (upload rules), [`ME
 
 ```bash
 python scripts/smoke_test.py                    # 17/17 agent contract
+python scripts/smoke_replay.py                  # 3/3 bench-guard golden fixtures
 python scripts/validate_deck.py                 # all agent_decks/*.csv
 ```
 
@@ -82,7 +83,29 @@ python scripts/package_submission.py --name <candidate> --scorer heuristic|searc
 python scripts/verify_archive.py dist/candidates/<candidate>.tar.gz --games 50
 ```
 
-### L4 — Kaggle ladder (truth; max 5/day, 2 Finals)
+### L4 — Episode analysis (why W/L; complements μ)
+
+After a submission reaches COMPLETE and plays ladder games:
+
+```bash
+python scripts/analyze_submission.py --ref <submission_ref>
+```
+
+Reads `report/replays/*.json` and updates [`report/submission_log.csv`](../report/submission_log.csv) with:
+- **win_rate** (W / decided episodes)
+- **avg_turns** / **median_turns**
+- **fast_loss_pct** (losses ending before turn 15)
+- **top_loss_reason** (`prize`, `deck_out`, `no_active`, `card_effect`)
+
+**Pass criteria:** `avg_turns > 15`, `fast_loss_pct < 20%`, top loss reason ≠ `no_active`.
+
+Local debugging before submit:
+
+```bash
+python scripts/record_local_battle.py --agent-a lucario --agent-b search --games 20
+```
+
+### L5 — Kaggle ladder (truth; max 5/day, 2 Finals)
 
 See [`SUBMISSION_PLAYBOOK.md`](SUBMISSION_PLAYBOOK.md). **Manually select 2 Final Submissions** before deadline.
 

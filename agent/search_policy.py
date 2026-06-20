@@ -12,6 +12,7 @@ import time
 
 from agent.agent import (
     CTX_SETUP_ACTIVE_POKEMON,
+    CTX_SETUP_BENCH_POKEMON,
     CTX_SWITCH,
     CTX_TO_ACTIVE,
     HeuristicScorer,
@@ -19,7 +20,12 @@ from agent.agent import (
 )
 
 SEARCH_BUDGET_MS = 200
-HIGH_LEVERAGE_CONTEXTS = {CTX_TO_ACTIVE, CTX_SWITCH, CTX_SETUP_ACTIVE_POKEMON}
+HIGH_LEVERAGE_CONTEXTS = {
+    CTX_TO_ACTIVE,
+    CTX_SWITCH,
+    CTX_SETUP_ACTIVE_POKEMON,
+    CTX_SETUP_BENCH_POKEMON,
+}
 
 
 class SearchScorer(HeuristicScorer):

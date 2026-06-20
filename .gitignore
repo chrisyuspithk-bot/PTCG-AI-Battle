@@ -18,8 +18,14 @@ venv/
 
 # Scratch
 dist/
+!dist/candidates/
+dist/submission_build/
 *.log
 report/agent_logs/*.json
+report/replays/*.json
+report/local_replays/*.json
+report/az/
+**/*.pth
 .DS_Store
 
 # Large downloaded Kaggle reference (episodes/notebooks) — keep out of git

@@ -100,7 +100,18 @@ under any task. Do not skip ahead unless a task is blocked (mark `[blocked]` + r
   - [x] 2026-06-19: Track B — features, collect_traces, train_bc, learned_policy, gate_track_b
   - [x] 2026-06-19: RL — `rl/cabt_env.py`, `rl/league.py`, `rl/train_rl.py`, `scripts/distill_policy.py`
   - [x] 2026-06-19: `scripts/nightly.py`, `report/finals_strategy.md`, `report/ladder_history.csv`
-  - [ ] Run SPRT gates with sufficient games (40+); submit probes after user approval
+  - [x] 2026-06-19 (run 33): SPRT gates complete; new RL deck validated at 90.67%, gate PASS; ladder analysis & readiness report prepared
+  - [x] 2026-06-20: Added `scripts/sweep_track_b_checkpoints.py` plus Kaggle wrapper to checkpoint, distill, gate, and package the best intermediate Track B PPO policy instead of final-only packaging.
+  - [x] 2026-06-20: Added `report/deck_rl_system_plan_20260620.md`, a concrete plan for archetype-aware card registry, legal deck genome, benchmark fitness, deck GA, per-deck Track B training, checkpoint sweeping, and ladder-probe discipline.
+  - [x] 2026-06-20: Added `data/SIMULATOR_RESOURCE_NOTES.md` and updated the deck-RL plan with user-provided simulator quirks, card metadata usage, and Kaggle episode replay/log mining guidance for BC/RL/IL.
+  - [x] 2026-06-20: Implemented Deck RL Phase 1 registry outputs with `scripts/build_card_registry.py`, generating `report/deck_rl/registry.json`, `report/deck_rl/candidate_registry.csv`, and `report/deck_rl/archetype_seed_notes.md`; added offline `scripts/mine_episode_replays.py` and generated empty schema-valid replay/mined-archetype indexes pending downloaded replay JSON.
+  - [x] 2026-06-20: Wired lane-aware deck GA from `report/deck_rl/candidate_registry.csv`: `rl/deck_lane_registry.py`, balanced lane seeding, same-lane crossover/mutation, and per-lane elite archive (`report/deck_rl/lane_elites.json`).
+  - [x] 2026-06-20: Deck RL Phase 2c — registry-backed `support_role_swap` + `chain_tune` in `rl/deck_genome.py` via `rl/deck_card_registry.py`; `tests/test_deck_genome_mutations.py`; 10-gen GA gen9 best 0.825, all 4 lanes alive (run 45).
+  - [x] 2026-06-20: Deck RL Phase 2d — `matchup_collapse_penalty` in deck GA fitness (`rl/deck_balance.py`, `rl/benchmark.py`, `rl/train_deck_campaign.py`); `tests/test_deck_collapse_penalty.py`; 20-gen GA gen19 best 0.753, all 4 lanes alive (run 47).
+  - [x] 2026-06-20: Deck RL Phase 2b — per-lane survivor quotas + round-robin same-lane breeding in `rl/train_deck_campaign.py`; `tests/test_deck_lane_selection.py`; smoke GA confirms all 4 lanes persist every generation (run 44).
+  - [x] 2026-06-20: Added first real RuleCore deck-tech layer (`agent/deck_tech.py`), `--scorer rulecore` packaging, and `scripts/trace_public_matchup.py`; packaged/gated `track_c_rulecore_tech_lucario`. Result: basic Crustle moved off 0% in targeted smoke, but full public gate was only 12.0%, so candidate is explicitly not submission-worthy.
+  - [x] 2026-06-20: RuleCore Crustle follow-up stayed in the wall-matchup lane: added search-card throttling, conservative setup benching, stronger Crustle `ATTACH_FROM` routing, and card IDs in traces. Best targeted kept sample was 15.0% Crustle-only; final retest 9.5%, so still not submission-worthy.
+  - [x] 2026-06-20: Added Lucario RL+MCTS post-run submission path: `agent/lucario_mcts_policy.py`, copied notebook runtime into `agent/lucario_mcts_runtime.py`, added `--scorer lucario_mcts` packaging with compact fp16 checkpoint copy, and `scripts/import_lucario_rl_outputs.py` to import/downloaded Kaggle outputs, package, and optionally public-gate before any upload.
 - [ ] **T17. Final Strategy report polish.** Turn
   `report/strategy_report_draft.md` into the final Strategy submission after the
   next measured agent/deck pass and after official report requirements are

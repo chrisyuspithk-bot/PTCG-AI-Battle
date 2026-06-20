@@ -2,38 +2,51 @@
 
 ## Current focus
 
-Track B is the **primary submission path**. Kyogre per-deck pipeline completed: 100k CUDA train vs 10 benchmark opponents → distill → gate **206/240** (SPRT pass) → package `dist/candidates/track_b_learned_kyogre.tar.gz`. Kaggle upload **blocked** (5/5 daily Simulation quota used 2026-06-19). **Next:** submit tarball when quota resets; pin **Final 1**; run second `train_track_b_deck.py` for Crustle or Dragapult (Final 2).
+**Lucario SmartBench + meta tactics complete; report written.** `LucarioScorer` on
+`real_mega_lucario_ex.csv` with bench guard, search/energy line setup, and
+competitive meta (Solrock/Lunatone, Jab/Brave, Hariyama gust). L1 @ 30 games:
+**10% overall**, **43.3% vs Lucario sample** — mirror strong, cross-archetype weak
+without search. **Do not replace Finals Search (668 μ, ref 53869254).** **Next:**
+implement `LucarioSearchScorer` hybrid (Search lookahead + Lucario MAIN), L1 @ 30g,
+compare to 53869254.
 
 ## Key context
 
-- **Repo:** `Z:\kaggle\pokemon` | **Branch:** `main` (ahead 2 of origin, unpushed)
-- **Pending upload:** `dist/candidates/track_b_learned_kyogre.tar.gz` — see `report/submission_pending_kyogre.md`
-- **Models (local):** `distilled_kyogre_v1.npz`, promoted `distilled_v1.npz`, `rl_policy.zip` — not committed
-- **Track B tooling:** `scripts/train_track_b_deck.py`, `rl/env_factory.py`, `rl/train_rl.py --deck --opponents`
-- **Testing doc:** `data/EVAL_PROTOCOL.md` | **Upload rules:** `data/SUBMISSION_PLAYBOOK.md`
-- **Best ladder μ:** Kyogre heuristic **633.0** (#53854707); old Learned probes 490/469 (wrong-deck train)
-- **Today's Finals (Search):** TA1 Kyogre+2e **580.8**, TA2 Abomasnow **486.4**
-- **Gate report:** `report/track_b_gates/track_b_learned_kyogre_gate.md`
-- **Run log:** `report/track_b_runs/kyogre_20260619_180332.json`
-- **Deck RL:** overnight campaign in progress — `report/rl_deck_campaign/` (separate from Track B)
-- **Decision:** Track B = Finals target; heuristic/Search = baselines only
-- **Blocker:** 5/day Simulation submit cap until next UTC day
-- **Env:** Python 3.13, torch 2.6.0+cu124, RTX 4070 Ti SUPER
+- **Repo:** `Z:\kaggle\pokemon` | **Branch:** `main` (dirty, uncommitted Lucario + tooling)
+- **Report:** `report/lucario_smartbench_report_20260620.md` — full write-up of this pass
+- **Candidate:** `dist/candidates/track_c_lucario_rulecore_smartbench.tar.gz` (`--scorer lucario --gate` OK)
+- **Policy:** `agent/lucario_policy.py`, `agent/bench_guard.py`, `agent/smart_bench.py`, `scripts/smoke_replay.py` (12/12)
+- **Best ladder:** ref **53869254** SearchScorer Lucario **668 μ** — keep Finals until hybrid beats L1+L4
+- **SmartBench ladder:** ref **53886522** **600 μ** — too few L4 episodes; re-analyze after more games
+- **Retired:** ref **53885445** RL iter-0 **324 μ** (empty bench); RL re-import blocked until iter≥4
+- **L1 gate cmd:** `python scripts/gate_vs_public.py --agent dist/candidates/track_c_lucario_rulecore_smartbench.tar.gz --games 30`
+- **Episode stats:** `python scripts/analyze_submission.py --ref <ref>` — win_rate, avg_turns, fast_loss_pct
+- **Submission log:** `report/submission_log.csv` | **Finals guide:** `report/FINALS_PIN.md`
+- **Blocker:** no Kaggle upload without explicit user OK
+- **Env:** Windows; **GPU RL:** `C:\Users\tobin\AppData\Local\Programs\Python\Python313\python.exe` (cu128). Miniconda `(base)` OK for packaging/gates; avoid miniconda for Track B GPU train (CPU torch).
 
 ## Continue prompt
 
 ```text
-Continue PTCG Track B Kyogre upload + Final 2 deck. Read first: @C:\Users\tobin\.cursor\USER-RULES-PASTE-THIS.txt, @.cursor/SESSION.md, @PROGRESS.md, @report/submission_pending_kyogre.md, @data/SUBMISSION_PLAYBOOK.md
+Continue Lucario hybrid agent. Read first: @C:\Users\tobin\.cursor\USER-RULES-PASTE-THIS.txt, @.cursor/SESSION.md, @report/lucario_smartbench_report_20260620.md, @agent/lucario_policy.py, @agent/search_policy.py
 
-Goal: Upload Learned Kyogre package to Simulation ladder and pin Final 1; start second per-deck Track B train.
-Status: Package ready; submit blocked 5/5 today; gate 206/240 SPRT pass.
-Next: kaggle competitions submit -f dist/candidates/track_b_learned_kyogre.tar.gz; track_ladder.py --fetch-logs; pin Final on Kaggle UI.
+Goal: LucarioSearchScorer — Search on setup/switch/to-active + LucarioScorer MAIN/meta; beat 668 μ baseline on L1 @ 30 games.
+Status: SmartBench tarball built; L1 10% overall, 43.3% vs Lucario sample; report done; Finals still 53869254.
+Next: Implement LucarioSearchScorer, package track_a_lucario_ex_search_v2, run gate_vs_public --games 30; no Kaggle submit without user OK.
 
-Branch: main (ahead 2) | Env: Python 3.13, torch+cu124 | Submit OK when quota resets.
+Branch: main (dirty) | Env: Python 3.13 for GPU RL; (base) OK for gates
 ```
 
 ## Timeline
 
+- **2026-06-20T18:45:00Z** | handoff by user | conv `9d3d5932`
+- **2026-06-20T17:30:00Z** | handoff by user | conv `deck-rl-phase2d`
+- **2026-06-20T16:00:00Z** | run 47 | Phase 2d collapse penalty + 20-gen GA
+- **2026-06-20T15:00:00Z** | handoff by user | conv `deck-rl-phase2c`
+- **2026-06-20T14:30:00Z** | run 45 | Phase 2c role/chain mutations + 10-gen GA
+- **2026-06-20T14:00:00Z** | handoff by user | conv `deck-rl-phase2b`
+- **2026-06-20T13:30:00Z** | run 44 | Phase 2b per-lane GA selection implemented and verified
+- **2026-06-20T13:25:00Z** | handoff by user | conv `deck-rl-phase2a`
 - **2026-06-19T18:15:00Z** | handoff by user | conv `586c52cd`
 - **2026-06-19T17:35:00Z** | handoff by user | 5/5 ladder slots live
 - **2026-06-19T17:33:00Z** | run 18 | TA1+TA2 submitted; ladder sync dragapult 468.9, alakazam 490.4

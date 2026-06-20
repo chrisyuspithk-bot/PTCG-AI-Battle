@@ -111,4 +111,4 @@ kaggle competitions submit -c pokemon-tcg-ai-battle \
   -m "description"
 ```
 
-See also: `data/META_NOTES.md`, `data/CABT_API.md`, `data/EVAL_PROTOCOL.md`, `report/finals_strategy.md`.
+See also: `data/META_NOTES.md`, `data/CABT_API.md`, `data/EVAL_PROTOCOL.md`, `data/KAGGLE_SIMULATION_CLI.md`, `data/COMPETITION_SCORING.md`, `report/finals_strategy.md`.
