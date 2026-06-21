@@ -2,42 +2,51 @@
 
 ## Current focus
 
-**Goal:** Climb ladder μ toward leaders (1252+); keep **53869254** (660.5 μ) as Final until beaten.
-**53890064** Alakazam probe settled at **512.1 μ** (below Lucario — do not pin). **5/5 uploads
-used 2026-06-20**; Trevenant packaged locally for tomorrow. **Lucario RL iter4/5** checkpoints
-staged at `kaggle_download_iter45_20260620/` (`model_best.pth` = iter5). **Lucario v2** passes
-expanded leader-suite gate **69.6%** locally but no slot today. **Next:** `import_lucario_rl_outputs`
-on iter5 + L1 gate; `analyze_submission.py --ref 53890064`; pin Finals (**53869254**).
+**Goal:** Climb ladder μ (leaders ~1310); keep **Search Lucario 668 μ** as Final until beaten.
+**Today's submissions (2026-06-21, both COMPLETE):** Alakazam best5 **636.8** (exceeded forecast),
+Trevenant **597.7** (weak, as 15% gate predicted). **2/5 slots used → HOLD the other 3.**
+**Primary handoff:** [`report/handoffs/deck_rl_continuation_20260621.md`](../report/handoffs/deck_rl_continuation_20260621.md).
+**THE pivot this session — field map (`scripts/analyze_winners.py`, 5,584 games):** the meta is a
+rock-paper-scissors triangle **Lucario → Bellibolt → Alakazam → Lucario**; Lucario is ~53% of decks;
+the **Lucario mirror is ~30% of all games, 50/50 on deck → decided by PILOT.** Field is aggressive
+(KO race 72% @ ~13 turns, board-wipe 21% @ ~9 turns, deck-out only 7.5%). Report:
+[`report/winner_analysis_20260621.md`](../report/winner_analysis_20260621.md).
+**Proven dead end:** robust deck search with a generic brain (L1 3.8–12.5%). Pilot >> deck.
+**Next (highest leverage):** improve our Search Lucario **mirror** play (prize-trade sequencing,
+KO tempo) — it's the biggest score lever. Then shore up Alakazam's Bellibolt/Iono hole. No uploads w/o user OK.
 
 ## Key context
 
-- **Repo:** `Z:\kaggle\pokemon` | **Branch:** `main` (ahead 3, dirty post-`f14455b`)
-- **Limits:** **5/5 uploads used 2026-06-20** — [`data/SUBMISSION_PLAYBOOK.md`](data/SUBMISSION_PLAYBOOK.md)
-- **Best ladder μ:** **53869254** Search Lucario **660.5** — Final 1 — [`report/FINALS_PIN.md`](report/FINALS_PIN.md)
-- **53890064** Alakazam + SearchScorer — **512.1 μ** (COMPLETE; below 69254)
-- **Not uploaded:** `track_a_trevenant_leader_search.tar.gz` (quota full)
-- **Lucario v2 gate:** 313/450 = **69.6%** expanded suite — [`report/LUCARIO_V2_GATE.md`](report/LUCARIO_V2_GATE.md); weak vs Trevenant (~40–47%)
-- **RL checkpoints:** [`report/kaggle_notebook_jobs/lucario/kaggle_download_iter45_20260620/`](report/kaggle_notebook_jobs/lucario/kaggle_download_iter45_20260620/) — iter4/5 + `model_best.pth` (iter5)
-- **RL upload blocked:** L1 must beat Search Lucario before Kaggle — [`report/handoffs/lucario_rl_reimport_status.md`](report/handoffs/lucario_rl_reimport_status.md)
-- **Leader intel:** [`report/top_performer_reverse_engineering_20260620.md`](report/top_performer_reverse_engineering_20260620.md)
-- **Analyze tooling:** per-episode seat fix — [`scripts/analyze_submission.py`](scripts/analyze_submission.py)
+- **Repo:** `Z:\kaggle\pokemon` | **Branch:** `main` (ahead, not pushed)
+- **Uploads 2026-06-21:** 2/5 used (Alakazam 636.8, Trevenant 597.7) — **3 remain, HOLD** — [`data/SUBMISSION_PLAYBOOK.md`](data/SUBMISSION_PLAYBOOK.md)
+- **Live ladder top (ours):** 668 Search Lucario (Final) > 660.5 lucario_ex_search > **636.8 Alakazam** > 633.0 Kyogre > 626 Kyogre-probe1 > 597.7 Trevenant
+- **⚠️ Double-submit trap:** a stale autonomous doc (Session 38) says "submit Trevenant Slot 3" — Trevenant is ALREADY done. See PROGRESS Session 39 correction. Do NOT re-submit Alakazam or Trevenant.
+- **Field analysis is now the daily routine:** download dump (slugs in `report/deck_rl/episode_dataset_manifest.csv`, refreshed from `kaggle/pokemon-tcg-ai-battle-episodes-index`) → `python scripts/analyze_winners.py --replays report/replays` → dated `report/winner_analysis_<DATE>.md`.
+- **Field is hardening:** median agent score 628→1064 over 06-16→06-20 (~+110/day); top plateaus ~1320. Static agent loses rank daily → pilot work is time-sensitive.
+- **Robust deck search:** validated method, DEAD END with generic brain (heuristic deck L1 12.5%, search deck L1 3.8% — 78% gauntlet was a same-brain mirror illusion). Subsystem in `rl/robust_*`, `rl/gauntlet.py`; outputs `report/robust_deck_rl/` (+ `_search/`). Don't re-run for ladder gains.
+- **Scoring model:** per-game reward is binary ±1; the 600–1300 score is TrueSkill μ; compounds by beating strong (=Lucario) opponents. No hidden per-game points.
+- **Code health:** `scripts/analyze_winners.py` reviewed + simplified (dropped an unreliable prize-count metric). `scripts/gate_track_b.py` opponent-tuple fix verified.
 - **GPU:** `C:\Users\tobin\AppData\Local\Programs\Python\Python313\python.exe` (cu128)
-- **Upload policy:** explicit user OK required; no slots until next day
+- **Upload:** user OK required; protect the 668 Final
 
 ## Continue prompt
 
 ```text
-Continue ladder + Lucario RL packaging. Read first: @C:\Users\tobin\.cursor\USER-RULES-PASTE-THIS.txt, @.cursor/SESSION.md, @data/SUBMISSION_PLAYBOOK.md, @report/LUCARIO_V2_GATE.md, @scripts/import_lucario_rl_outputs.py
+Continue PTCG ladder work. Read first: @.cursor/SESSION.md, @report/handoffs/deck_rl_continuation_20260621.md, @report/winner_analysis_20260621.md, @data/SUBMISSION_PLAYBOOK.md, @PROGRESS.md (top).
 
-Goal: Package iter5 RL locally and gate; track 53890064 episodes; keep 53869254 as Final until beaten.
-Status: Alakazam 53890064 @512.1 μ; iter4/5 in kaggle_download_iter45_20260620; v2 lucario_search 69.6% local; 5/5 uploads used.
-Next: python scripts/import_lucario_rl_outputs.py --source report/kaggle_notebook_jobs/lucario/kaggle_download_iter45_20260620 --name track_d_lucario_rl_mcts_iter5 --gate-games 12
+Goal: climb μ; protect the 668 Search Lucario Final; upload only with explicit user OK.
+Status (2026-06-21): 2/5 slots used — Alakazam best5 636.8, Trevenant 597.7 (both COMPLETE). HOLD remaining 3 slots; neither beats 668. Do NOT re-submit Alakazam/Trevenant (a stale Session 38 doc wrongly says "submit Trevenant Slot 3" — it's done).
+Key finding: field is a RPS triangle (Lucario→Bellibolt→Alakazam→Lucario); Lucario = 53% of decks; the Lucario MIRROR is ~30% of games, 50/50 on deck, decided by PILOT. Robust deck search is a proven dead end with a generic brain — pilot >> deck.
+Next (highest leverage): improve Search Lucario MIRROR play (prize-trade sequencing, KO tempo; field is aggressive ~12 turns). Baseline with `gate_vs_public.py --only lucario --games 30`. Then fix Alakazam's Bellibolt/Iono hole. Run `scripts/analyze_winners.py` on each new daily dump.
 
-Branch: main (ahead 3, dirty) | Env: Python313 cu128 | No upload without user OK
+Branch: main (ahead) | Env: Python313 cu128 | Upload only with user OK
 ```
 
 ## Timeline
 
+- **2026-06-21** | Submitted Alakazam best5 (636.8) + Trevenant (597.7); HOLD remaining slots
+- **2026-06-21** | Built `analyze_winners.py` field analysis → RPS triangle + Lucario-mirror lever; downloaded episodes-index; code-review + simplify of the analyzer
+- **2026-06-21** | Robust deck search proven dead-end (Search-pilot L1 3.8%); pivot to pilot/mirror work
 - **2026-06-20T17:05:00Z** | handoff by user | conv `lucario-top-performer-v1`
 - **2026-06-20T20:30:00Z** | handoff by user | conv `lucario-hybrid-v2`
 - **2026-06-20 EOD** | LucarioSearchScorer impl + partial L1; deck-out insight; strategy doc refresh
@@ -47,3 +56,4 @@ Branch: main (ahead 3, dirty) | Env: Python313 cu128 | No upload without user OK
 - **2026-06-20T17:35:00Z** | handoff by user | conv `high-mu-submission-plan`
 - **2026-06-20T18:00:00Z** | handoff by user | conv `alakazam-upload-iter45-rl`
 - **2026-06-20T18:45:00Z** | handoff by user | conv `iter45-staged-handoff`
+- **2026-06-20T19:30:00Z** | handoff by user | conv `full-commit-eod-handoff`

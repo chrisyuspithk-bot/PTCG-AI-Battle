@@ -20,6 +20,7 @@ venv/
 dist/
 !dist/candidates/
 dist/submission_build/
+build/
 *.log
 report/agent_logs/*.json
 report/replays/*.json

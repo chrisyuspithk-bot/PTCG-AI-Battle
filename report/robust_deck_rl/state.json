@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-06-20T17:51:20.963220+00:00",
-  "gen_done": 14,
-  "best_robust": 0.7567604855616054,
-  "best_label": "mut_x_mut_x_real_mega_abomasnow_ex_mut_x_real_mega_abomasnow_ex_a3_starmie_mut_x_pilot_abomasnow_a2_big_basic_31_energy",
+  "updated_at": "2026-06-21T01:51:27.461441+00:00",
+  "gen_done": 30,
+  "best_robust": 0.4535748477470434,
+  "best_label": "mut_x_a2_basic_heavy_31_energy_a3_starmie",
   "config": {
     "generations": 30,
     "population": 16,

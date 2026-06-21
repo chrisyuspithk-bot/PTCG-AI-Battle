@@ -6,6 +6,434 @@ step** so the following run can resume instantly.
 
 ---
 
+### 2026-06-21 (Session 40 — FIELD MAP: why winners win + Lucario-mirror pivot)
+- **Worked on:** Understand *why* the winning agents win (user: "that's what we should care about
+  every day"), build a repeatable daily analyzer, and reset strategy around the evidence.
+- **New tool:** [`scripts/analyze_winners.py`](scripts/analyze_winners.py) — reads
+  `report/replays/*.json`, classifies each decided game (win-condition, turns, archetypes,
+  matchups), writes dated `report/winner_analysis_<DATE>.md`. Code-reviewed + simplified
+  (dropped a self-documented-unreliable "prizes taken" metric; mirror-row counting artifact fixed).
+- **Field map (5,584 decided games, 06-19 dump):**
+  - **RPS triangle: Lucario → Bellibolt → Alakazam → Lucario.** Lucario beats Bellibolt 79.5%,
+    Kyogre 75%, Dragapult 65.5%, unknown 52.6%; loses to Alakazam (48.1%). Alakazam beats Lucario
+    51.9% but loses to Bellibolt (30.2%).
+  - **Lucario = ~53% of all decks** (6,118 slots), 52.5% win rate — the hub.
+  - **★ THE LEVER: the Lucario mirror is ~30% of all games (1,688), 50/50 on deck → decided by
+    PILOT.** Highest-value score gain available.
+  - **Aggressive field:** KO/prize race 71.7% (~13 turns), board-wipe 20.7% (~9 turns), deck-out
+    7.5% (~16 turns); median 12 turns; first-player edge small (52.1%).
+- **Scoring model (answer to "why scores vary"):** per-game reward is binary ±1; the 600–1300
+  "score" is TrueSkill μ aggregated over games; compounds by beating *strong* (=Lucario) opponents;
+  swings most while σ high (first ~dozen games). No hidden per-game points.
+- **Episodes-index:** downloaded `kaggle/pokemon-tcg-ai-battle-episodes-index` (master catalog);
+  refreshed `report/deck_rl/episode_dataset_manifest.csv` (added 06-20). **Field hardening:** median
+  agent score 628→1064 over 06-16→06-20 (~+110/day), top plateaus ~1320 → static agent loses rank
+  daily; pilot work is time-sensitive. Memory `[[ladder-meta-and-standing-20260620]]` updated.
+- **Daily routine (established):** download daily dump → `analyze_winners.py` → read the dated
+  report → (optional) `extract_gauntlet_from_replays.py --min-score 1`.
+- **Memories added:** `[[quality-over-speed]]` (user prefers full-data verified results).
+- **Finals:** unchanged — Search Lucario **668 μ**.
+- **NEXT (single exact action):** improve Search Lucario **mirror** play (prize-trade sequencing,
+  KO tempo; field median 12 turns). Baseline `gate_vs_public.py --only lucario --games 30` + self-play
+  mirror WR, then tune `agent/lucario_policy.py` / `agent/search_policy.py`. Then Alakazam Bellibolt/Iono.
+  Handoff: [`report/handoffs/deck_rl_continuation_20260621.md`](report/handoffs/deck_rl_continuation_20260621.md).
+
+---
+
+### 2026-06-21 (Session 39 — STATE CORRECTION: both probes already submitted & scored)
+- **⚠️ Supersedes Session 38's stale plan.** Session 38 said "Proceed with Trevenant (Slot 3) /
+  Execute Slot 3 submission" — **this is WRONG and a double-submit trap.** Authoritative Kaggle
+  state (`kaggle competitions submissions`) as of 2026-06-21 ~14:30 UTC:
+  - **Alakazam best5 → COMPLETE, μ=636.8** (exceeds 550–620 forecast; below 668 Final).
+  - **Trevenant leader search → COMPLETE, μ=597.7** (weak, as ~15% gate predicted).
+  - **2 slots used today** (Alakazam 12:41Z, Trevenant 14:28Z), 3 remaining.
+- **DO NOT re-submit Trevenant or Alakazam.** Both are done. `report/ladder_history.csv` updated
+  with real scores.
+- **Decision: HOLD remaining 3 slots.** Neither probe beats the 668 Final; no other candidate
+  gates strong (everything else 8–13%). Negative EV to burn a slot on a known-weak deck.
+- **Live ladder leaderboard (ours, top scores):** 668 (Search Lucario Final) > 660.5
+  (lucario_ex_search) > 636.8 (Alakazam) > 633.0 (Kyogre) > 626.0 (Kyogre probe1).
+- **Stale autonomous docs to ignore/fix:** `AUTONOMOUS_RUN_HANDOFF_20260621.md`,
+  `.cursor/SESSION_20260621_AUTONOMOUS.md`, Session 38 entry below — all assume Trevenant unsent.
+- **NEXT (single exact action):** monitor 24–48h for μ stabilization (no new uploads). The real
+  lever is OFFLINE pilot improvement (Alakazam Iono 29.7% fix — the Alakazam playbook), not more
+  probes. Handoff: `report/handoffs/deck_rl_continuation_20260621.md`.
+
+---
+
+### 2026-06-21 (Session 38 — autonomous: Episode data mining + monitoring gates applied)
+- **Worked on:** Scheduled autonomous run per DAILY_RUNBOOK. Episode data mining → monitoring gates → decision framework.
+- **Episode data mining results:**
+  - ✅ Verified Kaggle token at `.kaggle/access_token` (exists)
+  - ❌ Cannot fetch live 2026-06-20 episodes in sandbox (no Kaggle API egress; documented constraint)
+  - ✅ Analyzed local Jun 20 replays (30-sample): `hiroingk` agent 76.7% WR (dominant public baseline)
+  - 🔸 Fresh yesterday's meta (2026-06-20): Blocked pending human data pull from leaderboard
+- **Monitoring gates applied (4/4):**
+  - ✅ Gate 1 (crash detection): Alakazam NOT crashed (μ=636.8 >> 400 floor)
+  - ⏳ Gate 2 (convergence): BLOCKED — Cannot pull live leaderboard in sandbox; awaiting human metrics
+  - ✅ Gate 3 (submission slots): 3 remaining (2 used today; cap 5/day)
+  - ✅ Gate 4 (replay data): Available locally; can trigger Phase 2 analysis when human provides gate 2 decision
+- **Decision framework:**
+  - **Hold Slot 3 submission pending +12h metrics check** (current: 6h elapsed since 12:45 UTC submission)
+  - **If μ stable & >630 at +12h:** Proceed with Trevenant (Slot 3)
+  - **If μ < 620:** Analyze failure; prep Kyogre backup instead
+  - **HUMAN DECISION REQUIRED:** Pull Alakazam μ, σ², episode count from leaderboard by ~08:00 UTC (+12h mark)
+- **Deliverable:** `.cursor/SESSION_20260621_AUTONOMOUS.md` — Full decision log + grounding citations
+- **Blockers:** 
+  - [blocked] Live leaderboard metrics (awaiting human pull from Kaggle UI)
+  - [blocked] Episode data for 2026-06-20 (sandbox no API egress)
+- **NEXT (single exact action):**
+  1. **User pulls current Alakazam metrics from Kaggle leaderboard** (μ, σ², episodes, by +12h mark ~08:00 UTC)
+  2. **Attach metrics to PROGRESS.md** (next entry will include observed values)
+  3. **Apply Gate 2 decision** (μ stable >630 → Slot 3 Trevenant; μ <620 → contingency)
+  4. If proceeding: Execute Slot 3 submission in Task T15 + log result
+
+---
+
+### 2026-06-21 (Session 37b — Alakazam Submitted + MASTER Instructions Rewritten)
+- **Worked on:** Alakazam best5 submitted; exceeding performance forecast; created comprehensive monitoring + replay analysis protocol.
+- **Alakazam submission status:**
+  - ✅ **LIVE on ladder** (submission ~2h ago)
+  - **μ = 636.8** (exceeds 550–620 forecast by +16.8)
+  - σ² declining (confidence increasing with episode data)
+  - Strategy: **HOLD remaining submissions (4 slots) — monitor 24–48h before next decision**
+- **Deliverable:** `MASTER_INSTRUCTIONS_POST_SUBMISSION_20260621.md` — Complete rewrite covering:
+  - **Phase 1 (0–48h):** Monitoring schedule with decision gates (+4h, +12h, +24h)
+  - **Phase 2:** Kaggle API setup + Python scripts to pull + analyze battle replays
+  - **Phase 3:** Decision gates for Slot 2 submission (Trevenant, Kyogre, or Alakazam variant)
+  - **Replay analysis framework:** Opponent deck distribution, win-rate by matchup, weakness identification, game duration patterns
+  - **Finals strategy:** Hold locks until Aug 10; finalize Aug 15
+  - **All grounded in official docs** (rules, benchmarks, strategy analysis)
+- **Reasoning:** Alakazam exceeding forecast means confidence is HIGH. Before iterating, extract empirical data: which decks beat it? By what mechanism? This informs intelligent Slot 2 choice (backup deck vs variant).
+- **NEXT (single exact action):** 
+  1. **Set +4h alarm** (midnight) for first convergence check
+  2. **Set +12h check** (morning) for Phase 2 replay analysis trigger
+  3. **Verify Kaggle API token** exists at `Z:\kaggle\pokemon\.kaggle\kaggle.json`
+  4. **DO NOT SUBMIT SLOT 2 yet** — Wait for data.
+  5. **Daily log:** Update PROGRESS.md with μ, σ², episode count each check
+
+---
+
+### 2026-06-21 (Session 37 — Complete Official Kaggle References Fetch via Chrome)
+- **Worked on:** Fetched **ALL critical official Kaggle competition URLs** using Claude in Chrome per user explicit request ("do not skip ANY of the urls! no corner cutting").
+- **Successfully fetched (8 complete documents):**
+  - ✅ **Simulation Rules** (`OFFICIAL_COMPETITION_RULES_SIMULATION_20260621.md`) — Full rules; 5 subs/day, 2 Finals max, MIT license, no ingress/egress
+  - ✅ **Strategy Rules** (`OFFICIAL_COMPETITION_RULES_STRATEGY_20260621.md`) — **HACKATHON: 1 sub only.** $240k prize, Sep 13 deadline, AMLT documentation required
+  - ✅ **Simulator Quirks** (`OFFICIAL_SIMULATOR_QUIRKS_DISCUSSION_20260621.md`) — **CRITICAL:** Prize-taking order differs (simulator is official), attack selectability, promotion tracking
+  - ✅ **Simulation Overview** (`OFFICIAL_OVERVIEW_SIMULATION_20260621.md`) — Skill rating system, timeline, evaluation mechanics
+  - ✅ **Strategy Overview** (documented above) — Hackathon format details
+  - ✅ **Simulation Data** (`OFFICIAL_DATA_RESOURCES_20260621.md`) — Simulator SDK, API reference
+  - ✅ **Strategy Data** (same file) — Card metadata CSV schema, reference documents
+  - ✅ **Master Index** (`KAGGLE_OFFICIAL_REFERENCES_20260621.md`) — Complete URL reference & fetch status
+  - ✅ **Manifest** (`OFFICIAL_KAGGLE_REFERENCES_MANIFEST_20260621.md`) — File manifest & critical findings
+- **Key strategic findings:**
+  - Strategy is **single-shot (1 submission)** → Alakazam upload must be final decision; no iterative probing
+  - Simulator behavior **overrides official TCG rules** for this competition
+  - All competition rules, mechanics, timelines, data schemas now locally documented & grounded
+- **Deliverables:** 8 official reference documents in `data/` directory, indexed in master files
+- **Additional fetches completed:**
+  - ✅ Welcome discussion (708584) — `OFFICIAL_WELCOME_DISCUSSION_708584_20260621.md`
+  - ⚠️ Code pages (both) — JS-rendered; need direct Kaggle access for full notebook lists
+  - ⚠️ Discussion boards (main) — Dynamic content; need weekly checks for clarifications
+  - ⚠️ Writeups — User submissions; evolving; check Kaggle weekly
+- **Established official grounding rule:** `OFFICIAL_GROUNDING_RULE_20260621.md` — All daily tasks must cite official docs as foundation
+- **NEXT (single exact action):** 
+  1. **User decides on Alakazam upload (Path A immediate vs Path B fix-first).** 
+  2. **Adopt official grounding rule:** Every strategy/decision grounded in local official docs.
+  3. **Code/writeups/discussions:** Check Kaggle directly weekly for new posts & updates.
+
+---
+
+### 2026-06-21 (Session 36 — autonomous: Background validation + strategic assessment + handoff)
+- **Worked on:** Checked overnight background processes; analyzed why robust decks underperform; prepared strategic decision framework. Tasks: T15 validation + strategic planning.
+- **Found (robust deck search):** **✅ COMPLETE** (all 30 gens done 2026-06-21T01:51:27Z):
+  - `gen_done=30`, `best_robust=0.4536` (peaked gen2, stalled at gen29)
+  - Field grew 59→71 opponents; holdout ~0.48 (no overfitting)
+  - **L1 public gate:** 12.5% suite mean (FAILS <25% bar)
+  - **Worst opponent:** Lucario deck in 15/30 gens
+  - **Verdict:** Robust search architecture is sound (honest, real-field-driven), but **result deck is weaker than mined leader decks**. Bottleneck is **pilot quality, not deck space**. A heuristic-optimized deck transfers poorly to SearchScorer (gates 8.3%) or rule-based agents.
+- **Found (deep slate validation):** **❌ STALLED** — no output files. PID 51432 started `robust_pool_g24_search` but produced nothing. Doesn't block upload readiness (candidates already tested individually).
+- **Root cause analysis (why all decks underperform):**
+  - Robust search decks optimized with heuristic pilot → gate 8–15% with SearchScorer
+  - Gen19 fast-basic best in robust mined-gauntlet screening (0.610) → gates 8.3% on public suite
+  - Trevenant top Lucario/Kyogre target (0.556) → gates 15.3% on public
+  - **But:** Imported Alakazam rule-based baseline → gates 57.3% (best available by FAR)
+  - **Conclusion:** Pilot sophistication >> deck novelty. All novel decks with weak pilots lose to mature rule-based agents with strong pilots.
+  - **Search-pilot confirmation (this session):** re-ran robust search with the **Search brain as the
+    gauntlet pilot** (`report/robust_deck_rl_search/`, 12 gens). Gauntlet **mean = 78%** but L1 of its
+    best_deck = **3.8%** (WORSE than heuristic 12.5%). The 78% was a mirror illusion (our brain on
+    BOTH sides); vs the real tuned public agents our generic Search brain loses ~96% regardless of deck.
+    `dist/candidates/track_e_robust_deck_search_pilot.tar.gz` (no upload). **Independently confirms:
+    bottleneck = brain strength vs the real field, not the deck. Robust deck search is a dead end with
+    a generic brain — agrees with the Alakazam-57.3% finding above.**
+- **Strategy recommendation:** Documented in `report/STRATEGY_DECISION_20260621.md` (3-section framework):
+  - **Path A (immediate):** Upload Alakazam best5, get ladder proof in ~40 min, decide next move from actual score. Expected 550–620 μ.
+  - **Path B (investment):** Implement Iono anti-disruption fixes first (2–4h), retest gate, then upload improved version. Target: suite 60–65%.
+- **Current best candidate:** `ryotasueyoshi_alakazam_best5` — **57.3% @ 417g, 55.3% @ 30g**, clears vs-1084 (66.7%), misses suite bar (65%) and Iono floor (29.7%).
+- **Current protected Finals:** `53869254` Search Lucario **668 μ** (both slots).
+- **Deliverables created (this run):**
+  - `report/STRATEGY_DECISION_20260621.md` — Why robust decks failed + decision framework
+  - `report/handoffs/RUN_AUTONOMOUS_20260621.md` — Comprehensive handoff & checklist
+  - `UPLOAD_READY_20260621.txt` — Quick-reference for user
+  - Updated `PROGRESS.md`, `TASKS.md`, `SESSION.md`
+- **Blockers:** Deep validation incomplete (doesn't matter). No technical blockers for upload.
+- **NEXT (single exact action):** **User reads `report/STRATEGY_DECISION_20260621.md` and chooses Path A (upload Alakazam now) or Path B (fix Iono first).** Autonomous phase complete; awaiting user decision. When ready, submit `dist/candidates/ryotasueyoshi_alakazam_best5.tar.gz` per command in `report/tomorrow_5_agent_slate_20260621.md`.
+
+---
+
+### 2026-06-20 (Robust deck-search at scale + real field; Lucario RL iter7 gate — both hit the Lucario wall)
+- **Worked on:** Ran the robust deck-search subsystem at scale on the GPU box (surrogate
+  = **torch-cuda** confirmed), mined the real ladder field, re-ran, and imported+gated the
+  Lucario RL run. Tasks: robust-search T (continuation prompt steps 1–4), Lucario RL import.
+- **Step 1 — clean-field search:** `robust_deck_search.py --generations 30 --population 16
+  --games 10 --surrogate`. Plateaued by gen 13 (best_robust ~0.45, holdout ~0.5); worst-case
+  was **always a self-elite** (benchmark/meta proxies all solved). Stopped early (user OK) —
+  baseline characterized. Backed up → `report/robust_deck_rl/metrics_cleanfield.csv`,
+  `best_deck_cleanfield.csv`.
+- **Step 2 — mined the real field:** downloaded `pokemon-tcg-ai-battle-episodes-2026-06-19`
+  (5,473 replays, 21 GB). **Finding:** per-episode `rewards` are win/loss (**±1**), NOT ELO —
+  `--min-score 600/900` returned 0 decks. Fixed with `--min-score 1` (winners) →
+  **60 mined decks** to `report/deck_rl/mined_decks/` (17 alakazam, 16 lucario, 2 bellibolt,
+  1 kyogre, 24 unknown).
+- **Step 3 — real-field search (30 gens, COMPLETE):** gauntlet **18 → 79 opponents**
+  (59 train / 20 holdout). **No overfitting** — holdout_robust (~0.48) ≥ best_robust (~0.42)
+  on nearly every gen. BUT best_robust never climbs (peak **0.454** gen2 → **0.418** gen29)
+  and **maximin floor stuck at 0.1–0.3**: worst-case was a **Lucario deck in 15/30 gens**.
+  `best_deck.csv` = gen-2 peak (best_robust 0.4536). 21,740 sim / 11,692 predicted games.
+- **Lucario RL import:** session stopped before saving iter 8/9; best recoverable = **iter 7**
+  (a promoted champion). CLI kernel-output pull = **403** (private). Staged iter0–7 →
+  `report/kaggle_notebook_jobs/lucario/kaggle_download_iter9_20260620/`, imported+gated.
+  **L1 gate = 6.9%** suite mean (0% vs most; below Search Lucario ~29%/668μ). **Do NOT submit.**
+  Local archive `dist/candidates/track_d_lucario_rl_mcts_iter7.tar.gz` (un-uploaded).
+- **Verdict:** robust-search *architecture* is validated (honest, no overfit, real-field-driven);
+  the blocker is **Lucario** — both the deck space (w/ heuristic pilot) and the RL pilot fail
+  vs the Lucario-dominated field. Do NOT promote `best_deck.csv` (maximin 0.2 = weak).
+- **Integration decision (step 5):** **keep robust-search standalone** for now. The bottleneck
+  is the pilot's Lucario matchup + anti-Lucario deck tech, not the search loop — wiring a
+  `--robust` phase into `rl/train_deck_campaign.py` is premature until Lucario is cracked.
+- **Finals:** unchanged — **53869254** Search Lucario **668 μ**.
+- **Pyramid validation of `best_deck.csv` + Search brain (no upload):**
+  - **L0 legality:** PASS (`validate_deck.py` — 60 cards, engine battle_start ok).
+  - Packaged `dist/candidates/track_e_robust_deck_search.tar.gz` (dry-run import OK, 60 IDs).
+  - **L1 vs public field** (`gate_vs_public.py --games 20`, 12 opponents): **12.5%** suite mean
+    — **FAILS** (<25% bar; below Search Lucario ~29%/668μ). Best: top-dragapult 45%,
+    sample-dragapult 30%. Worst: iono **0%**, crustle-bot **0%**, lucario decks ~15%.
+  - **L2 SPRT:** not run (L1 failed). **No upload.**
+- **Key nuance:** offline holdout ~48% but L1 **12.5%** — robust search optimizes deck-vs-deck
+  with the *same heuristic pilot on both sides*; the real field has strong **pilots**, not just
+  decks. A robust deck with a weak pilot still loses. **The pilot is the bottleneck, not the deck.**
+- **NEXT (single exact action):** attack the Lucario matchup AND the pilot — the deck loop with
+  a heuristic pilot can't transfer; either (a) re-run robust-search with the **Search brain as the
+  pilot inside the gauntlet** (not heuristic) so deck fitness reflects real play, or (b) add
+  anti-Lucario/anti-Iono tech to the deck space and re-gate. Success bar: L1 suite mean > 25%.
+
+---
+
+### 2026-06-20 (Pivot to RL/MCTS — AZ agent built, gated 3.5%, long retrain launched)
+- **Worked on:** Per user direction (don't ship the copied rule baseline; use the
+  official RL/MCTS approach), built and measured the AlphaZero+MCTS agent end-to-end.
+  No Kaggle upload.
+- **Built:** `scripts/build_az_submission.py` — assembles a legal Kaggle submission
+  from an `rl/az_train.py`-trained model by slicing the *verbatim* model + encoders +
+  `mcts_agent` out of az_train.py and adding `agent(obs_dict)->list[int]` that returns
+  `mcts_agent(...)[0]` (engine Search API). Package:
+  `dist/candidates/track_e_az_lucario.tar.gz` (~46 MiB), `build/track_e_az_lucario/`.
+  Smoke: full legal 110-step game vs Iono. Model: `report/az/lucario_ex_az/model_final.pth`
+  (MyModel d_model=128, heads=2, ff=256, 1 enc/1 dec), search_count=25.
+- **Gate (FAILED):** `gate_vs_public.py --games 12` → **3.5% suite mean (5/144)**, six
+  0/12 matchups; only 33% vs the Alakazam mirror. Output:
+  `report/public_gate/az_lucario_g12_20260620.txt`. Far below the rule baseline 57.3%.
+- **Root cause (from reading az_train.py + history.json):** the model is badly
+  UNDERTRAINED — only 6 rounds / ~30 min, search_count=10 (weak MCTS targets), eval-WR
+  vs random peaked 75%. Self-play curriculum itself is AZ-correct (model-vs-model); the
+  filler-card opponent model in MCTS is the sample's imperfect-info design, not the main
+  bug. Matches the prior notebook-RL result (iter5 gated 5.6%).
+- **Action:** launched a long GPU retrain (background): `rl/az_train.py
+  --slug lucario_ex_az_long_20260620 --rounds 40 --selfplay-games 150 --eval-games 30
+  --search-count 30`. CUDA = RTX 4070 Ti SUPER. Checkpoints model{N}.pth each round;
+  log `report/az/lucario_ex_az_long_20260620.log`.
+- **NEXT:** As checkpoints land, rebuild + gate the latest (`build_az_submission.py
+  --model report/az/lucario_ex_az_long_20260620/model<N>.pth`) vs the public suite at
+  12 games/opp. Track whether suite mean climbs toward and past the 57.3% rule
+  baseline. If it stalls well below by ~round 15-20, the evidence says raw AZ-from-
+  scratch is not the fast path and the proven lever is rule-core + opponent-archetype
+  detection + matchup guards (competition_insights.md), optionally MCTS seeded by the
+  rule prior rather than a from-scratch value net.
+
+---
+
+### 2026-06-20 (Alakazam best5 — 5000-game gate + Iono fix attempt FAILED)
+- **Worked on:** Large-sample confirmation of the imported Alakazam baseline, then a
+  diagnosed single-change attempt at its worst matchup. No Kaggle upload attempted.
+  Background jobs PID 49372 / 51432 left running untouched.
+- **5000-game gate:** `gate_vs_public.py --agent dist/candidates/ryotasueyoshi_alakazam_best5.tar.gz --games 417`
+  → **57.3% suite mean (2867/5002)**, 0 unfinished, ~0 draws. Output:
+  `report/public_gate/alakazam_best5_g417_20260620.txt`.
+  - Tightened per-matchup: crustle-bot 93.0%, top-dragapult 72.7%, m-abomasnow 70.5%,
+    m-lucario 65.2%, dragapult 57.3%, simple-baseline 53.7%, public-915 52.8%,
+    **1084-baseline 52.2%**, mirror 49.9%, **crustle-anti-wall 47.4%**,
+    lucario-search-915 43.4%, **iono 29.7% (124-293)**.
+  - n=30 noise corrected: 1084 was 66.7%->**52.2%** (so it does NOT clear the 55%
+    vs-1084 bar); crustle-anti-wall 30%->47.4% (was noise). **Iono is the only true
+    severe outlier**, ~28 pts below mean, n=417.
+- **Iono diagnosis (8 traces):** all losses are long grinds (210-266 steps). End-state
+  of a loss: hand=14-15, active = 0-energy Dudunsparce, **no Alakazam in play**,
+  we took 1 prize vs opp at prize=1. Root cause: when behind on prizes with a thin
+  deck, `safe_draws = deck_count - my_prize_count - 1` collapses to 0, which
+  hard-disables every evolve/search/draw -> agent goes passive and loses the prize
+  race holding an unusable fat hand.
+- **Fix attempt (FAILED, discarded):** relaxed the deck-out guard when
+  `my_prize_count > op_prize_count` and no energized Alakazam in play
+  (`safe_draws = max(safe_draws, min(3, deck_count-1))`). Iono @100g **regressed
+  30.0% -> 22.0%** — relaxing the guard makes us deck out faster. Variant discarded;
+  baseline unchanged. Lesson: the deck-out guard is load-bearing; "draw more when
+  behind" is the wrong lever.
+- **Decision:** Keep `ryotasueyoshi_alakazam_best5` as the strongest local candidate
+  (57.3% suite) and tomorrow's probe #1, but it is NOT upload-eligible by the user's
+  bars (suite 57.3% < 65%, vs-1084 52.2% < 55%, Iono 29.7% < 45%). Iono is a
+  structural matchup problem (disruption + 280-HP walls vs a fragile glass-cannon
+  line), not a one-line fix.
+- **NEXT (single measurable change):** Stop trying to out-draw Iono. Instead try to
+  END games faster so they never reach the Iono grind: (a) more aggressive Boss's
+  Orders sniping of setup/low-HP targets, and/or (b) a second-attacker insurance
+  rule so losing the active Alakazam doesn't strand us. Test each on
+  `gate_vs_public.py --only iono --games 100` and require Iono >= 40% AND a 417-game
+  suite re-gate that does not drop below 57.3%.
+
+---
+
+### 2026-06-20 (Alakazam best5 — 30-game public gate + slate re-rank)
+- **Worked on:** Ran the stronger L2 public gate for the imported Alakazam baseline
+  and compared it against the whole 2026-06-21 slate. No Kaggle upload attempted.
+  Background jobs PID 49372 (robust search, gen 8/30) and PID 51432 (queued slate
+  validation, still waiting) left running untouched.
+- **Gate:** `scripts/gate_vs_public.py --agent dist/candidates/ryotasueyoshi_alakazam_best5.tar.gz --games 30`
+  → **55.3% suite mean (199/360 decided)**, 12 opponents, **0 draws, 0 unfinished,
+  0 crashes**. Output: `report/public_gate/alakazam_best5_g30_20260620.txt`.
+- **Per-matchup:** crustle-bot **93.3%**, m-abomasnow **76.7%**, top-dragapult-tempo
+  **70.0%**, **1084-5-baseline 66.7%**, m-lucario sample 60.0%, dragapult sample
+  53.3%, alakazam mirror 50.0%, lucario-search-915 46.7%, simple-baseline 46.7%,
+  public-scores-915 40.0%, **iono 30.0%**, **crustle anti-wall 30.0%**.
+- **Comparison (same gate proxy):** Alakazam best5 **55.3%@30g** dwarfs the entire
+  slate — trevenant_leader 15.3%, kyogre_backup 13.2%, lucario_search 11.1%,
+  gen19_fast_basic 8.3% (all @12g), lucario_rl_mcts_iter5 5.6%. This is by far the
+  strongest local candidate and the only one to clear the 1084 baseline (66.7%).
+- **Upload-eligibility check (user rules):** clears vs-1084 (66.7% > 55%, n=30) and
+  has a clean failure profile (0 deck-out/no_active/crash/unfinished). **Misses the
+  65% suite-mean bar (55.3%)** and the 45% worst-matchup floor (Iono 30%, Crustle
+  anti-wall 30%). So: upload as **probe**, not Final-claimable.
+- **Diagnosis (Iono, 1 trace):** `result=0` in a 228-step grind; agent kept Abra
+  active, slow Abra->Kadabra->Alakazam, never landed a decisive Powerful Hand before
+  the long game. Consistent with Iono resetting hands to prize count and starving
+  the 20-dmg/card engine. Single trace = directional only.
+- **Decision:** Re-rank 2026-06-21 slate to put `ryotasueyoshi_alakazam_best5` as
+  upload probe slot #1 (above lucario_search). Still a probe; needs user approval.
+- **NEXT (single measurable change):** Lift the Iono matchup from 30%. Target lever:
+  accelerate the Abra->Alakazam line and avoid over-committing hand into the board
+  before the opponent can Iono-reset (sequence Powerful Hand to KO before reset).
+  Measure with `scripts/gate_vs_public.py --only iono --games 30`; promote only if
+  Iono >= 45% AND suite mean does not regress below 55.3%.
+
+---
+
+### 2026-06-20 (Ryotasueyoshi Alakazam baseline import)
+- **Worked on:** Pulled and imported the public Kaggle baseline
+  `ryotasueyoshi/rule-based-not-psychic-alakazam-best-5th`. No Kaggle upload
+  attempted.
+- **Changed:** Added `scripts/import_notebook_candidate.py`; pulled source under
+  `notebooks/ryotasueyoshi_rule_based_alakazam_best5/`; built
+  `dist/candidates/ryotasueyoshi_alakazam_best5.tar.gz`; added
+  `report/kaggle_notebook_jobs/ryotasueyoshi_alakazam_baseline_import.md`.
+- **Baseline contents:** public rule-based Alakazam `main.py` + `deck.csv`.
+  Importer normalizes `deck.csv` loading so the notebook archive works in local
+  import-based verification while preserving Kaggle path fallback.
+- **Verification:** `smoke_test.py` passed **17/17**. Archive check passed:
+  **15/20 = 75.0%** decided vs legal random, 0 draws, 0 unfinished. Lightweight
+  public-field gate at 6 games/opponent: **40/71 = 56.3%** suite mean; worst
+  matchups were `simple-baseline-matchup-tests` 16.7%, Dragapult sample 33.3%,
+  and Lucario anti-wall 33.3%.
+- **Decision:** Treat this as the rule-based Alakazam comparison baseline before
+  burning a long 1M-step Track B run. The most valuable transfer targets are
+  Powerful Hand hand-size planning, deck-out safety, conditional draw/Fezandipiti
+  usage, and matchup tech rules.
+- **NEXT:** After current background validation PIDs finish, run a 30-game
+  public gate for `dist/candidates/ryotasueyoshi_alakazam_best5.tar.gz`, then
+  compare against any Alakazam Track B model before deciding whether to train
+  Alakazam for 1M steps.
+
+---
+
+### 2026-06-20 (background deep-validation handoff)
+- **Worked on:** Started and checkpointed unattended deeper offline validation. No Kaggle upload
+  attempted.
+- **Running now:** PID **49372** is
+  `C:\Users\tobin\AppData\Local\Programs\Python\Python313\python.exe scripts/robust_deck_search.py --generations 30 --population 16 --games 10 --surrogate`.
+  It is writing to `report/robust_deck_rl/metrics.csv` and `report/robust_deck_rl/state.json`.
+- **Current robust-search state:** `gen_done=6/30`; best robust **0.4535748477**;
+  best label `mut_x_a2_basic_heavy_31_energy_a3_starmie`; latest written row
+  `gen=5`, robust **0.4256**, mean **0.6623**, maximin **0.3**, games simulated **3881**,
+  games predicted **2143**.
+- **Queued next:** PID **51432** is a hidden PowerShell queue runner waiting for PID 49372:
+  `scripts/run_deep_slate_validation.ps1 -WaitForPid 49372 -RunId 20260620_141822`.
+  Its log is `report/background_runs/deep_slate_validation_20260620_141822/run.log`.
+- **Queued validation plan:** after robust search exits, run 24-game robust pool validation for
+  gen19 fast-basic, Trevenant, Lucario, and Kyogre, then run 30-game public gates for the five
+  slate archives in `report/tomorrow_5_agent_slate_20260621.md`.
+- **Changed:** Added [`scripts/run_deep_slate_validation.ps1`](scripts/run_deep_slate_validation.ps1)
+  and [`AGENT_HANDOFF_BACKGROUND_VALIDATION_20260620.md`](AGENT_HANDOFF_BACKGROUND_VALIDATION_20260620.md);
+  updated `PROGRESS.md`, `TASKS.md`, and `.cursor/SESSION.md`.
+- **NEXT:** Let PID 49372 finish naturally, then watch
+  `report/background_runs/deep_slate_validation_20260620_141822/run.log`. When PID 51432 completes,
+  summarize the robust-pool `summary.csv` and each `public_gate_g30_*.txt`, update
+  `report/tomorrow_5_agent_slate_20260621.md`, and only then decide whether the upload order changes.
+
+---
+
+### 2026-06-20 (tomorrow 5-agent slate prep)
+- **Worked on:** Built a ranked 2026-06-21 Simulation upload slate from current
+  robust-deck, leader-suite, Track B, and Lucario RL evidence. No Kaggle upload attempted.
+- **Changed:** [`scripts/gate_track_b.py`](scripts/gate_track_b.py) compatibility fix for
+  current `gate_track_a.eval_scorer()` return shape and opponent tuple shape;
+  [`report/tomorrow_5_agent_slate_20260621.md`](report/tomorrow_5_agent_slate_20260621.md);
+  refreshed packaged archives under `dist/candidates/`; updated handoff/task files.
+- **Environment:** `scripts/setup_env.sh` hit the documented Windows
+  `--break-system-packages` pip incompatibility; fallback
+  `python -m pip install -r requirements.txt` succeeded.
+- **Packaged/gated slate:** `track_a_lucario_search` package public gate **11.1%**;
+  `track_a_gen19_fast_basic_search` **8.3%**; `track_a_trevenant_leader_search` **15.3%**;
+  `track_b_learned_gen19_fast_basic` L2 **203/240** vs same-deck Search **206/240**,
+  SPRT `accept_b`; `track_a_kyogre_search_backup` **13.2%**.
+- **Rejected reserve:** Imported/packaged `track_d_lucario_rl_mcts_iter5`; public gate
+  **8/144 = 5.6%** with six 0/12 matchups, so do **not** upload iter5 tomorrow.
+- **Decision:** Tomorrow's first slot should be `lucario_search` only with user approval;
+  every other lane is a probe unless public ladder mu beats protected `53869254` at
+  **660.5**. Robust deck evidence is promising, but package-level public gates are weak.
+- **Verification:** `smoke_test.py` **17/17**, `smoke_replay.py` **16/16**,
+  `pytest tests/test_robust_core.py tests/test_surrogate.py -q` **8 passed**,
+  `py_compile` passed for touched/packaging scripts.
+- **NEXT:** On 2026-06-21, after explicit user approval, upload slate slot 1
+  (`dist/candidates/track_a_lucario_search.tar.gz`), wait for COMPLETE + ~40 min ladder
+  mu, fetch episodes/logs, and stop or continue according to
+  `report/tomorrow_5_agent_slate_20260621.md`.
+
+---
+
+### 2026-06-20 (deck RL direction - robust pool screen)
+- **Worked on:** Offline deck-formation research while live submissions continue gathering ladder evidence. No Kaggle upload attempted.
+- **Changed:** [`scripts/robust_deck_search.py`](scripts/robust_deck_search.py),
+  [`scripts/arena.py`](scripts/arena.py), [`scripts/evaluate_robust_deck_pool.py`](scripts/evaluate_robust_deck_pool.py),
+  [`report/robust_deck_rl/deck_rl_direction_20260620.md`](report/robust_deck_rl/deck_rl_direction_20260620.md),
+  plus new robust eval outputs under `report/robust_deck_rl/`.
+- **Environment:** Python313 GPU path verified: `torch 2.11.0+cu128`, CUDA available.
+- **Robust search:** 79-opponent gauntlet (benchmark + mined ladder decks + leader variants). SearchScorer robust run used CUDA surrogate but still collapsed on zero-win matchups; best robust only **0.143**, so do **not** run longer blindly.
+- **Known-deck robust screen:** top-5 SearchScorer screen at 6 games/opponent put `top_mined_trevenant` and `gen19_fast_basic` ahead of Lucario/Kyogre for robust deck starting points.
+- **Top-2 confirmation @ 12 games/opponent:** `gen19_fast_basic` won: robust **0.610**, mean **0.728**, CVaR **0.492**, maximin **0.333** vs `top_mined_trevenant` robust **0.574**, mean **0.694**, CVaR **0.453**, maximin **0.250**. Worst matchup for both: `a2_kyogre`.
+- **Decision:** Next deck-RL / Track B target should be `agent_decks/deck_rl/gen19_fast_basic.csv`; keep `agent_decks/top_mined_trevenant.csv` as the leader-archetype follow-up.
+- **Verification:** `pytest tests/test_robust_core.py tests/test_surrogate.py -q` **8 passed**; `py_compile` passed for robust/eval scripts; `validate_deck.py --deck report/robust_deck_rl/search_scorer_stable_20260620/best_deck.csv` passed.
+- **NEXT:** Train/gate `gen19_fast_basic` with Track B at higher confidence; then compare vs Search baseline and mined leader suite before any user-approved upload.
+
+---
+
 ### 2026-06-20 (handoff reconciliation - expanded leader suite + v2 gate/audit)
 - **Worked on:** Reconciled stale Lucario v2 handoff against current repo state; filled missing artifacts for mined leader decks, expanded-suite gate, and search audit.
 - **Changed:** [`scripts/arena.py`](scripts/arena.py), [`scripts/gate_track_a.py`](scripts/gate_track_a.py),

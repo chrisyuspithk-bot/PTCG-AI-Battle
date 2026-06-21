@@ -7,7 +7,31 @@ Does **not** touch `report/rl_deck_campaign/` (the existing GA campaign).
 Full rationale: `report/robust_deck_optimization_design.md`.
 Usage details: `report/robust_deck_rl/README.md`.
 
-## State: BUILT + UNIT-TESTED (CPU). Not yet run at scale; real field not yet mined.
+## State: RUN AT SCALE on real field (2026-06-20). Method validated; blocked by Lucario.
+
+**Latest run (30 gens, real field of 60 mined winning decks + benchmark = 79 opponents):**
+- Surrogate confirmed **torch-cuda**. **No overfitting** — holdout_robust (~0.48) ≥
+  best_robust (~0.42) on nearly every gen.
+- BUT best_robust never climbs (peak **0.454** gen2 → **0.418** gen29); **maximin floor
+  stuck 0.1–0.3** — worst-case was a **Lucario deck in 15/30 gens**. Lucario = 16/60 mined.
+- **Verdict:** architecture works; the wall is **Lucario** (deck space + heuristic pilot
+  can't beat the Lucario-heavy field). `best_deck.csv` (gen-2 peak) **not promotable**
+  (maximin 0.2). Clean-field baseline backed up → `metrics_cleanfield.csv` / `best_deck_cleanfield.csv`.
+- **Mining gotcha:** episode `rewards` are win/loss **±1**, not ELO — use `--min-score 1`.
+- **Integration decision:** keep **standalone**; fix Lucario matchup before any `--robust`
+  phase in `rl/train_deck_campaign.py`.
+- **Pyramid (no upload):** L0 PASS; packaged `dist/candidates/track_e_robust_deck_search.tar.gz`;
+  **L1 vs public field = 12.5%** (FAILS <25% bar; iono/crustle 0%, lucario ~15%). L2 not run.
+  Offline holdout ~48% vs L1 12.5% → gauntlet uses the *same heuristic pilot both sides*; the
+  real field has strong **pilots**. **The pilot is the bottleneck, not the deck.**
+- **Next:** put the **Search brain inside the gauntlet** (replace heuristic pilot in
+  `rl/gauntlet.py winrate_vs`, default `scorer="heuristic"`) so deck fitness reflects real play,
+  AND/OR add anti-Lucario/anti-Iono tech to the deck space; re-run, then re-gate. Success =
+  L1 suite mean > 25%.
+
+---
+
+## (original build state) BUILT + UNIT-TESTED (CPU).
 
 | File | Role | Status |
 |---|---|---|

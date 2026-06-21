@@ -18,19 +18,27 @@ REPORT = ROOT / "report" / "track_b_gate.md"
 DEFAULT_MODEL = ROOT / "agent" / "models" / "distilled_v1.npz"
 
 
+def _pool_opponents() -> dict[str, tuple[list[int], str]]:
+    """Return pool decks in the tuple shape shared with Track A gates."""
+    return {
+        name: (deck, str(ROOT / "agent_decks" / f"{name}.csv"))
+        for name, deck in pool_decks().items()
+    }
+
+
 def eval_learned(
     deck: list[int],
-    opponents: dict[str, list[int]],
+    opponents: dict[str, tuple[list[int], str]],
     games: int,
     deck_path: str,
     model_path: Path,
 ) -> tuple[int, int]:
     wins = losses = 0
-    for name, opp_deck in opponents.items():
+    for name, (opp_deck, opp_path) in opponents.items():
         row = play_matchup(
             "learned", deck, name, opp_deck, games, 6000,
             workers=1, scorer_a="learned", deck_path_a=deck_path,
-            model_path_a=str(model_path),
+            model_path_a=str(model_path), deck_path_b=opp_path,
         )
         wins += row["a_wins"]
         losses += row["b_wins"]
@@ -58,12 +66,12 @@ def main(argv: list[str] | None = None) -> int:
         deck_path = ROOT / deck_path
     deck = [int(x) for x in deck_path.read_text().splitlines() if x.strip()]
     deck_path_str = str(deck_path.resolve())
-    opponents = pool_decks()
+    opponents = _pool_opponents()
     l_wins, l_total = eval_learned(deck, opponents, args.games, deck_path_str, model_path)
 
     from scripts.gate_track_a import eval_scorer
 
-    s_wins, s_total = eval_scorer("search", deck, opponents, args.games, deck_path_str)
+    s_wins, s_total, _ = eval_scorer("search", deck, opponents, args.games, deck_path_str)
     sprt = sprt_test(l_wins, l_total)
     passed = l_wins >= s_wins or sprt.decision == "accept_b"
 
