@@ -185,7 +185,7 @@ Every future Pokémon/deck we train (Lucario, Alakazam, Dragapult, …) follows 
 |-------|------------|------|
 | **1. Rule pilot** | Official Kaggle sample for that archetype (e.g. kiyotah Lucario notebook → `agent/lucario_policy.py`) | Legal, never-crash spine; encodes how *this* deck is meant to be played |
 | **2. Deck tech** | `agent/deck_tech.py` — gust/draw/search/stadium/setup priorities for *our* 60 | Small card-ID tables; not a second brain |
-| **3. Matchup levers** | Opponent archetype detected from **visible** board (active/bench IDs) → tag | Thin score deltas (Boss timing, bench depth, race vs control, wall-breaker line) — not RuleCore-style per-opponent agents |
+| **3. Matchup levers** | `agent/matchup_levers.py` + visible-board detect → score deltas | Research: `data/MATCHUP_PLAYBOOK.md`; implement one archetype per gate |
 | **4. Optional search** | `SearchScorer` / shallow `search_*` on high-value contexts | Only after rules are stable; must beat rules-only on L1 gate |
 | **5. Optional RL+MCTS** | Official RL+MCTS sample + **field** training (`scripts/train_*_field_mcts.py`) | Real opponent deck in `search_begin`; train vs `field/decks/`; champion gate; **LucarioScorer fallback** at inference |
 

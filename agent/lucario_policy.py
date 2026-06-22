@@ -14,6 +14,7 @@ from dataclasses import dataclass
 
 from agent.agent import HeuristicScorer
 from agent.deck_tech import LUCARIO_TECH
+from agent.matchup_levers import GUST_SETUP_IDS, TREVENANT_REVENGE_SETUP_IDS, levers_for_lucario
 from agent.smart_bench import (
     MAX_VOLUNTARY_BENCH,
     bench_counts,
@@ -198,12 +199,16 @@ class LucarioScorer(HeuristicScorer):
 
         op_state = state.players[1 - my_index]
         card_table = _CARD_TABLE or {}
+        op_board_ids: set[int] = set()
         for card in op_state.active + op_state.bench:
             if card is None:
                 continue
+            op_board_ids.add(card.id)
             data = card_table.get(card.id)
             if data is not None and data.stage2:
                 op_stage2_count += 1
+
+        levers = levers_for_lucario(op_board_ids)
 
         for card in my_state.hand:
             hand_counts[card.id] += 1
@@ -264,6 +269,8 @@ class LucarioScorer(HeuristicScorer):
             ),
             "discard_energy": discard_counts[Basic_Fighting_Energy],
             "op_stage2_count": op_stage2_count,
+            "op_board_ids": op_board_ids,
+            "levers": levers,
         }
 
     # --- attack plan (official sample) ---------------------------------------
@@ -292,6 +299,7 @@ class LucarioScorer(HeuristicScorer):
         can_op_switch = ctx["can_op_switch"]
         can_use_mega_brave = ctx["can_use_mega_brave"]
         my_prize = ctx["my_prize"]
+        levers = ctx.get("levers")
 
         best_score = -1.0
         plan = LucarioPlan()
@@ -389,16 +397,29 @@ class LucarioScorer(HeuristicScorer):
                     # Meta: single-prize targets → Solrock/Hariyama; ex → Mega Brave.
                     if my_pokemon.id == Mega_Lucario_ex and a == 1:
                         if op_prize <= 1 and op_pokemon.hp > 130:
+                            if levers and levers.skip_mega_brave_vs_bulk_single_prize > 0:
+                                continue
+                            continue
+                        if op_pokemon.id == SNOVER_ID and levers and levers.skip_mega_brave_vs_bulk_single_prize > 0:
                             continue
                         if op_prize >= 2:
-                            line_bonus += 450.0
+                            line_bonus += 450.0 + (levers.mega_brave_vs_ex if levers else 0.0)
                     elif my_pokemon.id == Mega_Lucario_ex and a == 0 and op_prize >= 2:
                         if op_pokemon.hp <= 130:
                             line_bonus += 300.0
                     elif my_pokemon.id == Solrock and op_prize <= 1 and op_pokemon.hp <= 90:
-                        line_bonus += 350.0
+                        line_bonus += 350.0 + (levers.solrock_vs_single_prize if levers else 0.0)
                     elif my_pokemon.id == Hariyama and op_prize >= 2:
-                        line_bonus += 200.0
+                        line_bonus += 200.0 + (levers.hariyama_vs_ex if levers else 0.0)
+                    if levers and j >= 1 and op_pokemon.id in GUST_SETUP_IDS:
+                        line_bonus += levers.gust_setup_pokemon
+                    if (
+                        levers
+                        and levers.avoid_ko_trevenant_setup > 0
+                        and op_pokemon.id in TREVENANT_REVENGE_SETUP_IDS
+                        and op_pokemon.hp <= damage
+                    ):
+                        line_bonus -= levers.avoid_ko_trevenant_setup
                     score += line_bonus
                     if len(op_state.prize) <= prize:
                         score = 50000.0

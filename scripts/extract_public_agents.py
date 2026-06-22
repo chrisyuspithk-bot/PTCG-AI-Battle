@@ -24,7 +24,11 @@ import tarfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC_DIRS = [ROOT / "data" / "kaggle_ref" / "community", ROOT / "data" / "kaggle_ref" / "rule_agents"]
+SRC_DIRS = [
+    ROOT / "data" / "kaggle_ref" / "community",
+    ROOT / "data" / "kaggle_ref" / "rule_agents",
+    ROOT / "notebooks" / "official",
+]
 OUT_DIR = ROOT / "data" / "kaggle_ref" / "opponents"
 CG_DIR = ROOT / "data" / "sim" / "sample_submission" / "cg"
 

@@ -15,11 +15,11 @@ Work **per deck** (Lucario first, then Dragapult, Alakazam, …). Each sub-step 
   - [ ] Lucario: `lucario_policy.py` + `LUCARIO_TECH` — baseline gate vs 10 real-field decks.
   - [ ] Dragapult: `dragapult_agent.py` — baseline gate (`gate_dragapult.py`); await ladder μ ref 53950246.
   - [ ] Alakazam: port or re-gate imported best5 pilot on `top_mined_alakazam.csv`.
-- [ ] **R2. Matchup levers (phase 2).** Extend `rule_core.py` / policies: `detect_opponent_archetype()` tags
-      (`crustle_wall` exists; add `abomasnow_spread`, `iono_disrupt`, `lucario_mirror`, …). One lever per PR;
-      re-gate weak matchups; no regression on strong ones.
-  - [ ] Lucario vs Abomasnow (0% in RL eval) — first lever target.
-  - [ ] Alakazam vs Iono — first lever when Alakazam is in scope.
+- [ ] **R2. Matchup levers (phase 2).** Wire `agent/matchup_levers.py` into `lucario_policy.py`;
+      research in `data/MATCHUP_PLAYBOOK.md`. One lever per PR; re-gate weak matchups.
+  - [ ] Lucario vs Abomasnow (0% train eval) — **first implement** (`abomasnow_water` levers).
+  - [ ] Lucario vs Trevenant (20% train eval) — `avoid_ko_trevenant_setup`, Boss Phantump.
+  - [ ] Mirror / Alakazam — Boss on setup Pokémon (Riolu, Abra).
 - [ ] **R3. Field mixture (phase 3).** Only after R1+R2 floor stable:
   - [ ] `scripts/update_from_kaggle.py` → leaderboard snapshot on user machine.
   - [ ] Harden `scripts/update_opponent_tracker.py` → `report/OPPONENT_DECK_DISTRIBUTION.md`.

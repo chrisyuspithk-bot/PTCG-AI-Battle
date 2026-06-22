@@ -565,6 +565,60 @@ def progress(count: int, text: str):
 
 # === PATCH: field-aware MCTS (Fix #3) ========================================
 
+# Matchup levers (LucarioScorer) bias root action when training vs real opponents.
+_LUCARIO_SCORER = None
+_LEVER_BLEND = 0.0
+
+
+def set_lucario_lever_teaching(deck_path: str, blend: float = 0.35) -> None:
+    """Wire agent/matchup_levers.py into MCTS root selection (our side only)."""
+    global _LUCARIO_SCORER, _LEVER_BLEND
+    from agent.lucario_policy import LucarioScorer
+
+    _LUCARIO_SCORER = LucarioScorer(deck_path=deck_path)
+    _LEVER_BLEND = max(0.0, min(1.0, float(blend)))
+
+
+def _scorer_root_pick(obs_dict: dict) -> list[int] | None:
+    if _LUCARIO_SCORER is None or _LEVER_BLEND <= 0:
+        return None
+    try:
+        sel = obs_dict.get("select") or {}
+        options = sel.get("option") or []
+        if not options:
+            return None
+        return _LUCARIO_SCORER.choose(
+            obs_dict, sel, obs_dict.get("current"), options,
+        )
+    except Exception:
+        return None
+
+
+def _pick_root_child(
+    visited: list,
+    default_child,
+    obs_dict: dict,
+    *,
+    temperature: float,
+) -> object:
+    """MCTS visits + optional LucarioScorer/lever preference at root."""
+    if not visited:
+        return default_child
+    scorer_pick = _scorer_root_pick(obs_dict)
+    if scorer_pick is None:
+        return default_child
+    lever_bonus = _LEVER_BLEND * 1000.0
+    best_child, best_score = default_child, -1.0
+    for child, visits in visited:
+        score = float(visits)
+        if child.select == scorer_pick:
+            score += lever_bonus
+        if score > best_score:
+            best_score = score
+            best_child = child
+    return best_child
+
+
 def _sample_hidden(deck: list[int], n: int) -> list[int]:
     if n <= 0:
         return []
@@ -649,7 +703,7 @@ def mcts_agent(
 
     visited = [(c, c.node.visit) for c in root.children if c.node is not None]
     if visited:
-        if temperature > 0.0 and len(visited) > 1:
+        if temperature > 0.0 and len(visited) > 1 and _LEVER_BLEND <= 0:
             weights = [v ** (1.0 / temperature) for _, v in visited]
             tot = sum(weights) or 1.0
             r = random.random() * tot
@@ -661,6 +715,10 @@ def mcts_agent(
                     break
         else:
             max_child = max(visited, key=lambda t: t[1])[0]
+            if obs.current.yourIndex == your_index:
+                max_child = _pick_root_child(
+                    visited, max_child, obs_dict, temperature=temperature,
+                )
     else:
         max_child = root.children[0] if root.children else Child(
             random.sample(list(range(len(obs.select.option))), obs.select.maxCount), 1.0
