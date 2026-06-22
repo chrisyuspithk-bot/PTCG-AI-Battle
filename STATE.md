@@ -7,6 +7,31 @@
 
 ---
 
+## As of 2026-06-22 (Session 44b — Dragapult ex baseline)
+
+**First agent built on the rebuilt foundation.** Took the official Kaggle "Rule-Based Agent for
+Dragapult ex" (Crispin aggressive variant) as the baseline and stood it up against our local engine
+(which, contrary to old notes, runs here — Python 3.13, `cg` imports fine).
+
+- **New files:** `agent/dragapult_agent.py` (sample logic + a never-crash/output-validation wrapper —
+  IMPROVEMENT over the sample, which had no crash protection, Ruling R7), `agent_decks/dragapult_ex_sample.csv`
+  (its exact 60-card list), `scripts/gate_dragapult.py` (asymmetric-deck, seat-swapped, Wilson-CI gate).
+- **Local baseline (LOCAL FILTER, not ladder truth — RULINGS R1/R2):**
+  - vs **HeuristicScorer** pilot, 30g/opp: Lucario 66.7% · Alakazam 73.3% · Trevenant 100% · Abomasnow 73.3% → **78.3% overall**.
+  - vs **SearchScorer** pilot (our 668-μ brain), 20g/opp: Lucario 85% · Alakazam 85% · Trevenant 95% → **88.3% overall**.
+  - Safety wrapper: re-gate showed no regression, 0 crashes, 0 unfinished.
+- **Read this as:** the agent is clearly competent and we have a strong baseline to improve against —
+  NOT a μ prediction (local has misled us before; the ladder is the only judge).
+- **Note:** this is the *Crispin* variant (official sample), not the Dudunsparce/Alakazam variant
+  originally discussed — the official agent's card logic is Crispin-specific.
+
+**Next decisions (open):** (a) package this safe baseline for a **ladder probe** to get real μ (the
+measurement that matters), and/or (b) improve it — best win-rate lever is opponent-aware
+targeting/Boss's Orders using the visible board; the Dudunsparce deck variant would need the agent's
+card-ID logic adapted. Each improvement gets gated vs this baseline before it counts.
+
+---
+
 ## As of 2026-06-22 (Session 44 — repo reset)
 
 ### What just happened
