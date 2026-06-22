@@ -105,6 +105,7 @@ under any task. Do not skip ahead unless a task is blocked (mark `[blocked]` + r
   - [x] 2026-06-21 (Session 37b): **SUBMITTED Alakazam best5** @ 12:45 UTC. μ=636.8 (exceeds forecast).
   - [blocked] 2026-06-21 (Session 38): **HOLD Slot 2–4 pending +12h metrics check.** 
     - Next: Pull Alakazam μ, σ², episodes from Kaggle (human action). If stable >630 → Slot 3 Trevenant; if <620 → Kyogre contingency.
+  - [blocked] 2026-06-22 (Session 43): **KAGGLE API BLOCKER: Sandbox has no API egress.** Prepared `scripts/update_from_kaggle.py` for user to run on their machine. See `report/handoffs/session_43_kaggle_update_action.md` for critical next-step action list.
 - [ ] **T16. Research-backed search/RL prototype.** Phase 0â€“3 foundation implemented
   2026-06-19 (run 13): validate_deck + pool, arena/SPRT, OptionScorer refactor,
   search/BC/RL pipelines, nightly orchestrator. Remaining: SPRT-passing gates and

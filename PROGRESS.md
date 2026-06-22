@@ -6,6 +6,50 @@ step** so the following run can resume instantly.
 
 ---
 
+### 2026-06-22 (Session 43b — Alakazam Iono improvement investigation)
+- **Worked on:** Per user directive "proceed without Kaggle update". Shifted to T16 P3 priority: improve Alakazam Iono matchup (29.7% → 40%+) before Slot 2 submission.
+- **Baseline Iono gate (ryotasueyoshi_alakazam_best5):** 13.3% WR (4-26 on 30g) vs `a-sample-rule-based-agent-iono-s-deck`. Historical was 29.7% (larger sample, likely different opponent or variance).
+- **Attempted code modification:** Tried to add disruptor detection + evolution priority boost to agent logic; broke the agent (0/30 unfinished games due to scoping error).
+- **Key finding:** Rule-based agent modifications require careful scope/control flow handling. All-at-once changes risky; incremental approach needed.
+- **Path forward (documented in `report/ALAKAZAM_IONO_IMPROVEMENT_PLAN.md`):**
+  - Fix 1 (Faster evolution): Low effort, test immediately
+  - Fix 2 (Earlier Boss's Orders): Medium effort, build on Fix 1
+  - Fix 3 (Hand management): Medium effort, final validation
+  - Each change gates immediately to catch regressions
+- **Decision point:** Either implement 3-step plan, use pre-built variant, or accept baseline and move to Trevenant (next candidate).
+- **Ladder:** Unchanged — Lucario 734.6, Alakazam 636.8 (Slot 1), Trevenant ready (Slot 2), gen19 backup.
+- **Deliverables:** `report/ALAKAZAM_IONO_IMPROVEMENT_PLAN.md` (detailed improvement roadmap), broken attempt `dist/candidates/track_alakazam_iono_v2.tar.gz` (do not use).
+- **NEXT (for next session):** Human decision on Alakazam fix priority. If proceeding: extract agent, implement Change 1 (evolution timing), gate, iterate. If deferring: use Trevenant as Slot 2 or pivot to other work.
+
+---
+
+### 2026-06-22 (Session 43 — AZ v1 gating + Kaggle API handoff)
+- **Worked on:** Autonomous run per DAILY_RUNBOOK. Evaluated AZ v1 training results (mirror 56%, Alakazam 6%); L1-gated against public field; created Kaggle update script for user.
+- **AZ v1 Training Results (complete):**
+  - 8 rounds, mirror vs `real_mega_lucario_ex`, Alakazam vs `top_mined_alakazam`
+  - **Internal eval (self-play):** Mirror 56% ✅, Alakazam 6% ❌ (targets: 50-60%, 25-45%)
+  - **External eval (public field L1-gate):** Suite mean 9.7% (35/360) ❌ **FAILED**
+  - Diagnosis: Overfitting to training opponents; architecture sound but training data too narrow
+- **Decision:** AZ v1 not submission-ready. Requires Fix #3 (realistic MCTS opponent prior) — expand opponent pool + retrain
+- **Kaggle API Constraint (blocker):** Sandbox has no API egress (documented in T2). Cannot fetch leaderboard/episodes directly.
+  - Created `scripts/update_from_kaggle.py` — user runs on their machine to pull:
+    1. Leaderboard snapshot (current μ, σ², teams)
+    2. Episode replays (for meta analysis)
+    3. Competition metadata
+    4. Our submission history
+  - Script auto-saves to `report/leaderboard_snap_*.json`, `report/our_submissions.json`, etc.
+- **Ladder Status (unchanged from Session 42):** Lucario v2 **734.6 μ**, Alakazam 659, Trevenant 615.6
+- **T15 Blocker:** Still awaiting user metrics pull + decision on Slot 2-4 submissions
+- **Next (critical action for human):**
+  1. **Run on your machine (has Kaggle egress):** `python scripts/update_from_kaggle.py`
+  2. **Review outputs:** `report/leaderboard_snap_*.json`, `report/our_submissions.json`
+  3. **Decide next submission:** Based on current μ, μ trend, and submission slots remaining
+  4. **If Lucario good:** Proceed with Slot 2; else pivot to Alakazam or Trevenant
+- **Deliverables:** `report/gates/lucario_az_v1_l1gate.md`, `scripts/update_from_kaggle.py`
+- **Note:** AZ approach deferred pending Fix #3 investigation (would need 2-4h focused work on opponent priors)
+
+---
+
 ### 2026-06-22 (Session 42 — RL training fixed+optimized; strongest-strategy analysis)
 - **Strongest-strategy analysis** (`scripts/analyze_strategies.py`, full 5,584-game dump + our 36
   games → `report/strategy_analysis_20260622.md`): winning = **aggressive KO-race on a hub deck,
