@@ -1,41 +1,27 @@
-"""Phase-2 gate: LucarioScorer vs field opponents (official rule pilots only by default).
+"""Phase-2 gate: LucarioScorer vs extended field opponents.
 
-Measures per-matchup win-rate for lever tuning (R11 phase 2). Seat-swapped games,
-Wilson 95% CI. Local filter only — not ladder truth.
-
-Decks without a Kaggle official sample (Alakazam, Trevenant) are **skipped** unless
-``--allow-random`` is set (random is not a real field pilot).
+Thin CLI over eval/harness. Decks without an official sample are skipped unless
+listed in field/registry.json with opponent_brain=random.
 
   python scripts/gate_lucario_matchups.py --games 30
-  python scripts/gate_lucario_matchups.py --games 20 --opponents real_mega_abomasnow_ex top_mined_mega_abomasnow_ex
+  python scripts/gate_lucario_matchups.py --games 20 --suite full
 """
 
 from __future__ import annotations
 
 import argparse
-import math
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ENGINE_DIR = ROOT / "data" / "sim" / "sample_submission"
-DECKS_DIR = ROOT / "agent_decks"
-LUCARIO_DECK = DECKS_DIR / "real_mega_lucario_ex.csv"
-
-if str(ENGINE_DIR) not in sys.path:
-    sys.path.insert(0, str(ENGINE_DIR))
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from cg import game  # noqa: E402
-from cg.sim import Battle, lib  # noqa: E402
+from eval.field_registry import load_registry, opponents_for_suite  # noqa: E402
+from eval.gates import gate_matchups, print_harness_summary  # noqa: E402
 
-from agent.lucario_mcts_runtime import random_agent  # noqa: E402
-from agent.native_opponent import make_opponent_brain, native_brain_label  # noqa: E402
-from agent.official_registry import official_archetype_for_opponent  # noqa: E402
-
-# Full field (matches train_lucario_field_mcts.py DEFAULT_OPPONENTS).
-DEFAULT_OPPONENTS = [
+# Extended list for matchups script (mined variants + registry full suite).
+EXTENDED_OPPONENTS = [
     "dragapult_ex_sample",
     "real_mega_abomasnow_ex",
     "real_iono",
@@ -47,171 +33,39 @@ DEFAULT_OPPONENTS = [
     "top_mined_mega_lucario_ex",
 ]
 
-_lucario_act = None
-_opp_cache: dict[str, tuple[object, str]] = {}
-
-
-def load_deck(path: Path) -> list[int]:
-    return [int(x) for x in path.read_text().splitlines() if x.strip()][:60]
-
-
-def _select_player() -> int:
-    return lib.GetBattleData(Battle.battle_ptr).selectPlayer
-
-
-def _wilson(wins: int, n: int) -> tuple[float, float, float]:
-    if n == 0:
-        return 0.0, 0.0, 0.0
-    z = 1.96
-    p = wins / n
-    denom = 1 + z * z / n
-    center = (p + z * z / (2 * n)) / denom
-    half = (z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))) / denom
-    return 100 * p, 100 * max(0.0, center - half), 100 * min(1.0, center + half)
-
-
-def get_lucario_act():
-    global _lucario_act
-    if _lucario_act is None:
-        from agent.agent import build_agent
-        from agent.lucario_policy import LucarioScorer
-
-        deck_path = str(LUCARIO_DECK)
-        agent = build_agent(deck_path=deck_path, scorer=LucarioScorer(deck_path=deck_path))
-        _lucario_act = agent.act
-    return _lucario_act
-
-
-def get_opponent_act(opp_name: str, opp_path: str, deck_o: list[int], *, allow_random: bool):
-    key = f"{opp_name}:{'random' if allow_random else 'native'}"
-    if key in _opp_cache:
-        return _opp_cache[key]
-    kind = "non_official" if allow_random else "native"
-    act, brain = make_opponent_brain(
-        kind,
-        opp_path,
-        deck_o,
-        opp_name=opp_name,
-        random_agent=random_agent,
-        non_official_brain="random",
-    )
-    _opp_cache[key] = (act, brain)
-    return act, brain
-
-
-def run_game(deck0: list[int], deck1: list[int], pol0, pol1, max_steps: int = 8000) -> int:
-    obs, start = game.battle_start(deck0, deck1)
-    if obs is None:
-        raise RuntimeError(f"battle_start failed: err={getattr(start, 'errorType', '?')}")
-    policies = (pol0, pol1)
-    try:
-        for _ in range(max_steps):
-            cur = obs["current"]
-            if cur is not None and cur.get("result", -1) != -1:
-                return cur["result"]
-            if obs["select"] is None:
-                return -1
-            p = _select_player()
-            obs = game.battle_select(policies[p](obs))
-        return -1
-    finally:
-        game.battle_finish()
-
-
-def gate_vs(
-    opp_name: str, games: int, *, allow_random: bool,
-) -> tuple[int, int, int, int, str] | None:
-    """Return None if opponent has no official sample and allow_random is False."""
-    opp_path = str(DECKS_DIR / f"{opp_name}.csv")
-    deck_o = load_deck(Path(opp_path))
-    arch = official_archetype_for_opponent(opp_name, deck_o)
-    if arch is None and not allow_random:
-        return None
-
-    deck_l = load_deck(LUCARIO_DECK)
-    lucario = get_lucario_act()
-    opp_move, brain = get_opponent_act(opp_name, opp_path, deck_o, allow_random=allow_random)
-
-    wins = losses = draws = unfinished = 0
-    for i in range(games):
-        if i % 2 == 0:
-            r = run_game(deck_l, deck_o, lucario, opp_move)
-            if r == 0:
-                wins += 1
-            elif r == 1:
-                losses += 1
-            elif r == 2:
-                draws += 1
-            else:
-                unfinished += 1
-        else:
-            r = run_game(deck_o, deck_l, opp_move, lucario)
-            if r == 1:
-                wins += 1
-            elif r == 0:
-                losses += 1
-            elif r == 2:
-                draws += 1
-            else:
-                unfinished += 1
-    return wins, losses, draws, unfinished, brain
-
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--games", type=int, default=30)
-    ap.add_argument("--opponents", nargs="*", default=DEFAULT_OPPONENTS)
+    ap.add_argument("--suite", choices=["core", "full", "alakazam"], default=None)
+    ap.add_argument("--opponents", nargs="*", default=None)
     ap.add_argument(
         "--allow-random",
         action="store_true",
-        help="Use random pilot for decks without an official Kaggle sample (not phase-2 truth)",
+        help="Include registry opponents that use random pilot (e.g. alakazam suite)",
     )
     args = ap.parse_args()
 
-    mode = "official samples" + (" + random fallback" if args.allow_random else " only")
-    print(f"LucarioScorer + levers vs field ({args.games} games/opp, {mode})\n")
+    if args.opponents:
+        opponents = args.opponents
+    elif args.suite:
+        opponents = opponents_for_suite(args.suite)
+    else:
+        opponents = EXTENDED_OPPONENTS
 
-    total_w = total_n = 0
-    gated = 0
+    if args.allow_random:
+        reg = load_registry()
+        for stem, meta in reg["opponents"].items():
+            if meta.get("opponent_brain") == "random" and stem not in opponents:
+                opponents = list(opponents) + [stem]
 
-    for name in args.opponents:
-        opp_path = DECKS_DIR / f"{name}.csv"
-        deck_o = load_deck(opp_path)
-        label = native_brain_label(deck_o, name)
+    result = gate_matchups(games_per_opp=args.games, opponents=opponents)
 
-        if label == "none" and not args.allow_random:
-            print(f"  SKIP {name:32}  (no official Kaggle rule sample - use --allow-random to include)")
-            continue
-
-        try:
-            result = gate_vs(name, args.games, allow_random=args.allow_random)
-        except (FileNotFoundError, ModuleNotFoundError, ValueError) as exc:
-            print(f"  FAIL {name:32}  {exc}")
-            return 1
-
-        if result is None:
-            print(f"  SKIP {name:32}  (no official sample)")
-            continue
-
-        w, l, d, u, brain = result
-        n = w + l
-        pt, lo, hi = _wilson(w, n)
-        total_w += w
-        total_n += n
-        gated += 1
-        flag = " GAP" if pt < 30 else " OK" if pt >= 50 else ""
-        print(
-            f"  {name:32} ({brain:22})  {pt:5.1f}%  [{lo:4.1f}, {hi:5.1f}]  "
-            f"W{w}/L{l}/D{d}/U{u}{flag}",
-        )
-
-    if gated == 0:
-        print("\nNo opponents gated. Fetch official samples or pass --allow-random.")
+    if not result.matchups:
+        print("\nNo opponents gated.")
         return 1
 
-    if total_n:
-        pt, lo, hi = _wilson(total_w, total_n)
-        print(f"\n  {'OVERALL (gated)':32} {'':22}  {pt:5.1f}%  [{lo:4.1f}, {hi:5.1f}]  n={gated} decks")
+    print_harness_summary(result)
     return 0
 
 

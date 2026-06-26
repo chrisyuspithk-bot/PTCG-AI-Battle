@@ -38,7 +38,7 @@ python scripts/package_submission.py `
   --meta rl_mcts_field/lucarioex_v1/run_meta.json
 ```
 
-**Ship bar:** beat SearchScorer **668 μ** on ladder (Ruling R3); user OK for upload.
+**Ship bar:** beat **660.5 μ** Search on ladder for home-grown code; **880.9 μ** Dragapult for μ chase.
 
 ---
 
@@ -48,6 +48,7 @@ python scripts/package_submission.py `
 |-----------|-------|------|------|
 | Dragapult ex (Crispin) | `agent/dragapult_agent.py` | `agent_decks/dragapult_ex_sample.csv` | `scripts/gate_dragapult.py` |
 | Mega Lucario ex (rules) | `agent/lucario_policy.py` | `agent_decks/real_mega_lucario_ex.csv` | `scripts/gate_vs_public.py` with search/heuristic |
+| Archaludon ex / Cinderace | `agent/archaludon_agent.py` | `agent_decks/archaludon_ex_cinderace.csv` | `scripts/gate_archaludon.py` |
 
 Pattern documented in `ARCHITECTURE.md` § Per-deck agent template.
 
@@ -58,3 +59,4 @@ Pattern documented in `ARCHITECTURE.md` § Per-deck agent template.
 | Job | Path |
 |-----|------|
 | Imported Alakazam Kaggle kernel (659 μ reference) | [`ryotasueyoshi_rule_based_alakazam_best5/`](ryotasueyoshi_rule_based_alakazam_best5/) |
+| Archaludon ex / Cinderace community pilot (future test) | [`archaludon_ex_cinderace/`](archaludon_ex_cinderace/) · deck `agent_decks/archaludon_ex_cinderace.csv` · [`eval/archaludon_ex_cinderace_candidate.md`](../eval/archaludon_ex_cinderace_candidate.md) |

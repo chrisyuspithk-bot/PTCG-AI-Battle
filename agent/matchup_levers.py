@@ -144,16 +144,29 @@ LUCARIO_LEVERS: dict[str, LeverDeltas] = {
 }
 
 
-def levers_for_lucario(opp_board_ids: set[int] | frozenset[int]) -> LeverDeltas:
+def merge_lever_table(
+    overrides: dict[str, LeverDeltas] | None = None,
+) -> dict[str, LeverDeltas]:
+    """Return LUCARIO_LEVERS with optional per-archetype replacements."""
+    if not overrides:
+        return LUCARIO_LEVERS
+    return {**LUCARIO_LEVERS, **overrides}
+
+
+def levers_for_lucario(
+    opp_board_ids: set[int] | frozenset[int],
+    lever_table: dict[str, LeverDeltas] | None = None,
+) -> LeverDeltas:
     """Merge deltas for all detected tags (sum). Prefer primary_archetype for first impl."""
+    table = lever_table if lever_table is not None else LUCARIO_LEVERS
     tags = detect_archetypes(opp_board_ids)
     if not tags:
         return LeverDeltas()
     merged = LeverDeltas()
     for tag in tags:
-        if tag not in LUCARIO_LEVERS:
+        if tag not in table:
             continue
-        d = LUCARIO_LEVERS[tag]
+        d = table[tag]
         for f in merged.__dataclass_fields__:
             object.__setattr__(
                 merged,

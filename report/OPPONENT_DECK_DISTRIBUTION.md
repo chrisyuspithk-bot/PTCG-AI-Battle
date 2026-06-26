@@ -2,7 +2,8 @@
 
 **Purpose:** Track what decks competing agents are using to understand meta composition and tailor our strategy.
 
-**Last Updated:** 2026-06-22 (Session 44d — draft; refresh via `update_opponent_tracker.py`)  
+**Last Updated:** 2026-06-26 (Session 47 — `analyze_meta_by_mu_band.py`)  
+**Master brief:** [`RESEARCH_AND_DECISION_BRIEF.md`](RESEARCH_AND_DECISION_BRIEF.md)  
 **Role:** **Phase 3 only** — field mixture weights for gates and RL sampling. Do not use to skip
 global rules (phase 1) or matchup levers (phase 2). See `ARCHITECTURE.md` § Per-deck template.
 

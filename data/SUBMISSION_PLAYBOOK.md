@@ -74,21 +74,27 @@ Auto-selected Finals: **#5 + #4**. Best μ overall (**#1 Kyogre 633.0**) was dis
 
 ## Pre-submit checklist
 
-1. Dry-run: `python scripts/package_submission.py --name … --scorer … --deck …`
-2. Smoke: `python scripts/smoke_test.py` (17/17)
-3. User explicit OK for Kaggle upload
-4. **Uploads left today?** Max **5/day** (§2.2a)
-5. **Final slots:** Will this be one of your **2 Final Submissions**? If probing, OK — but **select best two manually** before deadline
-6. After upload: `python scripts/track_ladder.py` then `--fetch-logs`
-7. Log ref + μ in `report/submission_candidates_2026-06-19.md` and `report/ladder_history.csv`
+0. **R12 duplicate check:** `python scripts/check_upload_eligible.py --manifest … --change "…"` → exit **0** required.
+   Or `--suggest` for high-value next rows. See `data/EVAL_PROTOCOL.md` §9.
+1. Open `eval/AGENT_CATALOG_FULL.md` — which row are you **beating**? What **changed**?
+2. Dry-run package: `python scripts/package_*.py` or `package_submission.py`
+3. Smoke: `python scripts/smoke_test.py` (17/17)
+4. **Hypothesis:** one sentence — what is **new** vs every existing catalog row?
+5. User explicit OK for Kaggle upload
+6. **Uploads left today?** Max **5/day** (§2.2a)
+7. **Final slots:** Will this be one of your **2 Final Submissions**? If probing, OK — but **select best two manually** before deadline
+8. After upload: `python scripts/track_ladder.py` then `--fetch-logs`
+9. Log ref + μ in `eval/ladder_log.csv` and catalog if new row
 
 ---
 
 ## Deadline strategy
 
-- Pick **2 Final Submissions** explicitly on Kaggle — don’t rely on auto-select if your best μ isn’t your most recent upload.
-- Use daily upload quota for **probes**; re-upload or **select** winners before **Final Submission Deadline**.
-- Keep at least one daily slot near deadline for a lock-in re-upload if needed.
+- **During development:** every upload must be a **new catalog row** (R12) — iterate brain, deck, or
+  levers; local gate first. **Do not** re-upload proven brain×deck pairs to “verify packaging.”
+- **Before deadline:** run `python scripts/repackage_champions.py`, then **manually select 2 Finals**
+  on Kaggle — don't rely on auto-select (see [`SUBMISSION_REGISTRY.md`](SUBMISSION_REGISTRY.md)).
+- Keep at least one daily slot near deadline for a **final lock-in** re-upload of the best tarball if needed.
 
 ---
 
@@ -111,4 +117,4 @@ kaggle competitions submit -c pokemon-tcg-ai-battle \
   -m "description"
 ```
 
-See also: `data/META_NOTES.md`, `data/CABT_API.md`, `data/EVAL_PROTOCOL.md`, `data/KAGGLE_SIMULATION_CLI.md`, `data/COMPETITION_SCORING.md`, `report/finals_strategy.md`.
+See also: [`SUBMISSION_REGISTRY.md`](SUBMISSION_REGISTRY.md), [`KAGGLE_SIMULATION_CLI.md`](KAGGLE_SIMULATION_CLI.md), [`COMPETITION_SCORING.md`](COMPETITION_SCORING.md), `report/finals_strategy.md`.

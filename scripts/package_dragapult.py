@@ -33,6 +33,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENGINE_CG = os.path.join(ROOT, "data", "sim", "sample_submission", "cg")
 AGENT_SRC = os.path.join(ROOT, "agent", "dragapult_agent.py")
 BENCH_GUARD_SRC = os.path.join(ROOT, "agent", "dragapult_bench_guard.py")
+EMPTY_GUARD_SRC = os.path.join(ROOT, "agent", "empty_bench_guard.py")
 DECK_SRC = os.path.join(ROOT, "agent_decks", "dragapult_ex_sample.csv")
 NAME = "dragapult_ex_sample"
 BUILD_DIR = os.path.join(ROOT, "dist", "submission_build", NAME)
@@ -91,7 +92,7 @@ def _copytree_no_pyc(src: str, dst: str) -> None:
 def build() -> None:
     if not os.path.isdir(ENGINE_CG):
         raise FileNotFoundError(f"engine cg/ not found: {ENGINE_CG}")
-    for p in (AGENT_SRC, BENCH_GUARD_SRC, DECK_SRC):
+    for p in (AGENT_SRC, BENCH_GUARD_SRC, EMPTY_GUARD_SRC, DECK_SRC):
         if not os.path.exists(p):
             raise FileNotFoundError(p)
     deck_lines = [x for x in open(DECK_SRC).read().split("\n") if x.strip()]
@@ -105,12 +106,20 @@ def build() -> None:
         f.write(MAIN_PY)
     shutil.copy2(AGENT_SRC, os.path.join(BUILD_DIR, "dragapult_agent.py"))
     shutil.copy2(BENCH_GUARD_SRC, os.path.join(BUILD_DIR, "dragapult_bench_guard.py"))
+    shutil.copy2(EMPTY_GUARD_SRC, os.path.join(BUILD_DIR, "empty_bench_guard.py"))
     shutil.copy2(DECK_SRC, os.path.join(BUILD_DIR, "deck.csv"))
     _copytree_no_pyc(ENGINE_CG, os.path.join(BUILD_DIR, "cg"))
 
     os.makedirs(CAND_DIR, exist_ok=True)
     with tarfile.open(TARBALL, "w:gz") as tar:
-        for item in ("main.py", "dragapult_agent.py", "dragapult_bench_guard.py", "deck.csv", "cg"):
+        for item in (
+            "main.py",
+            "dragapult_agent.py",
+            "dragapult_bench_guard.py",
+            "empty_bench_guard.py",
+            "deck.csv",
+            "cg",
+        ):
             tar.add(os.path.join(BUILD_DIR, item), arcname=item)
 
     manifest = {
@@ -162,6 +171,11 @@ def dry_run() -> None:
         if not isinstance(out, list) or len(out) != 60:
             raise SystemExit(f"DRY-RUN FAILED: deck-select got {out!r}")
         print(f"dry-run OK: exec main (no __file__) + cg + deck-select -> {len(out)} cards")
+    print(
+        f"\nBefore upload: python scripts/check_upload_eligible.py "
+        f"--manifest {os.path.relpath(MANIFEST, ROOT)} "
+        f'--change "YOUR ONE-LINE DELTA" --local-gate 58.0'
+    )
 
 
 if __name__ == "__main__":

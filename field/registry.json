@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "decks_dir": "agent_decks",
+  "opponents": {
+    "dragapult_ex_sample": {
+      "deck_path": "agent_decks/dragapult_ex_sample.csv",
+      "archetype": "dragapult_psychic",
+      "suites": ["core", "full"],
+      "opponent_brain": "native"
+    },
+    "real_mega_abomasnow_ex": {
+      "deck_path": "agent_decks/real_mega_abomasnow_ex.csv",
+      "archetype": "abomasnow_water",
+      "suites": ["core", "full"],
+      "opponent_brain": "native"
+    },
+    "real_iono": {
+      "deck_path": "agent_decks/real_iono.csv",
+      "archetype": "iono_lightning",
+      "suites": ["core", "full"],
+      "opponent_brain": "native"
+    },
+    "real_dragapult_ex": {
+      "deck_path": "agent_decks/real_dragapult_ex.csv",
+      "archetype": "dragapult_psychic",
+      "suites": ["full"],
+      "opponent_brain": "native"
+    },
+    "real_mega_lucario_ex": {
+      "deck_path": "agent_decks/real_mega_lucario_ex.csv",
+      "archetype": "lucario_mirror",
+      "suites": ["full"],
+      "opponent_brain": "native"
+    },
+    "top_mined_alakazam": {
+      "deck_path": "agent_decks/top_mined_alakazam.csv",
+      "archetype": "alakazam_psychic",
+      "suites": ["alakazam"],
+      "opponent_brain": "native"
+    },
+    "ryotasueyoshi_alakazam_best5": {
+      "deck_path": "agent_decks/ryotasueyoshi_alakazam_best5.csv",
+      "archetype": "alakazam_psychic",
+      "suites": ["alakazam"],
+      "opponent_brain": "native"
+    },
+    "starmie_froslass_ashleysandlin": {
+      "deck_path": "agent_decks/starmie_froslass_ashleysandlin.csv",
+      "archetype": "starmie_water",
+      "suites": ["starmie"],
+      "opponent_brain": "native",
+      "notes": "Gold-medal list (ashleysandlin) + repo starmie_agent rule pilot."
+    }
+  },
+  "suites": {
+    "core": [
+      "dragapult_ex_sample",
+      "real_mega_abomasnow_ex",
+      "real_iono"
+    ],
+    "full": [
+      "dragapult_ex_sample",
+      "real_mega_abomasnow_ex",
+      "real_iono",
+      "real_dragapult_ex",
+      "real_mega_lucario_ex"
+    ],
+    "lucario": [
+      "real_mega_lucario_ex"
+    ],
+    "alakazam": [
+      "top_mined_alakazam",
+      "ryotasueyoshi_alakazam_best5"
+    ],
+    "starmie": [
+      "starmie_froslass_ashleysandlin"
+    ]
+  }
+}

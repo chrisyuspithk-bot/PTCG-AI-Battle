@@ -16,9 +16,12 @@ from agent.agent import HeuristicScorer
 from agent.deck_tech import LUCARIO_TECH
 from agent.matchup_levers import (
     GUST_SETUP_IDS,
+    LUCARIO_LEVERS,
     SNOVER_ID,
     TREVENANT_REVENGE_SETUP_IDS,
+    LeverDeltas,
     levers_for_lucario,
+    merge_lever_table,
 )
 from agent.smart_bench import (
     MAX_VOLUNTARY_BENCH,
@@ -78,13 +81,19 @@ class LucarioPlan:
 class LucarioScorer(HeuristicScorer):
     """Competition reference Lucario brain with smart bench caps."""
 
-    def __init__(self, rng=None, deck_path: str | None = None) -> None:
+    def __init__(
+        self,
+        rng=None,
+        deck_path: str | None = None,
+        lever_overrides: dict[str, LeverDeltas] | None = None,
+    ) -> None:
         super().__init__(rng=rng)
         self._fallback = HeuristicScorer(rng=rng)
         self._plan = LucarioPlan()
         self._plan_turn = -1
         self._ability_used = False
         self._deck_path = deck_path
+        self._lever_table = merge_lever_table(lever_overrides)
 
     def rank_options(self, obs_dict, select, current, options) -> list[int]:
         """All option indices sorted best-first (same scoring as choose)."""
@@ -213,7 +222,7 @@ class LucarioScorer(HeuristicScorer):
             if data is not None and data.stage2:
                 op_stage2_count += 1
 
-        levers = levers_for_lucario(op_board_ids)
+        levers = levers_for_lucario(op_board_ids, lever_table=self._lever_table)
 
         for card in my_state.hand:
             hand_counts[card.id] += 1

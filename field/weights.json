@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "updated": "2026-06-26",
+  "source": "report\\meta\\deck_by_mu_band_2026-06-26.json",
+  "notes": "R3 mixture weights for weighted E[win] gates. Opponent archetype keys match field/registry.json and agent/matchup_levers.py. Rebuild via scripts/build_field_weights.py after meta refresh.",
+  "opponent_archetype_weights": {
+    "alakazam_psychic": 0.189,
+    "lucario_mirror": 0.392,
+    "iono_lightning": 0.041,
+    "dragapult_psychic": 0.365,
+    "kyogre_water": 0.014
+  },
+  "mu_band_volume": {
+    "elite_1200+": 0.0284,
+    "high_1000_1199": 0.5653,
+    "mid_800_999": 0.4063
+  }
+}

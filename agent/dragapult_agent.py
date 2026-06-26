@@ -412,6 +412,13 @@ def _agent_impl(obs_dict: dict) -> list[int]:
     main_pokemon_count = field_counts[Dreepy] + field_counts[Drakloak] + field_counts[Dragapult_ex]
     no_more_dex = (field_counts[Dragapult_ex] * 2 >= len(op_state.prize))
 
+    opp_board_ids: set[int] = set()
+    if op_state.active and op_state.active[0] is not None:
+        opp_board_ids.add(op_state.active[0].id)
+    for _pokemon in op_state.bench:
+        if _pokemon is not None:
+            opp_board_ids.add(_pokemon.id)
+
     stadium_id = 0
     for card in state.stadium:
         stadium_id = card.id
@@ -573,7 +580,9 @@ def _agent_impl(obs_dict: dict) -> list[int]:
             score = 15
         elif id == Boss_Orders:
             if plan_a.attack > 0:
-                score = 60000
+                from agent.dragapult_levers import boss_orders_bonus
+
+                score = 60000 + boss_orders_bonus(opp_board_ids, phase="hand")
         elif id == Crispin:
             if not ignore_count or support_count == 0:
                 if deck_counts[Basic_Fire_Energy] == 0 or deck_counts[Basic_Psychic_Energy] == 0:
@@ -798,7 +807,9 @@ def _agent_impl(obs_dict: dict) -> list[int]:
                 score = 40000
             elif card.id == Boss_Orders:
                 if card.id == use_support:
-                    score = 35000
+                    from agent.dragapult_levers import boss_orders_bonus
+
+                    score = 35000 + boss_orders_bonus(opp_board_ids, phase="play")
                 else:
                     score = -1
             elif card.id == Lillie_Determination:
@@ -953,8 +964,9 @@ def agent(obs_dict: dict) -> list[int]:
     out, fellback, bench_guarded = None, False, False
     try:
         raw = _agent_impl(obs_dict)
-        guarded = apply_bench_guard(obs_dict, raw)
-        bench_guarded = guarded != raw
+        bench_on = os.environ.get("DRAGAPULT_BENCH_GUARD", "1") != "0"
+        guarded = apply_bench_guard(obs_dict, raw) if bench_on else raw
+        bench_guarded = bench_on and guarded != raw
         out = guarded
         if not _is_legal(out, obs_dict):
             out, fellback = _legal_fallback(obs_dict), True

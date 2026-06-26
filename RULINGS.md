@@ -49,9 +49,9 @@ of these.
 7. **Ground decisions in math and the actual game.** It is an imperfect-information POMDP on a
    TrueSkill ladder. Use the right tools for that (belief/determinized search, best-arm
    identification, Wilson/SPRT) — not vibes (R5, R9).
-8. **850.5 μ is best so far, not the goal.** Dragapult rules (ref 53950779) set the **interim bar**
+8. **880.9 μ is best so far, not the goal.** Dragapult v3 rules (ref 53989933) set the **interim bar**
    every agent must **beat** before we call it progress. Field top ~1350; mid-pack ~1100+. Never
-   frame 850.5 as "done" or "champion" — we **expect and need** to exceed it.
+   frame 880.9 as "done" — we **expect and need** to exceed it.
 
 > If a plan violates one of these, stop and fix the plan. These supersede enthusiasm for any
 > particular deck, model, or idea.
@@ -60,28 +60,30 @@ of these.
 
 ## Part 1 — The honest scoreboard (measured ladder μ)
 
-Source: `report/submission_log.csv`, `report/ladder_history.csv` (as of 2026-06-22 evening).
-Field scale for context: **top ~1350, mid-pack ~1100+** (`data/META_NOTES.md`). Our **best so far**
-is **850.5 μ** — still well below mid-pack. **Every agent must aim to beat 850.5**; that is the
-interim floor, not the finish line.
+Source: `eval/ladder_log.csv`, `report/ladder_history.csv` (updated **2026-06-26**, Session 45).
+Field scale: **top ~1350, mid-pack ~1100+**. **Bar to beat: 880.9 μ** (Dragapult v3, ref 53989933).
 
 | Rank | Agent (brain × deck) | Best μ | Verdict |
 |------|----------------------|-------:|---------|
-| **1** | **Official Dragapult ex sample (Crispin) + never-crash wrapper** | **850.5** | **Best so far (2026-06-22).** Ref 53950779. **Bar to beat** — not sufficient alone. |
-| 2 | **SearchScorer × real Mega Lucario ex** | **668** | Former best home-grown. 54.5% WR over 33 episodes. |
-| 3 | **Imported public rule-based Alakazam ("ryotasueyoshi best5")** | **659** | *Someone else's notebook.* Beat our own deck-search line decisively. |
-| 4 | LucarioMCTSScorer (RL+MCTS model4) × real Lucario ex | 643.9 | Kaggle basic train; below rules Dragapult. |
-| 5 | HeuristicScorer × Kyogre (a2_kyogre_33) | 633 (peaked 672.7) | Simple hand-tuned rules. |
-| 6 | SearchScorer × Kyogre+2e | 626 | |
-| 7 | SearchScorer × Trevenant control leader | 615.6 | |
-| 8 | SearchScorer × gen19 fast-basic (deck-RL output) | 598.8 | Best deck-RL deck — still below heuristic Kyogre. |
-| 9 | LearnedScorer (Track B PPO+distill) × RL-deck | 585.1 | Best *learned* policy; still below hand-tuned rules. |
-| 10 | SearchScorer × Abomasnow+4e | 548.6 | |
-| 11 | "Lucario v2" Search probe | 500.1 | **Same agent earlier read 734.6.** See Ruling R1. |
-| 12 | LearnedScorer × Alakazam (shared-distill bug) | 490.4 | Distill trained on wrong deck. |
-| 13 | LearnedScorer × Dragapult | 468.9 | Learned policy — not the official Crispin rules pilot (850.5). |
-| 14 | LucarioMCTSScorer (RL+MCTS, early iter) × Lucario | 324.6 | Empty-bench losses; retired. |
-| 15 | **MCTS/transformer policy × Alakazam** (`top_mined_alakazam`, `model4.pth`) | **~185** (user-reported, 2026-06-22) | **WORST result on record. Retired.** See note below. |
+| **1** | **Dragapult ex v3 (Crispin rules + bench guard R7)** | **880.9** | **Best so far.** Ref 53989933. Only agent >800 μ. |
+| 2 | Dragapult ex v2 (Crispin + wrapper) | 833.0 | Superseded. Ref 53950779. |
+| 3 | **SearchScorer × real Mega Lucario ex** | **660.5** | Best **home-grown** brain. Ref 53869254. |
+| 4 | Imported rule-based Alakazam ("ryotasueyoshi best5") | 659.0 | External pilot. Ref 53913404. |
+| 5 | Lucario RL+MCTS model4 (basic notebook) | 651.3 | **Beats field v5 MCTS** on same deck. Ref 53946742. |
+| 6 | HeuristicScorer × Kyogre | 633.0 (peaked 672.7) | Ref 53854707. |
+| 7 | SearchScorer × Kyogre +2e probe | 626.0 | Ref 53856711. |
+| 8 | SearchScorer × Trevenant | 615.6 | Ref 53916377. |
+| 9 | SearchScorer × gen19 GA deck | 600.7 | GA < hand Kyogre. |
+| 10 | LearnedScorer Track B | 585.1 | Retired. Ref 53868798. |
+| 11 | **Lucario v5 field RL+MCTS** (25 cycles) | **580.6** | Ref 53995982. **Below model4 & Search** — deprioritize. |
+| 12 | SearchScorer × Abomasnow | 548.6 | Ref 53856676. |
+| 13 | SearchScorer × Alakazam leader | 545.6 | Our Search << imported best5. |
+| 14 | LucarioScorer + smart bench | 535.6 | Ref 53886522. |
+| 15 | LucarioSearchScorer × Lucario v2 | 500.1 | Ref 53930648. |
+| 16–21 | Learned / early MCTS / v2 field | 185–490 | See `eval/ladder_scoreboard_full_20260626.md`. |
+
+**Full table (21 COMPLETE submissions):** [`eval/ladder_scoreboard_full_20260626.md`](../eval/ladder_scoreboard_full_20260626.md).  
+`eval/ladder_log.csv` is **incomplete** (6 rows) — do not use it alone.
 
 **Note on row 13 (the MCTS Alakazam, recorded 2026-06-22):** A small MCTS/transformer policy
 (d_model 128, 2 heads, 1+1 layers, search count 12; `run_meta.json` recoverable from commit
@@ -108,7 +110,7 @@ rebuild must reckon with.
 | Brain | What it is | Result | Verdict |
 |-------|-----------|--------|---------|
 | HeuristicScorer | Hand-tuned MAIN priority + context handlers (`agent/agent.py`) | 633 μ on Kyogre | **KEEP (baseline).** Simple, stable, our 3rd-best. |
-| SearchScorer | Heuristic + shallow `search_*` rerank | 668 μ on Lucario | **KEEP (baseline).** Our best home-grown. |
+| SearchScorer | Heuristic + shallow `search_*` rerank | **660.5 μ** on Lucario | **KEEP (baseline).** Best home-grown. |
 | LucarioScorer | Port of public Lucario sample policy + smart bench | 600 (only 2 episodes) | Inconclusive; deck-specific. |
 | **DragapultScorer (official Crispin sample + wrapper)** | `agent/dragapult_agent.py` on `dragapult_ex_sample.csv` | **850.5** | **Best so far (2026-06-22).** Ref 53950779. **Bar to beat** — not the goal. |
 | RuleCoreScorer + deck_tech | Generic brain + per-deck "tech" overrides | Public gate 9–15% | **FAILED.** Crustle matchup never cleared ~15%. Over-engineered. |
@@ -129,8 +131,8 @@ Real-meta lists (mined from competition episodes) — these are the field, keep 
 
 | Deck | Best result | Verdict |
 |------|-------------|---------|
-| Mega Lucario ex (real) | 668 μ (Search); 643.9 μ (RL+MCTS model4) | **Field wall.** RL pilots still below rules Dragapult (850.5). |
-| Dragapult ex (official Crispin sample) | **850.5 μ** | **Best so far.** Interim bar; target > 850.5 toward mid-pack (~1100+). |
+| Mega Lucario ex (real) | **660.5 μ** (Search); 651.3 μ (basic MCTS model4); 580.6 μ (field v5 MCTS) | Search > RL on same deck. |
+| Dragapult ex (official Crispin sample) | **880.9 μ** | **Best so far.** Matched pilot×deck only. |
 | Alakazam (single-prize aggro) | 659 μ (imported pilot) | **Strong when piloted well.** Our own pilots lose the Iono matchup (~13–30%). Pilot, not deck. |
 | Kyogre (big-basic Water) | 633 μ | Stable, simple, good heuristic pilot. |
 | Trevenant control | 615.6 μ | Mid. |
@@ -158,6 +160,7 @@ Real-meta lists (mined from competition episodes) — these are the field, keep 
 | Local win-rate vs *real mined* field + public agents (`gate_vs_public.py`) | **Closer, still imperfect.** Best local predictor we have; even it underrated Kyogre (13% local → 672 μ). |
 | Self-play vs random / mirror-only | **INVALID for ladder.** Caused every RL overfit. Never use as a ladder proxy. |
 | Kaggle ladder μ (after COMPLETE + ~40 min) | **GROUND TRUTH** — but slow, noisy early (high σ), and capped at 5 uploads/day. |
+| Re-upload same brain×deck to “verify port” | **WASTE (R12).** Session 50: Alakazam best5 re-upload after 53913404 @ 659 μ — zero iteration value. |
 | Episode replay mining | **Underused golden ticket.** Scripts exist but ran on empty inputs (Kaggle egress blocked in sandbox). Pillar 0 fixes this. |
 
 ---
@@ -204,8 +207,19 @@ Real-meta lists (mined from competition episodes) — these are the field, keep 
 - **R11 — Rules before mixture.** For each deck: (1) gate global rules on the real field, (2) add
   matchup levers one archetype at a time with measured improvement, (3) only then weight eval/training
   by field distribution. Meta tracker informs phase 3; it does not skip phases 1–2. (Decision: Session 44d.)
-
----
+- **R12 — Never re-upload a brain×deck we already laddered.** Check
+  `eval/AGENT_CATALOG_FULL.md` / `eval/ladder_log.csv` first. If that **same brain × same deck**
+  already has a COMPLETE ladder row, **do not upload again** to “verify the port,” “repackage,” or
+  “get another reading” — that burns a daily slot with **zero iteration value**. Porting notebook →
+  `agent/` ends at **dry-run package + local harness gate**; ladder truth already exists for that row.
+  **Allowed uploads:** (a) a **material change** — different brain logic, deck list, levers, or scorer
+  that is a **new catalog row** with a stated μ hypothesis; (b) **final lock-in** near competition
+  deadline (Sep 2026 Strategy / ~Aug Simulation) when manually selecting **2 Finals** — re-ship the
+  best-known tarball only then, not during development. **Evidence:** Session 50 — re-uploaded
+  ryotasueyoshi Alakazam best5 after ref **53913404** already showed **659.0 μ** (2026-06-21); wasted
+  1/5 daily upload. *The point of uploads is to iterate and improve, not to replay proven rows.*
+  **Enforcement:** `python scripts/check_upload_eligible.py` must exit 0 before upload;
+  iteration loop in `data/EVAL_PROTOCOL.md` §9.
 
 ## Part 4 — Grounded game / competition facts
 

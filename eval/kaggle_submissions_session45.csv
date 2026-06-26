@@ -1,0 +1,48 @@
+﻿ref,fileName,date,description,status,publicScore,privateScore
+
+53995982,lucarioex_v5_field_mcts.tar.gz,2026-06-24 01:20:12.807000,"lucarioex_v5 field RL+MCTS final champion (25 cycles, 46.1% field eval cycle21, model_best.pth)",SubmissionStatus.COMPLETE,580.6,
+
+53989933,dragapult_ex_sample.tar.gz,2026-06-23 19:44:47.133000,dragapult_ex_sample v3: Phase2 empty-bench guard (R7); official Crispin rules + never-crash wrapper; gate 90.6pct vs SearchScorer 0 no_active,SubmissionStatus.COMPLETE,880.8,
+
+53978119,lucarioex_v5_field_mcts.tar.gz,2026-06-23 11:39:38.643000,"lucarioex_v5 field RL+MCTS champion (cycle13, 43.5% field vs official pilots, search=20 train)",SubmissionStatus.COMPLETE,464.7,
+
+53962060,lucarioex_v2_field_mcts.tar.gz,2026-06-23 00:50:41.667000,lucarioex_v2 field RL+MCTS 20-cycle vs 10 opponents,SubmissionStatus.COMPLETE,460.8,
+
+53950779,dragapult_ex_sample.tar.gz,2026-06-22 15:06:08.913000,dragapult_ex_sample v2: fix __file__ bug in main.py; Crispin sample + never-crash wrapper,SubmissionStatus.COMPLETE,833.0,
+
+53950246,dragapult_ex_sample.tar.gz,2026-06-22 14:48:12.503000,dragapult_ex_sample: official Dragapult ex sample (Crispin) + never-crash wrapper; local gate 88% vs SearchScorer / 78% vs heuristic,SubmissionStatus.ERROR,,
+
+53946742,track_d_lucarioex_rl_mcts_model4.tar.gz,2026-06-22 12:59:16.613000,"20260622: Mega Lucario ex real deck + RL+MCTS model4 (rl_mcts_basic/lucarioex_basic/model4, d128 basic, 80pct eval win rate)",SubmissionStatus.COMPLETE,651.3,
+
+53946148,track_d_alakazam_rl_mcts_model4.tar.gz,2026-06-22 12:38:01.567000,"20260622: Alakazam top_mined deck + RL+MCTS model4 (rl_mcts_basic/alakazam_basic/model4.pth, d128 basic config, iter4 checkpoint)",SubmissionStatus.COMPLETE,185.4,
+
+53930652,track_a_gen19_fast_basic_search.tar.gz,2026-06-22 02:24:56.060000,"20260621 probe: gen19 fast-basic aggro deck + SearchScorer (robust-screen 0.610, public 8.3%); novel aggro archetype, aligns with aggressive-meta finding",SubmissionStatus.COMPLETE,600.7,
+
+53930648,track_a_lucario_search.tar.gz,2026-06-22 02:24:42.763000,"20260621 probe: Lucario v2 + LucarioSearchScorer (leader-suite L1 69.6%, public 11.1%); Lucario hub-archetype calibration vs ladder",SubmissionStatus.COMPLETE,500.1,
+
+53916377,track_a_trevenant_leader_search.tar.gz,2026-06-21 14:28:14.437000,"20260621 probe: mined Trevenant control leader deck + SearchScorer (L1 15.3%, robust-pool #2 0.556); 2nd slot calibration vs real ladder",SubmissionStatus.COMPLETE,615.6,
+
+53913404,ryotasueyoshi_alakazam_best5.tar.gz,2026-06-21 12:41:46.930000,"20260621 probe imported alakazam best5 (57.3% public gate, 417g)",SubmissionStatus.COMPLETE,659.0,
+
+53890064,track_a_alakazam_leader_search.tar.gz,2026-06-20 17:35:19.523000,Leader Alakazam mined deck (TrustHub line) + SearchScorer probe,SubmissionStatus.COMPLETE,545.6,
+
+53886522,track_c_lucario_rulecore_smartbench.tar.gz,2026-06-20 15:14:42.103000,"Track C Lucario official sample policy + smart bench (1-2 depth, empty-bench guard) via RuleCore/LucarioScorer",SubmissionStatus.COMPLETE,535.6,
+
+53885445,track_d_lucario_rl_mcts.tar.gz,2026-06-20 14:37:24.433000,"Track D Lucario RL+MCTS iter0 champion (85pct vs random, gate 97.5pct promoted) - 2-iter Kaggle GPU run",SubmissionStatus.COMPLETE,368.5,
+
+53869254,track_a_lucario_ex_search.tar.gz,2026-06-20 04:29:18.510000,Mega Lucario ex (real mined meta list) + SearchScorer best rules - 29/30 local vs benchmark,SubmissionStatus.COMPLETE,660.5,
+
+53868798,track_b_learned_rl_deck_kaggle_20260619.tar.gz,2026-06-20 04:07:12.790000,"Track B learned RL-deck (100k, gate 210/240 87.5% accept_b) - best learned candidate, ladder probe",SubmissionStatus.COMPLETE,585.1,
+
+53856711,track_a_probe_1.tar.gz,2026-06-19 17:30:45.013000,Track A TA1: Kyogre+2e SearchScorer (deck+agent vs live heuristic),SubmissionStatus.COMPLETE,626.0,
+
+53856676,track_a_probe_2.tar.gz,2026-06-19 17:29:19.023000,Track A TA2: Abomasnow+4e SearchScorer meta probe,SubmissionStatus.COMPLETE,548.6,
+
+53856590,track_b_learned_dragapult.tar.gz,2026-06-19 17:24:51.200000,Track B LearnedScorer + dragapult spread meta probe,SubmissionStatus.COMPLETE,468.9,
+
+53856584,track_b_learned_alakazam.tar.gz,2026-06-19 17:24:33.930000,Track B LearnedScorer + alakazam single-prize meta probe,SubmissionStatus.COMPLETE,490.4,
+
+53854707,a2_kyogre.tar.gz,2026-06-19 16:08:26.997000,A2 Kyogre ù fix main.py __file__ for Kaggle exec,SubmissionStatus.COMPLETE,633.0,
+
+53854588,a2_kyogre.tar.gz,2026-06-19 16:04:02.667000,A2 Kyogre deck ù 963/1000 local gate,SubmissionStatus.ERROR,,
+

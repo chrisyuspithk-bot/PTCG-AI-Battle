@@ -1,5 +1,24 @@
 recorded_at,name,ref,status,mu_reading_1,mu_reading_2,deck,agent,git_commit,local_gate_overall_pct,notes
-2026-06-22,dragapult_ex_sample,53950246,ERROR,,,dragapult_ex_sample.csv,dragapult_agent (official sample + never-crash wrapper),b22d52d,88.3,"v1 failed validation: __file__ NameError in main.py (ref 53950246, 2026-06-22 14:48 UTC)."
-2026-06-22,dragapult_ex_sample,53950779,COMPLETE,600.0,850.5,dragapult_ex_sample.csv,dragapult_agent (official sample + never-crash wrapper + __file__ fix),,88.3,"v2 submitted 2026-06-22 15:06 UTC. Validation COMPLETE μ=600.0 (baseline). Ladder μ settled 850.5 — best pilot; pin Final."
-2026-06-23,dragapult_ex_sample,53989933,COMPLETE,600.0,684.9,dragapult_ex_sample.csv,dragapult_agent (v3 bench guard R7),,90.6,"v3 submitted 2026-06-23 19:44 UTC. Ladder μ=684.9 after 3 public games (2W/1L); 0 no_active losses; keep 53950779 pinned until v3 beats 833+."
-2026-06-24,lucarioex_v5_field_mcts,53995982,COMPLETE,600.0,650.7,real_mega_lucario_ex.csv,lucario_mcts (model_best cycle21 46.1% field),,,"v5 final champion. Ladder μ=650.7 (+186 vs 53978119). Full report: report/eval/LUCARIOEX_V5_FIELD_REPORT.md"
+2026-06-26,dragapult_ex_sample_v3,53989933,COMPLETE,880.9,880.9,dragapult_ex_sample.csv,dragapult_crispin+bench_guard_R7,,,"Ladder #1. Only mu>800. Source: Kaggle UI + kaggle_submissions_session45.csv"
+2026-06-22,dragapult_ex_sample_v2,53950779,COMPLETE,833.0,833.0,dragapult_ex_sample.csv,dragapult_crispin+wrapper,,,"Superseded by v3"
+2026-06-20,track_a_lucario_ex_search,53869254,COMPLETE,660.5,660.5,real_mega_lucario_ex.csv,SearchScorer,,29/30 local,"Best home-grown brain. Catalog rank #3"
+2026-06-21,ryotasueyoshi_alakazam_best5,53913404,COMPLETE,659.0,659.0,ryotasueyoshi_alakazam_best5.csv,imported_rules_best5,,57.3 public gate,"External notebook. Catalog rank #4. Repo port S50 — do not re-upload (R12)"
+2026-06-22,track_d_lucarioex_rl_mcts_model4,53946742,COMPLETE,651.3,651.3,real_mega_lucario_ex.csv,lucario_mcts_basic_model4,,80 eval WR claimed,"Beats v5 field MCTS on same deck"
+2026-06-19,a2_kyogre,53854707,COMPLETE,633.0,633.0,a2_kyogre_33_energy.csv,HeuristicScorer,,,"Peaked 672.7 early"
+2026-06-19,track_a_probe_1,53856711,COMPLETE,626.0,626.0,track_a_probes/probe_1_kyogre_e+2.csv,SearchScorer,,,
+2026-06-21,track_a_trevenant_leader_search,53916377,COMPLETE,615.6,615.6,top_mined_trevenant.csv,SearchScorer,,15.3 L1 local,
+2026-06-22,track_a_gen19_fast_basic_search,53930652,COMPLETE,600.7,600.7,gen19_GA_deck.csv,SearchScorer,,8.3 public gate,
+2026-06-20,track_b_learned_rl_deck,53868798,COMPLETE,585.1,585.1,rl_deck/best_deck.csv,LearnedScorer_TrackB,,87.5,RETIRED
+2026-06-24,lucarioex_v5_field_mcts,53995982,COMPLETE,580.6,580.6,real_mega_lucario_ex.csv,lucario_mcts_field_v5_25cyc,,46.1 field gate,"Below Search+model4. RETIRED for more cycles"
+2026-06-19,track_a_probe_2,53856676,COMPLETE,548.6,548.6,track_a_probes/probe_2_abomasnow_e+4.csv,SearchScorer,,,
+2026-06-20,track_a_alakazam_leader_search,53890064,COMPLETE,545.6,545.6,top_mined_alakazam.csv,SearchScorer,,,"-113 mu vs imported best5"
+2026-06-20,track_c_lucario_rulecore_smartbench,53886522,COMPLETE,535.6,535.6,real_mega_lucario_ex.csv,LucarioScorer+smart_bench,,9.0,Only 2 episodes
+2026-06-22,track_a_lucario_search,53930648,COMPLETE,500.1,500.1,lucario_v2_leader_deck.csv,LucarioSearchScorer,,69.6 L1 local,"Local lied: 500 mu"
+2026-06-19,track_b_learned_alakazam,53856584,COMPLETE,490.4,490.4,pool_alakazam_dudunsparce.csv,LearnedScorer_TrackB,,,RETIRED pool proxy
+2026-06-19,track_b_learned_dragapult,53856590,COMPLETE,468.9,468.9,pool_dragapult.csv,LearnedScorer_TrackB,,,RETIRED
+2026-06-23,lucarioex_v5_field_mcts_early,53978119,COMPLETE,464.7,464.7,real_mega_lucario_ex.csv,lucario_mcts_field_v5_c13,,43.5 field gate,Superseded by 53995982
+2026-06-23,lucarioex_v2_field_mcts,53962060,COMPLETE,460.8,460.8,real_mega_lucario_ex.csv,lucario_mcts_field_v2_20cyc,,,RETIRED
+2026-06-20,track_d_lucario_rl_mcts,53885445,COMPLETE,368.5,368.5,real_mega_lucario_ex.csv,lucario_mcts_basic_iter0,,97.5 vs random,RETIRED wrong opponents
+2026-06-22,track_d_alakazam_rl_mcts_model4,53946148,COMPLETE,185.4,185.4,top_mined_alakazam.csv,lucario_mcts_basic_Snorlax_train,,,RETIRED pilot-not-deck demo
+2026-06-22,dragapult_ex_sample_v1,53950246,ERROR,,,dragapult_ex_sample.csv,dragapult_crispin,,,__file__ NameError
+2026-06-19,a2_kyogre_v0,53854588,ERROR,,,a2_kyogre_33_energy.csv,HeuristicScorer,,,__file__ NameError

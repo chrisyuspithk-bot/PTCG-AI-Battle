@@ -35,21 +35,27 @@ Local engine copy: `python scripts/fetch_sim_engine.py` → `data/sim/sample_sub
 
 ## 3. Submit an agent
 
-Our agents are packaged tarballs with `main.py` at root (see `scripts/package_submission.py`).
+**Before submit (R12):** `python scripts/check_upload_eligible.py --suggest` then gate + manifest check.
+
+Packaging:
 
 ```bash
-python scripts/package_submission.py --name <candidate> --scorer learned|search|lucario_mcts --deck <path> [--model <path>]
+# Dragapult (880.9 μ ship track)
+python scripts/package_dragapult.py
 
-kaggle competitions submit pokemon-tcg-ai-battle \
-  -f dist/candidates/<candidate>.tar.gz \
-  -m "description"
+# Alakazam best5 (659 μ — upload only with material improvement)
+python scripts/package_alakazam.py
+
+# Search / heuristic / lucario_mcts
+python scripts/package_submission.py --name <candidate> --scorer search|heuristic|lucario_mcts --deck <path> [--model <path>]
 ```
 
-Notebook-backed submit (optional):
+Submit (user OK only; 5/day):
 
-```bash
-kaggle competitions submit pokemon-tcg-ai-battle \
-  -k YOUR_USERNAME/your-kernel -f dist/candidates/<candidate>.tar.gz -v 1 -m "msg"
+```powershell
+kaggle competitions submit pokemon-tcg-ai-battle `
+  -f dist/candidates/dragapult_ex_sample.tar.gz `
+  -m "catalog row + one-line delta"
 ```
 
 **Limits:** 5 uploads/team/day; **2 Final Submissions** for judging (select manually on Kaggle).
@@ -100,31 +106,41 @@ Use replays/logs on top teams to study tempo, bench usage, and prize sequencing.
 
 ---
 
-## 7. Typical iteration loop
+## 7. Typical iteration loop (2026-06 — native field harness)
 
-1. Local gate: `scripts/gate_track_b.py`, `scripts/gate_track_a.py`, or `scripts/gate_vs_public.py`
-2. Package dry-run: `python scripts/package_submission.py --name … --gate` (runs L0+L1)
-3. Submit (user OK): `kaggle competitions submit …`
-4. Wait ~40+ min for ladder μ to stabilize after COMPLETE
-5. **Episode analysis:** `python scripts/analyze_submission.py --ref <ref>`
-6. Fix policy from `report/submission_stats/{ref}_stats.csv` (win_rate, avg_turns, fast_loss_pct)
+1. **Local gate (filter only):** native opponents via `eval/harness.py` — not ladder truth
+   ```powershell
+   python scripts/gate_alakazam.py --games 30 --suite full --report
+   python scripts/gate_search.py --games 30 --suite full --report
+   python scripts/gate_dragapult.py --games 30 --suite full --report
+   python scripts/gate_lucario_rules.py --games 30 --suite full --report
+   ```
+2. **Upload eligibility (R12):** `python scripts/check_upload_eligible.py --brain … --deck … --change "…" --local-gate <WR>`
+3. **Package dry-run:** `package_dragapult.py` / `package_alakazam.py` / `package_submission.py`
+4. **Submit** (user OK): `kaggle competitions submit …`
+5. Wait **≥40 min**; require **≥2 μ readings** before pivoting (R1)
+6. **Episode analysis:** `python scripts/analyze_submission.py --ref <ref>`
+7. Log ref + μ in `eval/ladder_log.csv`; decode row in `eval/AGENT_CATALOG_FULL.md`
+
+**Packaged agent vs public opponents (different gate):**
+```powershell
+python scripts/gate_vs_public.py --agent dist/candidates/<name>.tar.gz --games 30
+```
+
+**Do not re-upload** a brain×deck already COMPLETE on ladder except final lock-in near deadline (R12).
 
 ---
 
-## 8. Local JSON replay (offline debugging)
+## 8. Local debugging (harness)
 
-Record agent-vs-agent battles locally without Kaggle:
+Use harness gates + smoke tests offline (no Kaggle egress required for gates):
 
-```bash
-python scripts/record_local_battle.py --agent-a lucario --agent-b search \
-  --deck-a agent_decks/real_mega_lucario_ex.csv --games 20 --seed 42
+```powershell
+python -m pytest tests/test_harness_smoke.py -q
+python scripts/gate_alakazam.py --games 10 --suite core
 ```
 
-Output: `report/local_replays/<name>_seed<seed>.json` with per-game:
-- `turn_count`, `result_reason` (`prize`, `deck_out`, `no_active`, `card_effect`)
-- `win_rate`, `avg_turns`, `fast_loss_pct` summary
-
-Add `--full-steps` to capture every `(observation, action)` step for golden tests.
+For head-to-head packaged agents vs `data/kaggle_ref/opponents/`, use `gate_vs_public.py` (requires `--agent`).
 
 ---
 
@@ -153,6 +169,12 @@ See [`EVAL_PROTOCOL.md`](EVAL_PROTOCOL.md) and [`COMPETITION_SCORING.md`](COMPET
 
 | Task | Command |
 |------|---------|
-| Lucario field RL+MCTS (local) | `python scripts/train_lucario_field_mcts.py --device cpu --cycles 5` then package `--scorer lucario_mcts` |
-| Dragapult gate | `python scripts/gate_dragapult.py --games 30` |
-| Ladder sync | `python scripts/track_ladder.py --fetch-logs` |
+| Upload gate (R12) | `python scripts/check_upload_eligible.py --suggest` |
+| Alakazam gate (659 μ bar) | `python scripts/gate_alakazam.py --games 30 --suite full --report` |
+| SearchScorer gate | `python scripts/gate_search.py --games 30 --suite full --report` |
+| Dragapult gate / package | `python scripts/gate_dragapult.py --games 30` · `python scripts/package_dragapult.py` |
+| LucarioScorer gate | `python scripts/gate_lucario_rules.py --games 30 --suite full --report` |
+| Packaged vs public agents | `python scripts/gate_vs_public.py --agent dist/candidates/<name>.tar.gz --games 30` |
+| Ladder sync | `python scripts/track_ladder.py` · `--fetch-logs` |
+| Episode stats | `python scripts/analyze_submission.py --ref <ref>` |
+| Meta by μ band | `python scripts/analyze_meta_by_mu_band.py --download-per-band 50` |

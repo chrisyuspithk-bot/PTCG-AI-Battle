@@ -1,27 +1,42 @@
-# eval/ — the one evaluation harness (Foundation 0.4)
+# eval/ — measurement & session artifacts
 
-The single way we measure anything (Rulings R1, R2, R8). If a number didn't come through here
-against the **real field**, it doesn't count. See `ARCHITECTURE.md` § Pillar 0.4.
+**Ground truth:** Kaggle public μ → [`AGENT_CATALOG_FULL.md`](AGENT_CATALOG_FULL.md) · [`ladder_log.csv`](ladder_log.csv) · [`ladder_scoreboard_full_20260626.md`](ladder_scoreboard_full_20260626.md)
 
-## Interim (live scripts — use until `eval/harness.py` lands)
+**Spine (local filter only):** `eval/harness.py`, `eval/gates.py`, `field/registry.json`, `field/weights.json`
 
-| Script | Purpose |
-|--------|---------|
-| `scripts/gate_vs_public.py` | Spine + packaged candidates vs real decks + public agents |
-| `scripts/gate_dragapult.py` | Dragapult ex vs real-field set, seat-swapped, Wilson CI |
-| `scripts/arena.py` | Seeded matchups, metadata rows |
-| `scripts/smoke_test.py` | L0 legality / never-crash contract |
-| `scripts/smoke_cg_engine.py` | L0 engine `battle_start` smoke |
-| `scripts/stats_utils.py` | Wilson CI helpers |
-| `scripts/track_ladder.py` | Ladder μ sync + log fetch |
-| `scripts/verify_archive.py` | Post-package tarball smoke |
+## Read before train/upload
 
-Full protocol: [`data/EVAL_PROTOCOL.md`](../data/EVAL_PROTOCOL.md).
+[`AGENT_CATALOG_FULL.md`](AGENT_CATALOG_FULL.md) — all 21 submissions: brain type, deck, training opponents, verdict.
 
-## Planned modules (TASKS F2)
-- `harness.py` — brain×deck vs `field/registry.json`, seeded, side-swapped.
-- `gates.py` — L0–L3 pyramid (real field only).
-- `ladder_log.csv` — append-only (absorbs `report/{ladder_history,submission_log}.csv`).
+## Harness API
 
-**Definition of "validated":** L0–L2 on the real field, then L3 with **≥2 stable μ readings**
-≥40 min apart. Nothing ships otherwise.
+```powershell
+# SearchScorer — home-grown 660.5 mu bar (Lucario deck)
+python scripts/gate_search.py --games 30 --suite full --report
+
+# LucarioScorer rules only (39.3% @ n=30 — do not upload)
+python scripts/gate_lucario_rules.py --games 30 --suite full --report
+
+# Dragapult ladder ship track (880.9 mu)
+python scripts/package_dragapult.py
+python scripts/gate_dragapult.py --games 30 --suite full --report
+
+# Pilot×deck (never swap brain onto wrong list)
+python scripts/gate_dragapult.py --games 30 --suite full --hero-deck agent_decks/real_mega_lucario_ex.csv
+
+# Meta + smoke
+python scripts/analyze_meta_by_mu_band.py --download-per-band 50
+python -m pytest tests/test_harness_smoke.py -q
+```
+
+## Session artifacts
+
+| Session | File | Content |
+|---------|------|---------|
+| **49** | `AGENT_CATALOG_FULL.md` | Every agent decoded |
+| **49** | `pilot_deck_matrix_session49.md` | dragapult brain 10% on Lucario deck |
+| **49** | `ladder_log.csv` | 21 rows synced from Kaggle |
+| **48** | `dragapult_baseline_session48.md` | Boss levers ruled out |
+| **46** | `lucario_rules_baseline_session46.md` | LucarioScorer 44% @ n=20 local |
+
+Resubmit: `data/SUBMISSION_REGISTRY.md` · Protocol: `data/EVAL_PROTOCOL.md`

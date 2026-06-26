@@ -1,4 +1,4 @@
-"""Official Kaggle rule-based sample agents only — no invented pilots.
+"""Official Kaggle rule-based sample agents + imported community pilots.
 
 Organizer samples (kiyotah kernels):
   - Mega Lucario ex   -> agent/lucario_policy.py (LucarioScorer)
@@ -6,8 +6,10 @@ Organizer samples (kiyotah kernels):
   - Iono's deck       -> agent/iono_agent.py
   - Mega Abomasnow ex -> agent/abomasnow_agent.py
 
-Decks without an official sample (e.g. mined Alakazam, Trevenant) are not playable as
-native-rule opponents until a real sample exists. Training must opt in to random for those.
+Community import (659 mu reference):
+  - Alakazam best5    -> agent/alakazam_agent.py (ryotasueyoshi notebook)
+
+Decks without a wired pilot (e.g. Trevenant) use random only when opted in.
 """
 
 from __future__ import annotations
@@ -33,6 +35,8 @@ _LUCARIO_LINE = frozenset({673, 674, 676, 677, 678})
 _DRAGAPULT_LINE = frozenset({119, 120, 121})
 _ABOMASNOW_LINE = frozenset({722, 723})
 _IONO_LINE = frozenset({265, 268, 269, 270, 271})
+_ALAKAZAM_LINE = frozenset({741, 742, 743})
+_STARMIE_LINE = frozenset({1030, 1031, 860, 861})
 
 # Slugs match extract_public_agents.FALLBACK_DECK keys / kaggle kernel names.
 KERNEL_SLUGS = {
@@ -46,17 +50,23 @@ _STANDALONE_ENV = {
     "dragapult_ex": "DRAGAPULT_DECK",
     "iono": "IONO_DECK",
     "mega_abomasnow_ex": "ABOMASNOW_DECK",
+    "alakazam_psychic": "ALAKAZAM_DECK",
+    "starmie_water": "STARMIE_DECK",
 }
 
 _STANDALONE_MODULE = {
     "dragapult_ex": "agent.dragapult_agent",
     "iono": "agent.iono_agent",
     "mega_abomasnow_ex": "agent.abomasnow_agent",
+    "alakazam_psychic": "agent.alakazam_agent",
+    "starmie_water": "agent.starmie_agent",
 }
 
 # Human-readable pilot source for logs / verify_official_opponents.py
 OFFICIAL_PILOT_MODULES: dict[str, str] = {
     "mega_lucario_ex": "agent.lucario_policy.LucarioScorer",
+    "alakazam_psychic": "agent.alakazam_agent",
+    "starmie_water": "agent.starmie_agent",
     **{k: v for k, v in _STANDALONE_MODULE.items()},
 }
 
@@ -71,11 +81,13 @@ OFFICIAL_FIELD_DECK_STEMS = [
     "top_mined_iono",
     "top_mined_mega_abomasnow_ex",
     "top_mined_mega_lucario_ex",
+    "top_mined_alakazam",
+    "ryotasueyoshi_alakazam_best5",
+    "starmie_froslass_ashleysandlin",
 ]
 
 # No organizer sample — excluded unless training opts into random.
 RANDOM_ONLY_DECK_STEMS = [
-    "top_mined_alakazam",
     "top_mined_trevenant",
 ]
 
@@ -94,6 +106,10 @@ def detect_official_archetype(deck_ids: list[int]) -> str | None:
         return "mega_abomasnow_ex"
     if ids & _IONO_LINE:
         return "iono"
+    if _ALAKAZAM_LINE.issubset(ids):
+        return "alakazam_psychic"
+    if _STARMIE_LINE.issubset(ids):
+        return "starmie_water"
     return None
 
 
@@ -108,6 +124,10 @@ def official_archetype_for_opponent(opp_name: str, deck_ids: list[int]) -> str |
         return "mega_abomasnow_ex"
     if "iono" in stem:
         return "iono"
+    if "starmie" in stem or "froslass" in stem:
+        return "starmie_water"
+    if "alakazam" in stem:
+        return "alakazam_psychic"
     return detect_official_archetype(deck_ids)
 
 
@@ -168,7 +188,7 @@ def make_official_opponent(
     if archetype is None:
         raise ValueError(
             f"no official Kaggle rule sample for deck {opp_name or deck_path} "
-            f"(not Lucario/Dragapult/Iono/Abomasnow). Use --non-official-brain random to opt in."
+            f"(not Lucario/Dragapult/Iono/Abomasnow/Alakazam/Starmie). Use --non-official-brain random to opt in."
         )
     if archetype == "mega_lucario_ex":
         return _lucario_act(deck_path, seed), archetype

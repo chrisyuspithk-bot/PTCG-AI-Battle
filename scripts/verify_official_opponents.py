@@ -38,7 +38,7 @@ def main() -> int:
     ensure_cg_engine()
     decks_dir = ROOT / "agent_decks"
     ok = True
-    print(f"Official field decks ({len(OFFICIAL_FIELD_DECK_STEMS)}) — one Kaggle rule pilot each:\n")
+    print(f"\nOfficial field decks ({len(OFFICIAL_FIELD_DECK_STEMS)}) — rule pilots (kiyotah + community imports):\n")
     for stem in OFFICIAL_FIELD_DECK_STEMS:
         csv_path = decks_dir / f"{stem}.csv"
         if not csv_path.is_file():
@@ -56,6 +56,8 @@ def main() -> int:
             url = KERNEL_URLS.get(label or "", "")
             if url:
                 print(f"         kernel: {url}")
+            elif label == "alakazam_psychic":
+                print("         source: community import (ryotasueyoshi best5) — agent/alakazam_agent.py")
         except Exception as exc:
             print(f"  FAIL  {stem:32} {arch or 'none':20} -> {exc}")
             ok = False

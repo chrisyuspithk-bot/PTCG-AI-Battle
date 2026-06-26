@@ -19,9 +19,15 @@ from agent.agent import (
     CTX_SETUP_BENCH_POKEMON,
     CTX_SWITCH,
     CTX_TO_ACTIVE,
+    CTX_TO_HAND,
+    CTX_TO_DECK,
+    CTX_TO_DECK_BOTTOM,
+    CTX_ATTACH_FROM,
     HeuristicScorer,
     SEL_CARD,
+    load_deck,
 )
+from agent.prize_tracker import PrizeTracker
 
 SEARCH_BUDGET_MS = 200
 HIGH_LEVERAGE_CONTEXTS = {
@@ -38,6 +44,48 @@ LUCARIO_SEARCH_CONTEXTS = {
     CTX_SETUP_ACTIVE_POKEMON,
 }
 SEARCH_GUARD_TOP_K = 2
+PRIZE_DECK_CONTEXTS = {
+    CTX_TO_HAND,
+    CTX_TO_DECK,
+    CTX_TO_DECK_BOTTOM,
+    CTX_ATTACH_FROM,
+}
+
+
+class _PrizeTrackerMixin:
+    """Update PrizeTracker and penalize prized cards in deck search picks."""
+
+    def _init_prize_tracker(self, deck_path: str | None = None) -> None:
+        path = deck_path or os.path.join(
+            os.path.dirname(__file__), "deck.csv"
+        )
+        try:
+            deck_ids = load_deck(path)
+            self._prize_tracker = PrizeTracker(deck_ids) if len(deck_ids) == 60 else None
+        except Exception:
+            self._prize_tracker = None
+
+    def _update_prize_tracker(self, obs_dict) -> None:
+        if self._prize_tracker is None:
+            return
+        try:
+            from cg.api import to_observation_class
+
+            obs = to_observation_class(obs_dict)
+            self._prize_tracker.update(obs, obs_dict)
+        except Exception:
+            pass
+
+    def _prize_adjust_card_score(self, score: float, card_id: int, select) -> float:
+        if self._prize_tracker is None or select is None:
+            return score
+        context = select.get("context")
+        if context not in PRIZE_DECK_CONTEXTS:
+            return score
+        prized = self._prize_tracker.is_prized(card_id)
+        if prized is True:
+            return score - 1e9
+        return score
 
 
 class _CgSearchMixin:
@@ -90,20 +138,24 @@ class _CgSearchMixin:
         return None
 
     def _ensure_engine(self) -> bool:
-        if self._lib is not None:
-            return True
         try:
             from cg.sim import Battle, lib  # type: ignore
 
             self._lib = lib
+            # battle_ptr changes every battle_start — never cache across games.
             self._battle_ptr = Battle.battle_ptr
             return self._battle_ptr is not None
         except Exception:
+            self._lib = None
+            self._battle_ptr = None
             return False
 
     def _ctypes_search(self, obs_dict, options, deadline) -> list[int] | None:
         """Best-effort wrapper around cg search_*; returns None on failure."""
-        if not self._ensure_engine() or time.monotonic() >= deadline:
+        if time.monotonic() >= deadline:
+            self._audit_search("search_result", fired=False, reason="engine_or_budget")
+            return None
+        if not self._ensure_engine():
             self._audit_search("search_result", fired=False, reason="engine_or_budget")
             return None
         try:
@@ -166,24 +218,36 @@ class _CgSearchMixin:
         return None
 
 
-class SearchScorer(_CgSearchMixin, HeuristicScorer):
+class SearchScorer(_CgSearchMixin, _PrizeTrackerMixin, HeuristicScorer):
     """Heuristic baseline + optional cg search_* on promotion/switch picks."""
 
-    def __init__(self, rng=None, budget_ms: float = SEARCH_BUDGET_MS) -> None:
+    def __init__(
+        self,
+        rng=None,
+        budget_ms: float = SEARCH_BUDGET_MS,
+        deck_path: str | None = None,
+    ) -> None:
         super().__init__(rng=rng)
-        self._fallback = HeuristicScorer(rng=rng)
         self._init_search(budget_ms)
+        self._init_prize_tracker(deck_path)
+        self._active_select = None
 
     def choose(self, obs_dict, select, current, options):
+        self._update_prize_tracker(obs_dict)
+        self._active_select = select
         if not options:
             return []
         picked = self._try_search(obs_dict, select, options)
         if picked is not None:
             return picked
-        return self._fallback.choose(obs_dict, select, current, options)
+        return super().choose(obs_dict, select, current, options)
+
+    def _card_id_score(self, card_id, current):
+        base = super()._card_id_score(card_id, current)
+        return self._prize_adjust_card_score(base, card_id, self._active_select)
 
 
-class LucarioSearchScorer(_CgSearchMixin):
+class LucarioSearchScorer(_CgSearchMixin, _PrizeTrackerMixin):
     """Lucario meta MAIN + cg search_* on setup/switch/to-active picks."""
 
     def __init__(
@@ -194,10 +258,15 @@ class LucarioSearchScorer(_CgSearchMixin):
     ) -> None:
         from agent.lucario_policy import LucarioScorer
 
-        self._lucario = LucarioScorer(rng=rng, deck_path=deck_path)
+        path = deck_path
+        self._lucario = LucarioScorer(rng=rng, deck_path=path)
         self._init_search(budget_ms, search_contexts=LUCARIO_SEARCH_CONTEXTS)
+        self._init_prize_tracker(path)
+        self._active_select = None
 
     def choose(self, obs_dict, select, current, options):
+        self._update_prize_tracker(obs_dict)
+        self._active_select = select
         if not options:
             return []
         lucario_pick = self._lucario.choose(obs_dict, select, current, options)

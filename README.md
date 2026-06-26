@@ -5,30 +5,23 @@ Workspace for the Kaggle **[PTCG AI Battle Challenge](https://www.kaggle.com/com
 ([pokemon-tcg-ai-battle](https://www.kaggle.com/competitions/pokemon-tcg-ai-battle), the live μ
 ranking). The project was reset on 2026-06-22 (Session 44) — see `RULINGS.md` for why.
 
-## Read in this order (the only 4 canonical docs)
+## Read in this order
 
 | # | File | What it is |
 |---|------|-----------|
-| 1 | **`STATE.md`** | Current state + the single next action. The one handoff. |
-| 2 | **`RULINGS.md`** | **Part 0 = our operating mindset — read it first.** Then: everything tried, measured outcomes, why, and the standing rulings. |
-| 3 | **`ARCHITECTURE.md`** | The rebuilt system: all 5 pillars on one shared foundation. |
-| 4 | **`AGENTS.md`** | Operating contract for anyone (human or agent) working here. |
+| 1 | **`STATE.md`** | Current state + single next action |
+| 2 | **`eval/AGENT_CATALOG_FULL.md`** | All 21 ladder submissions decoded (brain × deck × training) |
+| 3 | **`RULINGS.md`** | Mindset + evidence + standing rulings |
+| 4 | **`ROADMAP.md`** | Now / next / not doing |
+| 5 | **`AGENTS.md`** | Operating contract |
 
-`TASKS.md` is the build-order backlog. `data/` holds official rules/card CSVs (source citations).
-There are no other top-level handoff/instruction files by design (Ruling R10).
+`TASKS.md` = build backlog. No other top-level handoff files (R10).
 
 ## The one-paragraph situation
 
-The game is an **imperfect-information** card game (opponent hand/deck/prizes are hidden —
-`RULINGS.md` Part 4), scored by a TrueSkill-style μ on a live ladder. After 43 sessions, our best
-agent is hand-tuned **search/rules at ~668 μ**; every prior RL/MCTS/deck-GA experiment underperformed
-it and was pruned. The rebuild keeps the rules spine as the proven floor and grows capability on
-top of it — determinized/information-set search + belief priors from episode data, daily meta, and
-scoped deck discovery — all measured against the **real field**, never proxy decks.
+Imperfect-information POMDP on a TrueSkill ladder. After **21 COMPLETE submissions**: only **Dragapult official pilot @ 880.9 μ** clears 800; best **home-grown** is **SearchScorer × Lucario @ 660.5 μ**. Field RL+MCTS v5 **regressed to 580.6 μ** on the same deck. Every Track B / Snorlax-MCTS path ≤585. **Ladder μ sorts; local gates filter.**
 
-**Active experiment (Session 44c):** a **fresh** local Lucario field RL+MCTS stack
-(`scripts/train_lucario_field_mcts.py`, 5-cycle CPU train in progress). It must clear Ruling R3
-(real-field gate + ladder) before it replaces SearchScorer; see `STATE.md`.
+See `eval/AGENT_CATALOG_FULL.md` before any train or upload.
 
 ## Repository map
 

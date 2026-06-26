@@ -332,6 +332,11 @@ def main() -> int:
     print(f"built {archive} ({size_kb:.1f} KiB)")
     print("dry-run import OK; deck-selection returns 60 card IDs")
     print("No Kaggle submission was attempted.")
+    print(
+        f"\nBefore upload: python scripts/check_upload_eligible.py "
+        f"--brain <scorer> --deck {args.deck} "
+        f'--change "YOUR ONE-LINE DELTA" --local-gate 58.0'
+    )
     return 0
 
 

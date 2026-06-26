@@ -2,7 +2,8 @@
 
 The single operating contract for this repo (human or AI). Reset 2026-06-22 (Session 44). For the
 *why* read `RULINGS.md`; for the *plan* read `ARCHITECTURE.md`; for *current state + next action*
-read `STATE.md`.
+read `STATE.md`. For the *forward plan* read `ROADMAP.md`. For *research + decisions* read
+`report/RESEARCH_AND_DECISION_BRIEF.md`.
 
 ## Mindset (this governs everything — full version: `RULINGS.md` Part 0)
 The errors that stalled 43 sessions were mindset errors, not bad luck. Hold these always:
@@ -17,11 +18,13 @@ The errors that stalled 43 sessions were mindset errors, not bad luck. Hold thes
 
 ## Start every session by reading, in order
 1. `STATE.md` — current state and the single next action.
-2. `.cursor/SESSION.md` — ephemeral session focus (Cursor hook; training PIDs, continue prompt).
-3. `RULINGS.md` — the standing rulings (R1–R11) and the record of what failed. **Do not re-run a
-   ruled-out experiment.**
-4. `ARCHITECTURE.md` — the pillar you're working on and its interface contract.
-5. `TASKS.md` — the build-order backlog; do the next unchecked item.
+2. **`eval/AGENT_CATALOG_FULL.md`** — what each of 21 ladder submissions actually was (brain × deck × training).
+3. `report/RESEARCH_AND_DECISION_BRIEF.md` — measured evidence + decision framework.
+4. `.cursor/SESSION.md` — ephemeral session focus (Cursor hook; continue prompt).
+5. `RULINGS.md` — standing rulings (R1–**R12**). **Do not re-run ruled-out experiments.**
+6. `ROADMAP.md` — now / next / not doing.
+7. `ARCHITECTURE.md` — pillar design.
+8. `TASKS.md` — build-order backlog; next unchecked item.
 
 ## The competition (verify specifics in `data/` source docs)
 - **Simulation** (`pokemon-tcg-ai-battle`): submit `submission.tar.gz`; public **μ** is truth.
@@ -40,23 +43,31 @@ The errors that stalled 43 sessions were mindset errors, not bad luck. Hold thes
 ## How we work (process)
 - **Measure on the real field only** (Ruling R2): `eval/` harness vs `field/` decks + public
   agents. Never `pool_*` proxies or random/mirror self-play.
-- **Nothing ML ships until it beats the rules floor (~668 μ) on the real-field gate** plus a ≥2-reading
-  ladder probe (Rulings R1, R3). Local win-rate is a filter, not truth.
+- **Nothing ML ships until it beats ladder evidence:** Dragapult bar **880.9 μ**; best home-grown Search **660.5 μ** on real-field harness filter + ≥2-reading ladder probe (R1, R3). **Local win-rate and weighted E[win] are not truth.**
 - **Every reported win-rate carries metadata**: games, opponents, seeds, deck, brain (Ruling R8).
-- **Don't break the spine.** `agent/` scored 668; do not rename/refactor it until the smoke test
-  runs on a Python ≥3.11 machine (Ruling R7).
+- **Don't break the spine.** `agent/` delivered SearchScorer **660.5 μ**; do not rename/refactor until smoke on Py≥3.11 (R7).
 - **One source of truth per concern** (Ruling R10): decisions → `RULINGS.md`; state → `STATE.md`
   (+ `.cursor/SESSION.md` for ephemeral session); design → `ARCHITECTURE.md`. No new top-level
   handoff/instruction files.
 - Improve one concrete behavior at a time, re-measure, keep only what improves the gate or fixes
   legality/stability.
+- **Before train/upload:** name the catalog row in `eval/AGENT_CATALOG_FULL.md` you are extending or beating.
+- **Weighted gates:** `field/weights.json` + `--weighted` — **filter only** until replay sample supports mixture (S49).
 - **Rules before mixture (R11):** global deck rules → per-opponent levers → then field-mixture
   weighting for gates/training. See `TASKS.md` R1–R3.
 
 ## Before any Kaggle upload
 - Read `data/SUBMISSION_PLAYBOOK.md`: **5 uploads/day**, **2 Final Submissions** (select manually).
-- Dry-run packaging (`scripts/package_submission.py --scorer {heuristic,search,lucario_mcts}`);
-  never submit without explicit user confirmation.
+- **Run the upload gate (required):**
+  ```powershell
+  python scripts/check_upload_eligible.py --manifest dist/candidates/<name>.manifest.json `
+    --change "ONE LINE: concrete delta vs catalog row ref XXXXX" --local-gate <WR>
+  ```
+  Exit **1** → do not upload. Use `--suggest` for high-value next rows.
+- **R12 — No duplicate brain×deck uploads.** Check `eval/AGENT_CATALOG_FULL.md`. If that row already
+  has COMPLETE μ on ladder, **do not upload** unless you have a **material improvement** (new logic,
+  deck, or levers) or it is **final lock-in** near deadline. Ports end at dry-run + local gate.
+- Dry-run packaging first; never submit without explicit user confirmation **and** `check_upload_eligible` exit 0.
 
 ## Environment
 - Engine + episode pull need **Python ≥3.11** and run on the user's machine (this sandbox is 3.10
