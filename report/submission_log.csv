@@ -8,4 +8,4 @@ ref,date,scorer,deck,mu_initial,mu_24h,episodes_total,wins,losses,draws,win_rate
 53856584,2026-06-19,LearnedScorer,pool_alakazam_dudunsparce.csv,600.0,490.4,,,,,,,,,,,Shared distill mistake; do not resubmit weak Learned
 53856590,2026-06-19,LearnedScorer,pool_dragapult.csv,600.0,468.9,,,,,,,,,,,Learned spread meta probe
 53885445,2026-06-20,LucarioMCTSScorer,real_mega_lucario_ex.csv,600.0,324.6,,,,,,,,,,8.3,Early RL iter-0; empty bench retired
-53890064,2026-06-20,SearchScorer,top_mined_alakazam.csv,600.0,,,,,,,,,,,Leader Alakazam probe #5 today; COMPLETE @600 validation — analyze ladder @40min
+53890064,2026-06-20,SearchScorer,top_mined_alakazam.csv,600.0,,,,,,,,,,,Leader Alakazam probe #5 today; COMPLETE @600 validation — analyze ladder @40min,

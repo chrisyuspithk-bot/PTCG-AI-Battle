@@ -18,7 +18,6 @@ in [`RULINGS.md`](RULINGS.md).
 - *What we're building* → `ARCHITECTURE.md` (§ Per-deck template phases 1–3)
 - *Build backlog* → `TASKS.md` (R1–R3 pilot rules)
 
-**Latest (2026-06-22, Session 44d):** Standing order solidified — **(1) global rules per deck →
-(2) per-opponent matchup levers → (3) field-mixture weighting**. Meta tracker is phase-3 input.
-Lucario field RL train cycle 3+ in `metrics.csv`. Next: gate Lucario global rules baseline, then
-first Abomasnow lever.
+**Latest (2026-06-22, Session 44e):** Dragapult **850.5 μ** = **best so far** (ref 53950779) — **bar to
+beat**, not the goal. Lucario v2 packaged; submit queued after daily quota. Next: phase-2 train/levers
+to **exceed 850.5**.

@@ -23,6 +23,12 @@ if ($LASTEXITCODE -ne 0) {
     Write-Error "bootstrap_official_rule_agents.py failed"
 }
 
+Write-Host "Verify official Kaggle rule pilots (4 archetypes, 9 field decks)..."
+& $python scripts/verify_official_opponents.py
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "verify_official_opponents.py failed — fix pilots before training"
+}
+
 $workDir = Join-Path (Get-Location) $Work
 New-Item -ItemType Directory -Force -Path $workDir | Out-Null
 $log = Join-Path $workDir 'train.log'
@@ -36,8 +42,8 @@ $args = @(
     '--cycles', "$Cycles",
     '--work', $Work,
     '--resume-from', $ResumeFrom,
-    '--opponent-brain', 'non_official',
-    '--eval-opponent', 'non_official',
+    '--opponent-brain', 'native',
+    '--eval-opponent', 'native',
     '--lever-blend', '0.35'
 )
 

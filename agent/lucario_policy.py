@@ -14,7 +14,12 @@ from dataclasses import dataclass
 
 from agent.agent import HeuristicScorer
 from agent.deck_tech import LUCARIO_TECH
-from agent.matchup_levers import GUST_SETUP_IDS, TREVENANT_REVENGE_SETUP_IDS, levers_for_lucario
+from agent.matchup_levers import (
+    GUST_SETUP_IDS,
+    SNOVER_ID,
+    TREVENANT_REVENGE_SETUP_IDS,
+    levers_for_lucario,
+)
 from agent.smart_bench import (
     MAX_VOLUNTARY_BENCH,
     bench_counts,
@@ -484,14 +489,21 @@ class LucarioScorer(HeuristicScorer):
                 elif o.index == plan.target - 1:
                     score += 100
             elif context == api.SelectContext.SETUP_ACTIVE_POKEMON.value:
+                levers = ctx.get("levers")
                 if card.id == Solrock:
                     score = 2.0 if state.firstPlayer == my_index else 4.0
+                    if levers and levers.prefer_solrock_open > 0:
+                        score += levers.prefer_solrock_open * 15.0
                 elif card.id == Riolu:
                     score = 3.0
+                    if levers and levers.prefer_riolu_open > 0:
+                        score += levers.prefer_riolu_open * 15.0
                 elif card.id == Makuhita:
                     score = 1.0
             elif context == api.SelectContext.SETUP_BENCH_POKEMON.value:
-                score = self._setup_bench_score(card.id, field_counts, state, my_index)
+                score = self._setup_bench_score(
+                    card.id, field_counts, state, my_index, ctx.get("levers"),
+                )
             elif context == api.SelectContext.TO_HAND.value:
                 score = self._to_hand_score(
                     card.id, field_counts, hand_counts, state
@@ -703,20 +715,26 @@ class LucarioScorer(HeuristicScorer):
             if state.supporterPlayed and plan.remain_hp <= 0:
                 return -1.0
             if can_attack and plan.remain_hp <= 0:
-                return 12000.0
-            if can_attack and plan.attack_index == 1:
-                return 11000.0
-            if line_hungry and not state.supporterPlayed:
-                return 8700.0
-            if not can_attack:
+                score = 12000.0
+            elif can_attack and plan.attack_index == 1:
+                score = 11000.0
+            elif line_hungry and not state.supporterPlayed:
+                score = 8700.0
+            elif not can_attack:
                 if (
                     not state.supporterPlayed
                     and hand_counts[Carmine] > 0
                     and hand_counts[Lillie_Determination] == 0
                 ):
-                    return 3050.0
-                return -1.0
-            return 5000.0
+                    score = 3050.0
+                else:
+                    return -1.0
+            else:
+                score = 5000.0
+            levers = ctx.get("levers")
+            if levers:
+                score += levers.premium_power_pro
+            return score
         if card_id == Switch:
             if plan.attacker <= 0:
                 return -1.0
@@ -725,10 +743,21 @@ class LucarioScorer(HeuristicScorer):
                 and not ctx["can_use_mega_brave"]
                 and plan.attack_index == 1
             ):
-                return 8800.0
-            return 6000.0
+                score = 8800.0
+            else:
+                score = 6000.0
+            levers = ctx.get("levers")
+            if levers and plan.attack_index == 1:
+                score += levers.switch_after_mega_brave
+            return score
         if card_id == Boss_Orders:
-            return 3400.0 if plan.target >= 1 else -1.0
+            if plan.target < 1:
+                return -1.0
+            score = 3400.0 + (ctx.get("levers").boss_orders if ctx.get("levers") else 0.0)
+            levers = ctx.get("levers")
+            if levers and levers.gust_setup_pokemon > 0 and plan.target >= 1:
+                score += levers.gust_setup_pokemon * 0.25
+            return score
         if card_id == Carmine:
             if low_deck:
                 return -1.0
@@ -741,29 +770,48 @@ class LucarioScorer(HeuristicScorer):
             if low_deck:
                 return -1.0
             if thin_deck:
-                return 900.0
-            if early and not ctx.get("has_solrock_lunatone_engine"):
-                return 8600.0
-            if ctx.get("has_solrock_lunatone_engine") and ctx["discard_energy"] <= 1:
-                return 8200.0
-            return 3100.0
+                score = 900.0
+            elif early and not ctx.get("has_solrock_lunatone_engine"):
+                score = 8600.0
+            elif ctx.get("has_solrock_lunatone_engine") and ctx["discard_energy"] <= 1:
+                score = 8200.0
+            else:
+                score = 3100.0
+            levers = ctx.get("levers")
+            if levers:
+                score += levers.lillie_early
+            return score
         if card_id == Gravity_Mountain:
             if ctx.get("op_stage2_count", 0) >= 1:
-                return 8900.0
-            if stadium_id == 0:
+                score = 8900.0
+            elif stadium_id == 0:
                 return -1.0
-            return 7000.0
+            else:
+                score = 7000.0
+            levers = ctx.get("levers")
+            if levers:
+                score += levers.gravity_mountain
+            return score
         return score
 
-    def _setup_bench_score(self, card_id, field_counts, state, my_index) -> float:
+    def _setup_bench_score(self, card_id, field_counts, state, my_index, levers=None) -> float:
         if card_id == Solrock:
-            if field_counts[Lunatone] >= 1:
-                return 4.5
-            return 2.0 if state.firstPlayer == my_index else 4.0
+            score = 4.5 if field_counts[Lunatone] >= 1 else (
+                2.0 if state.firstPlayer == my_index else 4.0
+            )
+            if levers and levers.prefer_solrock_open > 0:
+                score += levers.prefer_solrock_open * 10.0
+            return score
         if card_id == Riolu:
-            return 3.5
+            score = 3.5
+            if levers and levers.prefer_riolu_open > 0:
+                score += levers.prefer_riolu_open * 10.0
+            return score
         if card_id == Makuhita:
-            return 1.0
+            score = 1.0
+            if levers and levers.bench_hariyama_bonus > 0:
+                score += levers.bench_hariyama_bonus / 200.0
+            return score
         if card_id == Lunatone:
             if field_counts[Solrock] >= 1:
                 return 4.0

@@ -78,7 +78,76 @@ EVAL_GAMES = _ei("LUC_EVAL_GAMES", 20)
 REPLAY_ITERS = _ei("LUC_REPLAY_ITERS", 2)
 TEMP_PLIES = _ei("LUC_TEMP_PLIES", 8)
 VALUE_LAMBDA = _ef("LUC_VALUE_LAMBDA", 0.9)
+DIRICHLET_ALPHA = _ef("LUC_DIRICHLET_ALPHA", 0.03)
+DIRICHLET_EPS = _ef("LUC_DIRICHLET_EPS", 0.25)
 TIME_BUDGET = _ef("LUC_TIME_BUDGET_SEC", 6.0 * 3600)
+# Kaggle: 10 min/player cumulative decision time; forfeit on overrun. Train with 9:59 buffer.
+PLAYER_CLOCK_LIMIT_SEC = _ef("LUC_PLAYER_CLOCK_LIMIT_SEC", 599.0)
+_PLAYER_CLOCK_ENABLED = bool(_ei("LUC_PLAYER_CLOCK", 1))
+
+# #region agent log
+_DEBUG_LOG_PATH = Path(__file__).resolve().parents[1] / "debug-093ff2.log"
+
+
+def _debug_log(hypothesis_id: str, location: str, message: str, data: dict) -> None:
+    try:
+        import json
+        payload = {
+            "sessionId": "093ff2",
+            "hypothesisId": hypothesis_id,
+            "location": location,
+            "message": message,
+            "data": data,
+            "timestamp": int(time.time() * 1000),
+        }
+        with _DEBUG_LOG_PATH.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(payload, default=str) + "\n")
+    except Exception:
+        pass
+
+
+def _obs_debug_summary(obs) -> dict:
+    sel = obs.select
+    opts = []
+    for i, o in enumerate(sel.option[:8]):
+        opts.append({
+            "i": i,
+            "type": getattr(o, "type", None),
+            "area": getattr(o, "area", None),
+            "index": getattr(o, "index", None),
+            "playerIndex": getattr(o, "playerIndex", None),
+        })
+    return {
+        "context": str(getattr(sel, "context", "")),
+        "n_opts": len(sel.option),
+        "min": int(getattr(sel, "minCount", 0) or 0),
+        "max": int(getattr(sel, "maxCount", 0) or 0),
+        "turn": int(getattr(obs.current, "turn", -1)),
+        "yourIndex": int(getattr(obs.current, "yourIndex", -1)),
+        "result": int(getattr(obs.current, "result", -1)),
+        "has_select_deck": getattr(sel, "deck", None) is not None,
+        "opts": opts,
+        "opp_name": _TRAIN_OPP_NAME,
+    }
+# #endregion
+
+
+def set_field_training_flags(
+    *,
+    player_clock: bool = True,
+    deck_scope: bool = True,
+    clock_limit_sec: float | None = None,
+) -> None:
+    """Configure 9:59 forfeit cliff and deck-scoped lever soft masking for field train."""
+    global PLAYER_CLOCK_ENABLED, _DECK_SCOPE_ENABLED, PLAYER_CLOCK_LIMIT_SEC
+    PLAYER_CLOCK_ENABLED = player_clock
+    _DECK_SCOPE_ENABLED = deck_scope
+    if clock_limit_sec is not None:
+        PLAYER_CLOCK_LIMIT_SEC = clock_limit_sec
+
+
+# Back-compat name used by PlayerClock default
+PLAYER_CLOCK_ENABLED = _PLAYER_CLOCK_ENABLED
 
 D_MODEL = _ei("LUC_D_MODEL", 128)
 NUM_HEADS = _ei("LUC_HEADS", 2)
@@ -114,6 +183,7 @@ from cg.api import (
     all_card_data,
     search_begin,
     search_end,
+    search_release,
     search_step,
     to_observation_class,
 )
@@ -444,6 +514,7 @@ class Child:
         self.node = None
         self.select = select
         self.prob = prob
+        self.invalid = False
 
 # MCTS Node
 class Node:
@@ -469,6 +540,96 @@ class Node:
         if self.parent != None:
             self.parent.backprop(value)
 
+
+def _enumerate_action_combos(obs) -> list[list[int]]:
+    """Up to 64 combinatorial option-index tuples (may include illegal combos)."""
+    actions: list[list[int]] = []
+    indices = list(range(obs.select.maxCount))
+    for _ in range(64):
+        actions.append(indices.copy())
+        for i in range(len(indices)):
+            index = len(indices) - i - 1
+            if indices[index] < len(obs.select.option) - i - 1:
+                indices[index] += 1
+                for j in range(index + 1, len(indices)):
+                    indices[j] = indices[j - 1] + 1
+                break
+        else:
+            break
+    return actions
+
+
+def _fallback_actions(obs) -> list[list[int]]:
+    """Minimal fallback when combinatorial enumeration yields no legal combos."""
+    n_opts = len(obs.select.option)
+    mc = int(obs.select.maxCount)
+    if mc <= 1:
+        return [[i] for i in range(n_opts)]
+    if mc <= n_opts:
+        return [list(range(mc))]
+    return [[0]]
+
+
+def _filter_legal_actions(
+    search_id: int,
+    actions: list[list[int]],
+    *,
+    obs_summary: dict | None = None,
+) -> list[list[int]]:
+    """Keep only selections the search engine accepts from this search state."""
+    legal: list[list[int]] = []
+    failures: list[dict] = []
+    for select in actions:
+        try:
+            child_state = search_step(search_id, select)
+            search_release(child_state.searchId)
+            legal.append(select)
+        except (ValueError, RuntimeError) as exc:
+            failures.append({
+                "select": select,
+                "err": type(exc).__name__,
+                "msg": str(exc),
+            })
+            continue
+    if not legal and failures:
+        _debug_log(
+            "H1",
+            "lucario_mcts_runtime.py:_filter_legal_actions",
+            "all search_step probes failed",
+            {"failures": failures, "n_actions": len(actions), "obs": obs_summary or {}},
+        )
+    return legal
+
+
+def _selections_equal(a: list[int], b: list[int]) -> bool:
+    """Compare option picks; order-insensitive when multi-select."""
+    return sorted(a) == sorted(b)
+
+
+def _apply_dirichlet_noise(children: list[Child]) -> None:
+    """Root exploration noise (AlphaZero-style prior mix)."""
+    if not children:
+        return
+    noise = [random.gammavariate(DIRICHLET_ALPHA, 1.0) for _ in children]
+    total = sum(noise) or 1.0
+    for child, n in zip(children, noise):
+        child.prob = (1.0 - DIRICHLET_EPS) * child.prob + DIRICHLET_EPS * (n / total)
+
+
+def _dead_expand_node(
+    parent: Node,
+    your_index: int,
+) -> Node:
+    """Leaf for illegal search_step — bad for the player to move."""
+    dead = Node(parent, parent.state)
+    yi = parent.state.observation.current.yourIndex
+    dead.value = -1.0 if yi == your_index else 1.0
+    dead.visit = 1
+    dead.total = dead.value
+    dead.backprop(dead.value)
+    return dead
+
+
 def create_node(parent: Node | None,
                 search_state: SearchState,
                 your_index: int,
@@ -490,20 +651,47 @@ def create_node(parent: Node | None,
         node.backprop(node.value)
         sample = None
     else:
-        actions = []
-        indices = list(range(obs.select.maxCount))
-        for _ in range(64):
-            actions.append(indices.copy())
-            for i in range(len(indices)):
-                index = len(indices) - i - 1
-                if indices[index] < len(obs.select.option) - i - 1:
-                    indices[index] += 1
-                    for j in range(index+1, len(indices)):
-                        indices[j] = indices[j - 1] + 1
-                    break
-            else:
-                break
-            
+        obs_summary = _obs_debug_summary(obs)
+        combos = _enumerate_action_combos(obs)
+        actions = _filter_legal_actions(
+            search_state.searchId, combos, obs_summary=obs_summary,
+        )
+        if not actions:
+            actions = _filter_legal_actions(
+                search_state.searchId, _fallback_actions(obs), obs_summary=obs_summary,
+            )
+        if not actions:
+            raw = _fallback_actions(obs)
+            if raw:
+                _debug_log(
+                    "H2",
+                    "lucario_mcts_runtime.py:create_node",
+                    "unverified fallback actions (search_step probes failed)",
+                    {
+                        "obs": obs_summary,
+                        "parent_is_root": parent is None,
+                        "combos": combos,
+                        "fallback": raw,
+                    },
+                )
+                actions = raw
+        if not actions:
+            _debug_log(
+                "H2",
+                "lucario_mcts_runtime.py:create_node",
+                "no legal MCTS actions",
+                {
+                    "obs": obs_summary,
+                    "parent_is_root": parent is None,
+                    "combos": combos,
+                    "fallback": _fallback_actions(obs),
+                },
+            )
+            raise RuntimeError(
+                f"no legal MCTS actions (options={len(obs.select.option)} "
+                f"min={obs.select.minCount} max={obs.select.maxCount})"
+            )
+
         sv_enc = get_encoder_input(obs, your_deck)
         sv_dec = get_decoder_input(obs, actions)
         value, policy = eval_nn(sv_enc, sv_dec, model)
@@ -568,6 +756,9 @@ def progress(count: int, text: str):
 # Matchup levers (LucarioScorer) bias root action when training vs real opponents.
 _LUCARIO_SCORER = None
 _LEVER_BLEND = 0.0
+_TRAIN_OPP_NAME = ""
+_TRAIN_OPP_DECK: list[int] | None = None
+_DECK_SCOPE_ENABLED = True
 
 
 def set_lucario_lever_teaching(deck_path: str, blend: float = 0.35) -> None:
@@ -577,6 +768,23 @@ def set_lucario_lever_teaching(deck_path: str, blend: float = 0.35) -> None:
 
     _LUCARIO_SCORER = LucarioScorer(deck_path=deck_path)
     _LEVER_BLEND = max(0.0, min(1.0, float(blend)))
+
+
+def set_training_opponent_context(
+    opp_name: str,
+    opp_deck_ids: list[int] | None,
+    *,
+    deck_scope_enabled: bool = True,
+) -> None:
+    """Per-matchup context for deck-scoped soft masking during field training."""
+    global _TRAIN_OPP_NAME, _TRAIN_OPP_DECK, _DECK_SCOPE_ENABLED
+    _TRAIN_OPP_NAME = opp_name or ""
+    _TRAIN_OPP_DECK = list(opp_deck_ids) if opp_deck_ids else None
+    _DECK_SCOPE_ENABLED = deck_scope_enabled
+
+
+def clear_training_opponent_context() -> None:
+    set_training_opponent_context("", None, deck_scope_enabled=True)
 
 
 def _scorer_root_pick(obs_dict: dict) -> list[int] | None:
@@ -607,11 +815,24 @@ def _pick_root_child(
     scorer_pick = _scorer_root_pick(obs_dict)
     if scorer_pick is None:
         return default_child
-    lever_bonus = _LEVER_BLEND * 1000.0
+    effective_blend = _LEVER_BLEND
+    if _DECK_SCOPE_ENABLED and _TRAIN_OPP_DECK is not None:
+        from agent.deck_scope import soft_lever_blend, visible_board_ids
+
+        board = visible_board_ids(obs_dict)
+        effective_blend = soft_lever_blend(
+            _LEVER_BLEND,
+            opp_name=_TRAIN_OPP_NAME,
+            opp_deck_ids=_TRAIN_OPP_DECK,
+            board_ids=board,
+        )
+    if effective_blend <= 0:
+        return default_child
+    lever_bonus = effective_blend * 1000.0
     best_child, best_score = default_child, -1.0
     for child, visits in visited:
         score = float(visits)
-        if child.select == scorer_pick:
+        if _selections_equal(child.select, scorer_pick):
             score += lever_bonus
         if score > best_score:
             best_score = score
@@ -627,7 +848,38 @@ def _sample_hidden(deck: list[int], n: int) -> list[int]:
     return (deck * (n // len(deck) + 1))[:n]
 
 
+def _deck_basic_ids(deck: list[int]) -> list[int]:
+    basics: list[int] = []
+    for cid in deck:
+        data = card_table.get(cid)
+        if (
+            data is not None
+            and data.cardType == CardType.POKEMON
+            and getattr(data, "basic", False)
+        ):
+            basics.append(cid)
+    return basics
+
+
+def _sample_hidden_deck_for_search(deck: list[int], n: int) -> list[int]:
+    """search_begin deck belief: cg requires >=1 Basic during setup."""
+    if n <= 0:
+        return []
+    basics = _deck_basic_ids(deck)
+    if not basics:
+        return _sample_hidden(deck, n)
+    if n == 1:
+        return [random.choice(basics)]
+    sample = _sample_hidden(deck, n)
+    if any(cid in basics for cid in sample):
+        return sample
+    sample[random.randrange(n)] = random.choice(basics)
+    return sample
+
+
 def _stub_pokemon_id(deck: list[int]) -> int:
+    for cid in _deck_basic_ids(deck):
+        return cid
     for cid in deck:
         data = card_table.get(cid)
         if data is not None and data.cardType == CardType.POKEMON:
@@ -652,7 +904,7 @@ def mcts_agent(
     add_noise: bool = False,
     temperature: float = 0.0,
 ):
-    """MCTS with legal-option children only; opponent belief from real deck list."""
+    """MCTS with simulator-valid children; opponent belief from real deck list."""
     opp_deck = opp_deck or your_deck
     obs = to_observation_class(obs_dict)
     your_index = obs.current.yourIndex
@@ -662,14 +914,18 @@ def mcts_agent(
 
     search_state = search_begin(
         obs,
-        your_deck=_sample_hidden(your_deck, state.players[your_index].deckCount),
+        your_deck=_sample_hidden_deck_for_search(
+            your_deck, state.players[your_index].deckCount,
+        ),
         your_prize=_sample_hidden(your_deck, len(state.players[your_index].prize)),
-        opponent_deck=_sample_hidden(opp_deck, opp_ps.deckCount),
+        opponent_deck=_sample_hidden_deck_for_search(opp_deck, opp_ps.deckCount),
         opponent_prize=_sample_hidden(opp_deck, len(opp_ps.prize)),
         opponent_hand=[_stub_energy_id(opp_deck)] * opp_ps.handCount,
         opponent_active=[_stub_pokemon_id(opp_deck)] if len(active) > 0 and active[0] is None else [],
     )
     root, sample = create_node(None, search_state, your_index, your_deck, model)
+    if add_noise and root.children:
+        _apply_dirichlet_noise(root.children)
 
     for _ in range(SEARCH_COUNT):
         current = root
@@ -678,6 +934,8 @@ def mcts_agent(
             value = -1e9
             c = 0.4 * math.sqrt(current.visit)
             for child in current.children:
+                if child.invalid:
+                    continue
                 visit = 0
                 if child.node is None:
                     v = current.total / current.visit
@@ -693,32 +951,43 @@ def mcts_agent(
             if nxt is None:
                 break
             if nxt.node is None:
-                ss = search_step(current.state.searchId, nxt.select)
-                nxt.node, _ = create_node(current, ss, your_index, your_deck, model)
+                try:
+                    ss = search_step(current.state.searchId, nxt.select)
+                    nxt.node, _ = create_node(current, ss, your_index, your_deck, model)
+                except (ValueError, RuntimeError):
+                    nxt.invalid = True
+                    nxt.node = _dead_expand_node(current, your_index)
                 break
             current = nxt.node
             if current.state.observation.current.result >= 0:
                 current.backprop(current.value)
                 break
 
-    visited = [(c, c.node.visit) for c in root.children if c.node is not None]
+    visited = [
+        (c, c.node.visit) for c in root.children
+        if c.node is not None and not c.invalid
+    ]
+    lever_override = False
     if visited:
-        if temperature > 0.0 and len(visited) > 1 and _LEVER_BLEND <= 0:
+        if temperature > 0.0 and len(visited) > 1:
             weights = [v ** (1.0 / temperature) for _, v in visited]
             tot = sum(weights) or 1.0
             r = random.random() * tot
-            acc, max_child = 0.0, visited[-1][0]
+            acc, default_child = 0.0, visited[-1][0]
             for (child, _), w in zip(visited, weights):
                 acc += w
                 if r <= acc:
-                    max_child = child
+                    default_child = child
                     break
         else:
-            max_child = max(visited, key=lambda t: t[1])[0]
-            if obs.current.yourIndex == your_index:
-                max_child = _pick_root_child(
-                    visited, max_child, obs_dict, temperature=temperature,
-                )
+            default_child = max(visited, key=lambda t: t[1])[0]
+        max_child = default_child
+        if obs.current.yourIndex == your_index and _LEVER_BLEND > 0:
+            lever_child = _pick_root_child(
+                visited, default_child, obs_dict, temperature=temperature,
+            )
+            lever_override = not _selections_equal(lever_child.select, default_child.select)
+            max_child = lever_child
     else:
         max_child = root.children[0] if root.children else Child(
             random.sample(list(range(len(obs.select.option))), obs.select.maxCount), 1.0
@@ -726,19 +995,25 @@ def mcts_agent(
 
     min_value = 10.0
     for child in root.children:
-        if child.node is not None:
+        if child.node is not None and not child.invalid:
             v = child.node.total / child.node.visit
             if min_value > v:
                 min_value = v
     if sample is not None:
-        sample.value = root.total / root.visit
-        for i, child in enumerate(root.children):
-            base = sample.value
-            if child.node is None:
-                v = min_value - base - 0.03
-            else:
-                v = child.node.total / child.node.visit - base
-            sample.policy[i] = max(-1.0, min(1.0, v))
+        sample.value = root.total / max(1, root.visit)
+        if lever_override:
+            for i, child in enumerate(root.children):
+                sample.policy[i] = (
+                    1.0 if _selections_equal(child.select, max_child.select) else -1.0
+                )
+        else:
+            for i, child in enumerate(root.children):
+                base = sample.value
+                if child.node is None or child.invalid:
+                    v = min_value - base - 0.03
+                else:
+                    v = child.node.total / child.node.visit - base
+                sample.policy[i] = max(-1.0, min(1.0, v))
 
     search_end()
     return max_child.select, sample
@@ -753,6 +1028,54 @@ def load_lucario_deck(path: str | Path | None = None) -> list[int]:
 
 
 LUCARIO_DECK = load_lucario_deck()
+
+
+class PlayerClock:
+    """Per-player cumulative think-time (wall clock). Past limit => forfeit loss."""
+
+    __slots__ = ("limit_sec", "used", "enabled")
+
+    def __init__(self, limit_sec: float | None = None, *, enabled: bool | None = None):
+        self.limit_sec = PLAYER_CLOCK_LIMIT_SEC if limit_sec is None else limit_sec
+        self.enabled = PLAYER_CLOCK_ENABLED if enabled is None else enabled
+        self.used = [0.0, 0.0]
+
+    def charge(self, player: int, seconds: float) -> int | None:
+        """Add think time for player; return winner index if they forfeit, else None."""
+        if not self.enabled or self.limit_sec <= 0:
+            return None
+        self.used[player] += max(0.0, seconds)
+        if self.used[player] > self.limit_sec:
+            return 1 - player
+        return None
+
+
+def timed_act(
+    act_fn,
+    obs: dict,
+    clock: PlayerClock,
+    player: int,
+):
+    """Run act_fn(obs), charge player clock, return (selection, forfeit_winner|None)."""
+    t0 = time.perf_counter()
+    selection = act_fn(obs)
+    forfeit = clock.charge(player, time.perf_counter() - t0)
+    return selection, forfeit
+
+
+def timed_mcts(
+    act_fn,
+    obs: dict,
+    clock: PlayerClock,
+    player: int,
+    *args,
+    **kwargs,
+):
+    """Like timed_act but for (selected, sample) MCTS returns."""
+    t0 = time.perf_counter()
+    selected, sample = act_fn(obs, *args, **kwargs)
+    forfeit = clock.charge(player, time.perf_counter() - t0)
+    return selected, sample, forfeit
 
 
 def label_samples(samples, terminal_result: int, your_index: int, sink: list) -> None:
@@ -776,17 +1099,17 @@ def train_on_samples(model, optimizer, scheduler, scaler, device, loss_fn_enc, l
         return 0.0
     model.train()
     random.shuffle(sample_list)
-    batch_count = len(sample_list) // BATCH_SIZE
-    if batch_count == 0:
-        return 0.0
+    n = len(sample_list)
     total_loss = 0.0
+    steps = 0
     use_amp = device.type == "cuda"
-    for i in range(batch_count):
+    offset = 0
+    while offset < n:
+        batch_size = min(BATCH_SIZE, n - offset)
         input_enc = LearnInput()
         input_dec = LearnInput()
         mask, label_enc, label_dec = [], [], []
-        start = BATCH_SIZE * i
-        for j in range(start, start + BATCH_SIZE):
+        for j in range(offset, offset + batch_size):
             sample = sample_list[j]
             input_enc.add(sample.sv_enc)
             input_dec.add(sample.sv_dec)
@@ -799,9 +1122,9 @@ def train_on_samples(model, optimizer, scheduler, scaler, device, loss_fn_enc, l
                 label_dec.append(0.0)
                 input_dec.offset.append(len(input_dec.index))
 
-        mask_t = torch.tensor(mask, dtype=torch.float32, device=device).view(BATCH_SIZE, -1)
-        le_t = torch.tensor(label_enc, dtype=torch.float32, device=device).view(BATCH_SIZE, -1)
-        ld_t = torch.tensor(label_dec, dtype=torch.float32, device=device).view(BATCH_SIZE, -1)
+        mask_t = torch.tensor(mask, dtype=torch.float32, device=device).view(batch_size, -1)
+        le_t = torch.tensor(label_enc, dtype=torch.float32, device=device).view(batch_size, -1)
+        ld_t = torch.tensor(label_dec, dtype=torch.float32, device=device).view(batch_size, -1)
 
         optimizer.zero_grad()
         with torch.autocast(device_type="cuda", enabled=use_amp):
@@ -814,7 +1137,7 @@ def train_on_samples(model, optimizer, scheduler, scaler, device, loss_fn_enc, l
                 torch.tensor(input_dec.offset, dtype=torch.int32, device=device),
             )
             loss_enc = loss_fn_enc(out_enc, le_t)
-            loss_dec = (loss_fn_dec(out_dec, ld_t) * mask_t).sum() / float(BATCH_SIZE)
+            loss_dec = (loss_fn_dec(out_dec, ld_t) * mask_t).sum() / float(batch_size)
             loss = loss_enc + loss_dec
 
         scaler.scale(loss).backward()
@@ -823,29 +1146,42 @@ def train_on_samples(model, optimizer, scheduler, scaler, device, loss_fn_enc, l
         scaler.step(optimizer)
         scaler.update()
         total_loss += float(loss.detach())
+        steps += 1
+        offset += batch_size
     if scheduler is not None:
         scheduler.step()
-    return total_loss / batch_count
+    return total_loss / max(1, steps)
 
 
-def selfplay_game(model, deck: list[int]) -> list:
+def selfplay_game(model, deck: list[int], clock: PlayerClock | None = None) -> list:
     out: list = []
+    clock = clock or PlayerClock()
     obs, start = battle_start(deck, deck)
     if start.errorPlayer >= 0:
         raise ValueError(f"deck error type={start.errorType}")
     samples: list[list] = [[], []]
     ply = 0
-    while obs["current"]["result"] < 0:
+    forfeit_result = None
+    while obs["current"]["result"] < 0 and forfeit_result is None:
         yi = obs["current"]["yourIndex"]
         temp = 1.0 if ply < TEMP_PLIES else 0.0
-        selected, sample = mcts_agent(
-            obs, deck, model, opp_deck=deck, add_noise=True, temperature=temp,
+        selected, sample, forfeit_result = timed_mcts(
+            mcts_agent,
+            obs,
+            clock,
+            yi,
+            deck,
+            model,
+            opp_deck=deck,
+            add_noise=True,
+            temperature=temp,
         )
         samples[yi].append(sample)
-        obs = battle_select(selected)
+        if forfeit_result is None:
+            obs = battle_select(selected)
         ply += 1
     battle_finish()
-    result = obs["current"]["result"]
+    result = forfeit_result if forfeit_result is not None else obs["current"]["result"]
     for i in range(2):
         label_samples(samples[i], result, i, out)
     return out

@@ -1,0 +1,47 @@
+{
+  "train_deck": "agent_decks\\real_mega_lucario_ex.csv",
+  "opponents": [
+    "dragapult_ex_sample",
+    "real_dragapult_ex",
+    "real_iono",
+    "real_mega_abomasnow_ex",
+    "real_mega_lucario_ex",
+    "top_mined_dragapult_ex",
+    "top_mined_iono",
+    "top_mined_mega_abomasnow_ex",
+    "top_mined_mega_lucario_ex"
+  ],
+  "cycles": 25,
+  "completed_cycles": 25,
+  "source_checkpoint": "rl_mcts_field\\lucarioex_v5_field\\model_latest.pth",
+  "opponent_brains": {
+    "dragapult_ex_sample": "dragapult_ex",
+    "real_dragapult_ex": "dragapult_ex",
+    "real_iono": "iono",
+    "real_mega_abomasnow_ex": "mega_abomasnow_ex",
+    "real_mega_lucario_ex": "mega_lucario_ex",
+    "top_mined_dragapult_ex": "dragapult_ex",
+    "top_mined_iono": "iono",
+    "top_mined_mega_abomasnow_ex": "mega_abomasnow_ex",
+    "top_mined_mega_lucario_ex": "mega_lucario_ex"
+  },
+  "config": {
+    "LUC_D_MODEL": 128,
+    "LUC_HEADS": 2,
+    "LUC_D_FF": 256,
+    "LUC_ENC_LAYERS": 1,
+    "LUC_DEC_LAYERS": 1,
+    "LUC_SEARCH_COUNT": 20,
+    "opponent_brain": "native",
+    "eval_opponent": "native",
+    "mirror_brain": "none",
+    "lucario_mirror_games": 20,
+    "gate_mode": "field",
+    "lucario_game_mult": 1,
+    "lever_blend": 0.45,
+    "non_official_brain": "random",
+    "player_clock_sec": 599.0,
+    "player_clock_enabled": true,
+    "deck_scope_enabled": true
+  }
+}

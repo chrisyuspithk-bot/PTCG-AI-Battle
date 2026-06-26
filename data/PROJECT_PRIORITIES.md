@@ -90,7 +90,8 @@ Public agents: `python scripts/extract_public_agents.py` → `data/kaggle_ref/op
 
 | Agent | Status |
 |-------|--------|
-| SearchScorer × real Mega Lucario ex | **668 μ floor** — do not replace without beating it |
-| Dragapult ex (official Crispin sample) | Local gate 78–88% vs pilots; ladder probe pending user OK |
-| Lucario field RL+MCTS | **5-cycle CPU train in progress** → `rl_mcts_field/lucarioex_v1/` |
+| **Dragapult ex (official Crispin sample)** | **850.5 μ — best so far** (ref 53950779). Pin Final slot; **must beat to count as progress**. |
+| SearchScorer × real Mega Lucario ex | **668 μ floor** — former best home-grown |
+| Lucario field RL+MCTS model4 (Kaggle basic) | 643.9 μ — below Dragapult rules |
+| Lucario field RL+MCTS v2 (local 20-cycle) | Packaged `lucarioex_v2_field_mcts.tar.gz`; not submitted |
 | Track B Learned / deck GA / old Kaggle Lucario RL | **Retired** (RULINGS 2C) |

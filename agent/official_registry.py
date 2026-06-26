@@ -3,8 +3,8 @@
 Organizer samples (kiyotah kernels):
   - Mega Lucario ex   -> agent/lucario_policy.py (LucarioScorer)
   - Dragapult ex      -> agent/dragapult_agent.py
-  - Iono's deck       -> data/kaggle_ref/opponents/a-sample-rule-based-agent-iono-s-deck/
-  - Mega Abomasnow ex -> data/kaggle_ref/opponents/a-sample-rule-based-agent-mega-abomasnow-ex-deck/
+  - Iono's deck       -> agent/iono_agent.py
+  - Mega Abomasnow ex -> agent/abomasnow_agent.py
 
 Decks without an official sample (e.g. mined Alakazam, Trevenant) are not playable as
 native-rule opponents until a real sample exists. Training must opt in to random for those.
@@ -17,7 +17,16 @@ import os
 from collections.abc import Callable
 from pathlib import Path
 
+from agent.cg_bootstrap import ensure_cg_engine  # noqa: E402
 from agent.lucario_policy import is_lucario_deck
+
+# Kaggle organizer rule samples (kiyotah) — one pilot per archetype.
+KERNEL_URLS = {
+    "mega_lucario_ex": "https://www.kaggle.com/code/kiyotah/a-sample-rule-based-agent-mega-lucario-ex-deck",
+    "dragapult_ex": "https://www.kaggle.com/code/kiyotah/a-sample-rule-based-agent-dragapult-ex-deck",
+    "iono": "https://www.kaggle.com/code/kiyotah/a-sample-rule-based-agent-iono-s-deck",
+    "mega_abomasnow_ex": "https://www.kaggle.com/code/kiyotah/a-sample-rule-based-agent-mega-abomasnow-ex-deck",
+}
 
 # Card-id signatures for archetype detection (deck list, not board).
 _LUCARIO_LINE = frozenset({673, 674, 676, 677, 678})
@@ -44,6 +53,31 @@ _STANDALONE_MODULE = {
     "iono": "agent.iono_agent",
     "mega_abomasnow_ex": "agent.abomasnow_agent",
 }
+
+# Human-readable pilot source for logs / verify_official_opponents.py
+OFFICIAL_PILOT_MODULES: dict[str, str] = {
+    "mega_lucario_ex": "agent.lucario_policy.LucarioScorer",
+    **{k: v for k, v in _STANDALONE_MODULE.items()},
+}
+
+# Default field training: one CSV per archetype with an official Kaggle rule pilot.
+OFFICIAL_FIELD_DECK_STEMS = [
+    "dragapult_ex_sample",
+    "real_mega_lucario_ex",
+    "real_dragapult_ex",
+    "real_mega_abomasnow_ex",
+    "real_iono",
+    "top_mined_dragapult_ex",
+    "top_mined_iono",
+    "top_mined_mega_abomasnow_ex",
+    "top_mined_mega_lucario_ex",
+]
+
+# No organizer sample — excluded unless training opts into random.
+RANDOM_ONLY_DECK_STEMS = [
+    "top_mined_alakazam",
+    "top_mined_trevenant",
+]
 
 _standalone_cache: dict[tuple[str, str], Callable[[dict], list[int]]] = {}
 _scorer_cache: dict[str, Callable[[dict], list[int]]] = {}
@@ -104,6 +138,7 @@ def _standalone_act(archetype: str, deck_path: str) -> Callable[[dict], list[int
         raise ValueError(f"no standalone module for {archetype}")
 
     os.environ[env_var] = abs_path
+    ensure_cg_engine()
 
     # Prefer repo module (dragapult_agent.py); fall back to extracted kernel main.py.
     try:

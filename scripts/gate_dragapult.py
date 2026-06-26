@@ -21,6 +21,7 @@ import argparse
 import math
 import os
 import sys
+from collections import Counter
 
 PROJ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENGINE_DIR = os.path.join(PROJ, "data", "sim", "sample_submission")
@@ -32,6 +33,9 @@ from cg.sim import lib, Battle   # noqa: E402
 
 DECKS_DIR = os.path.join(PROJ, "agent_decks")
 DRAGAPULT_DECK = os.path.join(DECKS_DIR, "dragapult_ex_sample.csv")
+
+RESULT_REASONS = {1: "prize", 2: "deck_out", 3: "no_active", 4: "card_effect"}
+MIN_OVERALL_WR = 85.0
 
 
 def load_deck(path: str) -> list[int]:
@@ -71,8 +75,38 @@ def make_pilot(scorer_name: str, deck_path: str, seed: int):
     return lambda obs: ag.act(obs)
 
 
-def run_game(deck0: list[int], deck1: list[int], pol0, pol1, max_steps: int = 8000) -> int:
-    """Return winner index (0/1), 2=draw, -1 if step cap / select-None anomaly."""
+def _loss_reason(obs: dict, loser: int) -> str:
+    """Infer terminal loss reason for loser seat from final observation."""
+    for log in obs.get("logs") or []:
+        if log.get("type") == 5:
+            reason = int(log.get("reason", 0) or 0)
+            return RESULT_REASONS.get(reason, f"reason_{reason}")
+    cur = obs.get("current") or {}
+    players = cur.get("players") or []
+    if loser not in (0, 1) or len(players) < 2:
+        return "unknown"
+    winner = 1 - loser
+    lp = players[loser]
+    wp = players[winner]
+    if int(lp.get("deckCount", 1) or 0) <= 0:
+        return "deck_out"
+    w_prizes = len(wp.get("prize") or [])
+    l_prizes = len(lp.get("prize") or [])
+    if w_prizes < l_prizes or w_prizes == 0:
+        return "prize"
+    if not (lp.get("active") or []):
+        return "no_active"
+    return "prize"
+
+
+def run_game(
+    deck0: list[int],
+    deck1: list[int],
+    pol0,
+    pol1,
+    max_steps: int = 8000,
+) -> tuple[int, str | None]:
+    """Return (winner index 0/1/2, loss_reason for loser or None)."""
     obs, start = game.battle_start(deck0, deck1)
     if obs is None:
         raise RuntimeError(f"battle_start failed: err={getattr(start, 'errorType', '?')}")
@@ -81,18 +115,26 @@ def run_game(deck0: list[int], deck1: list[int], pol0, pol1, max_steps: int = 80
         for _ in range(max_steps):
             cur = obs["current"]
             if cur is not None and cur.get("result", -1) != -1:
-                return cur["result"]
+                winner = cur["result"]
+                if winner in (0, 1):
+                    return winner, _loss_reason(obs, 1 - winner)
+                return winner, None
             if obs["select"] is None:
-                return -1
+                return -1, None
             p = _select_player()
             choice = policies[p](obs)
             obs = game.battle_select(choice)
-        return -1
+        return -1, None
     finally:
         game.battle_finish()
 
 
-def gate_vs(opp_name: str, games: int, opp_scorer: str) -> tuple[int, int, int, int]:
+def gate_vs(
+    opp_name: str,
+    games: int,
+    opp_scorer: str,
+    loss_reasons: Counter | None = None,
+) -> tuple[int, int, int, int]:
     opp_deck_path = os.path.join(DECKS_DIR, opp_name + ".csv")
     deckD = load_deck(DRAGAPULT_DECK)
     deckO = load_deck(opp_deck_path)
@@ -101,10 +143,10 @@ def gate_vs(opp_name: str, games: int, opp_scorer: str) -> tuple[int, int, int, 
     for i in range(games):
         opp = make_pilot(opp_scorer, opp_deck_path, seed=1000 + i)
         if i % 2 == 0:  # Dragapult is player 0
-            res = run_game(deckD, deckO, drag, opp)
+            res, reason = run_game(deckD, deckO, drag, opp)
             d_win, d_loss = (res == 0), (res == 1)
         else:           # Dragapult is player 1
-            res = run_game(deckO, deckD, opp, drag)
+            res, reason = run_game(deckO, deckD, opp, drag)
             d_win, d_loss = (res == 1), (res == 0)
         if res == 2:
             draws += 1
@@ -114,6 +156,8 @@ def gate_vs(opp_name: str, games: int, opp_scorer: str) -> tuple[int, int, int, 
             wins += 1
         elif d_loss:
             losses += 1
+            if loss_reasons is not None and reason:
+                loss_reasons[reason] += 1
     return wins, losses, draws, unfinished
 
 
@@ -124,14 +168,26 @@ def main() -> int:
                     default=["real_mega_lucario_ex", "top_mined_alakazam", "top_mined_trevenant"],
                     help="opponent deck basenames in agent_decks/")
     ap.add_argument("--opp-scorer", choices=("heuristic", "search"), default="heuristic")
+    ap.add_argument(
+        "--min-overall-wr",
+        type=float,
+        default=MIN_OVERALL_WR,
+        help=f"Fail if overall win%% below this (default {MIN_OVERALL_WR})",
+    )
+    ap.add_argument(
+        "--allow-no-active",
+        action="store_true",
+        help="Do not fail when Dragapult loses by no_active (debug only)",
+    )
     args = ap.parse_args()
 
     print(f"Dragapult baseline gate — {args.games} games/opp vs {args.opp_scorer} pilot "
           f"(LOCAL FILTER, not ladder truth)\n")
     tot_w = tot_d = tot_n = 0
     decided_total = 0
+    loss_reasons: Counter = Counter()
     for opp in args.opponents:
-        w, l, d, u = gate_vs(opp, args.games, args.opp_scorer)
+        w, l, d, u = gate_vs(opp, args.games, args.opp_scorer, loss_reasons)
         decided = w + l
         pt, lo, hi = _wilson(w, decided)
         print(f"  vs {opp:<26} {w:>3}-{l:<3} ({pt:5.1f}%  CI {lo:4.1f}-{hi:4.1f})"
@@ -143,6 +199,15 @@ def main() -> int:
     pt, lo, hi = _wilson(tot_w, decided_total)
     print(f"\n  OVERALL {tot_w}/{decided_total} decided = {pt:.1f}%  (Wilson95 {lo:.1f}-{hi:.1f})"
           f"  | draws {tot_d} unfinished {tot_n}")
+    if loss_reasons:
+        print(f"  Dragapult loss reasons: {dict(loss_reasons)}")
+    no_active = loss_reasons.get("no_active", 0)
+    if no_active and not args.allow_no_active:
+        print(f"\nGATE FAIL: {no_active} no_active loss(es) — bench guard regression", file=sys.stderr)
+        return 1
+    if decided_total and pt < args.min_overall_wr:
+        print(f"\nGATE FAIL: overall {pt:.1f}% < {args.min_overall_wr}%", file=sys.stderr)
+        return 1
     return 0
 
 

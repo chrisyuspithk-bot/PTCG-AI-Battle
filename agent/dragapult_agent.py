@@ -26,16 +26,20 @@ def _resolve_deck_path() -> str:
     env = os.environ.get("DRAGAPULT_DECK")
     if env and os.path.exists(env):
         return env
-    here = os.path.dirname(os.path.abspath(__file__))
-    packaged = os.path.join(here, "deck.csv")          # tarball layout (deck.csv beside module)
-    if os.path.exists(packaged):
-        return packaged
-    repo_default = os.path.join(here, "..", "agent_decks", "dragapult_ex_sample.csv")
-    if os.path.exists(repo_default):
-        return repo_default
-    if os.path.exists("deck.csv"):                     # cwd
+    if os.path.exists("deck.csv"):                     # tarball / Kaggle cwd
         return "deck.csv"
-    return "/kaggle_simulations/agent/deck.csv"        # Kaggle runtime
+    try:
+        here = os.path.dirname(os.path.abspath(__file__))
+    except NameError:
+        here = None
+    if here:
+        packaged = os.path.join(here, "deck.csv")
+        if os.path.exists(packaged):
+            return packaged
+        repo_default = os.path.join(here, "..", "agent_decks", "dragapult_ex_sample.csv")
+        if os.path.exists(repo_default):
+            return repo_default
+    return "/kaggle_simulations/agent/deck.csv"        # Kaggle runtime fallback
 
 
 with open(_resolve_deck_path(), "r") as file:
@@ -875,8 +879,14 @@ def _agent_impl(obs_dict: dict) -> list[int]:
 
 
 # --- IMPROVEMENT over the official sample: never-crash + output validation (Ruling R7) ---
+# Phase 2: empty-bench guard (agent/dragapult_bench_guard.py) — see apply_bench_guard.
 # The sample has no exception handling: any unhandled edge case raises and forfeits the
 # game on the ladder. This wrapper guarantees a legal return in every case.
+
+try:
+    from dragapult_bench_guard import apply_bench_guard
+except ImportError:
+    from agent.dragapult_bench_guard import apply_bench_guard
 
 def _legal_fallback(obs_dict: dict) -> list[int]:
     sel = obs_dict.get("select")
@@ -911,15 +921,27 @@ def _is_legal(out, obs_dict: dict) -> bool:
 _LOG = os.environ.get("DRAGAPULT_LOG") == "1"   # env-gated decision trace (off by default)
 
 
-def _trace(obs_dict: dict, out: list[int], fellback: bool) -> None:
+def _trace(
+    obs_dict: dict,
+    out: list[int],
+    *,
+    fellback: bool = False,
+    bench_guard: bool = False,
+) -> None:
     """Compact one-line decision trace to stdout. Kaggle captures agent stdout per
     step (fetchable via scripts/fetch_agent_logs.py), so this is extractable for
     later eval. Never raises. Off unless DRAGAPULT_LOG=1."""
     try:
         cur = obs_dict.get("current") or {}
         sel = obs_dict.get("select") or {}
+        tags = []
+        if bench_guard:
+            tags.append("BENCH_GUARD")
+        if fellback:
+            tags.append("FALLBACK")
+        suffix = f" {' '.join(tags)}" if tags else ""
         print(f"DRG turn={cur.get('turn','?')} ctx={sel.get('context','?')} "
-              f"n={len(sel.get('option', []))} pick={out}{' FALLBACK' if fellback else ''}",
+              f"n={len(sel.get('option', []))} pick={out}{suffix}",
               flush=True)
     except Exception:
         pass
@@ -928,13 +950,16 @@ def _trace(obs_dict: dict, out: list[int], fellback: bool) -> None:
 def agent(obs_dict: dict) -> list[int]:
     """Public entry point: runs the sample logic but never crashes and never
     returns an illegal selection (falls back to a legal default on any problem)."""
-    out, fellback = None, False
+    out, fellback, bench_guarded = None, False, False
     try:
-        out = _agent_impl(obs_dict)
+        raw = _agent_impl(obs_dict)
+        guarded = apply_bench_guard(obs_dict, raw)
+        bench_guarded = guarded != raw
+        out = guarded
         if not _is_legal(out, obs_dict):
             out, fellback = _legal_fallback(obs_dict), True
     except Exception:
         out, fellback = _legal_fallback(obs_dict), True
     if _LOG:
-        _trace(obs_dict, out, fellback)
+        _trace(obs_dict, out, fellback=fellback, bench_guard=bench_guarded)
     return out

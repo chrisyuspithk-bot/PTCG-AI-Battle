@@ -111,7 +111,8 @@ python scripts/train_lucario_field_mcts.py --device cpu --cycles 5
 - Draw terminal label = 0.0 in training.
 - Inference: `LucarioScorer` fallback if model missing; `LUC_SUBMIT_SEARCH_COUNT` modest (default 12).
 
-**Ship criteria:** L0–L2 on real field, then L5 with stable μ **≥ SearchScorer 668** (user OK).
+**Ship criteria:** L0–L2 on real field, then L5 with stable μ **> 850.5** (current best so far).
+SearchScorer 668 remains the rules-only Lucario floor; **850.5 is the team bar** until beaten.
 
 ---
 

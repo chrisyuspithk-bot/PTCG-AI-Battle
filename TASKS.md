@@ -13,19 +13,23 @@ Work **per deck** (Lucario first, then Dragapult, Alakazam, …). Each sub-step 
 - [ ] **R1. Global rules (phase 1).** For each deck: official sample → `agent/<archetype>_policy.py` +
       `deck_tech` entry; L0 smoke + L1 `gate_vs_public.py` / deck-specific gate — record per-opponent WR baseline.
   - [ ] Lucario: `lucario_policy.py` + `LUCARIO_TECH` — baseline gate vs 10 real-field decks.
-  - [ ] Dragapult: `dragapult_agent.py` — baseline gate (`gate_dragapult.py`); await ladder μ ref 53950246.
+  - [x] Dragapult: `dragapult_agent.py` — ladder **850.5 μ** (ref **53950779**) — **best so far**; pin Final slot.
+  - [x] Dragapult Phase 2: empty-bench guard (`dragapult_bench_guard.py`); gate `scripts/gate_dragapult.py` tracks loss reasons; v3 tarball via `package_dragapult.py`.
+  - [x] Dragapult v3 ladder probe: ref **53989933** submitted 2026-06-23 19:44 UTC — await ladder μ vs **850.5** bar (53950779).
+  - [ ] **Beat 850.5 μ** — every upload/train gate; field top ~1350 is the real target.
   - [ ] Alakazam: port or re-gate imported best5 pilot on `top_mined_alakazam.csv`.
 - [ ] **R2. Matchup levers (phase 2).** Wire `agent/matchup_levers.py` into `lucario_policy.py`;
       research in `data/MATCHUP_PLAYBOOK.md`. One lever per PR; re-gate weak matchups.
-  - [ ] Lucario vs Abomasnow (0% train eval) — **first implement** (`abomasnow_water` levers).
-  - [ ] Lucario vs Trevenant (20% train eval) — `avoid_ko_trevenant_setup`, Boss Phantump.
+  - [x] Wire levers into `lucario_policy.py` (Boss/PPP/Lillie/setup/Solrock/Snover plan).
+  - [ ] Lucario vs Abomasnow (0% train eval) — **gate** `scripts/gate_lucario_matchups.py`.
+  - [ ] Lucario vs Trevenant — `avoid_ko_trevenant_setup`, Boss Phantump; re-gate.
   - [ ] Mirror / Alakazam — Boss on setup Pokémon (Riolu, Abra).
 - [ ] **R3. Field mixture (phase 3).** Only after R1+R2 floor stable:
   - [ ] `scripts/update_from_kaggle.py` → leaderboard snapshot on user machine.
   - [ ] Harden `scripts/update_opponent_tracker.py` → `report/OPPONENT_DECK_DISTRIBUTION.md`.
   - [ ] Weighted gate: `E[win] = Σ share(a)·WR(ours,a)`; optional weighted opponent sampling in field RL.
 
-**Deferred until R1–R2 pass:** weighting Lucario field RL cycles by meta share; upload Slot 2/3 picks from mixture alone.
+**Deferred until R1–R2 pass:** weighting Lucario field RL cycles by meta share; upload Slot 2/3 picks from mixture alone. **Dragapult field RL+MCTS** — Lucario v5 **complete** (46.1% field champ); may start after v5 lessons applied.
 
 ---
 
@@ -77,6 +81,10 @@ Work **per deck** (Lucario first, then Dragapult, Alakazam, …). Each sub-step 
 
 ## Done log
 _(move completed top-level steps here with a date)_
+- 2026-06-24: **Lucario v5 final submitted** — ref **53995982**, 25-cycle `model_best.pth` @ 46.1% field; validation 600.0 μ.
+- 2026-06-23: **Lucario v5 field RL+MCTS DONE** — 25/25 cycles, `model_best.pth` @ **46.1%** field eval (cycle 21); prior probe 53978119 @ 43.5% → 431.9 μ.
+- 2026-06-23: **Dragapult Phase 2 bench guard** — `dragapult_bench_guard.py`, gate loss-reason tracking, `dist/candidates/dragapult_ex_sample.tar.gz` v3; Dragapult field RL deferred until Lucario v5 train completes.
+- 2026-06-22 (S44e): **Dragapult 850.5 μ best so far** (ref 53950779) — bar to beat; pin Final slot; target > 850.5.
 - 2026-06-22 (S44d): **R11 rules-before-mixture** — phases 1–3 in ARCHITECTURE/TASKS/RULINGS; opponent tracker draft; next: Lucario global gate + Abomasnow lever.
 - 2026-06-22 (S44c): **Lucario field RL+MCTS stack** — runtime, trainer, policy wrapper; committed `251da2b`; 5-cycle CPU train → `rl_mcts_field/lucarioex_v1/`.
 - 2026-06-22 (S44b): **Dragapult ex baseline** — `agent/dragapult_agent.py`, `agent_decks/dragapult_ex_sample.csv`, `scripts/gate_dragapult.py`; local gate 78–88% vs pilot brains (filter only).

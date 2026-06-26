@@ -100,7 +100,7 @@ LUCARIO_LEVERS: dict[str, LeverDeltas] = {
     ),
     "dragapult_psychic": LeverDeltas(
         solrock_vs_single_prize=150.0,
-        boss_orders=700.0,
+        boss_orders=900.0,  # Tuned 2026-06-26: +200 (was 700)
         gust_setup_pokemon=600.0,  # Dreepy/Drakloak
         switch_after_mega_brave=300.0,
     ),

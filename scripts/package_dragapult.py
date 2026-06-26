@@ -32,6 +32,7 @@ from datetime import datetime, timezone
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENGINE_CG = os.path.join(ROOT, "data", "sim", "sample_submission", "cg")
 AGENT_SRC = os.path.join(ROOT, "agent", "dragapult_agent.py")
+BENCH_GUARD_SRC = os.path.join(ROOT, "agent", "dragapult_bench_guard.py")
 DECK_SRC = os.path.join(ROOT, "agent_decks", "dragapult_ex_sample.csv")
 NAME = "dragapult_ex_sample"
 BUILD_DIR = os.path.join(ROOT, "dist", "submission_build", NAME)
@@ -43,7 +44,10 @@ MAIN_PY = '''"""Kaggle cabt submission entry point — Dragapult ex (standalone 
 import os
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # cg/ + dragapult_agent
+# Kaggle exec()s main.py without __file__; cwd is the unpacked agent directory.
+_agent_dir = os.getcwd()
+if _agent_dir not in sys.path:
+    sys.path.insert(0, _agent_dir)
 
 from dragapult_agent import agent  # noqa: E402,F401  (Kaggle calls main.agent)
 '''
@@ -87,7 +91,7 @@ def _copytree_no_pyc(src: str, dst: str) -> None:
 def build() -> None:
     if not os.path.isdir(ENGINE_CG):
         raise FileNotFoundError(f"engine cg/ not found: {ENGINE_CG}")
-    for p in (AGENT_SRC, DECK_SRC):
+    for p in (AGENT_SRC, BENCH_GUARD_SRC, DECK_SRC):
         if not os.path.exists(p):
             raise FileNotFoundError(p)
     deck_lines = [x for x in open(DECK_SRC).read().split("\n") if x.strip()]
@@ -100,17 +104,18 @@ def build() -> None:
     with open(os.path.join(BUILD_DIR, "main.py"), "w", encoding="utf-8") as f:
         f.write(MAIN_PY)
     shutil.copy2(AGENT_SRC, os.path.join(BUILD_DIR, "dragapult_agent.py"))
+    shutil.copy2(BENCH_GUARD_SRC, os.path.join(BUILD_DIR, "dragapult_bench_guard.py"))
     shutil.copy2(DECK_SRC, os.path.join(BUILD_DIR, "deck.csv"))
     _copytree_no_pyc(ENGINE_CG, os.path.join(BUILD_DIR, "cg"))
 
     os.makedirs(CAND_DIR, exist_ok=True)
     with tarfile.open(TARBALL, "w:gz") as tar:
-        for item in ("main.py", "dragapult_agent.py", "deck.csv", "cg"):
+        for item in ("main.py", "dragapult_agent.py", "dragapult_bench_guard.py", "deck.csv", "cg"):
             tar.add(os.path.join(BUILD_DIR, item), arcname=item)
 
     manifest = {
         "name": NAME,
-        "agent": "agent/dragapult_agent.py (official Kaggle sample + never-crash/validation wrapper)",
+        "agent": "agent/dragapult_agent.py (official Kaggle sample + never-crash + bench guard)",
         "variant": "Crispin aggressive (official sample)",
         "deck": "agent_decks/dragapult_ex_sample.csv",
         "deck_sha1": _sha(DECK_SRC),
@@ -137,26 +142,26 @@ def build() -> None:
 
 
 def dry_run() -> None:
-    """Extract the tarball to a temp dir and import main with ONLY that dir on the
-    path — proves self-containment, cg import, and deck resolution."""
-    with tempfile.TemporaryDirectory() as tmp:
+    """Extract the tarball to a temp dir and exec main.py without __file__ (matches
+    Kaggle) — proves self-containment, cg import, and deck resolution."""
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
         with tarfile.open(TARBALL) as tar:
             try:
                 tar.extractall(tmp, filter="data")   # py>=3.12 safe extraction
             except TypeError:
                 tar.extractall(tmp)
-        code = (
-            "import sys; sys.path.insert(0, '.'); import main; "
-            "o = main.agent({'select': None, 'current': None}); "
-            "assert isinstance(o, list) and len(o) == 60, ('bad deck-select', o); "
-            "print('dry-run OK: import + cg + deck-select ->', len(o), 'cards')"
-        )
-        res = subprocess.run([sys.executable, "-c", code], cwd=tmp,
-                             capture_output=True, text=True)
-        sys.stdout.write(res.stdout)
-        if res.returncode != 0:
-            sys.stderr.write(res.stderr)
-            raise SystemExit(f"DRY-RUN FAILED (rc={res.returncode})")
+        old_cwd = os.getcwd()
+        try:
+            os.chdir(tmp)
+            main_src = open(os.path.join(tmp, "main.py"), encoding="utf-8").read()
+            env: dict = {"__builtins__": __builtins__}
+            exec(compile(main_src, "main.py", "exec"), env)
+            out = env["agent"]({"select": None, "current": None})
+        finally:
+            os.chdir(old_cwd)
+        if not isinstance(out, list) or len(out) != 60:
+            raise SystemExit(f"DRY-RUN FAILED: deck-select got {out!r}")
+        print(f"dry-run OK: exec main (no __file__) + cg + deck-select -> {len(out)} cards")
 
 
 if __name__ == "__main__":
