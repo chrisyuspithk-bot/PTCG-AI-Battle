@@ -7,9 +7,8 @@ Work top to bottom. Check `[x]` when done; log in `STATE.md`.
 
 ## NOW — Session 57 (Archaludon primary) 
 
-- [x] **R11 implement + gate** — `_prize_race_attach_cap` in `archaludon_agent.py`; local **58.7%** n=150; no_active 9/250 agent-only.
-- [ ] **Track R11 probe μ** — `track_ladder.py` after ≥40 min; pull episodes when COMPLETE.
-- [ ] **Archaludon P1 — close prize trace** — if R11 misses 1196.1 μ, trace 82062971 for R12 dead-active retreat.
+- [x] **Submission scoreboard** — `report/LADDER_BEST_SO_FAR.md` + `eval/ladder_log.csv` (all Archaludon rows, μ-sorted).
+- [ ] **Next Archaludon probe** — small lever vs leader 1196.1 μ → gate → upload **new ref** → track + log.
 - [ ] **Archaludon P2 — Iono harness** — 43.3% local; lever only if full-suite ≥5pp (`gate_archaludon.py`).
 - [ ] **Archaludon P2 — Iono harness** — 43.3% local; lever only if full-suite ≥5pp (`gate_archaludon.py`).
 - [ ] **Strategy report outline** — Archaludon story for Sep 2026 comp.

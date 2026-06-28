@@ -2,36 +2,31 @@
 
 **Champion (saved finalist baseline):** `archaludon_rules` × `archaludon_ex_cinderace.csv` · ref **54083197** · **1196.1 μ** (peak **1224.2**) · **R7 code only** on ladder.
 
-**Iteration posture (~2 months to Strategy deadline):** Small one-lever changes → local gate (filter) → ladder probe (truth). Replace saved champion only when probe beats **1196.1 μ** on ≥2 readings. Final Kaggle pins near deadline — not now.
+**Iteration posture:** Record every probe in [`report/LADDER_BEST_SO_FAR.md`](../report/LADDER_BEST_SO_FAR.md). Small one-lever changes → local gate (filter) → ladder probe (truth). **Keep iterating** — a low-μ probe is data, not a permanent ban on that idea (refine, combine, or retry on R7 baseline). Replace leader only when probe beats **1196.1 μ** on ≥2 readings. R12 = do not re-upload an existing ref tarball; always ship a **new catalog row** for the next try.
 
 ---
 
-## Probe learnings (Session 52–56)
+## Probe record (Session 52–57, μ desc)
 
-| Ref | Levers | Local full n=30 | Ladder μ | Verdict |
-|-----|--------|----------------:|---------:|---------|
-| 54083197 | R7 bench guard | 67.3% (post-R7b) | **1196.1** | **Baseline to beat** — 50 ep, 70.0% WR |
-| 54088877 | + R8a promote, R8b tempo block | **75.3%** | 983.8 | Local overpredicted; **no_active 17.9%** on ladder (56 ep) |
-| 54089078 | + R9 TO_HAND floor | 68.0% | 841.0 | **Ruled out** |
-| **54109826** | R7 + **R10** prize-attack KO | 62.0% | **854.0** | **Ruled out** (−342 vs champion) |
-| **54109878** | R7 + **R8a-only** promote | 62.7% | **967.3** | **Ruled out** (−229 vs champion) |
-| **(pending)** | R7 + **R11** attach cap | 58.7% | **PENDING** | Ref **54138853** uploaded S57 |
+| Ref | Levers | Local n=30 | Ladder μ | Notes |
+|-----|--------|----------:|---------:|-------|
+| 54083197 | R7 bench guard | 72.7% | **1196.1** | **Leader** — 50 ep, 70.0% WR |
+| 54088877 | R8a promote + R8b tempo | 75.3% | 983.8 | Best probe so far; no_active 17.9% on ladder |
+| 54109878 | R7 + R8a only | 62.7% | 967.3 | Promote without R8b |
+| 54109826 | R7 + R10 prize-attack | 62.0% | 854.0 | Attach-over-attack hypothesis |
+| 54089078 | R8 + R9 TO_HAND | 68.0% | 841.0 | Safety net on R8 combo |
+| 54138853 | R7 + R11 attach cap | 58.7% | 535.6 | Narrow cap vs global R10 |
 
-**Pattern (again):** local gate ↑ does not guarantee ladder ↑. R8b+R9 **doubled ladder no_active** (8%→18%) vs champion despite higher local gates. **Session 57:** R10 and R8a-on-R7 also regressed on ladder despite DS-backed hypotheses.
+**Pattern:** local gate ≠ ladder μ. Use probes to learn; next changes stay small and replay-backed.
 
-**R11 (Session 57):** `_prize_race_attach_cap` — when behind and legal attack KOs Active, cap attach/evolve/tempo ≤5000, boost lethal attack ≥55000. Reverted R8a from `apply_overrides`. Local gate **58.7%** n=150 (filter only).
+**Registry:** [`report/LADDER_BEST_SO_FAR.md`](../report/LADDER_BEST_SO_FAR.md) · [`eval/ladder_log.csv`](ladder_log.csv)
 
-**Offline DS (Session 56):** `python scripts/analyze_archaludon_losses.py`
-- Champion prize losses **10/10** ended behind in prize race; traces show **attach (type 7) chosen over attack (type 13)** when both legal → R10 probe **failed ladder** (854 μ).
-- R8a-only (967 μ) **below** R8a+R8b (984 μ) and far below champion — promote lever alone insufficient.
-- Close losses: **82062971** (2 vs 1 prizes), **82073113**, **82073596**.
-- **no_active (4):** 82055480, 82068759, 82076432, 82090639.
+**Offline DS:** `python scripts/analyze_archaludon_losses.py` — prize 10/10 behind race; close losses 82062971, 82073113, 82073596.
 
-**Next (post-probe):**
-1. Champion **54083197** retained — do not re-upload (R12).
-2. Trace close prize losses above in champion deck logs; one replay-backed lever on **R7-only** baseline.
-3. Retry `analyze_submission.py --skip-fetch` + deck logs when Kaggle 429 clears.
-4. **Do not** re-ship R8a, R10, R8b+R9, or R9 alone.
+**Next levers to try (candidates, not closed):**
+- **R12 dead-active tempo** (82062971) — local **70.7%** n=150; probe when uploaded
+- Refined prize-race attach (R11 variant) — narrow trigger vs global cap
+- R8 learnings: new rows for R8b-only / R8a-only variants
 
 ---
 

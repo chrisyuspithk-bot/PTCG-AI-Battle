@@ -8,12 +8,12 @@
 
 | Opponent | Brain | WR% | 95% CI | Record |
 |----------|-------|-----|--------|--------|
-| dragapult_ex_sample | dragapult_ex | 36.7 | [21.9, 54.5] | W11/L19/D0/U0 |
-| real_mega_abomasnow_ex | mega_abomasnow_ex | 53.3 | [36.1, 69.8] | W16/L14/D0/U0 |
-| real_iono | iono | 43.3 | [27.4, 60.8] | W13/L17/D0/U0 |
-| real_dragapult_ex | dragapult_ex | 80.0 | [62.7, 90.5] | W24/L6/D0/U0 |
-| real_mega_lucario_ex | mega_lucario_ex | 80.0 | [62.7, 90.5] | W24/L6/D0/U0 |
+| dragapult_ex_sample | dragapult_ex | 53.3 | [36.1, 69.8] | W16/L14/D0/U0 |
+| real_mega_abomasnow_ex | mega_abomasnow_ex | 86.7 | [70.3, 94.7] | W26/L4/D0/U0 |
+| real_iono | iono | 53.3 | [36.1, 69.8] | W16/L14/D0/U0 |
+| real_dragapult_ex | dragapult_ex | 76.7 | [59.1, 88.2] | W23/L7/D0/U0 |
+| real_mega_lucario_ex | mega_lucario_ex | 83.3 | [66.4, 92.7] | W25/L5/D0/U0 |
 
 ## Overall
 
-- **58.7%** [50.7, 66.2] (n=150 decided)
+- **70.7%** [62.9, 77.4] (n=150 decided)

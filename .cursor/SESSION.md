@@ -1,41 +1,40 @@
 ﻿# Session state — PTCG AI Battle Challenge
 
-> **Canonical:** `STATE.md` · **Upload gate:** `scripts/check_upload_eligible.py --suggest`
+> **Scoreboard:** `report/LADDER_BEST_SO_FAR.md`
 
 ## Current focus
 
-**Session 57 — R11 ladder probe in flight.** R10 (854 μ) and R8a (967 μ) ruled out; champion **54083197 @ 1196.1 μ** retained. Implemented **R11** `_prize_race_attach_cap` on R7 baseline (R8a reverted); local gate **58.7%** n=150; probe **54138853** uploaded 2026-06-28T11:42 UTC — **PENDING**. **Next:** wait ≥40 min → `track_ladder.py`; when COMPLETE pull episodes + decide vs 1196.1 μ. R12 dead-active retreat (82062971) only if R11 misses.
+Archaludon ladder iteration: **R12 dead-active tempo** probe **54139502** uploaded and **PENDING** (local gate **70.7%** n=150). Leader unchanged **54083197 @ 1196.1 μ** (Ruling R12 — do not re-upload that ref). **Next:** wait ≥40 min → `python scripts/track_ladder.py` for **54139502**; log μ in `eval/ladder_log.csv` + `report/LADDER_BEST_SO_FAR.md`.
 
 ## Key context
 
-- **Repo:** `Z:\kaggle\pokemon` · **Branch:** main · **Env:** Python 3.13
-- **Champion (R12 — do not re-upload):** ref **54083197** @ **1196.1 μ** · `agent_decks/archaludon_ex_cinderace.csv`
-- **Probe PENDING:** **54138853** (R7+R11 attach cap) · local **58.7%** · see `eval/ladder_log.csv`
-- **Ruled out:** R10 854 · R8a 967 · R8a+R8b 984 · R9 841
-- **R11 code:** `agent/archaludon_agent.py` — `_prize_race_attach_cap` in `apply_overrides`
-- **R11 logic:** behind + legal lethal attack on Active → cap attach/tempo ≤5000, boost KO ≥55000; skip if empty bench needs basic
-- **Champion losses (50 ep):** prize 10 · no_active 4 · deck_out 1 · WR 70.0%
-- **Prize-loss DS:** 10/10 behind race; 24 attach-over-attack when lethal legal; close losses 82062971, 82073113, 82073596
-- **Deck logs:** `report/deck_logs/archaludon/` · iteration: `eval/archaludon_iteration.md`
-- **Episode pull blocker:** Kaggle 429 on replays — retry `analyze_submission.py --ref <ref> --skip-fetch`
-- **Replace champion only if** probe beats **1196.1 μ** on ≥2 readings ≥40 min apart
-- **Queued if R11 fails:** R12 dead-active retreat (Relicanth stall, 82062971)
+- **Repo:** `Z:\kaggle\pokemon` · **Branch:** `main` (ahead of origin; not pushed)
+- **Python:** ≥3.11 on user machine (3.13 for gate/package)
+- **Leader:** ref **54083197** @ **1196.1 μ** — R7 bench guard only on ladder
+- **In flight:** ref **54139502** — R7 + R12 `_dead_active_tempo_score` (uploaded 2026-06-28T12:13 UTC)
+- **R11 probe:** ref **54138853** @ **632.9 μ** (reading 2; local 58.7%) — logged, not leader
+- **R12 lever:** dead Active (Relicanth ≤25% HP or ≤25% + 0 energy) → boost bench attach/retreat, penalize END when metal in hand
+- **Trace:** close loss **82062971** (Relicanth stall vs energizing bench Duraludon)
+- **Agent:** `agent/archaludon_agent.py` · **Gate:** `python scripts/gate_archaludon.py --games 30 --suite full --report`
+- **Track:** `python scripts/track_ladder.py` · **Analyze:** `python scripts/analyze_submission.py --ref <ref> --skip-fetch`
+- **Posture:** log every probe; low μ = learning data, not permanent ban; ship **new catalog rows** only
+- **Blocker:** Kaggle API **429** on replay download for some probes — retry analyze when rate limit clears
+- **Last commit:** `046b430` (R11 + S55–57); this session adds R12 code + tracking (commit pending handoff)
 
 ## Continue prompt
 
 ```text
-Continue Archaludon R11 ladder probe. Read first: @C:\Users\tobin\.cursor\USER-RULES-PASTE-THIS.txt, @.cursor/SESSION.md, @STATE.md, @eval/ladder_log.csv, @eval/archaludon_iteration.md
+Continue Archaludon R12 ladder track. Read first: @C:\Users\tobin\.cursor\USER-RULES-PASTE-THIS.txt, @.cursor/SESSION.md, @report/LADDER_BEST_SO_FAR.md, @agent/archaludon_agent.py
 
-Goal: Read μ for probe 54138853 (R11); pull episodes if COMPLETE; decide vs champion 54083197 @ 1196.1 μ.
-Status: R11 uploaded 2026-06-28T11:42 UTC, PENDING; R10/R8a ruled out; R8a reverted from agent.
-Next: python scripts/track_ladder.py (≥40 min since upload); analyze_submission + extract_deck_perspective_logs per ref when COMPLETE.
+Goal: fetch ladder μ for probe 54139502 and log vs leader 1196.1.
+Status: R12 PENDING (local 70.7%); leader 54083197 @ 1196.1 μ; R11 54138853 @ 632.9 μ.
+Next: python scripts/track_ladder.py (≥40 min since upload) → update eval/ladder_log.csv + LADDER_BEST_SO_FAR.md.
 
-Branch: main | Env: Python 3.13 | Do not re-upload 54083197 (R12).
+Branch: main | Do not re-upload 54083197 (R12).
 ```
 
 ## Timeline
 
-- **2026-06-28T12:00:00Z** | handoff by user | conv `handoff-s57`
-- **2026-06-28T11:42:29Z** | R11 probe **54138853** uploaded
-- **2026-06-28T11:28:38Z** | R10/R8a probes COMPLETE (ruled out)
-- **2026-06-27T00:00:00Z** | handoff by user | conv `35cee825`
+- **2026-06-28T12:13** | R12 probe **54139502** uploaded (local 70.7%)
+- **2026-06-28** | R11 **54138853** → **632.9 μ** (reading 2)
+- **2026-06-28T12:30:00Z** | handoff by user | conv `d4865d78`

@@ -20,9 +20,12 @@ recorded_at,name,ref,status,mu_reading_1,mu_reading_2,deck,agent,git_commit,loca
 2026-06-23,lucarioex_v2_field_mcts,53962060,COMPLETE,460.8,460.8,real_mega_lucario_ex.csv,lucario_mcts_field_v2_20cyc,,,RETIRED
 2026-06-20,track_d_lucario_rl_mcts,53885445,COMPLETE,368.5,368.5,real_mega_lucario_ex.csv,lucario_mcts_basic_iter0,,97.5 vs random,RETIRED wrong opponents
 2026-06-22,track_d_alakazam_rl_mcts_model4,53946148,COMPLETE,185.4,185.4,top_mined_alakazam.csv,lucario_mcts_basic_Snorlax_train,,,RETIRED pilot-not-deck demo
-2026-06-26,archaludon_r8,54088877,COMPLETE,600.0,983.8,archaludon_ex_cinderace.csv,archaludon_rules+R8a+R8b,,75.3 full n=30,"Final #2 candidate. Trajectory 600→704→780→984. -212 vs champion."
-2026-06-28,archaludon_r11,54138853,PENDING,,,archaludon_ex_cinderace.csv,archaludon_rules+R7+R11,,58.7 full n=30,"R7 + prize-race attach cap when lethal KO legal and behind; vs 54083197"
-2026-06-27,archaludon_r8a,54109878,COMPLETE,967.3,,archaludon_ex_cinderace.csv,archaludon_rules+R7+R8a,,62.7 full n=30,"R7 + mandatory TO_ACTIVE promote vs 54083197; -229 vs champion; ruled out"
-2026-06-26,archaludon_r7_bench,54083197,COMPLETE,1196.1,1224.2,archaludon_ex_cinderace.csv,archaludon_rules+R7,,72.7 full n=30,"Champion Final locked"
+2026-06-26,archaludon_r7_bench,54083197,COMPLETE,1196.1,1224.2,archaludon_ex_cinderace.csv,archaludon_rules+R7,046b430,72.7 full n=30,"LEADER — 50ep 70% WR; R12 do not re-upload ref"
+2026-06-26,archaludon_r8,54088877,COMPLETE,983.8,983.8,archaludon_ex_cinderace.csv,archaludon_rules+R8a+R8b,,75.3 full n=30,"Probe −212 vs leader; no_active 17.9% ladder"
+2026-06-27,archaludon_r8a,54109878,COMPLETE,967.3,,archaludon_ex_cinderace.csv,archaludon_rules+R7+R8a,046b430,62.7 full n=30,"Probe −229 vs leader"
+2026-06-27,archaludon_r10,54109826,COMPLETE,854.0,849.6,archaludon_ex_cinderace.csv,archaludon_rules+R7+R10,046b430,62.0 full n=30,"Probe −342 vs leader"
+2026-06-27,archaludon_r9,54089078,COMPLETE,841.0,,archaludon_ex_cinderace.csv,archaludon_rules+R8a+R8b+R9,,68.0 full n=30,"Probe −355 vs leader"
+2026-06-28,archaludon_r12,54139502,PENDING,,,archaludon_ex_cinderace.csv,archaludon_rules+R7+R12,,70.7 full n=30,"Probe — dead-active tempo energize bench attacker; vs 54083197"
+2026-06-28,archaludon_r11,54138853,COMPLETE,535.6,632.9,archaludon_ex_cinderace.csv,archaludon_rules+R7+R11,,58.7 full n=30,"Probe −563 vs leader; attach cap when lethal behind"
 2026-06-22,dragapult_ex_sample_v1,53950246,ERROR,,,dragapult_ex_sample.csv,dragapult_crispin,,,__file__ NameError
 2026-06-19,a2_kyogre_v0,53854588,ERROR,,,a2_kyogre_33_energy.csv,HeuristicScorer,,,__file__ NameError

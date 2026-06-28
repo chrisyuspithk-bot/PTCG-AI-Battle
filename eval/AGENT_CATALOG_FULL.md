@@ -37,26 +37,27 @@ Every submission is **`brain × deck`** packaged for Kaggle `main.agent(obs)`.
 
 ### Archaludon ex / Cinderace — community v5 + R7 bench guard
 
-#### #1 · μ **1196.1** (latest) · peak **1224.2** · ref `54083197` · `archaludon.tar.gz` (uploaded as `archaludon_ex_cinderace_r7_bench`)
+#### #1 · μ **1196.1** · ref `54083197` · **current leader**
 
 | Field | Value |
 |-------|-------|
-| **Brain** | `archaludon_rules` — community public v5 + **R7 empty-bench guard** (`archaludon_bench_guard.py`) |
-| **Deck** | `agent_decks/archaludon_ex_cinderace.csv` (public list, unchanged) |
-| **RL / training** | **None** — ported rules + wrapper |
-| **Local gate cited** | **72.7%** full native suite n=30 at upload; **67.3%** post R7b agent scoring (filter only) |
-| **μ trajectory** | 600.0 → 731.3 → **1224.2** (peak) → **1196.1** (latest, 2026-06-26 UI) |
-| **Rebuild** | `python scripts/package_archaludon.py` |
-| **Verdict** | **Still #1 on ladder** (+315 μ vs Dragapult). **Lock Final Submission (54083197).** R12: no duplicate upload. |
+| **Brain** | `archaludon_rules` + **R7 empty-bench guard** |
+| **Deck** | `agent_decks/archaludon_ex_cinderace.csv` |
+| **Verdict** | **Leader** until a new ref beats **1196.1 μ** on ≥2 readings. R12: do not re-upload **this ref**. |
 
-#### R8 probe · ref `54088877` · `archaludon.tar.gz` · **PENDING**
+#### Archaludon probe record (same deck — log every row, keep iterating)
 
-| Field | Value |
-|-------|-------|
-| **Brain** | `archaludon_rules` + **R8a** `_mandatory_promote_score` + **R8b** `_empty_bench_block_tempo` |
-| **Local gate** | **75.3%** full n=30 (64.7% → 70.7% → 75.3%) |
-| **Delta vs 54083197** | Material scoring change — upload gate exit 0 |
-| **Verdict** | Probe only — keep **54083197** Final until μ beats **1196.1** on ≥2 readings |
+| Ref | Lever | Local | **μ** | Notes |
+|-----|-------|------:|------:|-------|
+| 54088877 | R8a+R8b | 75.3% | 983.8 | Best probe; watch no_active 17.9% |
+| 54109878 | R7+R8a | 62.7% | 967.3 | |
+| 54109826 | R7+R10 | 62.0% | 854.0 | |
+| 54089078 | R8+R9 | 68.0% | 841.0 | |
+| 54138853 | R7+R11 | 58.7% | 535.6 | Latest probe |
+
+Full sorted table: [`report/LADDER_BEST_SO_FAR.md`](../report/LADDER_BEST_SO_FAR.md). **Posture:** probes are data — refine levers, don't treat low μ as permanent ban.
+
+**Repo:** `046b430` · Rebuild: `python scripts/package_archaludon.py`
 
 ---
 

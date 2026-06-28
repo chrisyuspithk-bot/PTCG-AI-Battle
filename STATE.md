@@ -4,6 +4,49 @@
 
 ---
 
+## As of 2026-06-28 Session 57d (R12 probe uploaded — handoff)
+
+**Leader:** **54083197** @ **1196.1 μ** (R12 — do not re-upload). **Latest probe:** **54139502** R7+R12 dead-active tempo — **PENDING** (local **70.7%** n=150, uploaded 2026-06-28T12:13 UTC). R11 **54138853** reading 2: **632.9 μ**.
+
+**Posture:** Log every probe in `report/LADDER_BEST_SO_FAR.md` + `eval/ladder_log.csv`. Low μ = learning data. Continue small one-lever changes toward beating **1196.1 μ**.
+
+| Ref | Lever | μ | Δ vs leader |
+|-----|-------|---:|------------:|
+| 54083197 | R7 | **1196.1** | — |
+| 54088877 | R8a+R8b | 983.8 | −212 |
+| 54109878 | R7+R8a | 967.3 | −229 |
+| 54109826 | R7+R10 | 854.0 | −342 |
+| 54089078 | R8+R9 | 841.0 | −355 |
+| 54138853 | R7+R11 | 632.9 | −563 |
+| 54139502 | R7+R12 | PENDING | — |
+
+### THE SINGLE NEXT ACTION
+
+Wait ≥40 min → `python scripts/track_ladder.py` for **54139502**. Log μ in `eval/ladder_log.csv` + `report/LADDER_BEST_SO_FAR.md`. If COMPLETE: `analyze_submission.py --ref 54139502 --skip-fetch` + deck logs. Leader still **54083197 @ 1196.1 μ** until beaten on ≥2 readings.
+
+---
+
+## As of 2026-06-28 Session 57c (scoreboard synced — keep iterating)
+
+**Leader:** **54083197** @ **1196.1 μ** (R12 — do not re-upload this ref). **Latest probe:** **54138853** R11 @ **535.6 μ**.
+
+**Posture:** Log every probe in `report/LADDER_BEST_SO_FAR.md` + `eval/ladder_log.csv`. Low μ = learning data, not a permanent ban. Continue **small one-lever changes** toward beating **1196.1 μ**.
+
+| Ref | Lever | μ | Δ vs leader |
+|-----|-------|---:|------------:|
+| 54083197 | R7 | **1196.1** | — |
+| 54088877 | R8a+R8b | 983.8 | −212 |
+| 54109878 | R7+R8a | 967.3 | −229 |
+| 54109826 | R7+R10 | 854.0 | −342 |
+| 54089078 | R8+R9 | 841.0 | −355 |
+| 54138853 | R7+R11 | 535.6 | −660 |
+
+### THE SINGLE NEXT ACTION
+
+Wait ≥40 min → `track_ladder.py` for **R12 probe** (just uploaded). Log row in `eval/ladder_log.csv` + `LADDER_BEST_SO_FAR.md`. Leader still **54083197 @ 1196.1 μ** until beaten.
+
+---
+
 ## As of 2026-06-28 Session 57b (R11 probe uploaded)
 
 **R11 implemented:** `_prize_race_attach_cap` — when behind in prizes and legal attack KOs Active, cap attach/evolve/tempo ≤5000, boost lethal attack ≥55000. **Reverted R8a** from `apply_overrides` (R7-only baseline).

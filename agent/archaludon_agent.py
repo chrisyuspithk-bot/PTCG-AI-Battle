@@ -5,8 +5,8 @@
 from Dragapult/Lucario/Alakazam pilots.
 
 Bench safety: ``score_setup`` / ``score_play`` / ``apply_overrides`` / ``score_option``
-(empty bench → bench Duraludon/Relicanth before END/items). R11 prize-race attach cap when
-lethal attack is legal and behind in prizes. ``archaludon_bench_guard.py`` is submission safety net only.
+(empty bench → bench Duraludon/Relicanth before END/items). R12 dead-active tempo:
+energize bench attacker / retreat when Active is low-HP dead weight (82062971).
 
 Built by scripts/bootstrap_archaludon.py — re-run after reference updates.
 """
@@ -202,6 +202,65 @@ def _empty_bench_basic_score(obs, opt, score: int, reason: str) -> tuple[int, st
 
     if opt.type == OptionType.END and ctx == SelectContext.MAIN and _main_has_basic_play(obs):
         return -50000, "empty bench: must bench basic"
+
+    return score, reason
+
+
+def _best_bench_attacker(obs):
+    ps = my_state(obs)
+    best = None
+    best_prio = -1
+    prio = {ARCHALUDON_EX: 3, DURALUDON: 2, CINDERACE: 1}
+    for p in ps.bench:
+        if not p or p.id not in prio:
+            continue
+        if prio[p.id] > best_prio:
+            best_prio = prio[p.id]
+            best = p
+    return best
+
+
+def _active_is_dead_weight(obs) -> bool:
+    active = active_pokemon(obs)
+    if not active:
+        return False
+    max_hp = getattr(active, "maxHp", None) or active.hp
+    if max_hp <= 0:
+        return False
+    ratio = active.hp / max_hp
+    if active.id == RELICANTH and ratio <= 0.25:
+        return True
+    return ratio <= 0.25 and energy_count(active) == 0
+
+
+def _dead_active_tempo_score(obs, opt, score: int, reason: str) -> tuple[int, str]:
+    """R12: dead Active — power bench attacker instead of END/attach stall (82062971 class)."""
+    if obs.select is None or obs.select.context != SelectContext.MAIN:
+        return score, reason
+    if not _active_is_dead_weight(obs):
+        return score, reason
+    attacker = _best_bench_attacker(obs)
+    if not attacker:
+        return score, reason
+
+    if opt.type == OptionType.ATTACH:
+        target = option_target(obs, opt)
+        if (
+            target
+            and target.id == attacker.id
+            and getattr(opt, "inPlayArea", None) == AreaType.BENCH
+        ):
+            return max(score, 35000), "R12: energize bench attacker"
+        return score, reason
+
+    if opt.type == OptionType.RETREAT and not obs.current.retreated:
+        ok, _ = attack_energy_route(obs, attacker)
+        if ok or energy_count(attacker) >= 1:
+            return max(score, 30000), "R12: retreat to bench attacker"
+
+    if opt.type == OptionType.END and not obs.current.energyAttached:
+        if METAL_ENERGY in hand_ids(obs) or energy_count(attacker) >= 1:
+            return min(score, -15000), "R12: don't END on dead active"
 
     return score, reason
 
@@ -565,7 +624,7 @@ def opp_max_damage(obs):
 
 def apply_overrides(obs, opt, score, reason):
     score, reason = _empty_bench_basic_score(obs, opt, score, reason)
-    score, reason = _prize_race_attach_cap(obs, opt, score, reason)
+    score, reason = _dead_active_tempo_score(obs, opt, score, reason)
 
     if opt.type == OptionType.PLAY:
         card = option_card(obs, opt)
