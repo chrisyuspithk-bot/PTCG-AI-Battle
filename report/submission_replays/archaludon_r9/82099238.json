@@ -1,0 +1,324 @@
+{
+  "ref": "54089078",
+  "package": "archaludon_r9",
+  "episode_id": "82099238",
+  "episode_type": "EPISODE_TYPE_PUBLIC",
+  "raw_replay": "report\\replays\\82099238.json",
+  "our_agent_index": 0,
+  "our_team": "TomBombadyl",
+  "opponent_team": "Benjp8",
+  "outcome": "win",
+  "result_reason": "prize",
+  "turn_count": 12,
+  "reward": 1.0,
+  "rewards": [
+    1,
+    -1
+  ],
+  "opponent_archetype": "lucario",
+  "opponent_deck_signature": "6:14 81:4 677:4 678:4 1088:1 1097:4 1102:4 1121:4 1122:4 1123:3 1124:2 1181:2 1182:3 1224:4 1227:3",
+  "our_deck_archetype": "archaludon",
+  "selected_context_counts": {
+    "action": 228,
+    "obs:9": 6,
+    "obs:1": 81,
+    "obs:8": 8,
+    "obs:select": 129
+  },
+  "agents": [
+    {
+      "index": 0,
+      "team": "TomBombadyl",
+      "reward": 1,
+      "deck_card_ids": [
+        169,
+        169,
+        169,
+        169,
+        190,
+        190,
+        190,
+        190,
+        666,
+        666,
+        666,
+        666,
+        1244,
+        57,
+        1152,
+        1152,
+        1152,
+        1152,
+        1121,
+        1121,
+        1121,
+        1121,
+        1122,
+        1122,
+        1122,
+        1122,
+        1097,
+        1097,
+        1097,
+        1147,
+        1147,
+        1147,
+        1147,
+        1159,
+        1182,
+        1182,
+        1182,
+        1182,
+        1185,
+        1185,
+        1185,
+        1185,
+        1227,
+        1227,
+        1227,
+        1227,
+        1244,
+        1244,
+        1244,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "deck_cards": [
+        {
+          "id": 8,
+          "name": "Basic {M} Energy",
+          "count": 11
+        },
+        {
+          "id": 57,
+          "name": "Relicanth",
+          "count": 1
+        },
+        {
+          "id": 169,
+          "name": "Duraludon",
+          "count": 4
+        },
+        {
+          "id": 190,
+          "name": "Archaludon ex",
+          "count": 4
+        },
+        {
+          "id": 666,
+          "name": "Cinderace",
+          "count": 4
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 3
+        },
+        {
+          "id": 1121,
+          "name": "Ultra Ball",
+          "count": 4
+        },
+        {
+          "id": 1122,
+          "name": "Pok\u00e9gear 3.0",
+          "count": 4
+        },
+        {
+          "id": 1147,
+          "name": "Jumbo Ice Cream",
+          "count": 4
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 4
+        },
+        {
+          "id": 1159,
+          "name": "Hero\u2019s Cape",
+          "count": 1
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 4
+        },
+        {
+          "id": 1185,
+          "name": "Explorer\u2019s Guidance",
+          "count": 4
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        },
+        {
+          "id": 1244,
+          "name": "Full Metal Lab",
+          "count": 4
+        }
+      ],
+      "deck_archetype": "archaludon",
+      "deck_signature": "8:11 57:1 169:4 190:4 666:4 1097:3 1121:4 1122:4 1147:4 1152:4 1159:1 1182:4 1185:4 1227:4 1244:4",
+      "is_us": true
+    },
+    {
+      "index": 1,
+      "team": "Benjp8",
+      "reward": -1,
+      "deck_card_ids": [
+        677,
+        677,
+        677,
+        677,
+        678,
+        678,
+        678,
+        678,
+        81,
+        81,
+        81,
+        81,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        1121,
+        1121,
+        1121,
+        1121,
+        1102,
+        1102,
+        1102,
+        1102,
+        1182,
+        1182,
+        1182,
+        1224,
+        1224,
+        1224,
+        1224,
+        1227,
+        1227,
+        1227,
+        1122,
+        1122,
+        1122,
+        1122,
+        1097,
+        1097,
+        1097,
+        1097,
+        1123,
+        1123,
+        1123,
+        1124,
+        1124,
+        1088,
+        1181,
+        1181
+      ],
+      "deck_cards": [
+        {
+          "id": 6,
+          "name": "Basic {F} Energy",
+          "count": 14
+        },
+        {
+          "id": 81,
+          "name": "Drilbur",
+          "count": 4
+        },
+        {
+          "id": 677,
+          "name": "Riolu",
+          "count": 4
+        },
+        {
+          "id": 678,
+          "name": "Mega Lucario ex",
+          "count": 4
+        },
+        {
+          "id": 1088,
+          "name": "Prime Catcher",
+          "count": 1
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 4
+        },
+        {
+          "id": 1102,
+          "name": "Dusk Ball",
+          "count": 4
+        },
+        {
+          "id": 1121,
+          "name": "Ultra Ball",
+          "count": 4
+        },
+        {
+          "id": 1122,
+          "name": "Pok\u00e9gear 3.0",
+          "count": 4
+        },
+        {
+          "id": 1123,
+          "name": "Switch",
+          "count": 3
+        },
+        {
+          "id": 1124,
+          "name": "Pok\u00e9mon Catcher",
+          "count": 2
+        },
+        {
+          "id": 1181,
+          "name": "Billy & O'Nare",
+          "count": 2
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 3
+        },
+        {
+          "id": 1224,
+          "name": "Cheren",
+          "count": 4
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 3
+        }
+      ],
+      "deck_archetype": "lucario",
+      "deck_signature": "6:14 81:4 677:4 678:4 1088:1 1097:4 1102:4 1121:4 1122:4 1123:3 1124:2 1181:2 1182:3 1224:4 1227:3",
+      "is_us": false
+    }
+  ]
+}

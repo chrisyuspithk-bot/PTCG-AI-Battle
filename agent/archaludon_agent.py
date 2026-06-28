@@ -5,8 +5,8 @@
 from Dragapult/Lucario/Alakazam pilots.
 
 Bench safety: ``score_setup`` / ``score_play`` / ``apply_overrides`` / ``score_option``
-(empty bench → bench Duraludon/Relicanth before END/items; R8a mandatory TO_ACTIVE;
-R8b block MAIN tempo before bench). ``archaludon_bench_guard.py`` is submission safety net only.
+(empty bench → bench Duraludon/Relicanth before END/items). R11 prize-race attach cap when
+lethal attack is legal and behind in prizes. ``archaludon_bench_guard.py`` is submission safety net only.
 
 Built by scripts/bootstrap_archaludon.py — re-run after reference updates.
 """
@@ -206,8 +206,64 @@ def _empty_bench_basic_score(obs, opt, score: int, reason: str) -> tuple[int, st
     return score, reason
 
 
+def _main_legal_attack_ko(obs) -> bool:
+    """True if any legal MAIN attack KOs opponent Active."""
+    if obs.select is None or obs.select.context != SelectContext.MAIN:
+        return False
+    opp_act = opp_active_pokemon(obs)
+    if not opp_act:
+        return False
+    for opt in obs.select.option:
+        if opt.type != OptionType.ATTACK:
+            continue
+        dmg = best_attack_damage(obs, getattr(opt, "attackId", None) or 0)
+        if effective_damage(dmg, opp_act) >= opp_act.hp:
+            return True
+    return False
+
+
+def _prize_race_attach_cap(obs, opt, score: int, reason: str) -> tuple[int, str]:
+    """R11: when behind in prizes and a legal attack KOs Active, cap attach/tempo below the KO."""
+    if obs.select is None or obs.select.context != SelectContext.MAIN:
+        return score, reason
+    our_prizes, opp_prizes = _prize_counts(obs)
+    if our_prizes <= opp_prizes:
+        return score, reason
+    if _bench_is_empty(obs) and _main_has_basic_play(obs):
+        return score, reason
+    if not _main_legal_attack_ko(obs):
+        return score, reason
+
+    if opt.type == OptionType.ATTACK:
+        opp_act = opp_active_pokemon(obs)
+        aid = getattr(opt, "attackId", None) or 0
+        dmg = best_attack_damage(obs, aid)
+        if opp_act and effective_damage(dmg, opp_act) >= opp_act.hp:
+            pv = prize_value(opp_act)
+            boost = 55000 + pv * 5000
+            if our_prizes <= pv:
+                boost += 10000
+            return max(score, boost), "R11: lethal attack when behind"
+        return score, reason
+
+    if opt.type == OptionType.ATTACH:
+        return min(score, 5000), "R11: cap attach when lethal available"
+
+    if opt.type == OptionType.PLAY:
+        card = option_card(obs, opt)
+        cid = card.id if card else None
+        if cid in {DURALUDON, RELICANTH}:
+            return score, reason
+        return min(score, 5000), "R11: cap tempo when lethal available"
+
+    if opt.type == OptionType.EVOLVE:
+        return min(score, 5000), "R11: cap evolve when lethal ready"
+
+    return score, reason
+
+
 def _mandatory_promote_score(obs, opt, score: int, reason: str) -> tuple[int, str]:
-    """After active KO — must pick new Active from bench (82068759 class)."""
+    """After active KO — must pick new Active from bench (82068759 class). R8a lever."""
     ctx = obs.select.context
     if ctx not in {SelectContext.TO_ACTIVE, SelectContext.SWITCH}:
         return score, reason
@@ -233,36 +289,33 @@ def _mandatory_promote_score(obs, opt, score: int, reason: str) -> tuple[int, st
     return score, reason
 
 
-def _empty_bench_block_tempo(obs, opt, score: int, reason: str) -> tuple[int, str]:
-    """Any MAIN tempo (items, attach, supporters) yields to bench basic when legal."""
-    if obs.select.context != SelectContext.MAIN:
-        return score, reason
-    if not _bench_is_empty(obs) or not _main_has_basic_play(obs):
-        return score, reason
-    if opt.type == OptionType.PLAY:
-        card = option_card(obs, opt)
-        if card and card.id in {DURALUDON, RELICANTH}:
-            return score, reason
-        return min(score, -5000), "empty bench: bench basic first"
-    if opt.type == OptionType.ATTACH:
-        return -50000, "empty bench: no attach before bench"
-    return score, reason
+def _prize_counts(obs) -> tuple[int, int]:
+    us = len(my_state(obs).prize or [])
+    them = len(opp_state(obs).prize or [])
+    return us, them
 
 
-def _to_hand_pick_floor(obs, opt, score: int, reason: str) -> tuple[int, str]:
-    """R9: never score 0 on mandatory TO_HAND picks (82068759); skip Explorer discard pass."""
-    if obs.select.context != SelectContext.TO_HAND:
-        return score, reason
-    if opt.type != OptionType.CARD:
-        return score, reason
-    effect = getattr(obs.select, "effect", None)
-    if effect and getattr(effect, "id", None) == EXPLORER:
-        return score, reason
-    if score >= 1000:
-        return score, reason
-    if option_card(obs, opt) is not None:
-        return 5000, "TO_HAND: must pick"
-    return score, reason
+def score_attack(obs, opt) -> tuple[int, str]:
+    """R10: prioritize KOs and prize-race tempo (7/10 champion losses were prize)."""
+    aid = getattr(opt, "attackId", None) or 0
+    dmg = best_attack_damage(obs, aid)
+    opp = opp_active_pokemon(obs)
+    our_prizes, opp_prizes = _prize_counts(obs)
+    behind = our_prizes > opp_prizes
+
+    if opp and effective_damage(dmg, opp) >= opp.hp:
+        pv = prize_value(opp)
+        score = 50000 + pv * 5000
+        if behind:
+            score += 5000
+        if our_prizes <= pv:
+            score += 10000
+        return score, "attack KO"
+
+    score = dmg + (3000 if behind else 0)
+    if aid == METAL_DEFENDER and opp and effective_damage(dmg, opp) >= opp.hp - 30:
+        score += 2000
+    return score, "attack"
 
 
 def opp_state(obs):
@@ -512,9 +565,7 @@ def opp_max_damage(obs):
 
 def apply_overrides(obs, opt, score, reason):
     score, reason = _empty_bench_basic_score(obs, opt, score, reason)
-    score, reason = _mandatory_promote_score(obs, opt, score, reason)
-    score, reason = _empty_bench_block_tempo(obs, opt, score, reason)
-    score, reason = _to_hand_pick_floor(obs, opt, score, reason)
+    score, reason = _prize_race_attach_cap(obs, opt, score, reason)
 
     if opt.type == OptionType.PLAY:
         card = option_card(obs, opt)

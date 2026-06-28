@@ -91,6 +91,66 @@ def _select_summary(select: dict[str, Any] | None) -> dict[str, Any]:
     }
 
 
+def _legal_options_summary(select: dict[str, Any] | None) -> list[dict[str, Any]]:
+    """Compact legal mask from replay select.option (Kiyota JSON review pattern)."""
+    if not isinstance(select, dict):
+        return []
+    out: list[dict[str, Any]] = []
+    for i, opt in enumerate(select.get("option") or []):
+        if not isinstance(opt, dict):
+            continue
+        entry: dict[str, Any] = {"index": i, "type": opt.get("type")}
+        for key in ("cardId", "attackId", "index", "number", "playerIndex", "area", "inPlayArea"):
+            if key in opt and opt[key] is not None:
+                entry[key] = opt[key]
+        out.append(entry)
+    return out
+
+
+def _chosen_indices(action: Any) -> list[int]:
+    """Normalize replay action to selected option indices (when applicable)."""
+    if isinstance(action, list) and action and all(isinstance(x, int) for x in action):
+        if len(action) <= 10:
+            return action
+    return []
+
+
+def _chosen_option_summary(select: dict[str, Any] | None, indices: list[int]) -> list[dict[str, Any]]:
+    if not indices or not isinstance(select, dict):
+        return []
+    opts = select.get("option") or []
+    picked: list[dict[str, Any]] = []
+    for i in indices:
+        if not (0 <= i < len(opts)):
+            continue
+        opt = opts[i]
+        if not isinstance(opt, dict):
+            continue
+        entry: dict[str, Any] = {"index": i, "type": opt.get("type")}
+        for key in ("cardId", "attackId", "index", "number"):
+            if key in opt and opt[key] is not None:
+                entry[key] = opt[key]
+        picked.append(entry)
+    return picked
+
+
+def _visualize_snippet(ps: dict[str, Any], our_index: int) -> str | None:
+    """First line of engine visualize text for our seat (human-readable board)."""
+    viz = ps.get("visualize")
+    if not isinstance(viz, list) or our_index >= len(viz):
+        return None
+    block = viz[our_index]
+    if isinstance(block, list) and block:
+        first = block[0]
+        if isinstance(first, dict):
+            return first.get("message") or first.get("text") or first.get("msg")
+        if isinstance(first, str):
+            return first[:500]
+    if isinstance(block, dict):
+        return block.get("message") or block.get("text")
+    return None
+
+
 def _action_summary(action: Any) -> Any:
     if isinstance(action, list):
         return action
@@ -121,12 +181,18 @@ def extract_our_turns(data: dict[str, Any], our_index: int) -> list[dict[str, An
             players = cur.get("players") or []
             our_player = players[our_index] if our_index < len(players) else {}
             opp_player = players[1 - our_index] if len(players) > 1 else {}
+            select = obs.get("select") or {}
+            indices = _chosen_indices(ps.get("action"))
             turns.append({
                 "step": step_idx,
                 "turn": cur.get("turn"),
                 "result": cur.get("result"),
-                "select": _select_summary(obs.get("select")),
+                "select": _select_summary(select),
+                "legal_options": _legal_options_summary(select),
+                "chosen_indices": indices,
+                "chosen_options": _chosen_option_summary(select, indices),
                 "action": _action_summary(ps.get("action")),
+                "visualize_line": _visualize_snippet(ps, our_index),
                 "us": _player_snapshot(our_player),
                 "opponent_visible": {
                     "bench_count": len(opp_player.get("bench") or []) if isinstance(opp_player, dict) else None,

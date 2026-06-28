@@ -1,0 +1,330 @@
+{
+  "ref": "54089078",
+  "package": "archaludon_r9",
+  "episode_id": "82115949",
+  "episode_type": "EPISODE_TYPE_PUBLIC",
+  "raw_replay": "report\\replays\\82115949.json",
+  "our_agent_index": 0,
+  "our_team": "TomBombadyl",
+  "opponent_team": "gon_fox",
+  "outcome": "win",
+  "result_reason": "prize",
+  "turn_count": 16,
+  "reward": 1.0,
+  "rewards": [
+    1,
+    -1
+  ],
+  "opponent_archetype": "unknown",
+  "opponent_deck_signature": "1:17 11:3 14:3 18:4 344:4 345:4 1086:4 1097:2 1121:2 1147:2 1152:3 1159:1 1182:1 1212:2 1225:4 1227:4",
+  "our_deck_archetype": "archaludon",
+  "selected_context_counts": {
+    "action": 178,
+    "obs:9": 1,
+    "obs:1": 52,
+    "obs:8": 2,
+    "obs:select": 118,
+    "obs:4": 1
+  },
+  "agents": [
+    {
+      "index": 0,
+      "team": "TomBombadyl",
+      "reward": 1,
+      "deck_card_ids": [
+        169,
+        169,
+        169,
+        169,
+        190,
+        190,
+        190,
+        190,
+        666,
+        666,
+        666,
+        666,
+        1244,
+        57,
+        1152,
+        1152,
+        1152,
+        1152,
+        1121,
+        1121,
+        1121,
+        1121,
+        1122,
+        1122,
+        1122,
+        1122,
+        1097,
+        1097,
+        1097,
+        1147,
+        1147,
+        1147,
+        1147,
+        1159,
+        1182,
+        1182,
+        1182,
+        1182,
+        1185,
+        1185,
+        1185,
+        1185,
+        1227,
+        1227,
+        1227,
+        1227,
+        1244,
+        1244,
+        1244,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "deck_cards": [
+        {
+          "id": 8,
+          "name": "Basic {M} Energy",
+          "count": 11
+        },
+        {
+          "id": 57,
+          "name": "Relicanth",
+          "count": 1
+        },
+        {
+          "id": 169,
+          "name": "Duraludon",
+          "count": 4
+        },
+        {
+          "id": 190,
+          "name": "Archaludon ex",
+          "count": 4
+        },
+        {
+          "id": 666,
+          "name": "Cinderace",
+          "count": 4
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 3
+        },
+        {
+          "id": 1121,
+          "name": "Ultra Ball",
+          "count": 4
+        },
+        {
+          "id": 1122,
+          "name": "Pok\u00e9gear 3.0",
+          "count": 4
+        },
+        {
+          "id": 1147,
+          "name": "Jumbo Ice Cream",
+          "count": 4
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 4
+        },
+        {
+          "id": 1159,
+          "name": "Hero\u2019s Cape",
+          "count": 1
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 4
+        },
+        {
+          "id": 1185,
+          "name": "Explorer\u2019s Guidance",
+          "count": 4
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        },
+        {
+          "id": 1244,
+          "name": "Full Metal Lab",
+          "count": 4
+        }
+      ],
+      "deck_archetype": "archaludon",
+      "deck_signature": "8:11 57:1 169:4 190:4 666:4 1097:3 1121:4 1122:4 1147:4 1152:4 1159:1 1182:4 1185:4 1227:4 1244:4",
+      "is_us": true
+    },
+    {
+      "index": 1,
+      "team": "gon_fox",
+      "reward": -1,
+      "deck_card_ids": [
+        344,
+        344,
+        344,
+        344,
+        345,
+        345,
+        345,
+        345,
+        1086,
+        1086,
+        1086,
+        1086,
+        1121,
+        1121,
+        1152,
+        1152,
+        1152,
+        1227,
+        1227,
+        1227,
+        1227,
+        1225,
+        1225,
+        1225,
+        1225,
+        1182,
+        1159,
+        1097,
+        1097,
+        1147,
+        1147,
+        18,
+        18,
+        18,
+        18,
+        11,
+        11,
+        11,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        14,
+        14,
+        14,
+        1212,
+        1212
+      ],
+      "deck_cards": [
+        {
+          "id": 1,
+          "name": "Basic {G} Energy",
+          "count": 17
+        },
+        {
+          "id": 11,
+          "name": "Mist Energy",
+          "count": 3
+        },
+        {
+          "id": 14,
+          "name": "Spiky Energy",
+          "count": 3
+        },
+        {
+          "id": 18,
+          "name": "Grow Grass Energy",
+          "count": 4
+        },
+        {
+          "id": 344,
+          "name": "Dwebble",
+          "count": 4
+        },
+        {
+          "id": 345,
+          "name": "Crustle",
+          "count": 4
+        },
+        {
+          "id": 1086,
+          "name": "Buddy-Buddy Poffin",
+          "count": 4
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 2
+        },
+        {
+          "id": 1121,
+          "name": "Ultra Ball",
+          "count": 2
+        },
+        {
+          "id": 1147,
+          "name": "Jumbo Ice Cream",
+          "count": 2
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 3
+        },
+        {
+          "id": 1159,
+          "name": "Hero\u2019s Cape",
+          "count": 1
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 1
+        },
+        {
+          "id": 1212,
+          "name": "Cook",
+          "count": 2
+        },
+        {
+          "id": 1225,
+          "name": "Hilda",
+          "count": 4
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        }
+      ],
+      "deck_archetype": "unknown",
+      "deck_signature": "1:17 11:3 14:3 18:4 344:4 345:4 1086:4 1097:2 1121:2 1147:2 1152:3 1159:1 1182:1 1212:2 1225:4 1227:4",
+      "is_us": false
+    }
+  ]
+}

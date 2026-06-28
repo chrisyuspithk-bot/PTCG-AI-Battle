@@ -5,12 +5,13 @@ Work top to bottom. Check `[x]` when done; log in `STATE.md`.
 
 ---
 
-## NOW — Session 52 (Archaludon primary)
+## NOW — Session 57 (Archaludon primary) 
 
-- [ ] **Archaludon P0 — no_active fix** — trace 82055480 + 82068759; extend R7 guard; 0 no_active @ n=30 (`eval/archaludon_iteration.md`).
-- [ ] **Archaludon P1 — ladder loss decks** — mine unknown opponent signatures from replays; add to field if recurring.
+- [x] **R11 implement + gate** — `_prize_race_attach_cap` in `archaludon_agent.py`; local **58.7%** n=150; no_active 9/250 agent-only.
+- [ ] **Track R11 probe μ** — `track_ladder.py` after ≥40 min; pull episodes when COMPLETE.
+- [ ] **Archaludon P1 — close prize trace** — if R11 misses 1196.1 μ, trace 82062971 for R12 dead-active retreat.
 - [ ] **Archaludon P2 — Iono harness** — 43.3% local; lever only if full-suite ≥5pp (`gate_archaludon.py`).
-- [ ] **Archaludon ladder probe** — upload only after P0 gate + material delta vs 54083197 (R12).
+- [ ] **Archaludon P2 — Iono harness** — 43.3% local; lever only if full-suite ≥5pp (`gate_archaludon.py`).
 - [ ] **Strategy report outline** — Archaludon story for Sep 2026 comp.
 
 ## PAUSED (do not spend upload slots)

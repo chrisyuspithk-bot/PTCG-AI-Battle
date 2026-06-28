@@ -1,0 +1,127 @@
+{
+  "ref": "54083197",
+  "package": "archaludon",
+  "count": 15,
+  "losses": [
+    {
+      "episode_id": "82055480",
+      "result_reason": "no_active",
+      "turn_count": 3,
+      "opponent_team": "kuma_jp",
+      "opponent_archetype": "lucario",
+      "file": "82055480.json"
+    },
+    {
+      "episode_id": "82058290",
+      "result_reason": "prize",
+      "turn_count": 9,
+      "opponent_team": "\u3010\uff21\uff29\u3068\u5171\u306b\u3001\uff21\uff29\u3068\u6226\u3046\u3011tubotu",
+      "opponent_archetype": "alakazam",
+      "file": "82058290.json"
+    },
+    {
+      "episode_id": "82060623",
+      "result_reason": "prize",
+      "turn_count": 6,
+      "opponent_team": "Kyohei",
+      "opponent_archetype": "unknown",
+      "file": "82060623.json"
+    },
+    {
+      "episode_id": "82062971",
+      "result_reason": "prize",
+      "turn_count": 21,
+      "opponent_team": "yomogi mochi",
+      "opponent_archetype": "unknown",
+      "file": "82062971.json"
+    },
+    {
+      "episode_id": "82065148",
+      "result_reason": "prize",
+      "turn_count": 13,
+      "opponent_team": "aidy",
+      "opponent_archetype": "alakazam",
+      "file": "82065148.json"
+    },
+    {
+      "episode_id": "82068293",
+      "result_reason": "deck_out",
+      "turn_count": 13,
+      "opponent_team": "yamy893",
+      "opponent_archetype": "unknown",
+      "file": "82068293.json"
+    },
+    {
+      "episode_id": "82068759",
+      "result_reason": "no_active",
+      "turn_count": 15,
+      "opponent_team": "yomogi mochi",
+      "opponent_archetype": "unknown",
+      "file": "82068759.json"
+    },
+    {
+      "episode_id": "82069224",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "yoshimasak",
+      "opponent_archetype": "dragapult",
+      "file": "82069224.json"
+    },
+    {
+      "episode_id": "82070304",
+      "result_reason": "prize",
+      "turn_count": 13,
+      "opponent_team": "katsudon 421",
+      "opponent_archetype": "unknown",
+      "file": "82070304.json"
+    },
+    {
+      "episode_id": "82073113",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "Akito Maruo",
+      "opponent_archetype": "dragapult",
+      "file": "82073113.json"
+    },
+    {
+      "episode_id": "82073596",
+      "result_reason": "prize",
+      "turn_count": 21,
+      "opponent_team": "HayatoFujihara",
+      "opponent_archetype": "unknown",
+      "file": "82073596.json"
+    },
+    {
+      "episode_id": "82074215",
+      "result_reason": "prize",
+      "turn_count": 11,
+      "opponent_team": "HIMIHIMI",
+      "opponent_archetype": "alakazam",
+      "file": "82074215.json"
+    },
+    {
+      "episode_id": "82076432",
+      "result_reason": "no_active",
+      "turn_count": 18,
+      "opponent_team": "KakuTakagawa",
+      "opponent_archetype": "archaludon",
+      "file": "82076432.json"
+    },
+    {
+      "episode_id": "82078247",
+      "result_reason": "prize",
+      "turn_count": 9,
+      "opponent_team": "aidy",
+      "opponent_archetype": "alakazam",
+      "file": "82078247.json"
+    },
+    {
+      "episode_id": "82090639",
+      "result_reason": "no_active",
+      "turn_count": 11,
+      "opponent_team": "Ajishio",
+      "opponent_archetype": "alakazam",
+      "file": "82090639.json"
+    }
+  ]
+}

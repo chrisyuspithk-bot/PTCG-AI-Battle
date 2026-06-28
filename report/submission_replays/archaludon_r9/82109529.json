@@ -1,0 +1,326 @@
+{
+  "ref": "54089078",
+  "package": "archaludon_r9",
+  "episode_id": "82109529",
+  "episode_type": "EPISODE_TYPE_PUBLIC",
+  "raw_replay": "report\\replays\\82109529.json",
+  "our_agent_index": 0,
+  "our_team": "TomBombadyl",
+  "opponent_team": "Satoluca",
+  "outcome": "loss",
+  "result_reason": "prize",
+  "turn_count": 15,
+  "reward": -1.0,
+  "rewards": [
+    -1,
+    1
+  ],
+  "opponent_archetype": "bellibolt",
+  "opponent_deck_signature": "4:22 265:3 268:3 269:3 270:3 271:3 1086:3 1097:2 1110:1 1118:1 1121:3 1152:2 1227:4 1233:4 1254:3",
+  "our_deck_archetype": "archaludon",
+  "selected_context_counts": {
+    "action": 422,
+    "obs:9": 4,
+    "obs:1": 190,
+    "obs:8": 1,
+    "obs:select": 217,
+    "obs:2": 4,
+    "obs:4": 2
+  },
+  "agents": [
+    {
+      "index": 0,
+      "team": "TomBombadyl",
+      "reward": -1,
+      "deck_card_ids": [
+        169,
+        169,
+        169,
+        169,
+        190,
+        190,
+        190,
+        190,
+        666,
+        666,
+        666,
+        666,
+        1244,
+        57,
+        1152,
+        1152,
+        1152,
+        1152,
+        1121,
+        1121,
+        1121,
+        1121,
+        1122,
+        1122,
+        1122,
+        1122,
+        1097,
+        1097,
+        1097,
+        1147,
+        1147,
+        1147,
+        1147,
+        1159,
+        1182,
+        1182,
+        1182,
+        1182,
+        1185,
+        1185,
+        1185,
+        1185,
+        1227,
+        1227,
+        1227,
+        1227,
+        1244,
+        1244,
+        1244,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "deck_cards": [
+        {
+          "id": 8,
+          "name": "Basic {M} Energy",
+          "count": 11
+        },
+        {
+          "id": 57,
+          "name": "Relicanth",
+          "count": 1
+        },
+        {
+          "id": 169,
+          "name": "Duraludon",
+          "count": 4
+        },
+        {
+          "id": 190,
+          "name": "Archaludon ex",
+          "count": 4
+        },
+        {
+          "id": 666,
+          "name": "Cinderace",
+          "count": 4
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 3
+        },
+        {
+          "id": 1121,
+          "name": "Ultra Ball",
+          "count": 4
+        },
+        {
+          "id": 1122,
+          "name": "Pok\u00e9gear 3.0",
+          "count": 4
+        },
+        {
+          "id": 1147,
+          "name": "Jumbo Ice Cream",
+          "count": 4
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 4
+        },
+        {
+          "id": 1159,
+          "name": "Hero\u2019s Cape",
+          "count": 1
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 4
+        },
+        {
+          "id": 1185,
+          "name": "Explorer\u2019s Guidance",
+          "count": 4
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        },
+        {
+          "id": 1244,
+          "name": "Full Metal Lab",
+          "count": 4
+        }
+      ],
+      "deck_archetype": "archaludon",
+      "deck_signature": "8:11 57:1 169:4 190:4 666:4 1097:3 1121:4 1122:4 1147:4 1152:4 1159:1 1182:4 1185:4 1227:4 1244:4",
+      "is_us": true
+    },
+    {
+      "index": 1,
+      "team": "Satoluca",
+      "reward": 1,
+      "deck_card_ids": [
+        265,
+        265,
+        265,
+        268,
+        268,
+        268,
+        269,
+        269,
+        269,
+        270,
+        270,
+        270,
+        271,
+        271,
+        271,
+        1086,
+        1086,
+        1086,
+        1097,
+        1097,
+        1110,
+        1118,
+        1121,
+        1121,
+        1121,
+        1152,
+        1152,
+        1227,
+        1227,
+        1227,
+        1227,
+        1233,
+        1233,
+        1233,
+        1233,
+        1254,
+        1254,
+        1254,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "deck_cards": [
+        {
+          "id": 4,
+          "name": "Basic {L} Energy",
+          "count": 22
+        },
+        {
+          "id": 265,
+          "name": "Iono\u2019s Voltorb",
+          "count": 3
+        },
+        {
+          "id": 268,
+          "name": "Iono\u2019s Tadbulb",
+          "count": 3
+        },
+        {
+          "id": 269,
+          "name": "Iono\u2019s Bellibolt ex",
+          "count": 3
+        },
+        {
+          "id": 270,
+          "name": "Iono\u2019s Wattrel",
+          "count": 3
+        },
+        {
+          "id": 271,
+          "name": "Iono\u2019s Kilowattrel",
+          "count": 3
+        },
+        {
+          "id": 1086,
+          "name": "Buddy-Buddy Poffin",
+          "count": 3
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 2
+        },
+        {
+          "id": 1110,
+          "name": "Max Rod",
+          "count": 1
+        },
+        {
+          "id": 1118,
+          "name": "Energy Retrieval",
+          "count": 1
+        },
+        {
+          "id": 1121,
+          "name": "Ultra Ball",
+          "count": 3
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 2
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        },
+        {
+          "id": 1233,
+          "name": "Canari",
+          "count": 4
+        },
+        {
+          "id": 1254,
+          "name": "Levincia",
+          "count": 3
+        }
+      ],
+      "deck_archetype": "bellibolt",
+      "deck_signature": "4:22 265:3 268:3 269:3 270:3 271:3 1086:3 1097:2 1110:1 1118:1 1121:3 1152:2 1227:4 1233:4 1254:3",
+      "is_us": false
+    }
+  ]
+}

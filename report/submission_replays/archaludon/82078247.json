@@ -1,0 +1,345 @@
+{
+  "ref": "54083197",
+  "package": "archaludon",
+  "episode_id": "82078247",
+  "episode_type": "EPISODE_TYPE_PUBLIC",
+  "raw_replay": "report\\replays\\82078247.json",
+  "our_agent_index": 0,
+  "our_team": "TomBombadyl",
+  "opponent_team": "aidy",
+  "outcome": "loss",
+  "result_reason": "prize",
+  "turn_count": 9,
+  "reward": -1.0,
+  "rewards": [
+    -1,
+    1
+  ],
+  "opponent_archetype": "alakazam",
+  "opponent_deck_signature": "5:3 13:1 19:4 66:3 305:4 741:4 742:4 743:4 1079:4 1081:4 1086:4 1097:3 1129:1 1152:4 1182:3 1184:1 1225:4 1231:4 1264:1",
+  "our_deck_archetype": "archaludon",
+  "selected_context_counts": {
+    "action": 250,
+    "obs:9": 9,
+    "obs:1": 112,
+    "obs:select": 123,
+    "obs:7": 2,
+    "obs:4": 1
+  },
+  "agents": [
+    {
+      "index": 0,
+      "team": "TomBombadyl",
+      "reward": -1,
+      "deck_card_ids": [
+        169,
+        169,
+        169,
+        169,
+        190,
+        190,
+        190,
+        190,
+        666,
+        666,
+        666,
+        666,
+        1244,
+        57,
+        1152,
+        1152,
+        1152,
+        1152,
+        1121,
+        1121,
+        1121,
+        1121,
+        1122,
+        1122,
+        1122,
+        1122,
+        1097,
+        1097,
+        1097,
+        1147,
+        1147,
+        1147,
+        1147,
+        1159,
+        1182,
+        1182,
+        1182,
+        1182,
+        1185,
+        1185,
+        1185,
+        1185,
+        1227,
+        1227,
+        1227,
+        1227,
+        1244,
+        1244,
+        1244,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "deck_cards": [
+        {
+          "id": 8,
+          "name": "Basic {M} Energy",
+          "count": 11
+        },
+        {
+          "id": 57,
+          "name": "Relicanth",
+          "count": 1
+        },
+        {
+          "id": 169,
+          "name": "Duraludon",
+          "count": 4
+        },
+        {
+          "id": 190,
+          "name": "Archaludon ex",
+          "count": 4
+        },
+        {
+          "id": 666,
+          "name": "Cinderace",
+          "count": 4
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 3
+        },
+        {
+          "id": 1121,
+          "name": "Ultra Ball",
+          "count": 4
+        },
+        {
+          "id": 1122,
+          "name": "Pok\u00e9gear 3.0",
+          "count": 4
+        },
+        {
+          "id": 1147,
+          "name": "Jumbo Ice Cream",
+          "count": 4
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 4
+        },
+        {
+          "id": 1159,
+          "name": "Hero\u2019s Cape",
+          "count": 1
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 4
+        },
+        {
+          "id": 1185,
+          "name": "Explorer\u2019s Guidance",
+          "count": 4
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        },
+        {
+          "id": 1244,
+          "name": "Full Metal Lab",
+          "count": 4
+        }
+      ],
+      "deck_archetype": "archaludon",
+      "deck_signature": "8:11 57:1 169:4 190:4 666:4 1097:3 1121:4 1122:4 1147:4 1152:4 1159:1 1182:4 1185:4 1227:4 1244:4",
+      "is_us": true
+    },
+    {
+      "index": 1,
+      "team": "aidy",
+      "reward": 1,
+      "deck_card_ids": [
+        5,
+        5,
+        5,
+        13,
+        19,
+        19,
+        19,
+        19,
+        66,
+        66,
+        66,
+        305,
+        305,
+        305,
+        305,
+        741,
+        741,
+        741,
+        741,
+        742,
+        742,
+        742,
+        742,
+        743,
+        743,
+        743,
+        743,
+        1079,
+        1079,
+        1079,
+        1079,
+        1081,
+        1081,
+        1081,
+        1081,
+        1086,
+        1086,
+        1086,
+        1086,
+        1097,
+        1097,
+        1097,
+        1129,
+        1152,
+        1152,
+        1152,
+        1152,
+        1182,
+        1182,
+        1182,
+        1184,
+        1225,
+        1225,
+        1225,
+        1225,
+        1231,
+        1231,
+        1231,
+        1231,
+        1264
+      ],
+      "deck_cards": [
+        {
+          "id": 5,
+          "name": "Basic {P} Energy",
+          "count": 3
+        },
+        {
+          "id": 13,
+          "name": "Enriching Energy",
+          "count": 1
+        },
+        {
+          "id": 19,
+          "name": "Telepath Psychic Energy",
+          "count": 4
+        },
+        {
+          "id": 66,
+          "name": "Dudunsparce",
+          "count": 3
+        },
+        {
+          "id": 305,
+          "name": "Dunsparce",
+          "count": 4
+        },
+        {
+          "id": 741,
+          "name": "Abra",
+          "count": 4
+        },
+        {
+          "id": 742,
+          "name": "Kadabra",
+          "count": 4
+        },
+        {
+          "id": 743,
+          "name": "Alakazam",
+          "count": 4
+        },
+        {
+          "id": 1079,
+          "name": "Rare Candy",
+          "count": 4
+        },
+        {
+          "id": 1081,
+          "name": "Enhanced Hammer",
+          "count": 4
+        },
+        {
+          "id": 1086,
+          "name": "Buddy-Buddy Poffin",
+          "count": 4
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 3
+        },
+        {
+          "id": 1129,
+          "name": "Sacred Ash",
+          "count": 1
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 4
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 3
+        },
+        {
+          "id": 1184,
+          "name": "Lana\u2019s Aid",
+          "count": 1
+        },
+        {
+          "id": 1225,
+          "name": "Hilda",
+          "count": 4
+        },
+        {
+          "id": 1231,
+          "name": "Dawn",
+          "count": 4
+        },
+        {
+          "id": 1264,
+          "name": "Battle Cage",
+          "count": 1
+        }
+      ],
+      "deck_archetype": "alakazam",
+      "deck_signature": "5:3 13:1 19:4 66:3 305:4 741:4 742:4 743:4 1079:4 1081:4 1086:4 1097:3 1129:1 1152:4 1182:3 1184:1 1225:4 1231:4 1264:1",
+      "is_us": false
+    }
+  ]
+}

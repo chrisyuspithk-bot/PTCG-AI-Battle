@@ -1,0 +1,8341 @@
+{
+  "ref": "54083197",
+  "deck": "archaludon",
+  "brain": "archaludon_rules",
+  "deck_csv": "agent_decks\\archaludon_ex_cinderace.csv",
+  "deck_sha1": "811b9567f2b29671ef2add55eb567fee02d5871a",
+  "deck_card_ids": [
+    169,
+    169,
+    169,
+    169,
+    190,
+    190,
+    190,
+    190,
+    666,
+    666,
+    666,
+    666,
+    1244,
+    57,
+    1152,
+    1152,
+    1152,
+    1152,
+    1121,
+    1121,
+    1121,
+    1121,
+    1122,
+    1122,
+    1122,
+    1122,
+    1097,
+    1097,
+    1097,
+    1147,
+    1147,
+    1147,
+    1147,
+    1159,
+    1182,
+    1182,
+    1182,
+    1182,
+    1185,
+    1185,
+    1185,
+    1185,
+    1227,
+    1227,
+    1227,
+    1227,
+    1244,
+    1244,
+    1244,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+  ],
+  "episode_id": "82071257",
+  "our_agent_index": 1,
+  "our_team": "TomBombadyl",
+  "opponent_team": "Kimiaki Nakamura",
+  "outcome": "win",
+  "result_reason": "prize",
+  "turn_count": 15,
+  "our_decision_count": 100,
+  "terminal_us": {
+    "deck_count": 7,
+    "hand_count": 11,
+    "bench_count": 3,
+    "prize_remaining": 1,
+    "discard_count": 27,
+    "active": {
+      "id": 190,
+      "hp": 240,
+      "max_hp": 300,
+      "energy_count": 3,
+      "has_tool": false
+    },
+    "bench_ids": [
+      169,
+      57,
+      169
+    ]
+  },
+  "raw_replay": "report\\replays\\82071257.json",
+  "turns": [
+    {
+      "step": 2,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 3,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 1,
+          "type": 3
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 4,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 2,
+        "option_count": 2,
+        "min_count": 0,
+        "max_count": 2
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 47,
+        "hand_count": 6,
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 5,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 2,
+          "type": 7
+        },
+        {
+          "index": 4,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 4,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 5,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 1,
+          "type": 7
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 46,
+        "hand_count": 6,
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "discard_count": 0,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 6,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 0,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 1
+        },
+        {
+          "index": 10,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 1
+        },
+        {
+          "index": 23,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 1
+        },
+        {
+          "index": 26,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 1
+        },
+        {
+          "index": 29,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 1
+        },
+        {
+          "index": 37,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 1
+        }
+      ],
+      "chosen_indices": [
+        1
+      ],
+      "chosen_options": [
+        {
+          "index": 10,
+          "type": 3
+        }
+      ],
+      "action": [
+        1
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 46,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "discard_count": 0,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 7,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 3,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        1
+      ],
+      "chosen_options": [
+        {
+          "index": 3,
+          "type": 8
+        }
+      ],
+      "action": [
+        1
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 45,
+        "hand_count": 6,
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "discard_count": 1,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 8,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 0,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        }
+      ],
+      "chosen_indices": [
+        3
+      ],
+      "chosen_options": [],
+      "action": [
+        3
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 38,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "discard_count": 1,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 9,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 3,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 4,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        1
+      ],
+      "chosen_options": [
+        {
+          "index": 3,
+          "type": 8
+        }
+      ],
+      "action": [
+        1
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 6,
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 10,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 2,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 2,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 2,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 7
+        },
+        {
+          "index": 4,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 2,
+          "type": 8
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 11,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 2,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 2,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 2,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 2,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        3
+      ],
+      "chosen_options": [
+        {
+          "index": 2,
+          "type": 8
+        }
+      ],
+      "action": [
+        3
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 12,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 13,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 14,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 15,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 16,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 17,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 18,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 19,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 20,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 21,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 22,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 23,
+      "turn": 1,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 44,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 24,
+      "turn": 3,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 2,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 7
+        },
+        {
+          "index": 2,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 3,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 43,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 25,
+      "turn": 3,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 2,
+        "max_count": 2
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 3
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 37,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 2,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 26,
+      "turn": 3,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 7,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 3,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 5,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 6,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        5,
+        1
+      ],
+      "chosen_options": [
+        {
+          "index": 5,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 3,
+          "type": 8
+        }
+      ],
+      "action": [
+        5,
+        1
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 37,
+        "hand_count": 5,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 27,
+      "turn": 3,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 2,
+          "type": 12
+        },
+        {
+          "index": 3,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        1
+      ],
+      "chosen_options": [
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        }
+      ],
+      "action": [
+        1
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 37,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 28,
+      "turn": 3,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 2,
+          "type": 12
+        },
+        {
+          "index": 3,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        1
+      ],
+      "chosen_options": [
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        }
+      ],
+      "action": [
+        1
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 37,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 29,
+      "turn": 3,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 2,
+          "type": 12
+        },
+        {
+          "index": 3,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 37,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 30,
+      "turn": 3,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 2,
+          "type": 12
+        },
+        {
+          "index": 3,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 37,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 31,
+      "turn": 3,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 2,
+          "type": 12
+        },
+        {
+          "index": 3,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 37,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 32,
+      "turn": 3,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 2,
+          "type": 12
+        },
+        {
+          "index": 3,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 37,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 33,
+      "turn": 3,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 2,
+          "type": 12
+        },
+        {
+          "index": 3,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 37,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 34,
+      "turn": 3,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 2,
+          "type": 12
+        },
+        {
+          "index": 3,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 37,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 35,
+      "turn": 3,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 2,
+          "type": 12
+        },
+        {
+          "index": 3,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 37,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 36,
+      "turn": 3,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 2,
+          "type": 12
+        },
+        {
+          "index": 3,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 37,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 941,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 37,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 7,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 2,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 7
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 4,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 5,
+          "type": 12
+        },
+        {
+          "index": 6,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 110,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 38,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 12,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 0,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 0,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 0,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 2,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 2,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 2,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 2,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 6,
+          "type": 7
+        },
+        {
+          "index": 9,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 10,
+          "type": 12
+        },
+        {
+          "index": 11,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        2
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 8
+        }
+      ],
+      "action": [
+        2
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 32,
+        "hand_count": 8,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 110,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 39,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 8,
+        "option_count": 7,
+        "min_count": 2,
+        "max_count": 2
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        },
+        {
+          "index": 6,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 2
+        }
+      ],
+      "chosen_indices": [
+        8
+      ],
+      "chosen_options": [],
+      "action": [
+        8
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 32,
+        "hand_count": 7,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 110,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 40,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 0,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 8,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 1
+        },
+        {
+          "index": 10,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 1
+        },
+        {
+          "index": 24,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 1
+        },
+        {
+          "index": 30,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 1
+        },
+        {
+          "index": 31,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 1
+        }
+      ],
+      "chosen_indices": [
+        0,
+        3
+      ],
+      "chosen_options": [
+        {
+          "index": 8,
+          "type": 3
+        },
+        {
+          "index": 30,
+          "type": 3
+        }
+      ],
+      "action": [
+        0,
+        3
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 32,
+        "hand_count": 5,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 110,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 41,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 10,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 1,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 1,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 1,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 1,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 5,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 5,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 5,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 8,
+          "type": 12
+        },
+        {
+          "index": 9,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        2
+      ],
+      "chosen_options": [
+        {
+          "index": 1,
+          "type": 8
+        }
+      ],
+      "action": [
+        2
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 6,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 110,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 42,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 7,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 4,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 4,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 4,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 5,
+          "type": 12
+        },
+        {
+          "index": 6,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 4,
+          "type": 9
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 5,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 110,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 43,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 9,
+        "context": 43,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 1
+        },
+        {
+          "index": 1,
+          "type": 2
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 1
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 11,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 110,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 44,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 22,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 8,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 3
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 8,
+          "type": 3
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 11,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 110,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 45,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 4
+        },
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 5
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 5
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 3
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 11,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 110,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 46,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 2,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 3,
+          "type": 12
+        },
+        {
+          "index": 4,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        1
+      ],
+      "chosen_options": [
+        {
+          "index": 1,
+          "type": 13,
+          "attackId": 223
+        }
+      ],
+      "action": [
+        1
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 110,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 47,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 3
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 48,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 3
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 49,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 50,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 51,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 52,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 53,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 54,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 55,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 56,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 57,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 58,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 59,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 60,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 31,
+        "hand_count": 4,
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 61,
+      "turn": 7,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 12,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 2,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 7
+        },
+        {
+          "index": 4,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 5,
+          "type": 7
+        },
+        {
+          "index": 7,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 8,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 9,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 10,
+          "type": 12
+        },
+        {
+          "index": 11,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 30,
+        "hand_count": 6,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 170,
+          "max_hp": 170,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 62,
+      "turn": 7,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 2,
+        "max_count": 2
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        }
+      ],
+      "chosen_indices": [
+        2
+      ],
+      "chosen_options": [
+        {
+          "index": 2,
+          "type": 3
+        }
+      ],
+      "action": [
+        2
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 24,
+        "hand_count": 5,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 10,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 170,
+          "max_hp": 170,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 63,
+      "turn": 7,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 10,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 6,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 7,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 8,
+          "type": 12
+        },
+        {
+          "index": 9,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        1,
+        5
+      ],
+      "chosen_options": [
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 13,
+          "attackId": 253
+        }
+      ],
+      "action": [
+        1,
+        5
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 24,
+        "hand_count": 7,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 15,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 170,
+          "max_hp": 170,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 64,
+      "turn": 7,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [
+        5
+      ],
+      "chosen_options": [],
+      "action": [
+        5
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 24,
+        "hand_count": 7,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 15,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 65,
+      "turn": 7,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 3
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 24,
+        "hand_count": 7,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 15,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 66,
+      "turn": 7,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 24,
+        "hand_count": 7,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 15,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 67,
+      "turn": 7,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 24,
+        "hand_count": 7,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 15,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 68,
+      "turn": 7,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 24,
+        "hand_count": 7,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 15,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 69,
+      "turn": 7,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 24,
+        "hand_count": 7,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 15,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 70,
+      "turn": 9,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 18,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 2,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 7
+        },
+        {
+          "index": 6,
+          "type": 7
+        },
+        {
+          "index": 7,
+          "type": 7
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 13,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 14,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 15,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 16,
+          "type": 12
+        },
+        {
+          "index": 17,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 23,
+        "hand_count": 9,
+        "bench_count": 3,
+        "prize_remaining": 4,
+        "discard_count": 15,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 4,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 170,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 71,
+      "turn": 9,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 2,
+        "max_count": 2
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        }
+      ],
+      "chosen_indices": [
+        6
+      ],
+      "chosen_options": [],
+      "action": [
+        6
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 17,
+        "hand_count": 8,
+        "bench_count": 3,
+        "prize_remaining": 4,
+        "discard_count": 15,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 4,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 170,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 72,
+      "turn": 9,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 22,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 9,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 9,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 9,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 9,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 17,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 18,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 19,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 20,
+          "type": 12
+        },
+        {
+          "index": 21,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        0,
+        1
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        }
+      ],
+      "action": [
+        0,
+        1
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 17,
+        "hand_count": 10,
+        "bench_count": 3,
+        "prize_remaining": 4,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 4,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 170,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 73,
+      "turn": 9,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 10,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 6,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 7,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 8,
+          "type": 12
+        },
+        {
+          "index": 9,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        6
+      ],
+      "chosen_options": [
+        {
+          "index": 6,
+          "type": 13,
+          "attackId": 223
+        }
+      ],
+      "action": [
+        6
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 17,
+        "hand_count": 9,
+        "bench_count": 3,
+        "prize_remaining": 4,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 4,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 170,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 74,
+      "turn": 9,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [
+        5
+      ],
+      "chosen_options": [],
+      "action": [
+        5
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 17,
+        "hand_count": 9,
+        "bench_count": 3,
+        "prize_remaining": 4,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 4,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 75,
+      "turn": 9,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 3
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 17,
+        "hand_count": 9,
+        "bench_count": 3,
+        "prize_remaining": 4,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 4,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 76,
+      "turn": 9,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 17,
+        "hand_count": 9,
+        "bench_count": 3,
+        "prize_remaining": 4,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 4,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 77,
+      "turn": 9,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 17,
+        "hand_count": 9,
+        "bench_count": 3,
+        "prize_remaining": 4,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 4,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 78,
+      "turn": 11,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 29,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 2,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 7
+        },
+        {
+          "index": 6,
+          "type": 7
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 9,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 9,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 9,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 9,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 10,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 10,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 10,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 10,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 24,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 25,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 26,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 27,
+          "type": 12
+        },
+        {
+          "index": 28,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 16,
+        "hand_count": 11,
+        "bench_count": 3,
+        "prize_remaining": 3,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 170,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 79,
+      "turn": 11,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 13,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 2,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 7
+        },
+        {
+          "index": 6,
+          "type": 7
+        },
+        {
+          "index": 8,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 9,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 10,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 11,
+          "type": 12
+        },
+        {
+          "index": 12,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        9
+      ],
+      "chosen_options": [
+        {
+          "index": 9,
+          "type": 13,
+          "attackId": 223
+        }
+      ],
+      "action": [
+        9
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 16,
+        "hand_count": 10,
+        "bench_count": 3,
+        "prize_remaining": 3,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 170,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 80,
+      "turn": 11,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 2,
+        "max_count": 2
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 3,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 5,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        }
+      ],
+      "chosen_indices": [
+        7
+      ],
+      "chosen_options": [],
+      "action": [
+        7
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 10,
+        "hand_count": 9,
+        "bench_count": 3,
+        "prize_remaining": 3,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 170,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 81,
+      "turn": 11,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 12,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 9,
+          "type": 7
+        },
+        {
+          "index": 10,
+          "type": 7
+        },
+        {
+          "index": 7,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 8,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 9,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 10,
+          "type": 12
+        },
+        {
+          "index": 11,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        0,
+        1
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        }
+      ],
+      "action": [
+        0,
+        1
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 10,
+        "hand_count": 11,
+        "bench_count": 3,
+        "prize_remaining": 3,
+        "discard_count": 25,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 170,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 82,
+      "turn": 11,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 1,
+        "min_count": 0,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 4,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 1
+        }
+      ],
+      "chosen_indices": [
+        6
+      ],
+      "chosen_options": [],
+      "action": [
+        6
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 10,
+        "hand_count": 10,
+        "bench_count": 3,
+        "prize_remaining": 3,
+        "discard_count": 25,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 170,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 83,
+      "turn": 11,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 11,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 9,
+          "type": 7
+        },
+        {
+          "index": 6,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 7,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 8,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 9,
+          "type": 12
+        },
+        {
+          "index": 10,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 10,
+        "hand_count": 10,
+        "bench_count": 3,
+        "prize_remaining": 3,
+        "discard_count": 26,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "active": {
+          "id": 943,
+          "hp": 170,
+          "max_hp": 170,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 84,
+      "turn": 11,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [
+        6
+      ],
+      "chosen_options": [],
+      "action": [
+        6
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 10,
+        "hand_count": 10,
+        "bench_count": 3,
+        "prize_remaining": 3,
+        "discard_count": 26,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 85,
+      "turn": 11,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 3
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 10,
+        "hand_count": 10,
+        "bench_count": 3,
+        "prize_remaining": 3,
+        "discard_count": 26,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 86,
+      "turn": 11,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 10,
+        "hand_count": 10,
+        "bench_count": 3,
+        "prize_remaining": 3,
+        "discard_count": 26,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 87,
+      "turn": 11,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 10,
+        "hand_count": 10,
+        "bench_count": 3,
+        "prize_remaining": 3,
+        "discard_count": 26,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 88,
+      "turn": 11,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 2,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 10,
+        "hand_count": 10,
+        "bench_count": 3,
+        "prize_remaining": 3,
+        "discard_count": 26,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 3,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 89,
+      "turn": 13,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 28,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 2,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 7
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 9,
+          "type": 7
+        },
+        {
+          "index": 10,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 10,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 11,
+          "type": 7
+        },
+        {
+          "index": 23,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 24,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 25,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 26,
+          "type": 12
+        },
+        {
+          "index": 27,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 9,
+        "hand_count": 12,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 26,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 305,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 90,
+      "turn": 13,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 0,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        },
+        {
+          "index": 6,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 12
+        }
+      ],
+      "chosen_indices": [
+        22
+      ],
+      "chosen_options": [],
+      "action": [
+        22
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 2,
+        "hand_count": 11,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 26,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 305,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 91,
+      "turn": 13,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 28,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 2,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 7
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 9,
+          "type": 7
+        },
+        {
+          "index": 10,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 10,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 11,
+          "type": 7
+        },
+        {
+          "index": 23,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 24,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 25,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 26,
+          "type": 12
+        },
+        {
+          "index": 27,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 7
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 8,
+        "hand_count": 12,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 27,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 305,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 92,
+      "turn": 13,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 16,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 2,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 7
+        },
+        {
+          "index": 8,
+          "type": 7
+        },
+        {
+          "index": 9,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 9,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 10,
+          "type": 7
+        },
+        {
+          "index": 11,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 12,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 13,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 14,
+          "type": 12
+        },
+        {
+          "index": 15,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        10
+      ],
+      "chosen_options": [
+        {
+          "index": 10,
+          "type": 7
+        }
+      ],
+      "action": [
+        10
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 8,
+        "hand_count": 11,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 27,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 305,
+          "hp": 70,
+          "max_hp": 70,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 93,
+      "turn": 13,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [
+        11
+      ],
+      "chosen_options": [],
+      "action": [
+        11
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 8,
+        "hand_count": 11,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 27,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 94,
+      "turn": 13,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 3
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 8,
+        "hand_count": 11,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 27,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 95,
+      "turn": 13,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 8,
+        "hand_count": 11,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 27,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 96,
+      "turn": 13,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        },
+        {
+          "index": 1,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 8,
+        "hand_count": 11,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 27,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 97,
+      "turn": 15,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 26,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 2,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 7
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 7
+        },
+        {
+          "index": 9,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 9,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 10,
+          "type": 7
+        },
+        {
+          "index": 11,
+          "type": 7
+        },
+        {
+          "index": 12,
+          "type": 7
+        },
+        {
+          "index": 21,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 22,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 23,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 24,
+          "type": 12
+        },
+        {
+          "index": 25,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [],
+      "chosen_options": [],
+      "action": [],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 7,
+        "hand_count": 13,
+        "bench_count": 3,
+        "prize_remaining": 1,
+        "discard_count": 27,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "active": {
+          "id": 235,
+          "hp": 30,
+          "max_hp": 30,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 98,
+      "turn": 15,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 25,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 2,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 7
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 6,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 4
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 7,
+          "type": 8,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 7
+        },
+        {
+          "index": 9,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 9,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 10,
+          "type": 7
+        },
+        {
+          "index": 11,
+          "type": 7
+        },
+        {
+          "index": 20,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 21,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 22,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 23,
+          "type": 12
+        },
+        {
+          "index": 24,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        19
+      ],
+      "chosen_options": [
+        {
+          "index": 11,
+          "type": 7
+        }
+      ],
+      "action": [
+        19
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 7,
+        "hand_count": 12,
+        "bench_count": 3,
+        "prize_remaining": 1,
+        "discard_count": 27,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "active": {
+          "id": 235,
+          "hp": 30,
+          "max_hp": 30,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 99,
+      "turn": 15,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 17,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 7
+        },
+        {
+          "index": 1,
+          "type": 7
+        },
+        {
+          "index": 2,
+          "type": 7
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 3,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 4,
+          "type": 7
+        },
+        {
+          "index": 5,
+          "type": 7
+        },
+        {
+          "index": 7,
+          "type": 7
+        },
+        {
+          "index": 8,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 8,
+          "type": 9,
+          "area": 2,
+          "inPlayArea": 5
+        },
+        {
+          "index": 9,
+          "type": 7
+        },
+        {
+          "index": 10,
+          "type": 7
+        },
+        {
+          "index": 12,
+          "type": 13,
+          "attackId": 253
+        },
+        {
+          "index": 13,
+          "type": 13,
+          "attackId": 223
+        },
+        {
+          "index": 14,
+          "type": 13,
+          "attackId": 224
+        },
+        {
+          "index": 15,
+          "type": 12
+        },
+        {
+          "index": 16,
+          "type": 14
+        }
+      ],
+      "chosen_indices": [
+        10
+      ],
+      "chosen_options": [
+        {
+          "index": 9,
+          "type": 7
+        }
+      ],
+      "action": [
+        10
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 7,
+        "hand_count": 11,
+        "bench_count": 3,
+        "prize_remaining": 1,
+        "discard_count": 27,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "active": {
+          "id": 235,
+          "hp": 30,
+          "max_hp": 30,
+          "energy_count": 0,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 100,
+      "turn": 15,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [
+        12
+      ],
+      "chosen_options": [],
+      "action": [
+        12
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 7,
+        "hand_count": 11,
+        "bench_count": 3,
+        "prize_remaining": 1,
+        "discard_count": 27,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 101,
+      "turn": 15,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "legal_options": [
+        {
+          "index": 0,
+          "type": 3,
+          "playerIndex": 1,
+          "area": 6
+        }
+      ],
+      "chosen_indices": [
+        0
+      ],
+      "chosen_options": [
+        {
+          "index": 0,
+          "type": 3
+        }
+      ],
+      "action": [
+        0
+      ],
+      "visualize_line": null,
+      "us": {
+        "deck_count": 7,
+        "hand_count": 11,
+        "bench_count": 3,
+        "prize_remaining": 1,
+        "discard_count": 27,
+        "active": {
+          "id": 190,
+          "hp": 240,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "active": null
+      }
+    }
+  ],
+  "note": "Deck-perspective only: rules+cards for this list, not opponent pilot logic."
+}

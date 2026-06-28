@@ -1,0 +1,375 @@
+{
+  "ref": "54089078",
+  "package": "archaludon_r9",
+  "episode_id": "82106161",
+  "episode_type": "EPISODE_TYPE_PUBLIC",
+  "raw_replay": "report\\replays\\82106161.json",
+  "our_agent_index": 1,
+  "our_team": "TomBombadyl",
+  "opponent_team": "tsukammo",
+  "outcome": "win",
+  "result_reason": "prize",
+  "turn_count": 14,
+  "reward": 1.0,
+  "rewards": [
+    -1,
+    1
+  ],
+  "opponent_archetype": "unknown",
+  "opponent_deck_signature": "1:6 73:1 74:1 89:4 90:4 91:1 92:4 93:4 100:2 240:1 322:1 484:1 1080:1 1086:4 1094:4 1097:1 1152:4 1174:1 1175:2 1182:2 1184:1 1191:1 1211:1 1227:4 1245:4",
+  "our_deck_archetype": "archaludon",
+  "selected_context_counts": {
+    "action": 280,
+    "obs:9": 5,
+    "obs:1": 128,
+    "obs:8": 8,
+    "obs:select": 108,
+    "obs:6": 28
+  },
+  "agents": [
+    {
+      "index": 0,
+      "team": "tsukammo",
+      "reward": -1,
+      "deck_card_ids": [
+        89,
+        89,
+        89,
+        89,
+        90,
+        90,
+        90,
+        92,
+        92,
+        92,
+        92,
+        93,
+        93,
+        93,
+        93,
+        100,
+        91,
+        240,
+        1184,
+        322,
+        73,
+        74,
+        1175,
+        1086,
+        1086,
+        1086,
+        1086,
+        1094,
+        1094,
+        1094,
+        1094,
+        1152,
+        1152,
+        1152,
+        1152,
+        1097,
+        1080,
+        1175,
+        1,
+        100,
+        1174,
+        1245,
+        1245,
+        1245,
+        1245,
+        1227,
+        1227,
+        1227,
+        1227,
+        90,
+        1211,
+        1191,
+        1182,
+        1182,
+        484,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "deck_cards": [
+        {
+          "id": 1,
+          "name": "Basic {G} Energy",
+          "count": 6
+        },
+        {
+          "id": 73,
+          "name": "Rellor",
+          "count": 1
+        },
+        {
+          "id": 74,
+          "name": "Rabsca",
+          "count": 1
+        },
+        {
+          "id": 89,
+          "name": "Grookey",
+          "count": 4
+        },
+        {
+          "id": 90,
+          "name": "Thwackey",
+          "count": 4
+        },
+        {
+          "id": 91,
+          "name": "Rillaboom",
+          "count": 1
+        },
+        {
+          "id": 92,
+          "name": "Applin",
+          "count": 4
+        },
+        {
+          "id": 93,
+          "name": "Dipplin",
+          "count": 4
+        },
+        {
+          "id": 100,
+          "name": "Goldeen",
+          "count": 2
+        },
+        {
+          "id": 240,
+          "name": "Seaking",
+          "count": 1
+        },
+        {
+          "id": 322,
+          "name": "Lilligant",
+          "count": 1
+        },
+        {
+          "id": 484,
+          "name": "Petilil",
+          "count": 1
+        },
+        {
+          "id": 1080,
+          "name": "Unfair Stamp",
+          "count": 1
+        },
+        {
+          "id": 1086,
+          "name": "Buddy-Buddy Poffin",
+          "count": 4
+        },
+        {
+          "id": 1094,
+          "name": "Bug Catching Set",
+          "count": 4
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 1
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 4
+        },
+        {
+          "id": 1174,
+          "name": "Air Balloon",
+          "count": 1
+        },
+        {
+          "id": 1175,
+          "name": "Brave Bangle",
+          "count": 2
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 2
+        },
+        {
+          "id": 1184,
+          "name": "Lana\u2019s Aid",
+          "count": 1
+        },
+        {
+          "id": 1191,
+          "name": "Kieran",
+          "count": 1
+        },
+        {
+          "id": 1211,
+          "name": "Black Belt\u2019s Training",
+          "count": 1
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        },
+        {
+          "id": 1245,
+          "name": "Festival Grounds",
+          "count": 4
+        }
+      ],
+      "deck_archetype": "unknown",
+      "deck_signature": "1:6 73:1 74:1 89:4 90:4 91:1 92:4 93:4 100:2 240:1 322:1 484:1 1080:1 1086:4 1094:4 1097:1 1152:4 1174:1 1175:2 1182:2 1184:1 1191:1 1211:1 1227:4 1245:4",
+      "is_us": false
+    },
+    {
+      "index": 1,
+      "team": "TomBombadyl",
+      "reward": 1,
+      "deck_card_ids": [
+        169,
+        169,
+        169,
+        169,
+        190,
+        190,
+        190,
+        190,
+        666,
+        666,
+        666,
+        666,
+        1244,
+        57,
+        1152,
+        1152,
+        1152,
+        1152,
+        1121,
+        1121,
+        1121,
+        1121,
+        1122,
+        1122,
+        1122,
+        1122,
+        1097,
+        1097,
+        1097,
+        1147,
+        1147,
+        1147,
+        1147,
+        1159,
+        1182,
+        1182,
+        1182,
+        1182,
+        1185,
+        1185,
+        1185,
+        1185,
+        1227,
+        1227,
+        1227,
+        1227,
+        1244,
+        1244,
+        1244,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "deck_cards": [
+        {
+          "id": 8,
+          "name": "Basic {M} Energy",
+          "count": 11
+        },
+        {
+          "id": 57,
+          "name": "Relicanth",
+          "count": 1
+        },
+        {
+          "id": 169,
+          "name": "Duraludon",
+          "count": 4
+        },
+        {
+          "id": 190,
+          "name": "Archaludon ex",
+          "count": 4
+        },
+        {
+          "id": 666,
+          "name": "Cinderace",
+          "count": 4
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 3
+        },
+        {
+          "id": 1121,
+          "name": "Ultra Ball",
+          "count": 4
+        },
+        {
+          "id": 1122,
+          "name": "Pok\u00e9gear 3.0",
+          "count": 4
+        },
+        {
+          "id": 1147,
+          "name": "Jumbo Ice Cream",
+          "count": 4
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 4
+        },
+        {
+          "id": 1159,
+          "name": "Hero\u2019s Cape",
+          "count": 1
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 4
+        },
+        {
+          "id": 1185,
+          "name": "Explorer\u2019s Guidance",
+          "count": 4
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        },
+        {
+          "id": 1244,
+          "name": "Full Metal Lab",
+          "count": 4
+        }
+      ],
+      "deck_archetype": "archaludon",
+      "deck_signature": "8:11 57:1 169:4 190:4 666:4 1097:3 1121:4 1122:4 1147:4 1152:4 1159:1 1182:4 1185:4 1227:4 1244:4",
+      "is_us": true
+    }
+  ]
+}

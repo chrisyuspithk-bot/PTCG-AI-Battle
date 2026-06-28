@@ -1,0 +1,175 @@
+{
+  "ref": "54088877",
+  "package": "archaludon_r8",
+  "count": 21,
+  "losses": [
+    {
+      "episode_id": "82094673",
+      "result_reason": "prize",
+      "turn_count": 21,
+      "opponent_team": "eurusoo",
+      "opponent_archetype": "lucario",
+      "file": "82094673.json"
+    },
+    {
+      "episode_id": "82095334",
+      "result_reason": "prize",
+      "turn_count": 17,
+      "opponent_team": "MeMu",
+      "opponent_archetype": "starmie",
+      "file": "82095334.json"
+    },
+    {
+      "episode_id": "82097056",
+      "result_reason": "no_active",
+      "turn_count": 3,
+      "opponent_team": "Charismatic Pizza Party\ud83c\udf55",
+      "opponent_archetype": "lucario",
+      "file": "82097056.json"
+    },
+    {
+      "episode_id": "82101578",
+      "result_reason": "no_active",
+      "turn_count": 11,
+      "opponent_team": "Gotta catch 'em all",
+      "opponent_archetype": "dragapult",
+      "file": "82101578.json"
+    },
+    {
+      "episode_id": "82103266",
+      "result_reason": "prize",
+      "turn_count": 13,
+      "opponent_team": "yumizu",
+      "opponent_archetype": "alakazam",
+      "file": "82103266.json"
+    },
+    {
+      "episode_id": "82104447",
+      "result_reason": "prize",
+      "turn_count": 11,
+      "opponent_team": "We1chnon",
+      "opponent_archetype": "alakazam",
+      "file": "82104447.json"
+    },
+    {
+      "episode_id": "82104953",
+      "result_reason": "no_active",
+      "turn_count": 5,
+      "opponent_team": "llkarill",
+      "opponent_archetype": "alakazam",
+      "file": "82104953.json"
+    },
+    {
+      "episode_id": "82106650",
+      "result_reason": "prize",
+      "turn_count": 15,
+      "opponent_team": "Yuiki",
+      "opponent_archetype": "alakazam",
+      "file": "82106650.json"
+    },
+    {
+      "episode_id": "82107826",
+      "result_reason": "prize",
+      "turn_count": 11,
+      "opponent_team": "TTT Is All You Need",
+      "opponent_archetype": "alakazam",
+      "file": "82107826.json"
+    },
+    {
+      "episode_id": "82110696",
+      "result_reason": "no_active",
+      "turn_count": 13,
+      "opponent_team": "takuya noto",
+      "opponent_archetype": "alakazam",
+      "file": "82110696.json"
+    },
+    {
+      "episode_id": "82113377",
+      "result_reason": "no_active",
+      "turn_count": 14,
+      "opponent_team": "\u3042\u3074\u3087\u3074\u3087",
+      "opponent_archetype": "dragapult",
+      "file": "82113377.json"
+    },
+    {
+      "episode_id": "82114044",
+      "result_reason": "prize",
+      "turn_count": 11,
+      "opponent_team": "Team_Rocket",
+      "opponent_archetype": "alakazam",
+      "file": "82114044.json"
+    },
+    {
+      "episode_id": "82114692",
+      "result_reason": "no_active",
+      "turn_count": 15,
+      "opponent_team": "GoodMorning",
+      "opponent_archetype": "alakazam",
+      "file": "82114692.json"
+    },
+    {
+      "episode_id": "82116485",
+      "result_reason": "no_active",
+      "turn_count": 13,
+      "opponent_team": "5.5",
+      "opponent_archetype": "alakazam",
+      "file": "82116485.json"
+    },
+    {
+      "episode_id": "82118360",
+      "result_reason": "no_active",
+      "turn_count": 3,
+      "opponent_team": "Akamatsu",
+      "opponent_archetype": "lucario",
+      "file": "82118360.json"
+    },
+    {
+      "episode_id": "82122355",
+      "result_reason": "no_active",
+      "turn_count": 5,
+      "opponent_team": "HIDEYO CHIBA",
+      "opponent_archetype": "unknown",
+      "file": "82122355.json"
+    },
+    {
+      "episode_id": "82156439",
+      "result_reason": "prize",
+      "turn_count": 21,
+      "opponent_team": "Shunji Minode",
+      "opponent_archetype": "unknown",
+      "file": "82156439.json"
+    },
+    {
+      "episode_id": "82185431",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "Gotta catch 'em all",
+      "opponent_archetype": "dragapult",
+      "file": "82185431.json"
+    },
+    {
+      "episode_id": "82217636",
+      "result_reason": "prize",
+      "turn_count": 11,
+      "opponent_team": "N.Y",
+      "opponent_archetype": "alakazam",
+      "file": "82217636.json"
+    },
+    {
+      "episode_id": "82218599",
+      "result_reason": "deck_out",
+      "turn_count": 16,
+      "opponent_team": "NukoNiko15",
+      "opponent_archetype": "archaludon",
+      "file": "82218599.json"
+    },
+    {
+      "episode_id": "82225640",
+      "result_reason": "no_active",
+      "turn_count": 17,
+      "opponent_team": "Maher el Ouahabi",
+      "opponent_archetype": "archaludon",
+      "file": "82225640.json"
+    }
+  ]
+}

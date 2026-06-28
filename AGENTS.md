@@ -1,5 +1,8 @@
 # AGENTS — operating contract
 
+> Auto repo state: see `REPO_STATE.md` (current snapshot) and `REPO_STATE_LOG.md` (daily history), regenerated each morning. Read REPO_STATE.md for where this repo stands right now.
+
+
 The single operating contract for this repo (human or AI). Reset 2026-06-22 (Session 44). For the
 *why* read `RULINGS.md`; for the *plan* read `ARCHITECTURE.md`; for *current state + next action*
 read `STATE.md`. For the *forward plan* read `ROADMAP.md`. For *research + decisions* read

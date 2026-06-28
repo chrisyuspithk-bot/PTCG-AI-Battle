@@ -1,0 +1,359 @@
+{
+  "ref": "54083197",
+  "package": "archaludon",
+  "episode_id": "82072503",
+  "episode_type": "EPISODE_TYPE_PUBLIC",
+  "raw_replay": "report\\replays\\82072503.json",
+  "our_agent_index": 1,
+  "our_team": "TomBombadyl",
+  "opponent_team": "Jaga",
+  "outcome": "win",
+  "result_reason": "prize",
+  "turn_count": 12,
+  "reward": 1.0,
+  "rewards": [
+    -1,
+    1
+  ],
+  "opponent_archetype": "starmie",
+  "opponent_deck_signature": "3:5 7:3 17:2 112:2 131:2 132:2 133:1 235:1 1030:4 1031:3 1071:1 1086:4 1121:4 1122:3 1152:4 1159:1 1182:3 1197:1 1225:4 1227:4 1229:2 1260:4",
+  "our_deck_archetype": "archaludon",
+  "selected_context_counts": {
+    "action": 166,
+    "obs:9": 1,
+    "obs:1": 88,
+    "obs:select": 72,
+    "obs:8": 1
+  },
+  "agents": [
+    {
+      "index": 0,
+      "team": "Jaga",
+      "reward": -1,
+      "deck_card_ids": [
+        1030,
+        1030,
+        1030,
+        1030,
+        1031,
+        1031,
+        1031,
+        132,
+        132,
+        112,
+        112,
+        131,
+        131,
+        1071,
+        1197,
+        133,
+        1121,
+        1121,
+        1121,
+        1121,
+        1152,
+        1152,
+        1152,
+        1152,
+        1086,
+        1086,
+        1086,
+        1086,
+        1122,
+        1122,
+        1122,
+        235,
+        1229,
+        1159,
+        1182,
+        1225,
+        1225,
+        1225,
+        1225,
+        1227,
+        1227,
+        1227,
+        1227,
+        1182,
+        1182,
+        1229,
+        1260,
+        1260,
+        1260,
+        1260,
+        3,
+        3,
+        3,
+        3,
+        3,
+        7,
+        7,
+        7,
+        17,
+        17
+      ],
+      "deck_cards": [
+        {
+          "id": 3,
+          "name": "Basic {W} Energy",
+          "count": 5
+        },
+        {
+          "id": 7,
+          "name": "Basic {D} Energy",
+          "count": 3
+        },
+        {
+          "id": 17,
+          "name": "Ignition Energy",
+          "count": 2
+        },
+        {
+          "id": 112,
+          "name": "Munkidori",
+          "count": 2
+        },
+        {
+          "id": 131,
+          "name": "Duskull",
+          "count": 2
+        },
+        {
+          "id": 132,
+          "name": "Dusclops",
+          "count": 2
+        },
+        {
+          "id": 133,
+          "name": "Dusknoir",
+          "count": 1
+        },
+        {
+          "id": 235,
+          "name": "Budew",
+          "count": 1
+        },
+        {
+          "id": 1030,
+          "name": "Staryu",
+          "count": 4
+        },
+        {
+          "id": 1031,
+          "name": "Mega Starmie ex",
+          "count": 3
+        },
+        {
+          "id": 1071,
+          "name": "Meowth ex",
+          "count": 1
+        },
+        {
+          "id": 1086,
+          "name": "Buddy-Buddy Poffin",
+          "count": 4
+        },
+        {
+          "id": 1121,
+          "name": "Ultra Ball",
+          "count": 4
+        },
+        {
+          "id": 1122,
+          "name": "Pok\u00e9gear 3.0",
+          "count": 3
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 4
+        },
+        {
+          "id": 1159,
+          "name": "Hero\u2019s Cape",
+          "count": 1
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 3
+        },
+        {
+          "id": 1197,
+          "name": "Xerosic\u2019s Machinations",
+          "count": 1
+        },
+        {
+          "id": 1225,
+          "name": "Hilda",
+          "count": 4
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        },
+        {
+          "id": 1229,
+          "name": "Wally's Compassion",
+          "count": 2
+        },
+        {
+          "id": 1260,
+          "name": "Risky Ruins",
+          "count": 4
+        }
+      ],
+      "deck_archetype": "starmie",
+      "deck_signature": "3:5 7:3 17:2 112:2 131:2 132:2 133:1 235:1 1030:4 1031:3 1071:1 1086:4 1121:4 1122:3 1152:4 1159:1 1182:3 1197:1 1225:4 1227:4 1229:2 1260:4",
+      "is_us": false
+    },
+    {
+      "index": 1,
+      "team": "TomBombadyl",
+      "reward": 1,
+      "deck_card_ids": [
+        169,
+        169,
+        169,
+        169,
+        190,
+        190,
+        190,
+        190,
+        666,
+        666,
+        666,
+        666,
+        1244,
+        57,
+        1152,
+        1152,
+        1152,
+        1152,
+        1121,
+        1121,
+        1121,
+        1121,
+        1122,
+        1122,
+        1122,
+        1122,
+        1097,
+        1097,
+        1097,
+        1147,
+        1147,
+        1147,
+        1147,
+        1159,
+        1182,
+        1182,
+        1182,
+        1182,
+        1185,
+        1185,
+        1185,
+        1185,
+        1227,
+        1227,
+        1227,
+        1227,
+        1244,
+        1244,
+        1244,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "deck_cards": [
+        {
+          "id": 8,
+          "name": "Basic {M} Energy",
+          "count": 11
+        },
+        {
+          "id": 57,
+          "name": "Relicanth",
+          "count": 1
+        },
+        {
+          "id": 169,
+          "name": "Duraludon",
+          "count": 4
+        },
+        {
+          "id": 190,
+          "name": "Archaludon ex",
+          "count": 4
+        },
+        {
+          "id": 666,
+          "name": "Cinderace",
+          "count": 4
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 3
+        },
+        {
+          "id": 1121,
+          "name": "Ultra Ball",
+          "count": 4
+        },
+        {
+          "id": 1122,
+          "name": "Pok\u00e9gear 3.0",
+          "count": 4
+        },
+        {
+          "id": 1147,
+          "name": "Jumbo Ice Cream",
+          "count": 4
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 4
+        },
+        {
+          "id": 1159,
+          "name": "Hero\u2019s Cape",
+          "count": 1
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 4
+        },
+        {
+          "id": 1185,
+          "name": "Explorer\u2019s Guidance",
+          "count": 4
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        },
+        {
+          "id": 1244,
+          "name": "Full Metal Lab",
+          "count": 4
+        }
+      ],
+      "deck_archetype": "archaludon",
+      "deck_signature": "8:11 57:1 169:4 190:4 666:4 1097:3 1121:4 1122:4 1147:4 1152:4 1159:1 1182:4 1185:4 1227:4 1244:4",
+      "is_us": true
+    }
+  ]
+}

@@ -1,0 +1,7420 @@
+{
+  "ref": "54089078",
+  "deck": "archaludon_r9",
+  "brain": "archaludon_rules",
+  "deck_csv": "agent_decks\\archaludon_ex_cinderace.csv",
+  "deck_sha1": "811b9567f2b29671ef2add55eb567fee02d5871a",
+  "deck_card_ids": [
+    169,
+    169,
+    169,
+    169,
+    190,
+    190,
+    190,
+    190,
+    666,
+    666,
+    666,
+    666,
+    1244,
+    57,
+    1152,
+    1152,
+    1152,
+    1152,
+    1121,
+    1121,
+    1121,
+    1121,
+    1122,
+    1122,
+    1122,
+    1122,
+    1097,
+    1097,
+    1097,
+    1147,
+    1147,
+    1147,
+    1147,
+    1159,
+    1182,
+    1182,
+    1182,
+    1182,
+    1185,
+    1185,
+    1185,
+    1185,
+    1227,
+    1227,
+    1227,
+    1227,
+    1244,
+    1244,
+    1244,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+  ],
+  "episode_id": "82103274",
+  "our_agent_index": 0,
+  "our_team": "TomBombadyl",
+  "opponent_team": "suruli",
+  "outcome": "loss",
+  "result_reason": "no_active",
+  "turn_count": 17,
+  "our_decision_count": 180,
+  "terminal_us": {
+    "deck_count": 9,
+    "hand_count": 2,
+    "bench_count": 3,
+    "prize_remaining": 2,
+    "discard_count": 31,
+    "active": {
+      "id": 190,
+      "hp": 300,
+      "max_hp": 300,
+      "energy_count": 3,
+      "has_tool": false
+    },
+    "bench_ids": [
+      190,
+      190,
+      57
+    ]
+  },
+  "raw_replay": "report\\replays\\82103274.json",
+  "turns": [
+    {
+      "step": 1,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 9,
+        "context": 41,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        169,
+        169,
+        169,
+        169,
+        190,
+        190,
+        190,
+        190,
+        666,
+        666,
+        666,
+        666,
+        1244,
+        57,
+        1152,
+        1152,
+        1152,
+        1152,
+        1121,
+        1121,
+        1121,
+        1121,
+        1122,
+        1122,
+        1122,
+        1122,
+        1097,
+        1097,
+        1097,
+        1147,
+        1147,
+        1147,
+        1147,
+        1159,
+        1182,
+        1182,
+        1182,
+        1182,
+        1185,
+        1185,
+        1185,
+        1185,
+        1227,
+        1227,
+        1227,
+        1227,
+        1244,
+        1244,
+        1244,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "us": {
+        "deck_count": 60,
+        "hand_count": 0,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 2,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 9,
+        "context": 42,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 3,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 9,
+        "context": 42,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 4,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 5,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 6,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 7,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 8,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 9,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 10,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 11,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 12,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 13,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 14,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 15,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 16,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 17,
+      "turn": 0,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 1,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 53,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "discard_count": 0,
+        "active": null,
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 0,
+        "prize_remaining": 0,
+        "active": null
+      }
+    },
+    {
+      "step": 18,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 46,
+        "hand_count": 7,
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "discard_count": 0,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 80,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 19,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 46,
+        "hand_count": 6,
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "discard_count": 0,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 80,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 20,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 8,
+        "min_count": 0,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 46,
+        "hand_count": 5,
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "discard_count": 0,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 80,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 21,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 45,
+        "hand_count": 6,
+        "bench_count": 0,
+        "prize_remaining": 6,
+        "discard_count": 1,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 80,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 22,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        2
+      ],
+      "us": {
+        "deck_count": 45,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "discard_count": 1,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 80,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 23,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 2,
+        "max_count": 2
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 39,
+        "hand_count": 4,
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "discard_count": 1,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 80,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 24,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        3,
+        0
+      ],
+      "us": {
+        "deck_count": 39,
+        "hand_count": 6,
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "discard_count": 6,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 80,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 25,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 1,
+        "min_count": 0,
+        "max_count": 1
+      },
+      "action": [
+        2
+      ],
+      "us": {
+        "deck_count": 32,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "discard_count": 6,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 80,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 26,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 38,
+        "hand_count": 6,
+        "bench_count": 1,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 80,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 27,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 38,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 80,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 28,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 22,
+        "option_count": 6,
+        "min_count": 0,
+        "max_count": 3
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 38,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 29,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0,
+        1,
+        2
+      ],
+      "us": {
+        "deck_count": 38,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 30,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 37,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 31,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 32,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 33,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 34,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 35,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 36,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 37,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 38,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 39,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 40,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 41,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 42,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 43,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 44,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 45,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 46,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 47,
+      "turn": 2,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 36,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 48,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 9,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 6,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 60,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 49,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 3,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        7
+      ],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 6,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 666,
+          "hp": 60,
+          "max_hp": 130,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 50,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 9,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 6,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 51,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 8,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 52,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 3,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        3
+      ],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 4,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 7,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 53,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 7,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 4,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 54,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        2
+      ],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": {
+          "id": 673,
+          "hp": 30,
+          "max_hp": 80,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 55,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        2
+      ],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 56,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 57,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 58,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 59,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 60,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 61,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 62,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 63,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 64,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 65,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 66,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 67,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 68,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 69,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 70,
+      "turn": 4,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 6,
+        "discard_count": 8,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          666,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 6,
+        "active": null
+      }
+    },
+    {
+      "step": 71,
+      "turn": 5,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 4,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 34,
+        "hand_count": 4,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": null,
+        "bench_ids": [
+          169,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 72,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 73,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        3
+      ],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 74,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 75,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 76,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 77,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 78,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 79,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 80,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 81,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 82,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 83,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 84,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 85,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 86,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 87,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 88,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 89,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 90,
+      "turn": 6,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 11,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 5,
+        "active": {
+          "id": 676,
+          "hp": 110,
+          "max_hp": 110,
+          "energy_count": 1,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 91,
+      "turn": 7,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 4,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 33,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 15,
+        "active": null,
+        "bench_ids": [
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 92,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 32,
+        "hand_count": 6,
+        "bench_count": 0,
+        "prize_remaining": 5,
+        "discard_count": 15,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 93,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 8,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 32,
+        "hand_count": 5,
+        "bench_count": 0,
+        "prize_remaining": 5,
+        "discard_count": 15,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 94,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        4
+      ],
+      "us": {
+        "deck_count": 32,
+        "hand_count": 6,
+        "bench_count": 0,
+        "prize_remaining": 5,
+        "discard_count": 15,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": []
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 95,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 32,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 15,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 96,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 8,
+        "option_count": 4,
+        "min_count": 2,
+        "max_count": 2
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 32,
+        "hand_count": 4,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 15,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 97,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 7,
+        "min_count": 0,
+        "max_count": 1
+      },
+      "action": [
+        2,
+        3
+      ],
+      "us": {
+        "deck_count": 32,
+        "hand_count": 2,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 17,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 98,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 31,
+        "hand_count": 3,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 18,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 99,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 31,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 18,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 100,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 31,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 18,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 101,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 31,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 18,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 102,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 31,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 18,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 103,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 31,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 18,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 104,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 31,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 18,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 105,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 31,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 18,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 106,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 31,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 18,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 107,
+      "turn": 8,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 31,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 18,
+        "active": {
+          "id": 57,
+          "hp": 100,
+          "max_hp": 100,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 4,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 1,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 108,
+      "turn": 9,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 4,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 31,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 20,
+        "active": null,
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 109,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 30,
+        "hand_count": 3,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 20,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 110,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 8,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 26,
+        "hand_count": 6,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 21,
+        "active": {
+          "id": 169,
+          "hp": 130,
+          "max_hp": 130,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 111,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 9,
+        "context": 43,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        4
+      ],
+      "us": {
+        "deck_count": 26,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 21,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 112,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 22,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 2
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 26,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 21,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 113,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0,
+        1
+      ],
+      "us": {
+        "deck_count": 26,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 21,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 114,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 26,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 115,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 7,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 26,
+        "hand_count": 5,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 116,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 26,
+        "hand_count": 4,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 117,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 26,
+        "hand_count": 3,
+        "bench_count": 1,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 118,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 26,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 119,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 26,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 120,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 26,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 121,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 26,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 122,
+      "turn": 10,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 26,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          169,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 440,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 123,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 25,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 169,
+          "hp": 30,
+          "max_hp": 130,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 124,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 9,
+        "context": 43,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        2
+      ],
+      "us": {
+        "deck_count": 25,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 200,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 125,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 22,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 2
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 25,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 200,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 126,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0,
+        1
+      ],
+      "us": {
+        "deck_count": 25,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 200,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 127,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 25,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 18,
+        "active": {
+          "id": 190,
+          "hp": 200,
+          "max_hp": 300,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 128,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 25,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 17,
+        "active": {
+          "id": 190,
+          "hp": 200,
+          "max_hp": 300,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 129,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 4,
+        "context": 30,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 25,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 17,
+        "active": {
+          "id": 190,
+          "hp": 200,
+          "max_hp": 300,
+          "energy_count": 2,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 130,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 4,
+        "context": 30,
+        "option_count": 1,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 25,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 18,
+        "active": {
+          "id": 190,
+          "hp": 200,
+          "max_hp": 300,
+          "energy_count": 1,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 131,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 3,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 25,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 200,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 132,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 25,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 133,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 8,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 20,
+        "hand_count": 6,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 134,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 1,
+        "min_count": 0,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 20,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 135,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 8,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 6,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 21,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 136,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 9,
+        "context": 43,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 21,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 137,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 22,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 2
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 21,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 138,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0,
+        1
+      ],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 21,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 139,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        2
+      ],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 140,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 7,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        2
+      ],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 141,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        3
+      ],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 4,
+        "bench_count": 2,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 142,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 678,
+          "hp": 220,
+          "max_hp": 440,
+          "energy_count": 2,
+          "has_tool": true
+        }
+      }
+    },
+    {
+      "step": 143,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 3,
+        "max_count": 3
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": null
+      }
+    },
+    {
+      "step": 144,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 3,
+        "max_count": 3
+      },
+      "action": [
+        0,
+        1,
+        2
+      ],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": null
+      }
+    },
+    {
+      "step": 145,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 3,
+        "max_count": 3
+      },
+      "action": [],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": null
+      }
+    },
+    {
+      "step": 146,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 3,
+        "max_count": 3
+      },
+      "action": [],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": null
+      }
+    },
+    {
+      "step": 147,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 3,
+        "max_count": 3
+      },
+      "action": [],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": null
+      }
+    },
+    {
+      "step": 148,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 3,
+        "max_count": 3
+      },
+      "action": [],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": null
+      }
+    },
+    {
+      "step": 149,
+      "turn": 12,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 5,
+        "min_count": 3,
+        "max_count": 3
+      },
+      "action": [],
+      "us": {
+        "deck_count": 19,
+        "hand_count": 3,
+        "bench_count": 3,
+        "prize_remaining": 5,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": null
+      }
+    },
+    {
+      "step": 150,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 18,
+        "hand_count": 7,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 20,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 151,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 3,
+        "min_count": 0,
+        "max_count": 1
+      },
+      "action": [
+        2
+      ],
+      "us": {
+        "deck_count": 11,
+        "hand_count": 6,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 19,
+        "active": {
+          "id": 190,
+          "hp": 20,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 152,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        2
+      ],
+      "us": {
+        "deck_count": 17,
+        "hand_count": 7,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 20,
+        "active": {
+          "id": 190,
+          "hp": 20,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 153,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        2
+      ],
+      "us": {
+        "deck_count": 17,
+        "hand_count": 6,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 21,
+        "active": {
+          "id": 190,
+          "hp": 20,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 154,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 6,
+        "min_count": 2,
+        "max_count": 2
+      },
+      "action": [
+        2
+      ],
+      "us": {
+        "deck_count": 11,
+        "hand_count": 5,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 21,
+        "active": {
+          "id": 190,
+          "hp": 20,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 155,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 7,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1,
+        0
+      ],
+      "us": {
+        "deck_count": 11,
+        "hand_count": 7,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 26,
+        "active": {
+          "id": 190,
+          "hp": 20,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          169
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 156,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 9,
+        "context": 43,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        5
+      ],
+      "us": {
+        "deck_count": 11,
+        "hand_count": 6,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 26,
+        "active": {
+          "id": 190,
+          "hp": 20,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 157,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 22,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 2
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 11,
+        "hand_count": 6,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 26,
+        "active": {
+          "id": 190,
+          "hp": 20,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 158,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0,
+        1
+      ],
+      "us": {
+        "deck_count": 11,
+        "hand_count": 6,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 26,
+        "active": {
+          "id": 190,
+          "hp": 20,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 159,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 21,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        3
+      ],
+      "us": {
+        "deck_count": 11,
+        "hand_count": 6,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 25,
+        "active": {
+          "id": 190,
+          "hp": 20,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 160,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 6,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        3
+      ],
+      "us": {
+        "deck_count": 11,
+        "hand_count": 6,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 24,
+        "active": {
+          "id": 190,
+          "hp": 20,
+          "max_hp": 300,
+          "energy_count": 0,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 161,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 11,
+        "hand_count": 5,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 24,
+        "active": {
+          "id": 190,
+          "hp": 120,
+          "max_hp": 400,
+          "energy_count": 0,
+          "has_tool": true
+        },
+        "bench_ids": [
+          190,
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 162,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 11,
+        "hand_count": 5,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 24,
+        "active": {
+          "id": 190,
+          "hp": 120,
+          "max_hp": 400,
+          "energy_count": 0,
+          "has_tool": true
+        },
+        "bench_ids": [
+          190,
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 163,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 11,
+        "hand_count": 5,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 24,
+        "active": {
+          "id": 190,
+          "hp": 120,
+          "max_hp": 400,
+          "energy_count": 0,
+          "has_tool": true
+        },
+        "bench_ids": [
+          190,
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 164,
+      "turn": 14,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 11,
+        "hand_count": 5,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 24,
+        "active": {
+          "id": 190,
+          "hp": 120,
+          "max_hp": 400,
+          "energy_count": 0,
+          "has_tool": true
+        },
+        "bench_ids": [
+          190,
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 3,
+        "active": {
+          "id": 674,
+          "hp": 80,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 165,
+      "turn": 15,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 4,
+        "option_count": 3,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 11,
+        "hand_count": 5,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 27,
+        "active": null,
+        "bench_ids": [
+          190,
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": {
+          "id": 674,
+          "hp": 10,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 166,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 10,
+        "hand_count": 6,
+        "bench_count": 2,
+        "prize_remaining": 2,
+        "discard_count": 27,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": {
+          "id": 674,
+          "hp": 10,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 167,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 8,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        1
+      ],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 6,
+        "bench_count": 2,
+        "prize_remaining": 2,
+        "discard_count": 28,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": {
+          "id": 674,
+          "hp": 10,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 168,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 8,
+        "option_count": 5,
+        "min_count": 2,
+        "max_count": 2
+      },
+      "action": [
+        4
+      ],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 5,
+        "bench_count": 2,
+        "prize_remaining": 2,
+        "discard_count": 28,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": {
+          "id": 674,
+          "hp": 10,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 169,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        2,
+        3
+      ],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 2,
+        "discard_count": 31,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": {
+          "id": 674,
+          "hp": 10,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 170,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 8,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 2,
+        "bench_count": 2,
+        "prize_remaining": 2,
+        "discard_count": 31,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": {
+          "id": 674,
+          "hp": 10,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 171,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 4,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        4
+      ],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 3,
+        "bench_count": 2,
+        "prize_remaining": 2,
+        "discard_count": 31,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": {
+          "id": 674,
+          "hp": 10,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 172,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 0,
+        "context": 0,
+        "option_count": 5,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 2,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 31,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": {
+          "id": 674,
+          "hp": 10,
+          "max_hp": 150,
+          "energy_count": 3,
+          "has_tool": false
+        }
+      }
+    },
+    {
+      "step": 173,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 2,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 31,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": null
+      }
+    },
+    {
+      "step": 174,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [
+        0
+      ],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 2,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 31,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": null
+      }
+    },
+    {
+      "step": 175,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 2,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 31,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": null
+      }
+    },
+    {
+      "step": 176,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 2,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 31,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": null
+      }
+    },
+    {
+      "step": 177,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 2,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 31,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": null
+      }
+    },
+    {
+      "step": 178,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 2,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 31,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": null
+      }
+    },
+    {
+      "step": 179,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 2,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 31,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": null
+      }
+    },
+    {
+      "step": 180,
+      "turn": 16,
+      "result": -1,
+      "select": {
+        "type": 1,
+        "context": 7,
+        "option_count": 2,
+        "min_count": 1,
+        "max_count": 1
+      },
+      "action": [],
+      "us": {
+        "deck_count": 9,
+        "hand_count": 2,
+        "bench_count": 3,
+        "prize_remaining": 2,
+        "discard_count": 31,
+        "active": {
+          "id": 190,
+          "hp": 300,
+          "max_hp": 300,
+          "energy_count": 3,
+          "has_tool": false
+        },
+        "bench_ids": [
+          190,
+          190,
+          57
+        ]
+      },
+      "opponent_visible": {
+        "bench_count": 5,
+        "prize_remaining": 1,
+        "active": null
+      }
+    }
+  ],
+  "note": "Deck-perspective only: rules+cards for this list, not opponent pilot logic."
+}

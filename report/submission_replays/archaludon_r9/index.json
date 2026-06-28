@@ -1,0 +1,457 @@
+{
+  "ref": "54089078",
+  "package": "archaludon_r9",
+  "episodes_total": 48,
+  "wins": 33,
+  "losses": 15,
+  "draws": 0,
+  "episodes": [
+    {
+      "episode_id": "82094667",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 5,
+      "opponent_team": "Miyama",
+      "opponent_archetype": "kyogre",
+      "file": "82094667.json"
+    },
+    {
+      "episode_id": "82095327",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 9,
+      "opponent_team": "sa s",
+      "opponent_archetype": "lucario",
+      "file": "82095327.json"
+    },
+    {
+      "episode_id": "82095871",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 15,
+      "opponent_team": "Ykst51",
+      "opponent_archetype": "unknown",
+      "file": "82095871.json"
+    },
+    {
+      "episode_id": "82096543",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 11,
+      "opponent_team": "Nyano2525",
+      "opponent_archetype": "dragapult",
+      "file": "82096543.json"
+    },
+    {
+      "episode_id": "82097049",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 4,
+      "opponent_team": "dxjjjjjj",
+      "opponent_archetype": "kyogre",
+      "file": "82097049.json"
+    },
+    {
+      "episode_id": "82097562",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 8,
+      "opponent_team": "delightening",
+      "opponent_archetype": "unknown",
+      "file": "82097562.json"
+    },
+    {
+      "episode_id": "82098074",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "Brendan Gho",
+      "opponent_archetype": "lucario",
+      "file": "82098074.json"
+    },
+    {
+      "episode_id": "82098731",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 10,
+      "opponent_team": "hisa ito",
+      "opponent_archetype": "kyogre",
+      "file": "82098731.json"
+    },
+    {
+      "episode_id": "82099238",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "Benjp8",
+      "opponent_archetype": "lucario",
+      "file": "82099238.json"
+    },
+    {
+      "episode_id": "82099743",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 5,
+      "opponent_team": "Takibi",
+      "opponent_archetype": "dragapult",
+      "file": "82099743.json"
+    },
+    {
+      "episode_id": "82100399",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "Tsubasa",
+      "opponent_archetype": "dragapult",
+      "file": "82100399.json"
+    },
+    {
+      "episode_id": "82100922",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 3,
+      "opponent_team": "D\u0168NG H\u1ed2 ANH",
+      "opponent_archetype": "abomasnow",
+      "file": "82100922.json"
+    },
+    {
+      "episode_id": "82101589",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 18,
+      "opponent_team": "mattsu2020",
+      "opponent_archetype": "lucario",
+      "file": "82101589.json"
+    },
+    {
+      "episode_id": "82102248",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 20,
+      "opponent_team": "\u30b7\u30f3 \u30bd\u30a6\u30a4\u30c1\u30ed\u30a4",
+      "opponent_archetype": "unknown",
+      "file": "82102248.json"
+    },
+    {
+      "episode_id": "82102764",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "kiwi apple",
+      "opponent_archetype": "lucario",
+      "file": "82102764.json"
+    },
+    {
+      "episode_id": "82103274",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 17,
+      "opponent_team": "suruli",
+      "opponent_archetype": "lucario",
+      "file": "82103274.json"
+    },
+    {
+      "episode_id": "82103791",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 10,
+      "opponent_team": "ChampionTCG",
+      "opponent_archetype": "starmie",
+      "file": "82103791.json"
+    },
+    {
+      "episode_id": "82104455",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "Chikuwabu",
+      "opponent_archetype": "starmie",
+      "file": "82104455.json"
+    },
+    {
+      "episode_id": "82104962",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "tadhase",
+      "opponent_archetype": "unknown",
+      "file": "82104962.json"
+    },
+    {
+      "episode_id": "82105473",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 6,
+      "opponent_team": "Rafael Monta\u00f1ez",
+      "opponent_archetype": "unknown",
+      "file": "82105473.json"
+    },
+    {
+      "episode_id": "82106161",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "tsukammo",
+      "opponent_archetype": "unknown",
+      "file": "82106161.json"
+    },
+    {
+      "episode_id": "82106655",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "We1chnon",
+      "opponent_archetype": "alakazam",
+      "file": "82106655.json"
+    },
+    {
+      "episode_id": "82107163",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 4,
+      "opponent_team": "EF",
+      "opponent_archetype": "starmie",
+      "file": "82107163.json"
+    },
+    {
+      "episode_id": "82107831",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "D\u0169ng \u0110\u1ed7",
+      "opponent_archetype": "dragapult",
+      "file": "82107831.json"
+    },
+    {
+      "episode_id": "82108341",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 3,
+      "opponent_team": "lxh unbound",
+      "opponent_archetype": "lucario",
+      "file": "82108341.json"
+    },
+    {
+      "episode_id": "82109020",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "SUGI",
+      "opponent_archetype": "lucario",
+      "file": "82109020.json"
+    },
+    {
+      "episode_id": "82109529",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 15,
+      "opponent_team": "Satoluca",
+      "opponent_archetype": "bellibolt",
+      "file": "82109529.json"
+    },
+    {
+      "episode_id": "82110193",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 6,
+      "opponent_team": "SCU_12600883",
+      "opponent_archetype": "lucario",
+      "file": "82110193.json"
+    },
+    {
+      "episode_id": "82110701",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 8,
+      "opponent_team": "skorry",
+      "opponent_archetype": "starmie",
+      "file": "82110701.json"
+    },
+    {
+      "episode_id": "82111213",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "kaliafluorido",
+      "opponent_archetype": "dragapult",
+      "file": "82111213.json"
+    },
+    {
+      "episode_id": "82111715",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "razona",
+      "opponent_archetype": "lucario",
+      "file": "82111715.json"
+    },
+    {
+      "episode_id": "82112226",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "ACoder",
+      "opponent_archetype": "lucario",
+      "file": "82112226.json"
+    },
+    {
+      "episode_id": "82112882",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 16,
+      "opponent_team": "Beginner's luck",
+      "opponent_archetype": "lucario",
+      "file": "82112882.json"
+    },
+    {
+      "episode_id": "82113385",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 15,
+      "opponent_team": "EPHEMORIA",
+      "opponent_archetype": "alakazam",
+      "file": "82113385.json"
+    },
+    {
+      "episode_id": "82114052",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 11,
+      "opponent_team": "shunsuke,nashiki",
+      "opponent_archetype": "starmie",
+      "file": "82114052.json"
+    },
+    {
+      "episode_id": "82114697",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 10,
+      "opponent_team": "atknak",
+      "opponent_archetype": "lucario",
+      "file": "82114697.json"
+    },
+    {
+      "episode_id": "82115245",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 9,
+      "opponent_team": "Insper TCG",
+      "opponent_archetype": "starmie",
+      "file": "82115245.json"
+    },
+    {
+      "episode_id": "82115949",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 16,
+      "opponent_team": "gon_fox",
+      "opponent_archetype": "unknown",
+      "file": "82115949.json"
+    },
+    {
+      "episode_id": "82117054",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 20,
+      "opponent_team": "Shunji Minode",
+      "opponent_archetype": "unknown",
+      "file": "82117054.json"
+    },
+    {
+      "episode_id": "82118249",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 9,
+      "opponent_team": "\u304f\u308a\u305f\u3093\u3068\u305f\u3051\u3061\u3083\u3093",
+      "opponent_archetype": "lucario",
+      "file": "82118249.json"
+    },
+    {
+      "episode_id": "82125841",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "SantaClaws",
+      "opponent_archetype": "unknown",
+      "file": "82125841.json"
+    },
+    {
+      "episode_id": "82128581",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 10,
+      "opponent_team": "nikechan",
+      "opponent_archetype": "unknown",
+      "file": "82128581.json"
+    },
+    {
+      "episode_id": "82148038",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 5,
+      "opponent_team": "h_noson",
+      "opponent_archetype": "starmie",
+      "file": "82148038.json"
+    },
+    {
+      "episode_id": "82162452",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 13,
+      "opponent_team": "TEAM NAME",
+      "opponent_archetype": "alakazam",
+      "file": "82162452.json"
+    },
+    {
+      "episode_id": "82179497",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "eiji noguchi",
+      "opponent_archetype": "lucario",
+      "file": "82179497.json"
+    },
+    {
+      "episode_id": "82209964",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 19,
+      "opponent_team": "Saikattyo",
+      "opponent_archetype": "unknown",
+      "file": "82209964.json"
+    },
+    {
+      "episode_id": "82216509",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 7,
+      "opponent_team": "Eamonn Kashyap",
+      "opponent_archetype": "unknown",
+      "file": "82216509.json"
+    },
+    {
+      "episode_id": "82217656",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 10,
+      "opponent_team": "zoroark190",
+      "opponent_archetype": "unknown",
+      "file": "82217656.json"
+    }
+  ],
+  "win_rate_pct": 68.75,
+  "loss_reasons": {
+    "no_active": 9,
+    "prize": 6
+  },
+  "opponent_archetypes": {
+    "kyogre": 3,
+    "lucario": 15,
+    "unknown": 13,
+    "dragapult": 5,
+    "abomasnow": 1,
+    "starmie": 7,
+    "alakazam": 3,
+    "bellibolt": 1
+  }
+}

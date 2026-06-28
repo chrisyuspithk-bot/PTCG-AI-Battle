@@ -1,0 +1,333 @@
+{
+  "ref": "54088877",
+  "package": "archaludon_r8",
+  "episode_id": "82137223",
+  "episode_type": "EPISODE_TYPE_PUBLIC",
+  "raw_replay": "report\\replays\\82137223.json",
+  "our_agent_index": 1,
+  "our_team": "TomBombadyl",
+  "opponent_team": "akiakane",
+  "outcome": "win",
+  "result_reason": "prize",
+  "turn_count": 12,
+  "reward": 1.0,
+  "rewards": [
+    -1,
+    1
+  ],
+  "opponent_archetype": "lucario",
+  "opponent_deck_signature": "6:14 673:2 674:2 675:2 676:3 677:4 678:4 1102:4 1123:2 1141:4 1142:4 1152:2 1159:1 1182:3 1192:4 1227:4 1252:1",
+  "our_deck_archetype": "archaludon",
+  "selected_context_counts": {
+    "action": 282,
+    "obs:9": 5,
+    "obs:1": 135,
+    "obs:select": 138
+  },
+  "agents": [
+    {
+      "index": 0,
+      "team": "akiakane",
+      "reward": -1,
+      "deck_card_ids": [
+        673,
+        673,
+        674,
+        674,
+        675,
+        675,
+        676,
+        676,
+        676,
+        677,
+        677,
+        677,
+        678,
+        678,
+        678,
+        678,
+        1102,
+        1102,
+        1102,
+        1102,
+        1123,
+        1123,
+        1141,
+        1141,
+        1141,
+        1141,
+        1142,
+        1142,
+        1142,
+        1142,
+        1152,
+        1152,
+        6,
+        1159,
+        1182,
+        1182,
+        1192,
+        1192,
+        1192,
+        1192,
+        1227,
+        1227,
+        1227,
+        1227,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        1182,
+        677,
+        1252
+      ],
+      "deck_cards": [
+        {
+          "id": 6,
+          "name": "Basic {F} Energy",
+          "count": 14
+        },
+        {
+          "id": 673,
+          "name": "Makuhita",
+          "count": 2
+        },
+        {
+          "id": 674,
+          "name": "Hariyama",
+          "count": 2
+        },
+        {
+          "id": 675,
+          "name": "Lunatone",
+          "count": 2
+        },
+        {
+          "id": 676,
+          "name": "Solrock",
+          "count": 3
+        },
+        {
+          "id": 677,
+          "name": "Riolu",
+          "count": 4
+        },
+        {
+          "id": 678,
+          "name": "Mega Lucario ex",
+          "count": 4
+        },
+        {
+          "id": 1102,
+          "name": "Dusk Ball",
+          "count": 4
+        },
+        {
+          "id": 1123,
+          "name": "Switch",
+          "count": 2
+        },
+        {
+          "id": 1141,
+          "name": "Premium Power Pro",
+          "count": 4
+        },
+        {
+          "id": 1142,
+          "name": "Fighting Gong",
+          "count": 4
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 2
+        },
+        {
+          "id": 1159,
+          "name": "Hero\u2019s Cape",
+          "count": 1
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 3
+        },
+        {
+          "id": 1192,
+          "name": "Carmine",
+          "count": 4
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        },
+        {
+          "id": 1252,
+          "name": "Gravity Mountain",
+          "count": 1
+        }
+      ],
+      "deck_archetype": "lucario",
+      "deck_signature": "6:14 673:2 674:2 675:2 676:3 677:4 678:4 1102:4 1123:2 1141:4 1142:4 1152:2 1159:1 1182:3 1192:4 1227:4 1252:1",
+      "is_us": false
+    },
+    {
+      "index": 1,
+      "team": "TomBombadyl",
+      "reward": 1,
+      "deck_card_ids": [
+        169,
+        169,
+        169,
+        169,
+        190,
+        190,
+        190,
+        190,
+        666,
+        666,
+        666,
+        666,
+        1244,
+        57,
+        1152,
+        1152,
+        1152,
+        1152,
+        1121,
+        1121,
+        1121,
+        1121,
+        1122,
+        1122,
+        1122,
+        1122,
+        1097,
+        1097,
+        1097,
+        1147,
+        1147,
+        1147,
+        1147,
+        1159,
+        1182,
+        1182,
+        1182,
+        1182,
+        1185,
+        1185,
+        1185,
+        1185,
+        1227,
+        1227,
+        1227,
+        1227,
+        1244,
+        1244,
+        1244,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "deck_cards": [
+        {
+          "id": 8,
+          "name": "Basic {M} Energy",
+          "count": 11
+        },
+        {
+          "id": 57,
+          "name": "Relicanth",
+          "count": 1
+        },
+        {
+          "id": 169,
+          "name": "Duraludon",
+          "count": 4
+        },
+        {
+          "id": 190,
+          "name": "Archaludon ex",
+          "count": 4
+        },
+        {
+          "id": 666,
+          "name": "Cinderace",
+          "count": 4
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 3
+        },
+        {
+          "id": 1121,
+          "name": "Ultra Ball",
+          "count": 4
+        },
+        {
+          "id": 1122,
+          "name": "Pok\u00e9gear 3.0",
+          "count": 4
+        },
+        {
+          "id": 1147,
+          "name": "Jumbo Ice Cream",
+          "count": 4
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 4
+        },
+        {
+          "id": 1159,
+          "name": "Hero\u2019s Cape",
+          "count": 1
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 4
+        },
+        {
+          "id": 1185,
+          "name": "Explorer\u2019s Guidance",
+          "count": 4
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        },
+        {
+          "id": 1244,
+          "name": "Full Metal Lab",
+          "count": 4
+        }
+      ],
+      "deck_archetype": "archaludon",
+      "deck_signature": "8:11 57:1 169:4 190:4 666:4 1097:3 1121:4 1122:4 1147:4 1152:4 1159:1 1182:4 1185:4 1227:4 1244:4",
+      "is_us": true
+    }
+  ]
+}

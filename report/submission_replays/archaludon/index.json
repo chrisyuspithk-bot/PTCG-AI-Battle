@@ -1,0 +1,474 @@
+{
+  "ref": "54083197",
+  "package": "archaludon",
+  "episodes_total": 50,
+  "wins": 35,
+  "losses": 15,
+  "draws": 0,
+  "episodes": [
+    {
+      "episode_id": "82051056",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "Brian Yong",
+      "opponent_archetype": "unknown",
+      "file": "82051056.json"
+    },
+    {
+      "episode_id": "82051532",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 20,
+      "opponent_team": "GoodWill",
+      "opponent_archetype": "starmie",
+      "file": "82051532.json"
+    },
+    {
+      "episode_id": "82052175",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 2,
+      "opponent_team": "yuna5577",
+      "opponent_archetype": "unknown",
+      "file": "82052175.json"
+    },
+    {
+      "episode_id": "82052657",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "Been Seo",
+      "opponent_archetype": "lucario",
+      "file": "82052657.json"
+    },
+    {
+      "episode_id": "82053282",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "Benjamin Zhao3927",
+      "opponent_archetype": "lucario",
+      "file": "82053282.json"
+    },
+    {
+      "episode_id": "82053920",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 18,
+      "opponent_team": "Janglish",
+      "opponent_archetype": "unknown",
+      "file": "82053920.json"
+    },
+    {
+      "episode_id": "82054385",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "molmot",
+      "opponent_archetype": "lucario",
+      "file": "82054385.json"
+    },
+    {
+      "episode_id": "82054864",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "kouki__k_4869",
+      "opponent_archetype": "starmie",
+      "file": "82054864.json"
+    },
+    {
+      "episode_id": "82055480",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 3,
+      "opponent_team": "kuma_jp",
+      "opponent_archetype": "lucario",
+      "file": "82055480.json"
+    },
+    {
+      "episode_id": "82056101",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "\u30c8\u30b2\u30a2\u30ea\u30c8\u30b2\u30ca\u30b7\u30c8\u30b2\u30c8\u30b2",
+      "opponent_archetype": "alakazam",
+      "file": "82056101.json"
+    },
+    {
+      "episode_id": "82056568",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "xue1213",
+      "opponent_archetype": "unknown",
+      "file": "82056568.json"
+    },
+    {
+      "episode_id": "82057197",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "Kendamarron",
+      "opponent_archetype": "unknown",
+      "file": "82057197.json"
+    },
+    {
+      "episode_id": "82057669",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 17,
+      "opponent_team": "Xenon Soh",
+      "opponent_archetype": "dragapult",
+      "file": "82057669.json"
+    },
+    {
+      "episode_id": "82058290",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 9,
+      "opponent_team": "\u3010\uff21\uff29\u3068\u5171\u306b\u3001\uff21\uff29\u3068\u6226\u3046\u3011tubotu",
+      "opponent_archetype": "alakazam",
+      "file": "82058290.json"
+    },
+    {
+      "episode_id": "82058916",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 16,
+      "opponent_team": "Xander",
+      "opponent_archetype": "unknown",
+      "file": "82058916.json"
+    },
+    {
+      "episode_id": "82059681",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 3,
+      "opponent_team": "Masahiro Nagasawa",
+      "opponent_archetype": "dragapult",
+      "file": "82059681.json"
+    },
+    {
+      "episode_id": "82060007",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 20,
+      "opponent_team": "n=1",
+      "opponent_archetype": "unknown",
+      "file": "82060007.json"
+    },
+    {
+      "episode_id": "82060623",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 6,
+      "opponent_team": "Kyohei",
+      "opponent_archetype": "unknown",
+      "file": "82060623.json"
+    },
+    {
+      "episode_id": "82061256",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "c-number",
+      "opponent_archetype": "lucario",
+      "file": "82061256.json"
+    },
+    {
+      "episode_id": "82061875",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 2,
+      "opponent_team": "\u3010\uff21\uff29\u3068\u5171\u306b\u3001\uff21\uff29\u3068\u6226\u3046\u3011tubotu",
+      "opponent_archetype": "alakazam",
+      "file": "82061875.json"
+    },
+    {
+      "episode_id": "82062339",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "tw_shin",
+      "opponent_archetype": "starmie",
+      "file": "82062339.json"
+    },
+    {
+      "episode_id": "82062971",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 21,
+      "opponent_team": "yomogi mochi",
+      "opponent_archetype": "unknown",
+      "file": "82062971.json"
+    },
+    {
+      "episode_id": "82063578",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 11,
+      "opponent_team": "mw",
+      "opponent_archetype": "dragapult",
+      "file": "82063578.json"
+    },
+    {
+      "episode_id": "82064050",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 6,
+      "opponent_team": "CoCoSh",
+      "opponent_archetype": "starmie",
+      "file": "82064050.json"
+    },
+    {
+      "episode_id": "82064661",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 10,
+      "opponent_team": "Akito Maruo",
+      "opponent_archetype": "dragapult",
+      "file": "82064661.json"
+    },
+    {
+      "episode_id": "82065148",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 13,
+      "opponent_team": "aidy",
+      "opponent_archetype": "alakazam",
+      "file": "82065148.json"
+    },
+    {
+      "episode_id": "82065786",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "shogo1229",
+      "opponent_archetype": "starmie",
+      "file": "82065786.json"
+    },
+    {
+      "episode_id": "82066303",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "Takaaki Matsuda",
+      "opponent_archetype": "alakazam",
+      "file": "82066303.json"
+    },
+    {
+      "episode_id": "82066818",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 10,
+      "opponent_team": "Rajan Nagarajan",
+      "opponent_archetype": "lucario",
+      "file": "82066818.json"
+    },
+    {
+      "episode_id": "82067336",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "Jaga",
+      "opponent_archetype": "starmie",
+      "file": "82067336.json"
+    },
+    {
+      "episode_id": "82067827",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "taka",
+      "opponent_archetype": "dragapult",
+      "file": "82067827.json"
+    },
+    {
+      "episode_id": "82068293",
+      "outcome": "loss",
+      "result_reason": "deck_out",
+      "turn_count": 13,
+      "opponent_team": "yamy893",
+      "opponent_archetype": "unknown",
+      "file": "82068293.json"
+    },
+    {
+      "episode_id": "82068759",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 15,
+      "opponent_team": "yomogi mochi",
+      "opponent_archetype": "unknown",
+      "file": "82068759.json"
+    },
+    {
+      "episode_id": "82069224",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "yoshimasak",
+      "opponent_archetype": "dragapult",
+      "file": "82069224.json"
+    },
+    {
+      "episode_id": "82069705",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 17,
+      "opponent_team": "Safiullah Baig",
+      "opponent_archetype": "starmie",
+      "file": "82069705.json"
+    },
+    {
+      "episode_id": "82070292",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 4,
+      "opponent_team": "CoCoSh",
+      "opponent_archetype": "starmie",
+      "file": "82070292.json"
+    },
+    {
+      "episode_id": "82070304",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 13,
+      "opponent_team": "katsudon 421",
+      "opponent_archetype": "unknown",
+      "file": "82070304.json"
+    },
+    {
+      "episode_id": "82070777",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "CoCoSh",
+      "opponent_archetype": "starmie",
+      "file": "82070777.json"
+    },
+    {
+      "episode_id": "82071257",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 15,
+      "opponent_team": "Kimiaki Nakamura",
+      "opponent_archetype": "unknown",
+      "file": "82071257.json"
+    },
+    {
+      "episode_id": "82071881",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 16,
+      "opponent_team": "ysakuragi",
+      "opponent_archetype": "starmie",
+      "file": "82071881.json"
+    },
+    {
+      "episode_id": "82072503",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "opponent_team": "Jaga",
+      "opponent_archetype": "starmie",
+      "file": "82072503.json"
+    },
+    {
+      "episode_id": "82073113",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "opponent_team": "Akito Maruo",
+      "opponent_archetype": "dragapult",
+      "file": "82073113.json"
+    },
+    {
+      "episode_id": "82073596",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 21,
+      "opponent_team": "HayatoFujihara",
+      "opponent_archetype": "unknown",
+      "file": "82073596.json"
+    },
+    {
+      "episode_id": "82074215",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 11,
+      "opponent_team": "HIMIHIMI",
+      "opponent_archetype": "alakazam",
+      "file": "82074215.json"
+    },
+    {
+      "episode_id": "82076432",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 18,
+      "opponent_team": "KakuTakagawa",
+      "opponent_archetype": "archaludon",
+      "file": "82076432.json"
+    },
+    {
+      "episode_id": "82078247",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 9,
+      "opponent_team": "aidy",
+      "opponent_archetype": "alakazam",
+      "file": "82078247.json"
+    },
+    {
+      "episode_id": "82080484",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 13,
+      "opponent_team": "Masahiro Nagasawa",
+      "opponent_archetype": "dragapult",
+      "file": "82080484.json"
+    },
+    {
+      "episode_id": "82084772",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 15,
+      "opponent_team": "katsudon 421",
+      "opponent_archetype": "unknown",
+      "file": "82084772.json"
+    },
+    {
+      "episode_id": "82087670",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 3,
+      "opponent_team": "TG_Aetheryx",
+      "opponent_archetype": "dragapult",
+      "file": "82087670.json"
+    },
+    {
+      "episode_id": "82090639",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 11,
+      "opponent_team": "Ajishio",
+      "opponent_archetype": "alakazam",
+      "file": "82090639.json"
+    }
+  ],
+  "win_rate_pct": 70.0,
+  "loss_reasons": {
+    "no_active": 4,
+    "prize": 10,
+    "deck_out": 1
+  },
+  "opponent_archetypes": {
+    "unknown": 15,
+    "starmie": 11,
+    "lucario": 6,
+    "alakazam": 8,
+    "dragapult": 9,
+    "archaludon": 1
+  }
+}

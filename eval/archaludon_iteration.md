@@ -1,8 +1,39 @@
 # Archaludon iteration — primary track (Session 52+)
 
-**Champion:** `archaludon_rules` × `archaludon_ex_cinderace.csv` · ref **54083197** · **1196.1 μ** (peak **1224.2**)
+**Champion (saved finalist baseline):** `archaludon_rules` × `archaludon_ex_cinderace.csv` · ref **54083197** · **1196.1 μ** (peak **1224.2**) · **R7 code only** on ladder.
 
-## Single edit surface
+**Iteration posture (~2 months to Strategy deadline):** Small one-lever changes → local gate (filter) → ladder probe (truth). Replace saved champion only when probe beats **1196.1 μ** on ≥2 readings. Final Kaggle pins near deadline — not now.
+
+---
+
+## Probe learnings (Session 52–56)
+
+| Ref | Levers | Local full n=30 | Ladder μ | Verdict |
+|-----|--------|----------------:|---------:|---------|
+| 54083197 | R7 bench guard | 67.3% (post-R7b) | **1196.1** | **Baseline to beat** — 50 ep, 70.0% WR |
+| 54088877 | + R8a promote, R8b tempo block | **75.3%** | 983.8 | Local overpredicted; **no_active 17.9%** on ladder (56 ep) |
+| 54089078 | + R9 TO_HAND floor | 68.0% | 841.0 | **Ruled out** |
+| **54109826** | R7 + **R10** prize-attack KO | 62.0% | **854.0** | **Ruled out** (−342 vs champion) |
+| **54109878** | R7 + **R8a-only** promote | 62.7% | **967.3** | **Ruled out** (−229 vs champion) |
+| **(pending)** | R7 + **R11** attach cap | 58.7% | **PENDING** | Ref **54138853** uploaded S57 |
+
+**Pattern (again):** local gate ↑ does not guarantee ladder ↑. R8b+R9 **doubled ladder no_active** (8%→18%) vs champion despite higher local gates. **Session 57:** R10 and R8a-on-R7 also regressed on ladder despite DS-backed hypotheses.
+
+**R11 (Session 57):** `_prize_race_attach_cap` — when behind and legal attack KOs Active, cap attach/evolve/tempo ≤5000, boost lethal attack ≥55000. Reverted R8a from `apply_overrides`. Local gate **58.7%** n=150 (filter only).
+
+**Offline DS (Session 56):** `python scripts/analyze_archaludon_losses.py`
+- Champion prize losses **10/10** ended behind in prize race; traces show **attach (type 7) chosen over attack (type 13)** when both legal → R10 probe **failed ladder** (854 μ).
+- R8a-only (967 μ) **below** R8a+R8b (984 μ) and far below champion — promote lever alone insufficient.
+- Close losses: **82062971** (2 vs 1 prizes), **82073113**, **82073596**.
+- **no_active (4):** 82055480, 82068759, 82076432, 82090639.
+
+**Next (post-probe):**
+1. Champion **54083197** retained — do not re-upload (R12).
+2. Trace close prize losses above in champion deck logs; one replay-backed lever on **R7-only** baseline.
+3. Retry `analyze_submission.py --skip-fetch` + deck logs when Kaggle 429 clears.
+4. **Do not** re-ship R8a, R10, R8b+R9, or R9 alone.
+
+---
 
 **All iteration → [`agent/archaludon_agent.py`](../agent/archaludon_agent.py)**
 
@@ -50,12 +81,14 @@ Code to change: **`agent/archaludon_agent.py`** only (+ deck CSV if list changes
 
 ---
 
-## Ladder truth (n=42 public, Archaludon deck POV)
+## Ladder truth (n=50 public, champion ref 54083197)
 
 | Metric | Value |
 |--------|------:|
-| Win rate | **76.2%** (32W / 10L) |
-| Loss reasons | prize 7 · **no_active 2** · deck_out 1 |
+| Win rate | **70.0%** (35W / 15L) |
+| Loss reasons | prize **10** · **no_active 4** · deck_out 1 |
+
+Cross-ref (56 ep R8 probe): no_active **17.9%**. Field meta: `report/strategy_analysis_20260627.md`.
 
 ---
 
@@ -78,7 +111,11 @@ Code to change: **`agent/archaludon_agent.py`** only (+ deck CSV if list changes
 
 ### P1 — Prize losses (our pilot decisions)
 
-Review `losses.json` last-turn snapshots — mulligan, attach, Boss, promote under **v5 + R7**, not opponent logic.
+**Measured (Session 56, n=10 champion):** all 10 ended **behind in prize race**; deck-log traces show **attach/setup (type 7) over attack (type 13)** when both legal on MAIN. Close losses: 82062971 (2 vs 1), 82073113, 82073596. **R10 probe 54109826** tests `score_attack()` — wait for ladder μ before further changes.
+
+```powershell
+python scripts/analyze_archaludon_losses.py
+```
 
 ### P2 — Local harness (same deck, native opponents)
 
@@ -92,6 +129,7 @@ Use harness only as A/B filter for **this** brain×deck.
 ### Ruled out on this list
 
 - Prize-KO overlay (regressed)
+- **R9 `_to_hand_pick_floor`** (54089078: 68% local, 841 μ — regressed vs R8)
 - ML / MCTS / SearchScorer on Archaludon list
 - Copying Dragapult/Lucario levers without Archaludon-specific replay proof
 
@@ -107,4 +145,4 @@ python scripts/check_upload_eligible.py --manifest dist/candidates/archaludon.ma
   --change "Archaludon: <delta vs 54083197>" --local-gate <WR>
 ```
 
-Upload only with material delta (R12). Keep ref **54083197** as Final until a probe beats **1224.2 μ**.
+Upload only with material delta (R12). **Saved champion:** ref **54083197** @ **1196.1 μ** — beat on ladder before Sep Final lock-in.

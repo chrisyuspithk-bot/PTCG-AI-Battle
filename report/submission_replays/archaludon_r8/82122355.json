@@ -1,0 +1,343 @@
+{
+  "ref": "54088877",
+  "package": "archaludon_r8",
+  "episode_id": "82122355",
+  "episode_type": "EPISODE_TYPE_PUBLIC",
+  "raw_replay": "report\\replays\\82122355.json",
+  "our_agent_index": 0,
+  "our_team": "TomBombadyl",
+  "opponent_team": "HIDEYO CHIBA",
+  "outcome": "loss",
+  "result_reason": "no_active",
+  "turn_count": 5,
+  "reward": -1.0,
+  "rewards": [
+    -1,
+    1
+  ],
+  "opponent_archetype": "unknown",
+  "opponent_deck_signature": "11:4 12:1 19:4 65:4 66:4 304:2 878:4 879:2 1086:4 1097:3 1115:3 1122:4 1152:4 1171:4 1182:2 1194:2 1210:2 1227:4 1255:3",
+  "our_deck_archetype": "archaludon",
+  "selected_context_counts": {
+    "action": 118,
+    "obs:9": 2,
+    "obs:1": 25,
+    "obs:select": 88
+  },
+  "agents": [
+    {
+      "index": 0,
+      "team": "TomBombadyl",
+      "reward": -1,
+      "deck_card_ids": [
+        169,
+        169,
+        169,
+        169,
+        190,
+        190,
+        190,
+        190,
+        666,
+        666,
+        666,
+        666,
+        1244,
+        57,
+        1152,
+        1152,
+        1152,
+        1152,
+        1121,
+        1121,
+        1121,
+        1121,
+        1122,
+        1122,
+        1122,
+        1122,
+        1097,
+        1097,
+        1097,
+        1147,
+        1147,
+        1147,
+        1147,
+        1159,
+        1182,
+        1182,
+        1182,
+        1182,
+        1185,
+        1185,
+        1185,
+        1185,
+        1227,
+        1227,
+        1227,
+        1227,
+        1244,
+        1244,
+        1244,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "deck_cards": [
+        {
+          "id": 8,
+          "name": "Basic {M} Energy",
+          "count": 11
+        },
+        {
+          "id": 57,
+          "name": "Relicanth",
+          "count": 1
+        },
+        {
+          "id": 169,
+          "name": "Duraludon",
+          "count": 4
+        },
+        {
+          "id": 190,
+          "name": "Archaludon ex",
+          "count": 4
+        },
+        {
+          "id": 666,
+          "name": "Cinderace",
+          "count": 4
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 3
+        },
+        {
+          "id": 1121,
+          "name": "Ultra Ball",
+          "count": 4
+        },
+        {
+          "id": 1122,
+          "name": "Pok\u00e9gear 3.0",
+          "count": 4
+        },
+        {
+          "id": 1147,
+          "name": "Jumbo Ice Cream",
+          "count": 4
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 4
+        },
+        {
+          "id": 1159,
+          "name": "Hero\u2019s Cape",
+          "count": 1
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 4
+        },
+        {
+          "id": 1185,
+          "name": "Explorer\u2019s Guidance",
+          "count": 4
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        },
+        {
+          "id": 1244,
+          "name": "Full Metal Lab",
+          "count": 4
+        }
+      ],
+      "deck_archetype": "archaludon",
+      "deck_signature": "8:11 57:1 169:4 190:4 666:4 1097:3 1121:4 1122:4 1147:4 1152:4 1159:1 1182:4 1185:4 1227:4 1244:4",
+      "is_us": true
+    },
+    {
+      "index": 1,
+      "team": "HIDEYO CHIBA",
+      "reward": 1,
+      "deck_card_ids": [
+        11,
+        11,
+        11,
+        11,
+        12,
+        19,
+        19,
+        19,
+        19,
+        65,
+        65,
+        65,
+        65,
+        66,
+        66,
+        66,
+        66,
+        304,
+        304,
+        878,
+        878,
+        878,
+        878,
+        879,
+        879,
+        1086,
+        1086,
+        1086,
+        1086,
+        1097,
+        1097,
+        1097,
+        1115,
+        1115,
+        1115,
+        1122,
+        1122,
+        1122,
+        1122,
+        1152,
+        1152,
+        1152,
+        1152,
+        1171,
+        1171,
+        1171,
+        1171,
+        1182,
+        1182,
+        1194,
+        1194,
+        1210,
+        1210,
+        1227,
+        1227,
+        1227,
+        1227,
+        1255,
+        1255,
+        1255
+      ],
+      "deck_cards": [
+        {
+          "id": 11,
+          "name": "Mist Energy",
+          "count": 4
+        },
+        {
+          "id": 12,
+          "name": "Legacy Energy",
+          "count": 1
+        },
+        {
+          "id": 19,
+          "name": "Telepath Psychic Energy",
+          "count": 4
+        },
+        {
+          "id": 65,
+          "name": "Dunsparce",
+          "count": 4
+        },
+        {
+          "id": 66,
+          "name": "Dudunsparce",
+          "count": 4
+        },
+        {
+          "id": 304,
+          "name": "Hop\u2019s Snorlax",
+          "count": 2
+        },
+        {
+          "id": 878,
+          "name": "Hop's Phantump",
+          "count": 4
+        },
+        {
+          "id": 879,
+          "name": "Hop's Trevenant",
+          "count": 2
+        },
+        {
+          "id": 1086,
+          "name": "Buddy-Buddy Poffin",
+          "count": 4
+        },
+        {
+          "id": 1097,
+          "name": "Night Stretcher",
+          "count": 3
+        },
+        {
+          "id": 1115,
+          "name": "Hop\u2019s Bag",
+          "count": 3
+        },
+        {
+          "id": 1122,
+          "name": "Pok\u00e9gear 3.0",
+          "count": 4
+        },
+        {
+          "id": 1152,
+          "name": "Pok\u00e9 Pad",
+          "count": 4
+        },
+        {
+          "id": 1171,
+          "name": "Hop\u2019s Choice Band",
+          "count": 4
+        },
+        {
+          "id": 1182,
+          "name": "Boss\u2019s Orders",
+          "count": 2
+        },
+        {
+          "id": 1194,
+          "name": "Colress\u2019s Tenacity",
+          "count": 2
+        },
+        {
+          "id": 1210,
+          "name": "Brock\u2019s Scouting",
+          "count": 2
+        },
+        {
+          "id": 1227,
+          "name": "Lillie's Determination",
+          "count": 4
+        },
+        {
+          "id": 1255,
+          "name": "Postwick",
+          "count": 3
+        }
+      ],
+      "deck_archetype": "unknown",
+      "deck_signature": "11:4 12:1 19:4 65:4 66:4 304:2 878:4 879:2 1086:4 1097:3 1115:3 1122:4 1152:4 1171:4 1182:2 1194:2 1210:2 1227:4 1255:3",
+      "is_us": false
+    }
+  ]
+}

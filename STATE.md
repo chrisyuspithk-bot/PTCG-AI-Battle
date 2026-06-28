@@ -4,6 +4,198 @@
 
 ---
 
+## As of 2026-06-28 Session 57b (R11 probe uploaded)
+
+**R11 implemented:** `_prize_race_attach_cap` — when behind in prizes and legal attack KOs Active, cap attach/evolve/tempo ≤5000, boost lethal attack ≥55000. **Reverted R8a** from `apply_overrides` (R7-only baseline).
+
+| Metric | Value |
+|--------|-------|
+| Local gate (full n=30) | **58.7%** [50.7, 66.2] n=150 |
+| no_active (agent-only n=250) | **9** (packaged guard 12 — do not ship guard) |
+| Upload gate | exit 0 |
+| Probe | **54138853** PENDING (uploaded 2026-06-28T11:42 UTC) |
+
+**Champion unchanged:** **54083197** @ **1196.1 μ** (R12 — do not re-upload).
+
+### THE SINGLE NEXT ACTION
+
+Wait ≥40 min → `python scripts/track_ladder.py` for R11 probe ref. When COMPLETE: `analyze_submission.py --ref <ref> --skip-fetch` + deck logs. Replace champion only if μ beats **1196.1** on ≥2 readings. **R12 dead-active retreat** only if R11 misses.
+
+---
+
+## As of 2026-06-28 Session 57 (probe μ landed — champion retained)
+
+**Both Session 55 probes COMPLETE** (`track_ladder.py` 2026-06-28T11:28 UTC):
+
+| Ref | Lever | Local gate | **μ** | Δ vs champion | Verdict |
+|-----|-------|------------|------:|--------------:|---------|
+| **54083197** | R7 bench guard | 72.7% | **1196.1** | — | **Champion retained (R12)** |
+| **54109878** | R7 + R8a promote | 62.7% | **967.3** | −229 | **Ruled out** |
+| **54109826** | R7 + R10 prize-attack | 62.0% | **854.0** | −342 | **Ruled out** |
+
+**Decision:** Neither probe beats **1196.1 μ**. Champion **54083197** stays finalist baseline. Do **not** re-upload (R12). R10 and R8a-on-R7 off the table.
+
+**Ladder ranking (Archaludon):** 54083197 (1196) > 54088877 R8a+R8b (984) > 54109878 R8a-only (967) > 54109826 R10 (854) > 54089078 R9 (841).
+
+**Episode pull:** Agent-log manifest has 26 ep (R10) + 25 ep (R8a). Replay download **blocked** — Kaggle API 429 on `GetEpisodeReplay`. Retry: `analyze_submission.py --ref <ref> --skip-fetch` then deck-log extract.
+
+### THE SINGLE NEXT ACTION
+
+**Offline (no upload):** Trace champion close prize losses **82062971**, **82073113**, **82073596** in `report/deck_logs/archaludon/`; design one replay-backed lever vs **54083197 R7-only** baseline. Revert working tree to R7 champion code before next experiment.
+
+---
+
+## As of 2026-06-28 Session 56.5 (Autonomous run — Kaggle auth blocker) — superseded
+
+**Status:** Two probes from Session 55 remain PENDING on ladder (17+ hours elapsed).
+
+**Blockers encountered:**
+1. **Kaggle API auth:** `track_ladder.py` requires kaggle.json; KGAT_ bearer token format not compatible. Cannot fetch probe μ updates.
+2. **Torch dependency:** Local gate testing blocked (torch commented out; install risky in 45-sec sandbox timeout).
+
+**Ladder state** (last update 2026-06-27 13:28 UTC from `ladder_history.csv`):
+- **54109826** (R10): PENDING, local 62.0%
+- **54109878** (R8a): PENDING, local 62.7%
+- **54088877** (R8a+R8b): μ = 979.2 (↓ from 983.8)
+- **54083197** (champion): μ = 1196.1 (peak 1224.2)
+
+**P0 code review:** `_empty_bench_basic_score` + `_mandatory_promote_score` guards present. No_active failures (82055480, 82068759) may be context-parsing issues in deck logs or score collision. **Probes should clarify**: 54109878 (R8a) is the P0 test; if μ > 1196.1, assume R8a fixes 82068759 class.
+
+**Collected analysis:**
+- Strategy data: 178 games, 65.7% WR; **Alakazam weak (48.6%)**; mirror Archaludon 0-3 (ban if 3-deck).
+- Prize-loss traces from champion: R10 probe addresses (attach vs attack logic).
+- P2 Iono harness @ 40% local (deferred until P0 probe resolves).
+
+**THE SINGLE NEXT ACTION**
+
+**Immediate (critical path):** Escalate Kaggle auth to Dylan. Options:
+1. Set up KAGGLE_API_TOKEN env + kaggle.json in sandbox
+2. or: Configure kaggle CLI to use KGAT_ bearer token format
+3. or: Manual check Kaggle UI + copy μ into `report/ladder_history.csv` for manual import
+
+**Timeline:** Probes uploaded 2026-06-27 13:28 UTC; deterministic ladder should settle μ within 6–24h (expect 2nd readings by 2026-06-28 13:28–19:28 UTC). **Do not iterate code until probe μ known** (gate ≠ ladder truth).
+
+**Once auth fixed, script:** `python scripts/track_ladder.py` → interpret 54109826 + 54109878 μ trajectories → choose next lever or declare new champion.
+
+---
+
+## As of 2026-06-27 Session 56 (offline DS + handoff — probes in flight)
+
+**Two ladder probes still PENDING** (uploaded Session 55):
+
+| Ref | Lever | Local gate | Status | Hypothesis |
+|-----|-------|------------|--------|------------|
+| **54109826** | R7 + **R10** prize-attack KO scoring | 62.0% | **PENDING** | 10/10 champion prize losses ended behind in prize race; traces show attach (type 7) over attack (type 13) |
+| **54109878** | R7 + **R8a-only** mandatory promote | 62.7% | **PENDING** | Target 82068759 promote without R8b side effects |
+
+**Saved champion (R12 — do not re-upload):** **54083197** @ **1196.1 μ** · 50 episodes · **70.0% WR** · prize 10 · no_active 4 · deck_out 1.
+
+**Offline DS (Session 56)** — `python scripts/analyze_archaludon_losses.py`:
+
+| Ref | WR | no_active | prize | Lesson |
+|-----|-----|-----------|-------|--------|
+| 54083197 | 70.0% | 8.0% (4) | 20.0% (10) | Baseline |
+| 54088877 R8a+R8b | 62.5% | **17.9%** (10) | 17.9% | Local gate overpredicted; **2× no_active** vs champion |
+| 54089078 R8+R9 | 68.75% | **18.8%** (9) | 12.5% | R9 ruled out |
+
+**Close prize losses to trace if probes fail:** 82062971 (2 vs 1 prizes), 82073113 (4 vs 1), 82073596 (4 vs 1). **no_active episodes:** 82055480, 82068759, 82076432, 82090639 (`eval/archaludon_no_active_trace.md`).
+
+**Field meta:** `report/strategy_analysis_20260627.md` — 178 our games 65.7% WR; alakazam 48.6% aggregate (prize-race losses, not blowouts).
+
+### THE SINGLE NEXT ACTION
+
+Wait ≥40 min → `python scripts/track_ladder.py` for **54109826** + **54109878**. When COMPLETE: `analyze_submission.py --ref <ref>` + `extract_deck_perspective_logs.py` per ref. Replace champion only if probe beats **1196.1 μ** on ≥2 readings. **Do not ship another brain change until probe μ lands.**
+
+---
+
+## As of 2026-06-27 Session 55 (two probes uploaded + episode review gaps filled)
+
+**Episode pipeline upgraded:** `extract_deck_perspective_logs.py` now captures `legal_options`, `chosen_indices`, `chosen_options`, `visualize_line` per our-turn (Kiyota JSON review pattern).
+
+**Champion full pull (54083197):** 50 public episodes · **70.0% WR** · prize 10 · no_active 4 · deck_out 1.
+
+**Two new ladder probes uploaded:**
+
+| Ref | Lever | Local gate | Status |
+|-----|-------|------------|--------|
+| **54109826** | R7 + **R10** prize-attack KO scoring | 62.0% | PENDING |
+| **54109878** | R7 + **R8a-only** mandatory promote | 62.7% | PENDING |
+
+**Saved champion (unchanged):** **54083197** @ **1196.1 μ** — beat on ≥2 ladder readings to replace.
+
+### THE SINGLE NEXT ACTION
+
+Wait ≥40 min → `python scripts/track_ladder.py` for **54109826** + **54109878** 2nd μ readings. When COMPLETE: `analyze_submission.py --ref <ref>` + deck log extract for each probe.
+
+---
+
+**Blocker cleared:** torch available locally (`2.12.1+cpu`). Session 53 timeout was sandbox-only.
+
+**Gate results** (`gate_archaludon.py --games 30 --suite full`):
+- **Overall: 66.0%** [58.1, 73.1] n=150 — report `eval/gate_archaludon.md`
+
+**no_active audit** (`compare_archaludon_bench_guard.py --games 50 --suite full`):
+| Variant | Overall WR | no_active (n=250) |
+|---------|------------|-------------------|
+| Agent only (`ARCHALUDON_BENCH_GUARD=0`) | 64.8–67.6% | **5–7** |
+| + packaged guard | 65.6–66.8% | **7–8** |
+
+**P0 not met:** still **>0 no_active** @ n=250. Packaged guard does not fix promote path (82068759); TO_ACTIVE guard extension **tested and reverted** (no_active 7→8).
+
+**Next action:** Fix in **`archaludon_agent.py`** — strengthen `_empty_bench_block_tempo` (R8b) for attach-before-bench on turn 2; verify `_mandatory_promote_score` (R8a) on TO_HAND vs TO_ACTIVE stalls. Re-gate; target 0 no_active before upload.
+
+---
+
+## As of 2026-06-27 Session 53 (Autonomous P0 diagnostic — superseded by S54)
+
+**P0 task**: Traced no_active failures from 82055480 + 82068759 deck logs.
+
+**Root causes identified:**
+- 82055480: Bench stayed empty entire game (0 benched Pokémon). Current `_empty_bench_basic_score` should have boosted Duraludon/Relicanth to 50k in MAIN context; needs verification.
+- 82068759: Active KO forced TO_ACTIVE context (step 65); promoted to Duraludon (step 66) then evolved to Archaludon (step 67). Current `_mandatory_promote_score` should have handled this; also needs verification.
+
+**Current guards in place** (archaludon_agent.py):
+1. `_empty_bench_basic_score` — boosts Duraludon/Relicanth when bench=0
+2. `_mandatory_promote_score` — boosts forced promotions (TO_ACTIVE/SWITCH)
+3. `_empty_bench_block_tempo` — blocks items/attach before benching a basic
+4. `_to_hand_pick_floor` — R9 safety net for TO_HAND stalls
+
+**Blocker:** Workspace torch dependency timeout during `gate_archaludon.py` n=30 verification. 
+
+**Next action (next session):** 
+1. Install torch via pip (or check if requirements.txt exists)
+2. Run `python scripts/gate_archaludon.py --games 30 --suite full --report` 
+3. Confirm 0 no_active @ n≥50 before any upload
+4. If still seeing no_active: add extended guards to archaludon_bench_guard.py for SETUP_BENCH / TO_BENCH / TO_FIELD contexts (see archaludon_iteration.md P0 section)
+
+---
+
+## As of 2026-06-27 (Session 52 — iteration mode, ~2 months to deadline)
+
+**Posture:** Save champion as finalist baseline; keep improving via small agent/deck changes. Final pins are a **Sep deadline** action — not urgent now. Use uploads as **ladder probes**; swap saved champion only when a probe beats **1196.1 μ** on ≥2 readings.
+
+### Saved champion (do not re-upload tarball — R12)
+
+| Ref | Code | **μ** | Role |
+|-----|------|------:|------|
+| **54083197** | R7 empty-bench guard only | **1196.1** (peak 1224.2) | **Finalist baseline** — beat this on ladder to ship |
+
+### Probe learnings (catalog rows — keep for comparison)
+
+| Ref | Change | Local gate | **μ** | Lesson |
+|-----|--------|------------|------:|--------|
+| 54088877 | R8a promote + R8b tempo block | **75.3%** n=30 | **983.8** (↑ climbing) | Local gate **overpredicted** again; promising but still −212 vs champion |
+| 54089078 | + R9 `_to_hand_pick_floor` | **68.0%** n=30 | **841.0** | **Ruled out** — regressed local + ladder vs R8-only |
+| 54083513 | Starmie (paused) | — | 277.5 | Not on Archaludon track |
+
+**Takeaway:** Ladder μ is truth. Local full suite is a **filter only**. R9 off the table. Next experiments: **R8a-only** on R7 baseline (82068759 promote without R8b side effects); **P1 prize-loss** mining from `losses.json` (7/10 losses).
+
+### THE SINGLE NEXT ACTION
+
+**Offline:** Revert R9 in `archaludon_agent.py`; A/B **R8a-only** vs champion R7 baseline → `gate_archaludon.py` n=30 full. If gate holds/improves, package + upload probe (R12). **`track_ladder.py`** on schedule — no manual Final pin until Sep unless champion displaced.
+
+---
+
 ## As of 2026-06-26 (Session 52 — two-Final Archaludon strategy)
 
 **Goal:** Two Finals worth keeping · drop Starmie (277.5 μ).

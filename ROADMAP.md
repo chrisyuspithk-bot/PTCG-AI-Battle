@@ -57,15 +57,18 @@ Full decode: [`eval/AGENT_CATALOG_FULL.md`](eval/AGENT_CATALOG_FULL.md)
 
 ### Phase A — Protect + refine Archaludon (now)
 
-**Objective:** Lock ref **54083197** as Final; iterate offline; upload only material improvements.
+**Objective:** Save ref **54083197** as finalist baseline; iterate offline; upload ladder probes; pin Finals near **Sep deadline**.
+
+**In flight (Session 55–56):** probes **54109826** (R10 prize-attack) + **54109878** (R8a promote) **PENDING** — offline DS complete (`scripts/analyze_archaludon_losses.py`); **wait for μ before next brain change.**
 
 | Step | Action | Gate |
 |------|--------|------|
-| A1 | Lock Final | Kaggle UI — ref 54083197 |
-| A2 | Replay pull | `analyze_submission.py` + `convert_submission_replays.py --name archaludon` |
-| A3 | P0 fix | 0 `no_active` @ n=30 full suite |
-| A4 | Ladder probe | New package name + R12 + `check_upload_eligible` |
-| A5 | Monitor | `track_ladder.py` — beat **1196.1** latest on ≥2 readings before swapping Final |
+| A1 | Save champion baseline | Catalog ref 54083197 @ 1196.1 μ — no re-upload (R12) |
+| A2 | Replay pull | `analyze_submission.py` + deck logs from champion ref |
+| A3 | One lever / session | Local full n=30 filter; replay evidence for change |
+| A4 | Ladder probe | New row + R12 + `check_upload_eligible` when filter passes |
+| A5 | Monitor | `track_ladder.py` — beat **1196.1** on ≥2 readings → new baseline |
+| A6 | Final lock-in | **Sep 2026** — manually pin best two on Kaggle UI |
 
 **Success:** μ ≥ 1196.1 sustained OR 0 forfeit losses with stable μ.
 

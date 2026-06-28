@@ -1,0 +1,516 @@
+{
+  "deck": "archaludon_r8",
+  "brain": "archaludon_rules",
+  "ref": "54088877",
+  "perspective": "our_seat_only",
+  "episodes_total": 56,
+  "wins": 35,
+  "losses": 21,
+  "win_rate_pct": 62.5,
+  "episodes": [
+    {
+      "episode_id": "82092995",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 10,
+      "our_decision_count": 84,
+      "terminal_bench": 4,
+      "file": "82092995.json"
+    },
+    {
+      "episode_id": "82093651",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 6,
+      "our_decision_count": 36,
+      "terminal_bench": 2,
+      "file": "82093651.json"
+    },
+    {
+      "episode_id": "82094163",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 8,
+      "our_decision_count": 48,
+      "terminal_bench": 3,
+      "file": "82094163.json"
+    },
+    {
+      "episode_id": "82094673",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 21,
+      "our_decision_count": 150,
+      "terminal_bench": 2,
+      "file": "82094673.json"
+    },
+    {
+      "episode_id": "82095334",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 17,
+      "our_decision_count": 105,
+      "terminal_bench": 0,
+      "file": "82095334.json"
+    },
+    {
+      "episode_id": "82095875",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "our_decision_count": 152,
+      "terminal_bench": 1,
+      "file": "82095875.json"
+    },
+    {
+      "episode_id": "82096541",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 2,
+      "our_decision_count": 23,
+      "terminal_bench": 2,
+      "file": "82096541.json"
+    },
+    {
+      "episode_id": "82097056",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 3,
+      "our_decision_count": 36,
+      "terminal_bench": 0,
+      "file": "82097056.json"
+    },
+    {
+      "episode_id": "82097553",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 4,
+      "our_decision_count": 43,
+      "terminal_bench": 2,
+      "file": "82097553.json"
+    },
+    {
+      "episode_id": "82098073",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "our_decision_count": 121,
+      "terminal_bench": 3,
+      "file": "82098073.json"
+    },
+    {
+      "episode_id": "82098729",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 16,
+      "our_decision_count": 98,
+      "terminal_bench": 2,
+      "file": "82098729.json"
+    },
+    {
+      "episode_id": "82099237",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "our_decision_count": 110,
+      "terminal_bench": 5,
+      "file": "82099237.json"
+    },
+    {
+      "episode_id": "82099739",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "our_decision_count": 134,
+      "terminal_bench": 2,
+      "file": "82099739.json"
+    },
+    {
+      "episode_id": "82100392",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 10,
+      "our_decision_count": 82,
+      "terminal_bench": 3,
+      "file": "82100392.json"
+    },
+    {
+      "episode_id": "82100917",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "our_decision_count": 143,
+      "terminal_bench": 2,
+      "file": "82100917.json"
+    },
+    {
+      "episode_id": "82101578",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 11,
+      "our_decision_count": 147,
+      "terminal_bench": 1,
+      "file": "82101578.json"
+    },
+    {
+      "episode_id": "82102241",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 16,
+      "our_decision_count": 121,
+      "terminal_bench": 4,
+      "file": "82102241.json"
+    },
+    {
+      "episode_id": "82102757",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 10,
+      "our_decision_count": 125,
+      "terminal_bench": 2,
+      "file": "82102757.json"
+    },
+    {
+      "episode_id": "82103266",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 13,
+      "our_decision_count": 151,
+      "terminal_bench": 1,
+      "file": "82103266.json"
+    },
+    {
+      "episode_id": "82103782",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "our_decision_count": 129,
+      "terminal_bench": 3,
+      "file": "82103782.json"
+    },
+    {
+      "episode_id": "82104447",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 11,
+      "our_decision_count": 68,
+      "terminal_bench": 0,
+      "file": "82104447.json"
+    },
+    {
+      "episode_id": "82104953",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 5,
+      "our_decision_count": 42,
+      "terminal_bench": 0,
+      "file": "82104953.json"
+    },
+    {
+      "episode_id": "82105468",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 2,
+      "our_decision_count": 18,
+      "terminal_bench": 0,
+      "file": "82105468.json"
+    },
+    {
+      "episode_id": "82106169",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 13,
+      "our_decision_count": 110,
+      "terminal_bench": 3,
+      "file": "82106169.json"
+    },
+    {
+      "episode_id": "82106650",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 15,
+      "our_decision_count": 142,
+      "terminal_bench": 2,
+      "file": "82106650.json"
+    },
+    {
+      "episode_id": "82107161",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "our_decision_count": 118,
+      "terminal_bench": 4,
+      "file": "82107161.json"
+    },
+    {
+      "episode_id": "82107826",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 11,
+      "our_decision_count": 154,
+      "terminal_bench": 1,
+      "file": "82107826.json"
+    },
+    {
+      "episode_id": "82108336",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 15,
+      "our_decision_count": 106,
+      "terminal_bench": 4,
+      "file": "82108336.json"
+    },
+    {
+      "episode_id": "82109015",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 18,
+      "our_decision_count": 142,
+      "terminal_bench": 5,
+      "file": "82109015.json"
+    },
+    {
+      "episode_id": "82109525",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "our_decision_count": 66,
+      "terminal_bench": 3,
+      "file": "82109525.json"
+    },
+    {
+      "episode_id": "82110184",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 10,
+      "our_decision_count": 126,
+      "terminal_bench": 2,
+      "file": "82110184.json"
+    },
+    {
+      "episode_id": "82110696",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 13,
+      "our_decision_count": 145,
+      "terminal_bench": 2,
+      "file": "82110696.json"
+    },
+    {
+      "episode_id": "82111206",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 10,
+      "our_decision_count": 142,
+      "terminal_bench": 1,
+      "file": "82111206.json"
+    },
+    {
+      "episode_id": "82111709",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 2,
+      "our_decision_count": 22,
+      "terminal_bench": 2,
+      "file": "82111709.json"
+    },
+    {
+      "episode_id": "82112218",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "our_decision_count": 131,
+      "terminal_bench": 2,
+      "file": "82112218.json"
+    },
+    {
+      "episode_id": "82112871",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 10,
+      "our_decision_count": 53,
+      "terminal_bench": 2,
+      "file": "82112871.json"
+    },
+    {
+      "episode_id": "82113377",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 14,
+      "our_decision_count": 194,
+      "terminal_bench": 1,
+      "file": "82113377.json"
+    },
+    {
+      "episode_id": "82114044",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 11,
+      "our_decision_count": 113,
+      "terminal_bench": 0,
+      "file": "82114044.json"
+    },
+    {
+      "episode_id": "82114692",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 15,
+      "our_decision_count": 142,
+      "terminal_bench": 2,
+      "file": "82114692.json"
+    },
+    {
+      "episode_id": "82115240",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "our_decision_count": 135,
+      "terminal_bench": 3,
+      "file": "82115240.json"
+    },
+    {
+      "episode_id": "82115932",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "our_decision_count": 212,
+      "terminal_bench": 3,
+      "file": "82115932.json"
+    },
+    {
+      "episode_id": "82116485",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 13,
+      "our_decision_count": 127,
+      "terminal_bench": 1,
+      "file": "82116485.json"
+    },
+    {
+      "episode_id": "82117169",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 33,
+      "our_decision_count": 148,
+      "terminal_bench": 3,
+      "file": "82117169.json"
+    },
+    {
+      "episode_id": "82117680",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 16,
+      "our_decision_count": 145,
+      "terminal_bench": 4,
+      "file": "82117680.json"
+    },
+    {
+      "episode_id": "82118308",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "our_decision_count": 102,
+      "terminal_bench": 3,
+      "file": "82118308.json"
+    },
+    {
+      "episode_id": "82118360",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 3,
+      "our_decision_count": 50,
+      "terminal_bench": 0,
+      "file": "82118360.json"
+    },
+    {
+      "episode_id": "82122355",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 5,
+      "our_decision_count": 58,
+      "terminal_bench": 0,
+      "file": "82122355.json"
+    },
+    {
+      "episode_id": "82137223",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "our_decision_count": 138,
+      "terminal_bench": 2,
+      "file": "82137223.json"
+    },
+    {
+      "episode_id": "82156439",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 21,
+      "our_decision_count": 159,
+      "terminal_bench": 0,
+      "file": "82156439.json"
+    },
+    {
+      "episode_id": "82169654",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 3,
+      "our_decision_count": 13,
+      "terminal_bench": 0,
+      "file": "82169654.json"
+    },
+    {
+      "episode_id": "82185431",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 12,
+      "our_decision_count": 163,
+      "terminal_bench": 2,
+      "file": "82185431.json"
+    },
+    {
+      "episode_id": "82190725",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 4,
+      "our_decision_count": 21,
+      "terminal_bench": 1,
+      "file": "82190725.json"
+    },
+    {
+      "episode_id": "82192309",
+      "outcome": "win",
+      "result_reason": "prize",
+      "turn_count": 14,
+      "our_decision_count": 104,
+      "terminal_bench": 1,
+      "file": "82192309.json"
+    },
+    {
+      "episode_id": "82217636",
+      "outcome": "loss",
+      "result_reason": "prize",
+      "turn_count": 11,
+      "our_decision_count": 99,
+      "terminal_bench": 0,
+      "file": "82217636.json"
+    },
+    {
+      "episode_id": "82218599",
+      "outcome": "loss",
+      "result_reason": "deck_out",
+      "turn_count": 16,
+      "our_decision_count": 115,
+      "terminal_bench": 4,
+      "file": "82218599.json"
+    },
+    {
+      "episode_id": "82225640",
+      "outcome": "loss",
+      "result_reason": "no_active",
+      "turn_count": 17,
+      "our_decision_count": 147,
+      "terminal_bench": 2,
+      "file": "82225640.json"
+    }
+  ]
+}
