@@ -57,6 +57,14 @@ TREVENANT_LINE = {878, 879}
 IONO_LINE = {265, 266}
 FEZANDIPITI_EX = 140
 SQUAWKABILLY = 478
+MARNIE_LINE = {646, 647, 648}
+FROSLASS_LINE = {860, 861}
+OGERPON_EX = 117
+MEGA_LUCARIO_EX = 678
+DUDUNSPARCE_LINE = {65, 305}
+MUNKIDORI = 112
+BUDEW = 235
+LUNASOL_LINE = {675, 676}
 
 METAL_ENERGY = 8
 
@@ -621,6 +629,16 @@ def detect_matchup(obs):
         return "trevenant"
     if ids & IONO_LINE:
         return "iono"
+    if ids & MARNIE_LINE:
+        return "marnie"
+    if ids & FROSLASS_LINE:
+        return "froslass"
+    if ids & {OGERPON_EX}:
+        return "ogerpon"
+    if ids & DUDUNSPARCE_LINE:
+        return "dudunsparce"
+    if ids & LUNASOL_LINE:
+        return "lunasol"
     return "generic"
 
 
@@ -640,6 +658,12 @@ def opp_max_damage(obs):
         return 180
     if matchup == "abomasnow":
         return 230
+    if matchup == "marnie":
+        return 250
+    if matchup == "froslass":
+        return 280
+    if matchup == "ogerpon":
+        return 200
     return 220
 
 
@@ -758,6 +782,51 @@ def apply_overrides(obs, opt, score, reason):
             if active and active.id == ARCHALUDON_EX and damage_on(active) >= 60:
                 return 18000, "Abomasnow: heal Arch"
 
+    # ── Marnie/Grimmsnarl control ──
+    if matchup == "marnie":
+        if opt.type == OptionType.ATTACK:
+            active = active_pokemon(obs)
+            if active and active.id == ARCHALUDON_EX:
+                return max(score, 20000), "Marnie: Metal Defender"
+        if opt.type == OptionType.PLAY:
+            if cid == HERO_CAPE:
+                arch = next((p for p in all_my_pokemon(obs) if p and p.id == ARCHALUDON_EX), None)
+                if arch and not has_tool(arch):
+                    return 22000, "Marnie: Cape Arch"
+            if cid == FULL_METAL_LAB and obs.current.stadium is None:
+                return 15000, "Marnie: stall with Lab"
+
+    # ── Froslass spread ──
+    if matchup == "froslass":
+        if opt.type == OptionType.PLAY:
+            if cid == HERO_CAPE:
+                arch = next((p for p in all_my_pokemon(obs) if p and p.id == ARCHALUDON_EX), None)
+                if arch and not has_tool(arch):
+                    return 25000, "Froslass: Cape Arch"
+            if cid == POKE_PAD:
+                return 12000, "Froslass: find Cape/gear"
+        if opt.type == OptionType.ATTACH:
+            target = option_target(obs, opt)
+            tid = target.id if target else None
+            if tid == ARCHALUDON_EX and energy_count(target) < 3:
+                return score + 10000, "Froslass: rush Arch energy"
+
+    # ── Ogerpon ──
+    if matchup == "ogerpon":
+        if opt.type == OptionType.ATTACH:
+            target = option_target(obs, opt)
+            if target and target.id == ARCHALUDON_EX:
+                return score + 8000, "Ogerpon: power Arch"
+
+    # ── Lunatone/Solrock ──
+    if matchup == "lunasol":
+        if opt.type == OptionType.ATTACK:
+            active = active_pokemon(obs)
+            if active and active.id == ARCHALUDON_EX:
+                return max(score, 20000), "Lunasol: Metal Defender sweep"
+        if opt.type == OptionType.PLAY and cid == POKE_PAD:
+            return 10000, "Lunasol: find pieces"
+
     return score, reason
 
 
@@ -786,6 +855,8 @@ _ICE_CREAM_HP_THRESHOLD = {
     "starmie": 210,
     "crustle": 120,
     "hop": 220,
+    "marnie": 250,
+    "froslass": 280,
     "generic": 230,
 }
 
