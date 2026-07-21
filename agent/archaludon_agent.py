@@ -50,6 +50,12 @@ STARMIE_LINE = {1030, 1031}
 LUCARIO_LINE = {677, 678}
 HOP_LINE = {288, 289, 299, 304, 307, 308, 309, 310, 878, 879}
 HOP_SNORLAX = 304
+DRAGAPULT_LINE = {492, 493, 494}
+ALAKAZAM_LINE = {77, 78, 79}
+ABOMASNOW_LINE = {722, 723}
+TREVENANT_LINE = {334, 335, 336}
+IONO_LINE = {1029, 1030, 1031, 1032}
+DUDUNSPARCE_ID = 478
 
 METAL_ENERGY = 8
 
@@ -604,6 +610,16 @@ def detect_matchup(obs):
         return "starmie"
     if ids & LUCARIO_LINE:
         return "lucario"
+    if ids & DRAGAPULT_LINE:
+        return "dragapult"
+    if ids & ALAKAZAM_LINE:
+        return "alakazam"
+    if ids & ABOMASNOW_LINE:
+        return "abomasnow"
+    if ids & TREVENANT_LINE:
+        return "trevenant"
+    if ids & IONO_LINE:
+        return "iono"
     return "generic"
 
 
@@ -617,6 +633,12 @@ def opp_max_damage(obs):
         return 270
     if matchup == "starmie":
         return 210
+    if matchup == "dragapult":
+        return 200
+    if matchup == "alakazam":
+        return 180
+    if matchup == "abomasnow":
+        return 230
     return 220
 
 
@@ -625,67 +647,115 @@ def opp_max_damage(obs):
 def apply_overrides(obs, opt, score, reason):
     score, reason = _empty_bench_basic_score(obs, opt, score, reason)
     score, reason = _dead_active_tempo_score(obs, opt, score, reason)
+    score, reason = _prize_race_attach_cap(obs, opt, score, reason)
+    score, reason = _mandatory_promote_score(obs, opt, score, reason)
 
     if opt.type == OptionType.PLAY:
         card = option_card(obs, opt)
         cid = card.id if card else None
         if my_state(obs).deckCount <= 10 and cid == EXPLORER:
             return -5000, "hard: don't Explorer with low deck"
+        if my_state(obs).deckCount <= 5 and cid == LILLIE:
+            return -5000, "hard: don't Lillie with low deck"
 
-    if detect_matchup(obs) != "crustle":
-        return score, reason
-
+    matchup = detect_matchup(obs)
     card = option_card(obs, opt)
     cid = card.id if card else getattr(opt, 'cardId', None)
     ctx = obs.select.context
 
-    if opt.type == OptionType.EVOLVE and cid == ARCHALUDON_EX:
-        return -10000, "Crustle: don't evolve to ex"
+    if matchup == "crustle":
+        if opt.type == OptionType.EVOLVE and cid == ARCHALUDON_EX:
+            return -10000, "Crustle: don't evolve to ex"
+        if opt.type == OptionType.ATTACK:
+            aid = getattr(opt, 'attackId', None)
+            if aid == METAL_DEFENDER:
+                return -5000, "Crustle: Metal Defender does 0"
+            if aid == RAGING_HAMMER:
+                opp_act = opp_active_pokemon(obs)
+                rh_dmg = 80 + damage_on(active_pokemon(obs)) // 10 * 10
+                if opp_act and rh_dmg < opp_act.hp:
+                    opp_has_spiky = any(
+                        getattr(c, 'id', None) == 14
+                        for c in (getattr(opp_act, 'energyCards', None) or []))
+                    if opp_has_spiky:
+                        return -3000, "Crustle: don't attack into Spiky Energy without OHKO"
+                return max(score, 200), "Crustle: Raging Hammer"
+        if opt.type == OptionType.PLAY:
+            if cid == RELICANTH:
+                return -5000, "Crustle: skip Relicanth"
+            dc = my_state(obs).deckCount
+            if dc <= 10 and cid in (EXPLORER, LILLIE):
+                if cid == LILLIE and dc <= 3 and my_state(obs).handCount >= dc + 6:
+                    return 15000, "Crustle: Lillie to refill deck"
+                return -5000, "Crustle: don't draw with low deck"
+            if cid == LILLIE:
+                has_metal = any(c and c.id == METAL_ENERGY for c in (my_state(obs).hand or []) if c)
+                if not has_metal:
+                    return score, "Crustle: Lillie OK (no energy in hand)"
+        if opt.type == OptionType.ATTACH:
+            target = option_target(obs, opt)
+            tid = target.id if target else None
+            if getattr(opt, 'inPlayArea', None) == AreaType.BENCH and tid == DURALUDON:
+                return score + 10000, "Crustle: bench Duraludon energy priority"
+            if getattr(opt, 'inPlayArea', None) == AreaType.ACTIVE:
+                active = active_pokemon(obs)
+                if active and energy_count(active) >= 2:
+                    return score + 3000, "Crustle: Active 3rd energy"
+        if ctx == SelectContext.TO_HAND and opt.type == OptionType.CARD and cid == ARCHALUDON_EX:
+            return -3000, "Crustle: skip Archaludon ex"
+        if ctx in {SelectContext.DISCARD, SelectContext.DISCARD_CARD_OR_ATTACHED_CARD}:
+            if cid == ARCHALUDON_EX and score < 0:
+                return 9000, "Crustle: discard Archaludon ex"
 
-    if opt.type == OptionType.ATTACK:
-        aid = getattr(opt, 'attackId', None)
-        if aid == METAL_DEFENDER:
-            return -5000, "Crustle: Metal Defender does 0"
-        if aid == RAGING_HAMMER:
-            opp_act = opp_active_pokemon(obs)
-            rh_dmg = 80 + damage_on(active_pokemon(obs)) // 10 * 10
-            if opp_act and rh_dmg < opp_act.hp:
-                opp_has_spiky = any(
-                    getattr(c, 'id', None) == 14
-                    for c in (getattr(opp_act, 'energyCards', None) or []))
-                if opp_has_spiky:
-                    return -3000, "Crustle: don't attack into Spiky Energy without OHKO"
-            return max(score, 200), "Crustle: Raging Hammer"
-
-    if opt.type == OptionType.PLAY:
-        if cid == RELICANTH:
-            return -5000, "Crustle: skip Relicanth"
-        dc = my_state(obs).deckCount
-        if dc <= 10 and cid in (EXPLORER, LILLIE):
-            if cid == LILLIE and dc <= 3 and my_state(obs).handCount >= dc + 6:
-                return 15000, "Crustle: Lillie to refill deck"
-            return -5000, "Crustle: don't draw with low deck"
-        if cid == LILLIE:
-            has_metal = any(c and c.id == METAL_ENERGY for c in (my_state(obs).hand or []) if c)
-            if not has_metal:
-                return score, "Crustle: Lillie OK (no energy in hand)"
-
-    if opt.type == OptionType.ATTACH:
-        target = option_target(obs, opt)
-        tid = target.id if target else None
-        if getattr(opt, 'inPlayArea', None) == AreaType.BENCH and tid == DURALUDON:
-            return score + 10000, "Crustle: bench Duraludon energy priority"
-        if getattr(opt, 'inPlayArea', None) == AreaType.ACTIVE:
+    # ── Alakazam single-prize aggro ──
+    if matchup == "alakazam":
+        if opt.type == OptionType.ATTACK:
             active = active_pokemon(obs)
-            if active and energy_count(active) >= 2:
-                return score + 3000, "Crustle: Active 3rd energy"
+            if active and active.id == ARCHALUDON_EX:
+                opp_act = opp_active_pokemon(obs)
+                if opp_act and opp_act.hp <= 220:
+                    return max(score, 25000), "Alakazam: KO single-prizer"
+        if opt.type == OptionType.PLAY:
+            if cid == HERO_CAPE:
+                has_arch = has_in_play(obs, ARCHALUDON_EX)
+                arch = next((p for p in all_my_pokemon(obs) if p and p.id == ARCHALUDON_EX), None)
+                if has_arch and arch and not has_tool(arch):
+                    return 20000, "Alakazam: Cape to survive"
+        if opt.type == OptionType.ATTACH:
+            target = option_target(obs, opt)
+            tid = target.id if target else None
+            if tid == ARCHALUDON_EX and energy_count(target) < 3:
+                return score + 8000, "Alakazam: rush Arch energy"
 
-    if ctx == SelectContext.TO_HAND and opt.type == OptionType.CARD and cid == ARCHALUDON_EX:
-        return -3000, "Crustle: skip Archaludon ex"
+    # ── Dragapult spread ──
+    if matchup == "dragapult":
+        if opt.type == OptionType.ATTACH:
+            target = option_target(obs, opt)
+            tid = target.id if target else None
+            if tid == ARCHALUDON_EX:
+                arch_count = energy_count(target)
+                if arch_count < 3:
+                    return score + 10000, "Dragapult: rush Arch energy"
+                elif not has_tool(target):
+                    return score + 5000, "Dragapult: power Arch"
+        if opt.type == OptionType.PLAY:
+            if cid == HERO_CAPE:
+                arch = next((p for p in all_my_pokemon(obs) if p and p.id == ARCHALUDON_EX), None)
+                if arch and not has_tool(arch):
+                    return 25000, "Dragapult: Cape Arch"
+            if cid == FULL_METAL_LAB and obs.current.stadium is None:
+                return 15000, "Dragapult: Full Metal Lab"
 
-    if ctx in {SelectContext.DISCARD, SelectContext.DISCARD_CARD_OR_ATTACHED_CARD}:
-        if cid == ARCHALUDON_EX and score < 0:
-            return 9000, "Crustle: discard Archaludon ex"
+    # ── Abomasnow spread ──
+    if matchup == "abomasnow":
+        if opt.type == OptionType.PLAY and cid == HERO_CAPE:
+            arch = next((p for p in all_my_pokemon(obs) if p and p.id == ARCHALUDON_EX), None)
+            if arch and not has_tool(arch):
+                return 25000, "Abomasnow: Cape Arch to survive"
+        if opt.type == OptionType.PLAY and cid == JUMBO_ICE_CREAM:
+            active = active_pokemon(obs)
+            if active and active.id == ARCHALUDON_EX and damage_on(active) >= 60:
+                return 18000, "Abomasnow: heal Arch"
 
     return score, reason
 
