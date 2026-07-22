@@ -732,26 +732,6 @@ def apply_overrides(obs, opt, score, reason):
             if cid == ARCHALUDON_EX and score < 0:
                 return 9000, "Crustle: discard Archaludon ex"
 
-    # ── Alakazam single-prize aggro ──
-    if matchup == "alakazam":
-        if opt.type == OptionType.ATTACK:
-            active = active_pokemon(obs)
-            if active and active.id == ARCHALUDON_EX:
-                opp_act = opp_active_pokemon(obs)
-                if opp_act and opp_act.hp <= 220:
-                    return max(score, 25000), "Alakazam: KO single-prizer"
-        if opt.type == OptionType.PLAY:
-            if cid == HERO_CAPE:
-                has_arch = has_in_play(obs, ARCHALUDON_EX)
-                arch = next((p for p in all_my_pokemon(obs) if p and p.id == ARCHALUDON_EX), None)
-                if has_arch and arch and not has_tool(arch):
-                    return 20000, "Alakazam: Cape to survive"
-        if opt.type == OptionType.ATTACH:
-            target = option_target(obs, opt)
-            tid = target.id if target else None
-            if tid == ARCHALUDON_EX and energy_count(target) < 3:
-                return score + 8000, "Alakazam: rush Arch energy"
-
     # ── Dragapult spread ──
     if matchup == "dragapult":
         if opt.type == OptionType.ATTACH:
