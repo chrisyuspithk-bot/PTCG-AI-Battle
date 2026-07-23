@@ -642,6 +642,101 @@ def opp_max_damage(obs):
     return 220
 
 
+# ── Attack planning ──
+
+_attack_plan = None
+
+def plan_attack(obs):
+    """Find the best attack we can execute this turn."""
+    global _attack_plan
+    _attack_plan = None
+    
+    if obs.current.turn < 2:
+        return
+    
+    my = my_state(obs)
+    opp = opp_state(obs)
+    all_opp = list(opp.active) + list(opp.bench)
+    
+    best_score = -1
+    
+    # Check active attacker
+    active = my.active[0] if my.active else None
+    if active:
+        ec = energy_count(active)
+        for aid in range(2):
+            dmg = best_attack_damage(obs, aid)
+            if dmg <= 0:
+                continue
+            if aid == METAL_DEFENDER and ec < 3:
+                continue
+            if aid == RAGING_HAMMER and ec < 2:
+                if not (ec == 1 and not obs.current.energyAttached):
+                    continue
+                needs_e = True
+            else:
+                needs_e = False
+            
+            for ti, target in enumerate(all_opp):
+                if not target:
+                    continue
+                if effective_damage(dmg, target) >= target.hp:
+                    pv = prize_value(target)
+                    sc = 50000 + pv * 5000
+                    if len(my.prize) <= pv:
+                        sc += 10000
+                    if sc > best_score:
+                        best_score = sc
+                        _attack_plan = (0, ti, aid, needs_e)
+    
+    # Check bench for Metal Defender (flat 220)
+    for bi, bench_mon in enumerate(my.bench):
+        if not bench_mon:
+            continue
+        if energy_count(bench_mon) >= 3:
+            for ti, target in enumerate(all_opp):
+                if not target:
+                    continue
+                if effective_damage(220, target) >= target.hp:
+                    pv = prize_value(target)
+                    sc = 50000 + pv * 5000 - 5000  # slight penalty for switch cost
+                    if len(my.prize) <= pv:
+                        sc += 10000
+                    if sc > best_score:
+                        best_score = sc
+                        _attack_plan = (bi + 1, ti, METAL_DEFENDER, False)
+
+
+def plan_boost(obs, opt):
+    """Score boost when an action enables the attack plan."""
+    global _attack_plan
+    if not _attack_plan:
+        return 0, ""
+    ai, ti, aid, needs_e = _attack_plan
+    
+    if opt.type == OptionType.ATTACK:
+        tidx = getattr(opt, 'targetIndex', -1)
+        if getattr(opt, 'attackId', None) == aid and tidx == ti:
+            return 30000, "plan: execute attack"
+    
+    if opt.type == OptionType.RETREAT and ai > 0:
+        return 8000, "plan: retreat to attacker"
+    
+    if opt.type == OptionType.PLAY:
+        card = option_card(obs, opt)
+        if card and card.id == 1123 and ai > 0:
+            return 9000, "plan: switch to attacker"
+    
+    if opt.type == OptionType.ATTACH and needs_e:
+        target = option_target(obs, opt)
+        if target:
+            t_idx = 0 if opt.inPlayArea == AreaType.ACTIVE else getattr(opt, 'inPlayIndex', 0) + 1
+            if t_idx == ai:
+                return 12000, "plan: energy to enable attack"
+    
+    return 0, ""
+
+
 # ── Overrides ──
 
 def apply_overrides(obs, opt, score, reason):
@@ -649,6 +744,12 @@ def apply_overrides(obs, opt, score, reason):
     score, reason = _dead_active_tempo_score(obs, opt, score, reason)
     score, reason = _prize_race_attach_cap(obs, opt, score, reason)
     score, reason = _mandatory_promote_score(obs, opt, score, reason)
+    
+    # Attack-plan boost
+    pb, pr = plan_boost(obs, opt)
+    if pb:
+        score += pb
+        reason = pr
 
     if opt.type == OptionType.PLAY:
         card = option_card(obs, opt)
@@ -1064,6 +1165,7 @@ def score_option(obs, opt):
         return (opt.number or 0), "number"
 
     if ctx == SelectContext.MAIN:
+        plan_attack(obs)
         fn = _MAIN_DISPATCH.get(opt.type)
         if fn:
             score, reason = fn(obs, opt)
