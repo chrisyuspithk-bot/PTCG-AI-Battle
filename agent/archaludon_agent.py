@@ -51,7 +51,8 @@ LUCARIO_LINE = {677, 678}
 HOP_LINE = {288, 289, 299, 304, 307, 308, 309, 310, 878, 879}
 HOP_SNORLAX = 304
 DRAGAPULT_LINE = {492, 493, 494}
-ALAKAZAM_LINE = {77, 78, 79}
+ALAKAZAM_LINE = {741, 742, 743}  # Abra, Kadabra, Alakazam
+_ALA_BOARD_GAIN = {66: 3, 742: 2, 305: 2, 65: 2, 741: 1}  # Dudunsparce, Kadabra, Dunsparce×2, Abra
 ABOMASNOW_LINE = {722, 723}
 TREVENANT_LINE = {334, 335, 336}
 IONO_LINE = {1029, 1030, 1031, 1032}
@@ -111,6 +112,31 @@ def _update_opp_attack_tracking(obs):
             _cur_turn_logs.clear()
         else:
             _cur_turn_logs.append(entry)
+
+
+def _estimate_alakazam_from_pokes(opp, pokes):
+    """(floor, ceiling, ceiling_with_boss) damage from visible Alakazam line."""
+    ids = [p.id for p in pokes if p]
+    if not (ALAKAZAM_LINE & set(ids)):
+        return 0, 0, 0
+    base = opp.handCount + 1
+    gain = sum(_ALA_BOARD_GAIN.get(i, 0) for i in ids)
+    enriching_seen = (
+        any(c and c.id == 13 for c in (opp.discard or []))
+        or any(c and c.id == 13 for p in pokes if p for c in (getattr(p, "energyCards", None) or []))
+    )
+    if not enriching_seen:
+        gain += 3
+    if any(i == 140 for i in ids):
+        gain += 3
+    return base * 20, (base + gain + 2) * 20, (base + gain - 1) * 20
+
+
+def _estimate_alakazam(obs):
+    """(floor, ceiling, ceiling_with_boss) damage from Powerful Hand."""
+    opp = opp_state(obs)
+    pokes = ([opp.active[0]] if opp.active else []) + list(opp.bench or [])
+    return _estimate_alakazam_from_pokes(opp, pokes)
 
 
 # ── Board helpers ──
@@ -626,24 +652,67 @@ def detect_matchup(obs):
 
 def opp_max_damage(obs):
     matchup = detect_matchup(obs)
+    if matchup == "alakazam":
+        _, ceiling, _ = _estimate_alakazam(obs)
+        return ceiling
     if matchup == "crustle":
         return 120
     if matchup == "hop":
         return 220
     if matchup == "lucario":
-        return 270
+        return 270  # Mega Brave base. PPP adds +30 each but unpredictable
     if matchup == "starmie":
         return 210
     if matchup == "dragapult":
         return 200
-    if matchup == "alakazam":
-        return 180
     if matchup == "abomasnow":
         return 230
     return 220
 
 
-# ── Overrides ──
+# ── Ice Cream guard ──
+
+_ICE_CREAM_HP_THRESHOLD = {
+    "lucario": 270, "starmie": 210, "crustle": 120,
+    "hop": 220, "alakazam": 999, "generic": 230,
+}
+
+def should_skip_ice_cream(obs, active):
+    """Decide whether to skip Jumbo Ice Cream. Returns (skip: bool, reason: str)."""
+    if active.id != ARCHALUDON_EX:
+        return True, "skip Ice Cream: not Archaludon ex"
+    # Raging Hammer KO guard
+    opp_act = opp_active_pokemon(obs)
+    if opp_act and has_in_play(obs, RELICANTH):
+        md_kills = effective_damage(220, opp_act) >= opp_act.hp
+        if not md_kills:
+            rh_dmg = 80 + damage_on(active) // 10 * 10
+            rh_after = 80 + max(0, damage_on(active) - 80) // 10 * 10
+            if effective_damage(rh_dmg, opp_act) >= opp_act.hp and effective_damage(rh_after, opp_act) < opp_act.hp:
+                return True, "skip Ice Cream: healing loses Raging Hammer KO"
+    # Alakazam all-or-nothing
+    matchup = detect_matchup(obs)
+    if matchup == "alakazam":
+        floor, ceiling, _ = _estimate_alakazam(obs)
+        opp_a = opp_active_pokemon(obs)
+        attacks = planned_archaludon_attacks(obs)
+        if opp_a and attacks and any(effective_damage(a["damage"], opp_a) >= opp_a.hp for a in attacks):
+            _, ceiling, _ = _estimate_alakazam_from_pokes(opp_state(obs), opp_bench_pokemon(obs))
+        ice_count = sum(1 for c in (my_state(obs).hand or []) if c and c.id == JUMBO_ICE_CREAM)
+        max_hp = getattr(active, "maxHp", active.hp)
+        hp_after_all = min(max_hp, active.hp + ice_count * 80)
+        if hp_after_all <= active.hp:
+            return True, "skip Ice Cream: no effective healing"
+        if hp_after_all < floor:
+            return True, f"skip Ice Cream: even {ice_count}x heal ({hp_after_all}) < floor {floor}"
+        if hp_after_all >= ceiling:
+            return False, f"use Ice Cream: {ice_count}x heal ({hp_after_all}) >= ceil {ceiling}"
+        return False, f"use Ice Cream: {ice_count}x heal ({hp_after_all}) between floor={floor} ceil={ceiling}"
+    # HP above matchup threshold
+    threshold = _ICE_CREAM_HP_THRESHOLD.get(matchup, 220)
+    if active.hp > threshold:
+        return True, f"skip Ice Cream: HP {active.hp} > {threshold} ({matchup})"
+    return False, ""
 
 def apply_overrides(obs, opt, score, reason):
     score, reason = _empty_bench_basic_score(obs, opt, score, reason)
@@ -788,24 +857,6 @@ _ICE_CREAM_HP_THRESHOLD = {
     "hop": 220,
     "generic": 230,
 }
-
-
-def should_skip_ice_cream(obs, active):
-    if active.id != ARCHALUDON_EX:
-        return True, "skip Ice Cream: not Archaludon ex"
-    opp_act = opp_active_pokemon(obs)
-    if opp_act and has_in_play(obs, RELICANTH):
-        md_kills = effective_damage(220, opp_act) >= opp_act.hp
-        if not md_kills:
-            rh_dmg = 80 + damage_on(active) // 10 * 10
-            rh_after = 80 + max(0, damage_on(active) - 80) // 10 * 10
-            if effective_damage(rh_dmg, opp_act) >= opp_act.hp and effective_damage(rh_after, opp_act) < opp_act.hp:
-                return True, "skip Ice Cream: healing loses Raging Hammer KO"
-    matchup = detect_matchup(obs)
-    threshold = _ICE_CREAM_HP_THRESHOLD.get(matchup, 220)
-    if active.hp > threshold:
-        return True, f"skip Ice Cream: HP {active.hp} > {threshold} ({matchup})"
-    return False, ""
 
 
 ITEMS = {POKE_PAD, ULTRA_BALL, POKEGEAR, NIGHT_STRETCHER, JUMBO_ICE_CREAM, HERO_CAPE}
