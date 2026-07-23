@@ -990,7 +990,7 @@ def attach_target_score(obs, target, area):
         if e == 0:
             score += 7000 + (12000 if area == AreaType.ACTIVE else 5000)
     elif cid in {DURALUDON, ARCHALUDON_EX}:
-        score = 6000 if cid == ARCHALUDON_EX else 5500
+        score = 6000 if cid == ARCHALUDON_EX else 8500
         score += {2: 12000, 1: 7000, 0: 4000}.get(e, -1000)
         score += 1000 if area == AreaType.ACTIVE else 500
     else:
