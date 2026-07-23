@@ -66,6 +66,7 @@ NIGHT_STRETCHER = 1097
 JUMBO_ICE_CREAM = 1147
 HERO_CAPE = 1159
 BOSS = 1182
+JUDGE = 1213
 EXPLORER = 1185
 LILLIE = 1227
 FULL_METAL_LAB = 1244
@@ -473,7 +474,7 @@ def safe_discard_count(obs):
             safe += 1
         elif cid == CINDERACE:
             safe += 1
-    draw_in_hand = sum(1 for c in ids if c in (LILLIE, EXPLORER))
+    draw_in_hand = sum(1 for c in ids if c in (LILLIE, EXPLORER, JUDGE))
     if draw_in_hand >= 2:
         safe += draw_in_hand - 1
     return safe
@@ -756,8 +757,8 @@ def apply_overrides(obs, opt, score, reason):
         cid = card.id if card else None
         if my_state(obs).deckCount <= 10 and cid == EXPLORER:
             return -5000, "hard: don't Explorer with low deck"
-        if my_state(obs).deckCount <= 5 and cid == LILLIE:
-            return -5000, "hard: don't Lillie with low deck"
+        if my_state(obs).deckCount <= 5 and cid in (LILLIE, JUDGE):
+            return -5000, "hard: don't Lillie/Judge with low deck"
 
     matchup = detect_matchup(obs)
     card = option_card(obs, opt)
@@ -973,6 +974,16 @@ def score_play(obs, opt):
         if BOSS in ids and planned_archaludon_attacks(obs):
             return -500, "save Lillie: Boss in hand with attacker ready"
         return 5000, "play Lillie"
+
+    if cid == JUDGE:
+        if obs.current.supporterPlayed:
+            return -1000, "Supporter already used"
+        if my_state(obs).deckCount <= 6:
+            return -5000, "Judge: deck too low"
+        # Good vs combo decks early, disrupt opponent hand
+        if obs.current.turn <= 3:
+            return 7000, "Judge: early disruption"
+        return 4000, "Judge"
 
     if cid == BOSS:
         if obs.current.supporterPlayed:
@@ -1258,6 +1269,8 @@ def score_to_hand(obs, opt):
         return 5000, "take Full Metal Lab"
     if cid == BOSS:
         return 2500, "take Boss"
+    if cid == JUDGE:
+        return 3000, "take Judge"
     return 1000, "generic take"
 
 
