@@ -19,9 +19,34 @@ ranking). The project was reset on 2026-06-22 (Session 44) — see `RULINGS.md` 
 
 ## The one-paragraph situation
 
-Imperfect-information POMDP on a TrueSkill ladder. After **21 COMPLETE submissions**: only **Dragapult official pilot @ 880.9 μ** clears 800; best **home-grown** is **SearchScorer × Lucario @ 660.5 μ**. Field RL+MCTS v5 **regressed to 580.6 μ** on the same deck. Every Track B / Snorlax-MCTS path ≤585. **Ladder μ sorts; local gates filter.**
+Imperfect-information POMDP on a TrueSkill ladder. After **29 COMPLETE submissions**: best is **Archaludon/Cinderace pure rules agent @ 808.6 μ (v3)**, built from baseline (1196 μ → 808 μ improvement). Current v12 = v3 + Duraludon energy priority boost. **Meta snapshot** confirms Archaludon is the **#1 archetype** (62.2% field WR), with Alakazam/Dunsparce as its only losing matchup (39.1%). Top agents (930-950 μ) use beam search + MCTS. **Ladder μ sorts; local gates filter.**
 
 See `eval/AGENT_CATALOG_FULL.md` before any train or upload.
+
+## Submission history (Archaludon/Cinderace)
+
+| Version | μ Score | Change | Key insight |
+|---------|---------|--------|-------------|
+| v3 | **808.6** | Baseline (wrong card IDs) | Accidental matchups created beneficial aggressive tilt |
+| v7 | 769.4 | Fixed IDs + 6 new matchups | New matchups add ~54 μ over bare fix |
+| v8 | 608.1 | v7 - Alakazam override | Removing one override tanked score |
+| v9 | 715.5 | v3 + fixed IDs only | Fixing IDs lost ~93 μ! Wrong IDs were accidentally beneficial |
+| v10 | 696.0 | v9 + Fire matchup | Worse — Fire override hurt mirror WR |
+| v11 | 761.9 | Exact v3 restore | TrueSkill noise ±30 μ (~50 games) |
+| **v12** | **pending** | v3 + Duraludon attach +3000 | Match meta's aggro profile (T2.66 first attack) |
+
+## Meta snapshot highlights (July 7, 2026)
+
+| Archetype | Field % | Field WR | Archa WR vs |
+|-----------|---------|----------|-------------|
+| Alakazam/Dunsparce | 18.96% | 51.3% | **39.1%** ← worst matchup |
+| Lucario | 18.78% | 42.4% | 64.4% |
+| Hop/Trevenant | 17.52% | 45.5% | 80.6% |
+| **Archaludon** | 14.57% | **62.2%** | mirror |
+| Starmie | 13.85% | 51.9% | 73.8% |
+| Dragapult | 7.31% | 49.1% | 66.2% |
+
+**Top agents use:** beam search + MCTS (cg.api search), 2.6s budget, BEAM_WIDTH=10. Best public: probability v2 @ 933.8 μ (bronze), meta snapshot @ 947.5 μ (silver).
 
 ## Repository map
 
