@@ -1,14 +1,39 @@
-"""Archaludon ex / Cinderace — community rule pilot + R7 bench guard.
+"""Archaludon ex + Cinderace â Rule-based agent (Public version)
 
-**Primary iteration file** — all Archaludon deck logic lives here (+ thin wrapper at
-``agent()``). Deck: ``agent_decks/archaludon_ex_cinderace.csv``. Do not port levers
-from Dragapult/Lucario/Alakazam pilots.
+Deck Concept:
+  Cinderace's Explosiveness places it face-down as Active during setup.
+  Turn 1 Turbo Flare ({C}=50) accelerates up to 3 Basic Energy from deck
+  to benched Duraludon. Evolving into Archaludon ex triggers Assemble Alloy,
+  attaching up to 2 Basic Metal Energy from discard to Metal Pokemon.
+  Metal Defender ({M}{M}{M}=220) is the main attack; no Weakness next turn.
+  Duraludon can attack directly with Raging Hammer ({M}{M}{C}=80 + 10 per
+  damage counter) without evolving. Relicanth's Memory Dive also unlocks
+  Raging Hammer on Archaludon ex after evolution. Hero's Cape gives +100 HP
+  (HP400). Full Metal Lab reduces attack damage to Metal Pokemon by 30.
 
-Bench safety: ``score_setup`` / ``score_play`` / ``apply_overrides`` / ``score_option``
-(empty bench → bench Duraludon/Relicanth before END/items). R12 dead-active tempo:
-energize bench attacker / retreat when Active is low-HP dead weight (82062971).
+Pokemon:
+  Duraludon (169)      - Basic Metal HP130. Hammer In {M}=30.
+                         Raging Hammer {M}{M}{C}=80+10*damage_counters.
+  Archaludon ex (190)  - Stage 1 from Duraludon, HP300. Assemble Alloy: on evolve
+                         from hand, attach up to 2 Metal Energy from discard.
+                         Metal Defender {M}{M}{M}=220, no Weakness next turn.
+  Cinderace (666)      - Stage 2 HP160. Explosiveness: place face-down as Active
+                         in setup from opening hand. Turbo Flare {C}=50, attach
+                         up to 3 Basic Energy from deck to benched Pokemon.
+  Relicanth (57)       - Basic HP100. Memory Dive: evolved Pokemon can use attacks
+                         from previous Evolutions. Archaludon ex -> Raging Hammer.
 
-Built by scripts/bootstrap_archaludon.py — re-run after reference updates.
+Trainers:
+  Poke Pad (1152), Ultra Ball (1121), Pokegear 3.0 (1122), Night Stretcher (1097),
+  Jumbo Ice Cream (1147), Hero's Cape (1159), Boss's Orders (1182),
+  Explorer's Guidance (1185), Lillie's Determination (1227), Full Metal Lab (1244) x4.
+
+Energy: Basic Metal Energy (8) x11
+
+Score system:
+  Setup/play/evolve/attach: 1000~28000 (high = do first)
+  Attack: damage value (always last â attacking ends the turn)
+  Negative = skip if above minCount
 """
 
 import os
@@ -39,7 +64,7 @@ try:
 except Exception:
     ALL_ATTACKS = {}
 
-# ── Card IDs ──
+# ââ Card IDs ââ
 
 DURALUDON = 169
 ARCHALUDON_EX = 190
@@ -50,13 +75,6 @@ STARMIE_LINE = {1030, 1031}
 LUCARIO_LINE = {677, 678}
 HOP_LINE = {288, 289, 299, 304, 307, 308, 309, 310, 878, 879}
 HOP_SNORLAX = 304
-DRAGAPULT_LINE = {492, 493, 494}
-ALAKAZAM_LINE = {741, 742, 743}  # Abra, Kadabra, Alakazam
-_ALA_BOARD_GAIN = {66: 3, 742: 2, 305: 2, 65: 2, 741: 1}  # Dudunsparce, Kadabra, Dunsparce×2, Abra
-ABOMASNOW_LINE = {722, 723}
-TREVENANT_LINE = {334, 335, 336}
-IONO_LINE = {1029, 1030, 1031, 1032}
-DUDUNSPARCE_ID = 478
 
 METAL_ENERGY = 8
 
@@ -67,7 +85,6 @@ NIGHT_STRETCHER = 1097
 JUMBO_ICE_CREAM = 1147
 HERO_CAPE = 1159
 BOSS = 1182
-JUDGE = 1213
 EXPLORER = 1185
 LILLIE = 1227
 FULL_METAL_LAB = 1244
@@ -81,11 +98,6 @@ _SETUP_ACTIVE_PRIORITY = {
     CINDERACE: (100000, "Active: Cinderace Explosiveness"),
     DURALUDON: (20000, "Active fallback: Duraludon"),
     RELICANTH: (5000, "Active fallback: Relicanth"),
-}
-
-_SETUP_BENCH_PRIORITY = {
-    DURALUDON: (25000, "Setup bench: Duraludon"),
-    RELICANTH: (22000, "Setup bench: Relicanth"),
 }
 
 ALWAYS_SAFE_DISCARD = {METAL_ENERGY, CINDERACE}
@@ -114,32 +126,7 @@ def _update_opp_attack_tracking(obs):
             _cur_turn_logs.append(entry)
 
 
-def _estimate_alakazam_from_pokes(opp, pokes):
-    """(floor, ceiling, ceiling_with_boss) damage from visible Alakazam line."""
-    ids = [p.id for p in pokes if p]
-    if not (ALAKAZAM_LINE & set(ids)):
-        return 0, 0, 0
-    base = opp.handCount + 1
-    gain = sum(_ALA_BOARD_GAIN.get(i, 0) for i in ids)
-    enriching_seen = (
-        any(c and c.id == 13 for c in (opp.discard or []))
-        or any(c and c.id == 13 for p in pokes if p for c in (getattr(p, "energyCards", None) or []))
-    )
-    if not enriching_seen:
-        gain += 3
-    if any(i == 140 for i in ids):
-        gain += 3
-    return base * 20, (base + gain + 2) * 20, (base + gain - 1) * 20
-
-
-def _estimate_alakazam(obs):
-    """(floor, ceiling, ceiling_with_boss) damage from Powerful Hand."""
-    opp = opp_state(obs)
-    pokes = ([opp.active[0]] if opp.active else []) + list(opp.bench or [])
-    return _estimate_alakazam_from_pokes(opp, pokes)
-
-
-# ── Board helpers ──
+# ââ Board helpers ââ
 
 def read_deck_csv():
     fp = "deck.csv"
@@ -188,226 +175,6 @@ def option_target(obs, opt):
 
 def my_state(obs):
     return obs.current.players[obs.current.yourIndex]
-
-
-def _bench_is_empty(obs) -> bool:
-    return len([p for p in my_state(obs).bench if p]) == 0
-
-
-def _main_has_basic_play(obs) -> bool:
-    """True if MAIN menu includes PLAY for Duraludon or Relicanth."""
-    if obs.select is None or obs.select.context != SelectContext.MAIN:
-        return False
-    for opt in obs.select.option:
-        if opt.type != OptionType.PLAY:
-            continue
-        card = option_card(obs, opt)
-        if card and card.id in {DURALUDON, RELICANTH}:
-            return True
-    return False
-
-
-def _active_is_empty(obs) -> bool:
-    ps = my_state(obs)
-    return not ps.active or not ps.active[0]
-
-
-def _empty_bench_basic_score(obs, opt, score: int, reason: str) -> tuple[int, str]:
-    """Central empty-bench policy for this deck (169/57 are engine Basics)."""
-    if not _bench_is_empty(obs):
-        return score, reason
-    card = option_card(obs, opt)
-    cid = card.id if card else None
-    ctx = obs.select.context
-
-    if cid in {DURALUDON, RELICANTH}:
-        if opt.type == OptionType.PLAY and ctx == SelectContext.MAIN:
-            return max(score, 50000), "empty bench: bench basic (MAIN)"
-        if opt.type == OptionType.CARD and ctx in {
-            SelectContext.SETUP_BENCH_POKEMON,
-            SelectContext.TO_BENCH,
-            SelectContext.TO_FIELD,
-        }:
-            return max(score, 25000), "empty bench: place basic"
-
-    if opt.type == OptionType.PLAY and ctx == SelectContext.MAIN and cid == ULTRA_BALL:
-        return min(score, -5000), "empty bench: no Ultra Ball"
-
-    if opt.type == OptionType.END and ctx == SelectContext.MAIN and _main_has_basic_play(obs):
-        return -50000, "empty bench: must bench basic"
-
-    return score, reason
-
-
-def _best_bench_attacker(obs):
-    ps = my_state(obs)
-    best = None
-    best_prio = -1
-    prio = {ARCHALUDON_EX: 3, DURALUDON: 2, CINDERACE: 1}
-    for p in ps.bench:
-        if not p or p.id not in prio:
-            continue
-        if prio[p.id] > best_prio:
-            best_prio = prio[p.id]
-            best = p
-    return best
-
-
-def _active_is_dead_weight(obs) -> bool:
-    active = active_pokemon(obs)
-    if not active:
-        return False
-    max_hp = getattr(active, "maxHp", None) or active.hp
-    if max_hp <= 0:
-        return False
-    ratio = active.hp / max_hp
-    if active.id == RELICANTH and ratio <= 0.25:
-        return True
-    return ratio <= 0.25 and energy_count(active) == 0
-
-
-def _dead_active_tempo_score(obs, opt, score: int, reason: str) -> tuple[int, str]:
-    """R12: dead Active — power bench attacker instead of END/attach stall (82062971 class)."""
-    if obs.select is None or obs.select.context != SelectContext.MAIN:
-        return score, reason
-    if not _active_is_dead_weight(obs):
-        return score, reason
-    attacker = _best_bench_attacker(obs)
-    if not attacker:
-        return score, reason
-
-    if opt.type == OptionType.ATTACH:
-        target = option_target(obs, opt)
-        if (
-            target
-            and target.id == attacker.id
-            and getattr(opt, "inPlayArea", None) == AreaType.BENCH
-        ):
-            return max(score, 35000), "R12: energize bench attacker"
-        return score, reason
-
-    if opt.type == OptionType.RETREAT and not obs.current.retreated:
-        ok, _ = attack_energy_route(obs, attacker)
-        if ok or energy_count(attacker) >= 1:
-            return max(score, 30000), "R12: retreat to bench attacker"
-
-    if opt.type == OptionType.END and not obs.current.energyAttached:
-        if METAL_ENERGY in hand_ids(obs) or energy_count(attacker) >= 1:
-            return min(score, -15000), "R12: don't END on dead active"
-
-    return score, reason
-
-
-def _main_legal_attack_ko(obs) -> bool:
-    """True if any legal MAIN attack KOs opponent Active."""
-    if obs.select is None or obs.select.context != SelectContext.MAIN:
-        return False
-    opp_act = opp_active_pokemon(obs)
-    if not opp_act:
-        return False
-    for opt in obs.select.option:
-        if opt.type != OptionType.ATTACK:
-            continue
-        dmg = best_attack_damage(obs, getattr(opt, "attackId", None) or 0)
-        if effective_damage(dmg, opp_act) >= opp_act.hp:
-            return True
-    return False
-
-
-def _prize_race_attach_cap(obs, opt, score: int, reason: str) -> tuple[int, str]:
-    """R11: when behind in prizes and a legal attack KOs Active, cap attach/tempo below the KO."""
-    if obs.select is None or obs.select.context != SelectContext.MAIN:
-        return score, reason
-    our_prizes, opp_prizes = _prize_counts(obs)
-    if our_prizes <= opp_prizes:
-        return score, reason
-    if _bench_is_empty(obs) and _main_has_basic_play(obs):
-        return score, reason
-    if not _main_legal_attack_ko(obs):
-        return score, reason
-
-    if opt.type == OptionType.ATTACK:
-        opp_act = opp_active_pokemon(obs)
-        aid = getattr(opt, "attackId", None) or 0
-        dmg = best_attack_damage(obs, aid)
-        if opp_act and effective_damage(dmg, opp_act) >= opp_act.hp:
-            pv = prize_value(opp_act)
-            boost = 55000 + pv * 5000
-            if our_prizes <= pv:
-                boost += 10000
-            return max(score, boost), "R11: lethal attack when behind"
-        return score, reason
-
-    if opt.type == OptionType.ATTACH:
-        return min(score, 5000), "R11: cap attach when lethal available"
-
-    if opt.type == OptionType.PLAY:
-        card = option_card(obs, opt)
-        cid = card.id if card else None
-        if cid in {DURALUDON, RELICANTH}:
-            return score, reason
-        return min(score, 5000), "R11: cap tempo when lethal available"
-
-    if opt.type == OptionType.EVOLVE:
-        return min(score, 5000), "R11: cap evolve when lethal ready"
-
-    return score, reason
-
-
-def _mandatory_promote_score(obs, opt, score: int, reason: str) -> tuple[int, str]:
-    """After active KO — must pick new Active from bench (82068759 class). R8a lever."""
-    ctx = obs.select.context
-    if ctx not in {SelectContext.TO_ACTIVE, SelectContext.SWITCH}:
-        return score, reason
-    if opt.type != OptionType.CARD:
-        return score, reason
-    yi = obs.current.yourIndex
-    if getattr(opt, "playerIndex", yi) != yi:
-        return score, reason
-    if not _active_is_empty(obs):
-        return score, reason
-    card = option_card(obs, opt)
-    if not card:
-        return score, reason
-    promote_priority = {
-        ARCHALUDON_EX: 60000,
-        CINDERACE: 55000,
-        DURALUDON: 50000,
-        RELICANTH: 48000,
-    }
-    boost = promote_priority.get(card.id)
-    if boost is not None:
-        return max(score, boost), "must promote: empty active"
-    return score, reason
-
-
-def _prize_counts(obs) -> tuple[int, int]:
-    us = len(my_state(obs).prize or [])
-    them = len(opp_state(obs).prize or [])
-    return us, them
-
-
-def score_attack(obs, opt) -> tuple[int, str]:
-    """R10: prioritize KOs and prize-race tempo (7/10 champion losses were prize)."""
-    aid = getattr(opt, "attackId", None) or 0
-    dmg = best_attack_damage(obs, aid)
-    opp = opp_active_pokemon(obs)
-    our_prizes, opp_prizes = _prize_counts(obs)
-    behind = our_prizes > opp_prizes
-
-    if opp and effective_damage(dmg, opp) >= opp.hp:
-        pv = prize_value(opp)
-        score = 50000 + pv * 5000
-        if behind:
-            score += 5000
-        if our_prizes <= pv:
-            score += 10000
-        return score, "attack KO"
-
-    score = dmg + (3000 if behind else 0)
-    if aid == METAL_DEFENDER and opp and effective_damage(dmg, opp) >= opp.hp - 30:
-        score += 2000
-    return score, "attack"
 
 
 def opp_state(obs):
@@ -500,7 +267,7 @@ def safe_discard_count(obs):
             safe += 1
         elif cid == CINDERACE:
             safe += 1
-    draw_in_hand = sum(1 for c in ids if c in (LILLIE, EXPLORER, JUDGE))
+    draw_in_hand = sum(1 for c in ids if c in (LILLIE, EXPLORER))
     if draw_in_hand >= 2:
         safe += draw_in_hand - 1
     return safe
@@ -543,7 +310,7 @@ def _first_option_index(obs, card_id):
     return None
 
 
-# ── Attack routes ──
+# ââ Attack routes ââ
 
 def direct_attack_energy_route(obs, pokemon):
     e = energy_count(pokemon)
@@ -624,7 +391,36 @@ def planned_archaludon_attacks(obs):
     return attacks
 
 
-# ── Matchup detection & opponent max damage ──
+# ââ Matchup detection & opponent max damage ââ
+
+ALAKAZAM_LINE = {741, 742, 743}
+_ALA_BOARD_GAIN = {66: 3, 742: 2, 305: 2, 65: 2, 741: 1}  # Dudunsparce, Kadabra, DunsparceÃ2, Abra
+
+
+def _estimate_alakazam_from_pokes(opp, pokes):
+    """(floor, ceiling, ceiling_with_boss) damage from visible Alakazam line."""
+    ids = [p.id for p in pokes if p]
+    if not (ALAKAZAM_LINE & set(ids)):
+        return 0, 0, 0
+    base = opp.handCount + 1
+    gain = sum(_ALA_BOARD_GAIN.get(i, 0) for i in ids)
+    enriching_seen = (
+        any(c and c.id == 13 for c in (opp.discard or []))
+        or any(c and c.id == 13 for p in pokes if p for c in (getattr(p, "energyCards", None) or []))
+    )
+    if not enriching_seen:
+        gain += 3
+    if any(i == 140 for i in ids):
+        gain += 3
+    return base * 20, (base + gain + 2) * 20, (base + gain - 1) * 20
+
+
+def _estimate_alakazam(obs):
+    """(floor, ceiling, ceiling_with_boss) damage from Powerful Hand."""
+    opp = opp_state(obs)
+    pokes = ([opp.active[0]] if opp.active else []) + list(opp.bench or [])
+    return _estimate_alakazam_from_pokes(opp, pokes)
+
 
 def detect_matchup(obs):
     opp = opp_state(obs)
@@ -637,16 +433,8 @@ def detect_matchup(obs):
         return "starmie"
     if ids & LUCARIO_LINE:
         return "lucario"
-    if ids & DRAGAPULT_LINE:
-        return "dragapult"
     if ids & ALAKAZAM_LINE:
         return "alakazam"
-    if ids & ABOMASNOW_LINE:
-        return "abomasnow"
-    if ids & TREVENANT_LINE:
-        return "trevenant"
-    if ids & IONO_LINE:
-        return "iono"
     return "generic"
 
 
@@ -663,25 +451,114 @@ def opp_max_damage(obs):
         return 270  # Mega Brave base. PPP adds +30 each but unpredictable
     if matchup == "starmie":
         return 210
-    if matchup == "dragapult":
-        return 200
-    if matchup == "abomasnow":
-        return 230
     return 220
 
 
-# ── Ice Cream guard ──
+# ââ Overrides ââ
 
+def apply_overrides(obs, opt, score, reason):
+    # Hard rule: don't Explorer with low deck
+    if opt.type == OptionType.PLAY:
+        card = option_card(obs, opt)
+        cid = card.id if card else None
+        if my_state(obs).deckCount <= 10 and cid == EXPLORER:
+            return -5000, "hard: don't Explorer with low deck"
+
+    if detect_matchup(obs) != "crustle":
+        return score, reason
+
+    # Crustle overrides
+    card = option_card(obs, opt)
+    cid = card.id if card else getattr(opt, 'cardId', None)
+    ctx = obs.select.context
+
+    if opt.type == OptionType.EVOLVE and cid == ARCHALUDON_EX:
+        return -10000, "Crustle: don't evolve to ex"
+
+    if opt.type == OptionType.ATTACK:
+        aid = getattr(opt, 'attackId', None)
+        active = active_pokemon(obs)
+        opp_act = opp_active_pokemon(obs)
+        opp_has_spiky = bool(opp_act and any(
+            getattr(c, 'id', None) == 14
+            for c in (getattr(opp_act, 'energyCards', None) or [])))
+        if (active and active.id == DURALUDON and active.hp == 130
+                and opp_act and opp_act.id == 345 and energy_count(opp_act) >= 2
+                and opp_has_spiky):
+            return -3000, "Crustle: full HP Duraludon waits out Spiky"
+        if aid == METAL_DEFENDER:
+            return -5000, "Crustle: Metal Defender does 0"
+        if aid == RAGING_HAMMER:
+            rh_dmg = 80 + damage_on(active_pokemon(obs)) // 10 * 10
+            return max(score, 200), "Crustle: Raging Hammer"
+
+    if opt.type == OptionType.PLAY:
+        if cid == RELICANTH:
+            return -5000, "Crustle: skip Relicanth"
+        dc = my_state(obs).deckCount
+        if dc <= 10 and cid in (EXPLORER, LILLIE):
+            if cid == LILLIE and dc <= 3 and my_state(obs).handCount >= dc + 6:
+                return 15000, "Crustle: Lillie to refill deck"
+            return -5000, "Crustle: don't draw with low deck"
+        if cid == LILLIE:
+            has_metal = any(c and c.id == METAL_ENERGY for c in (my_state(obs).hand or []) if c)
+            if not has_metal:
+                return score, "Crustle: Lillie OK (no energy in hand)"
+
+    if opt.type == OptionType.ATTACH:
+        target = option_target(obs, opt)
+        tid = target.id if target else None
+        if getattr(opt, 'inPlayArea', None) == AreaType.BENCH and tid == DURALUDON:
+            return score + 10000, "Crustle: bench Duraludon energy priority"
+        if getattr(opt, 'inPlayArea', None) == AreaType.ACTIVE:
+            active = active_pokemon(obs)
+            if active and energy_count(active) >= 2:
+                return score + 3000, "Crustle: Active 3rd energy"
+
+    if ctx == SelectContext.TO_HAND and opt.type == OptionType.CARD and cid == ARCHALUDON_EX:
+        return -3000, "Crustle: skip Archaludon ex"
+
+    if ctx in {SelectContext.DISCARD, SelectContext.DISCARD_CARD_OR_ATTACHED_CARD}:
+        if cid == ARCHALUDON_EX and score < 0:
+            return 9000, "Crustle: discard Archaludon ex"
+
+    return score, reason
+
+
+# ââ Scoring ââ
+
+def score_setup(obs, opt):
+    card = option_card(obs, opt)
+    cid = card.id if card else None
+    ctx = obs.select.context
+
+    if ctx == SelectContext.MULLIGAN:
+        return (10000, "no mulligan") if opt.type == OptionType.NO else (0, "mulligan")
+    if ctx == SelectContext.IS_FIRST:
+        return (10000, "choose second") if opt.type == OptionType.NO else (0, "go first")
+    if ctx == SelectContext.SETUP_ACTIVE_POKEMON:
+        return _SETUP_ACTIVE_PRIORITY.get(cid, (0, "unknown Active"))
+    if ctx == SelectContext.SETUP_BENCH_POKEMON:
+        return -10000, "never bench during setup"
+    return 0, "non-setup"
+
+
+# HP threshold per matchup: skip Ice Cream if HP > this value
 _ICE_CREAM_HP_THRESHOLD = {
-    "lucario": 270, "starmie": 210, "crustle": 120,
-    "hop": 220, "alakazam": 999, "generic": 230,
+    "lucario": 270,
+    "starmie": 210,
+    "crustle": 120,
+    "hop": 220,
+    "generic": 230,
 }
+
 
 def should_skip_ice_cream(obs, active):
     """Decide whether to skip Jumbo Ice Cream. Returns (skip: bool, reason: str)."""
+    # 1. Active must be Archaludon ex
     if active.id != ARCHALUDON_EX:
         return True, "skip Ice Cream: not Archaludon ex"
-    # Raging Hammer KO guard
+    # 2. Raging Hammer KO guard: don't heal if it loses a KO (but 220 Metal Defender still KOs â heal OK)
     opp_act = opp_active_pokemon(obs)
     if opp_act and has_in_play(obs, RELICANTH):
         md_kills = effective_damage(220, opp_act) >= opp_act.hp
@@ -690,7 +567,7 @@ def should_skip_ice_cream(obs, active):
             rh_after = 80 + max(0, damage_on(active) - 80) // 10 * 10
             if effective_damage(rh_dmg, opp_act) >= opp_act.hp and effective_damage(rh_after, opp_act) < opp_act.hp:
                 return True, "skip Ice Cream: healing loses Raging Hammer KO"
-    # Alakazam all-or-nothing
+    # 3. Alakazam: all-or-nothing Ice Cream decision
     matchup = detect_matchup(obs)
     if matchup == "alakazam":
         floor, ceiling, _ = _estimate_alakazam(obs)
@@ -708,155 +585,12 @@ def should_skip_ice_cream(obs, active):
         if hp_after_all >= ceiling:
             return False, f"use Ice Cream: {ice_count}x heal ({hp_after_all}) >= ceil {ceiling}"
         return False, f"use Ice Cream: {ice_count}x heal ({hp_after_all}) between floor={floor} ceil={ceiling}"
-    # HP above matchup threshold
+    # 4. HP above matchup threshold
     threshold = _ICE_CREAM_HP_THRESHOLD.get(matchup, 220)
     if active.hp > threshold:
         return True, f"skip Ice Cream: HP {active.hp} > {threshold} ({matchup})"
+    # 5. Use it
     return False, ""
-
-def apply_overrides(obs, opt, score, reason):
-    score, reason = _empty_bench_basic_score(obs, opt, score, reason)
-    score, reason = _dead_active_tempo_score(obs, opt, score, reason)
-    score, reason = _prize_race_attach_cap(obs, opt, score, reason)
-    score, reason = _mandatory_promote_score(obs, opt, score, reason)
-
-    if opt.type == OptionType.PLAY:
-        card = option_card(obs, opt)
-        cid = card.id if card else None
-        if my_state(obs).deckCount <= 10 and cid == EXPLORER:
-            return -5000, "hard: don't Explorer with low deck"
-        if my_state(obs).deckCount <= 5 and cid in (LILLIE, JUDGE):
-            return -5000, "hard: don't Lillie with low deck"
-
-    matchup = detect_matchup(obs)
-    card = option_card(obs, opt)
-    cid = card.id if card else getattr(opt, 'cardId', None)
-    ctx = obs.select.context
-
-    if matchup == "crustle":
-        if opt.type == OptionType.EVOLVE and cid == ARCHALUDON_EX:
-            return -10000, "Crustle: don't evolve to ex"
-        if opt.type == OptionType.ATTACK:
-            aid = getattr(opt, 'attackId', None)
-            if aid == METAL_DEFENDER:
-                return -5000, "Crustle: Metal Defender does 0"
-            if aid == RAGING_HAMMER:
-                opp_act = opp_active_pokemon(obs)
-                rh_dmg = 80 + damage_on(active_pokemon(obs)) // 10 * 10
-                if opp_act and rh_dmg < opp_act.hp:
-                    opp_has_spiky = any(
-                        getattr(c, 'id', None) == 14
-                        for c in (getattr(opp_act, 'energyCards', None) or []))
-                    if opp_has_spiky:
-                        return -3000, "Crustle: don't attack into Spiky Energy without OHKO"
-                return max(score, 200), "Crustle: Raging Hammer"
-        if opt.type == OptionType.PLAY:
-            if cid == RELICANTH:
-                return -5000, "Crustle: skip Relicanth"
-            dc = my_state(obs).deckCount
-            if dc <= 10 and cid in (EXPLORER, LILLIE):
-                if cid == LILLIE and dc <= 3 and my_state(obs).handCount >= dc + 6:
-                    return 15000, "Crustle: Lillie to refill deck"
-                return -5000, "Crustle: don't draw with low deck"
-            if cid == LILLIE:
-                has_metal = any(c and c.id == METAL_ENERGY for c in (my_state(obs).hand or []) if c)
-                if not has_metal:
-                    return score, "Crustle: Lillie OK (no energy in hand)"
-        if opt.type == OptionType.ATTACH:
-            target = option_target(obs, opt)
-            tid = target.id if target else None
-            if getattr(opt, 'inPlayArea', None) == AreaType.BENCH and tid == DURALUDON:
-                return score + 10000, "Crustle: bench Duraludon energy priority"
-            if getattr(opt, 'inPlayArea', None) == AreaType.ACTIVE:
-                active = active_pokemon(obs)
-                if active and energy_count(active) >= 2:
-                    return score + 3000, "Crustle: Active 3rd energy"
-        if ctx == SelectContext.TO_HAND and opt.type == OptionType.CARD and cid == ARCHALUDON_EX:
-            return -3000, "Crustle: skip Archaludon ex"
-        if ctx in {SelectContext.DISCARD, SelectContext.DISCARD_CARD_OR_ATTACHED_CARD}:
-            if cid == ARCHALUDON_EX and score < 0:
-                return 9000, "Crustle: discard Archaludon ex"
-
-    # ── Alakazam single-prize aggro ──
-    if matchup == "alakazam":
-        if opt.type == OptionType.ATTACK:
-            active = active_pokemon(obs)
-            if active and active.id == ARCHALUDON_EX:
-                opp_act = opp_active_pokemon(obs)
-                if opp_act and opp_act.hp <= 220:
-                    return max(score, 25000), "Alakazam: KO single-prizer"
-        if opt.type == OptionType.PLAY:
-            if cid == HERO_CAPE:
-                has_arch = has_in_play(obs, ARCHALUDON_EX)
-                arch = next((p for p in all_my_pokemon(obs) if p and p.id == ARCHALUDON_EX), None)
-                if has_arch and arch and not has_tool(arch):
-                    return 20000, "Alakazam: Cape to survive"
-        if opt.type == OptionType.ATTACH:
-            target = option_target(obs, opt)
-            tid = target.id if target else None
-            if tid == ARCHALUDON_EX and energy_count(target) < 3:
-                return score + 8000, "Alakazam: rush Arch energy"
-
-    # ── Dragapult spread ──
-    if matchup == "dragapult":
-        if opt.type == OptionType.ATTACH:
-            target = option_target(obs, opt)
-            tid = target.id if target else None
-            if tid == ARCHALUDON_EX:
-                arch_count = energy_count(target)
-                if arch_count < 3:
-                    return score + 10000, "Dragapult: rush Arch energy"
-                elif not has_tool(target):
-                    return score + 5000, "Dragapult: power Arch"
-        if opt.type == OptionType.PLAY:
-            if cid == HERO_CAPE:
-                arch = next((p for p in all_my_pokemon(obs) if p and p.id == ARCHALUDON_EX), None)
-                if arch and not has_tool(arch):
-                    return 25000, "Dragapult: Cape Arch"
-            if cid == FULL_METAL_LAB and obs.current.stadium is None:
-                return 15000, "Dragapult: Full Metal Lab"
-
-    # ── Abomasnow spread ──
-    if matchup == "abomasnow":
-        if opt.type == OptionType.PLAY and cid == HERO_CAPE:
-            arch = next((p for p in all_my_pokemon(obs) if p and p.id == ARCHALUDON_EX), None)
-            if arch and not has_tool(arch):
-                return 25000, "Abomasnow: Cape Arch to survive"
-        if opt.type == OptionType.PLAY and cid == JUMBO_ICE_CREAM:
-            active = active_pokemon(obs)
-            if active and active.id == ARCHALUDON_EX and damage_on(active) >= 60:
-                return 18000, "Abomasnow: heal Arch"
-
-    return score, reason
-
-
-# ── Scoring ──
-
-def score_setup(obs, opt):
-    card = option_card(obs, opt)
-    cid = card.id if card else None
-    ctx = obs.select.context
-
-    if ctx == SelectContext.MULLIGAN:
-        return (10000, "no mulligan") if opt.type == OptionType.NO else (0, "mulligan")
-    if ctx == SelectContext.IS_FIRST:
-        return (10000, "choose second") if opt.type == OptionType.NO else (0, "go first")
-    if ctx == SelectContext.SETUP_ACTIVE_POKEMON:
-        return _SETUP_ACTIVE_PRIORITY.get(cid, (0, "unknown Active"))
-    if ctx == SelectContext.SETUP_BENCH_POKEMON:
-        if cid in _SETUP_BENCH_PRIORITY:
-            return _SETUP_BENCH_PRIORITY[cid]
-        return -10000, "skip non-basic setup bench"
-    return 0, "non-setup"
-
-
-_ICE_CREAM_HP_THRESHOLD = {
-    "lucario": 270,
-    "starmie": 210,
-    "crustle": 120,
-    "hop": 220,
-    "generic": 230,
-}
 
 
 ITEMS = {POKE_PAD, ULTRA_BALL, POKEGEAR, NIGHT_STRETCHER, JUMBO_ICE_CREAM, HERO_CAPE}
@@ -867,18 +601,18 @@ def score_play(obs, opt):
     cid = card.id if card else None
     ids = hand_ids(obs)
 
+    # ââ Pokemon: bench if available ââ
     if cid in {DURALUDON, RELICANTH}:
-        bench_empty = len([p for p in my_state(obs).bench if p]) == 0
-        if bench_empty:
-            return 50000, "play Pokemon (empty bench — R7)"
         return 18000, "play Pokemon"
 
+    # ââ Stadium ââ
     if cid == FULL_METAL_LAB:
         active = active_pokemon(obs)
         if active and active.id not in {DURALUDON, ARCHALUDON_EX}:
             return -200, "skip FML: Active not Metal"
         return 20000, "play Full Metal Lab"
 
+    # ââ Items: default 20000, only negative exceptions ââ
     if cid in ITEMS:
         if cid == HERO_CAPE:
             if not any(p.id in {ARCHALUDON_EX, DURALUDON} and not has_tool(p) for p in all_my_pokemon(obs)):
@@ -903,7 +637,7 @@ def score_play(obs, opt):
         if cid == ULTRA_BALL:
             bench_empty = len([p for p in my_state(obs).bench if p]) == 0
             if bench_empty:
-                return -5000, "Ultra Ball: bench empty (must bench basic first)"
+                return 300, "Ultra Ball: bench empty (donk risk)"
             metal_in_hand = sum(1 for c in (my_state(obs).hand or []) if c and c.id == METAL_ENERGY)
             metal_in_trash = metal_in_discard(obs)
             if metal_in_trash == 0 and metal_in_hand >= 1:
@@ -925,25 +659,21 @@ def score_play(obs, opt):
             return -500, "save Lillie: Boss in hand with attacker ready"
         return 5000, "play Lillie"
 
-    if cid == JUDGE:
-        if obs.current.supporterPlayed:
-            return -1000, "Supporter already used"
-        if my_state(obs).deckCount <= 8:
-            return -5000, "Judge: deck too low"
-        return 5000, "Judge: disrupt + draw"
-
     if cid == BOSS:
         if obs.current.supporterPlayed:
             return -1000, "Supporter already used"
+        # vs Hop: Boss Snorlax to remove Extra Helpings (+30) ASAP
         if detect_matchup(obs) == "hop":
             active = active_pokemon(obs)
             opp_has_snorlax = any(p.id == HOP_SNORLAX for p in opp_bench_pokemon(obs))
             if opp_has_snorlax and active:
+                # Case 1: Cinderace active + bench has Duraludon â Turbo Flare Snorlax
                 if active.id == CINDERACE:
                     has_dura_bench = any(p.id in {DURALUDON, ARCHALUDON_EX}
                                         for p in my_state(obs).bench if p)
                     if has_dura_bench:
                         return 16500, "Boss: pull Snorlax (Cinderace Turbo Flare)"
+                # Case 2: Archaludon active, HP > 220, can attack â Boss Snorlax
                 if active.id == ARCHALUDON_EX and active.hp > 220:
                     ok, _ = attack_energy_route(obs, active)
                     if ok:
@@ -1055,6 +785,7 @@ def attach_target_score(obs, target, area):
     else:
         score = 1000 + (1000 if e == 0 else 0)
 
+    # HP-based adjustment
     if target.hp > 0:
         max_hp = getattr(target, "maxHp", target.hp)
         ratio = target.hp / max_hp if max_hp > 0 else 1
@@ -1109,8 +840,7 @@ def score_option(obs, opt):
 
     if ctx in {SelectContext.IS_FIRST, SelectContext.MULLIGAN,
                SelectContext.SETUP_ACTIVE_POKEMON, SelectContext.SETUP_BENCH_POKEMON}:
-        score, reason = score_setup(obs, opt)
-        return _empty_bench_basic_score(obs, opt, score, reason)
+        return score_setup(obs, opt)
 
     if opt.type in {OptionType.YES, OptionType.NO}:
         if ctx == SelectContext.IS_FIRST:
@@ -1131,10 +861,7 @@ def score_option(obs, opt):
         elif opt.type == OptionType.ATTACK:
             score, reason = best_attack_damage(obs, opt.attackId), "attack"
         elif opt.type == OptionType.END:
-            if _bench_is_empty(obs) and _main_has_basic_play(obs):
-                score, reason = -50000, "empty bench: must bench basic"
-            else:
-                score, reason = 0, "end turn"
+            score, reason = 0, "end turn"
         else:
             score, reason = 500, "generic MAIN"
     elif ctx == SelectContext.TO_HAND:
@@ -1215,8 +942,6 @@ def score_to_hand(obs, opt):
         return 5000, "take Full Metal Lab"
     if cid == BOSS:
         return 2500, "take Boss"
-    if cid == JUDGE:
-        return 3000, "take Judge"
     return 1000, "generic take"
 
 
@@ -1295,13 +1020,16 @@ def score_target(obs, opt):
         yi = obs.current.yourIndex
         pi = getattr(opt, 'playerIndex', yi)
         if pi != yi and card:
+            # vs Hop: prioritize Snorlax (remove Extra Helpings)
             if detect_matchup(obs) == "hop" and cid == HOP_SNORLAX and card:
                 active = active_pokemon(obs)
                 e = energy_count(card)
                 tools = len(getattr(card, 'tools', None) or [])
                 if active and active.id == CINDERACE:
+                    # Cinderace: pull the least mobile Snorlax (low energy, no tools, high HP)
                     return 30000 - e * 100 - tools * 50 + card.hp, "Boss: Snorlax (immobile target)"
                 else:
+                    # Archaludon: pull the most threatening Snorlax (high energy, tools, high HP)
                     return 30000 + e * 100 + tools * 50 + card.hp, "Boss: Snorlax (biggest threat)"
             pv = prize_value(card)
             te = energy_count(card)
@@ -1324,6 +1052,8 @@ def score_target(obs, opt):
 
     return 1000, "generic target"
 
+
+# ââ Choose & Agent ââ
 
 def choose_options(obs):
     scored = []
@@ -1350,13 +1080,13 @@ def choose_options(obs):
     return selected
 
 
-def _agent_impl(obs_dict):
+def agent(obs_dict):
     obs = to_observation_class(obs_dict)
     if obs.select is None:
         global _opp_last_attack_id, _cur_turn_logs
         _opp_last_attack_id = None
         _cur_turn_logs.clear()
-        return my_deck
+        return read_deck_csv()
     _update_opp_attack_tracking(obs)
     if not obs.select.option:
         return []
@@ -1364,76 +1094,3 @@ def _agent_impl(obs_dict):
         return choose_options(obs)
     except Exception:
         return random.sample(list(range(len(obs.select.option))), obs.select.maxCount)
-
-
-def _resolve_deck_path() -> str:
-    env = os.environ.get("ARCHALUDON_DECK")
-    if env and os.path.exists(env):
-        return env
-    if os.path.exists("deck.csv"):
-        return "deck.csv"
-    try:
-        here = os.path.dirname(os.path.abspath(__file__))
-    except NameError:
-        here = None
-    if here:
-        packaged = os.path.join(here, "deck.csv")
-        if os.path.exists(packaged):
-            return packaged
-        repo_default = os.path.join(here, "..", "agent_decks", "archaludon_ex_cinderace.csv")
-        if os.path.exists(repo_default):
-            return repo_default
-    return "/kaggle_simulations/agent/deck.csv"
-
-
-with open(_resolve_deck_path(), "r", encoding="utf-8") as file:
-    _csv = file.read().split("\n")
-my_deck = [int(_csv[i]) for i in range(60)]
-
-
-def _legal_fallback(obs_dict: dict) -> list[int]:
-    sel = obs_dict.get("select")
-    if sel is None:
-        return my_deck
-    n = len(sel.get("option", []))
-    min_c = int(sel.get("minCount") or 0)
-    max_c = int(sel.get("maxCount") or 0)
-    if n == 0 or max_c == 0:
-        return []
-    k = min_c if min_c > 0 else min(1, max_c)
-    k = min(k, max_c, n)
-    return list(range(k))
-
-
-def _is_legal(out, obs_dict: dict) -> bool:
-    sel = obs_dict.get("select")
-    if sel is None:
-        return isinstance(out, list) and len(out) == 60
-    if not isinstance(out, list):
-        return False
-    n = len(sel.get("option", []))
-    min_c = int(sel.get("minCount") or 0)
-    max_c = int(sel.get("maxCount") or 0)
-    if len(out) != len(set(out)):
-        return False
-    if not all(isinstance(i, int) and 0 <= i < n for i in out):
-        return False
-    return min_c <= len(out) <= max_c
-
-
-try:
-    from agent.archaludon_bench_guard import apply_bench_guard
-except ImportError:
-    from archaludon_bench_guard import apply_bench_guard
-
-
-def agent(obs_dict: dict) -> list[int]:
-    try:
-        raw = _agent_impl(obs_dict)
-        bench_on = os.environ.get("ARCHALUDON_BENCH_GUARD", "1") != "0"
-        out = apply_bench_guard(obs_dict, raw) if bench_on else raw
-        if not _is_legal(out, obs_dict):
-            return _legal_fallback(obs_dict)
-    except Exception:
-        return _legal_fallback(obs_dict)
-    return out
