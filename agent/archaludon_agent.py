@@ -107,6 +107,8 @@ CARD_DB = {c.cardId: c for c in all_card_data()}
 MEGA_BRAVE = 983
 PREMIUM_POWER_PRO = 1141
 HARIYAMA_LINE = {673, 674}
+DRAGAPULT_LINE = {587, 588, 589, 680, 681}
+ABOMASNOW_LINE = {78, 79, 80, 335}
 
 # Track opponent's last-turn attack via logs
 _opp_last_attack_id = None
@@ -435,6 +437,10 @@ def detect_matchup(obs):
         return "lucario"
     if ids & ALAKAZAM_LINE:
         return "alakazam"
+    if ids & DRAGAPULT_LINE:
+        return "dragapult"
+    if ids & ABOMASNOW_LINE:
+        return "abomasnow"
     return "generic"
 
 
@@ -451,6 +457,10 @@ def opp_max_damage(obs):
         return 270  # Mega Brave base. PPP adds +30 each but unpredictable
     if matchup == "starmie":
         return 210
+    if matchup == "dragapult":
+        return 200  # Phantom Dive spread, not single-target lethal
+    if matchup == "abomasnow":
+        return 280  # reckless Sheer Cold
     return 220
 
 
@@ -464,63 +474,102 @@ def apply_overrides(obs, opt, score, reason):
         if my_state(obs).deckCount <= 10 and cid == EXPLORER:
             return -5000, "hard: don't Explorer with low deck"
 
-    if detect_matchup(obs) != "crustle":
+    matchup = detect_matchup(obs)
+    if matchup not in ("crustle", "alakazam"):
         return score, reason
 
-    # Crustle overrides
-    card = option_card(obs, opt)
-    cid = card.id if card else getattr(opt, 'cardId', None)
-    ctx = obs.select.context
+    # ── Crustle overrides ──
+    if matchup == "crustle":
+        card = option_card(obs, opt)
+        cid = card.id if card else getattr(opt, 'cardId', None)
+        ctx = obs.select.context
 
-    if opt.type == OptionType.EVOLVE and cid == ARCHALUDON_EX:
-        return -10000, "Crustle: don't evolve to ex"
+        if opt.type == OptionType.EVOLVE and cid == ARCHALUDON_EX:
+            return -10000, "Crustle: don't evolve to ex"
 
-    if opt.type == OptionType.ATTACK:
-        aid = getattr(opt, 'attackId', None)
-        active = active_pokemon(obs)
-        opp_act = opp_active_pokemon(obs)
-        opp_has_spiky = bool(opp_act and any(
-            getattr(c, 'id', None) == 14
-            for c in (getattr(opp_act, 'energyCards', None) or [])))
-        if (active and active.id == DURALUDON and active.hp == 130
-                and opp_act and opp_act.id == 345 and energy_count(opp_act) >= 2
-                and opp_has_spiky):
-            return -3000, "Crustle: full HP Duraludon waits out Spiky"
-        if aid == METAL_DEFENDER:
-            return -5000, "Crustle: Metal Defender does 0"
-        if aid == RAGING_HAMMER:
-            rh_dmg = 80 + damage_on(active_pokemon(obs)) // 10 * 10
-            return max(score, 200), "Crustle: Raging Hammer"
-
-    if opt.type == OptionType.PLAY:
-        if cid == RELICANTH:
-            return -5000, "Crustle: skip Relicanth"
-        dc = my_state(obs).deckCount
-        if dc <= 10 and cid in (EXPLORER, LILLIE):
-            if cid == LILLIE and dc <= 3 and my_state(obs).handCount >= dc + 6:
-                return 15000, "Crustle: Lillie to refill deck"
-            return -5000, "Crustle: don't draw with low deck"
-        if cid == LILLIE:
-            has_metal = any(c and c.id == METAL_ENERGY for c in (my_state(obs).hand or []) if c)
-            if not has_metal:
-                return score, "Crustle: Lillie OK (no energy in hand)"
-
-    if opt.type == OptionType.ATTACH:
-        target = option_target(obs, opt)
-        tid = target.id if target else None
-        if getattr(opt, 'inPlayArea', None) == AreaType.BENCH and tid == DURALUDON:
-            return score + 10000, "Crustle: bench Duraludon energy priority"
-        if getattr(opt, 'inPlayArea', None) == AreaType.ACTIVE:
+        if opt.type == OptionType.ATTACK:
+            aid = getattr(opt, 'attackId', None)
             active = active_pokemon(obs)
-            if active and energy_count(active) >= 2:
-                return score + 3000, "Crustle: Active 3rd energy"
+            opp_act = opp_active_pokemon(obs)
+            opp_has_spiky = bool(opp_act and any(
+                getattr(c, 'id', None) == 14
+                for c in (getattr(opp_act, 'energyCards', None) or [])))
+            if (active and active.id == DURALUDON and active.hp == 130
+                    and opp_act and opp_act.id == 345 and energy_count(opp_act) >= 2
+                    and opp_has_spiky):
+                return -3000, "Crustle: full HP Duraludon waits out Spiky"
+            if aid == METAL_DEFENDER:
+                return -5000, "Crustle: Metal Defender does 0"
+            if aid == RAGING_HAMMER:
+                rh_dmg = 80 + damage_on(active_pokemon(obs)) // 10 * 10
+                return max(score, 200), "Crustle: Raging Hammer"
 
-    if ctx == SelectContext.TO_HAND and opt.type == OptionType.CARD and cid == ARCHALUDON_EX:
-        return -3000, "Crustle: skip Archaludon ex"
+        if opt.type == OptionType.PLAY:
+            if cid == RELICANTH:
+                return -5000, "Crustle: skip Relicanth"
+            dc = my_state(obs).deckCount
+            if dc <= 10 and cid in (EXPLORER, LILLIE):
+                if cid == LILLIE and dc <= 3 and my_state(obs).handCount >= dc + 6:
+                    return 15000, "Crustle: Lillie to refill deck"
+                return -5000, "Crustle: don't draw with low deck"
+            if cid == LILLIE:
+                has_metal = any(c and c.id == METAL_ENERGY for c in (my_state(obs).hand or []) if c)
+                if not has_metal:
+                    return score, "Crustle: Lillie OK (no energy in hand)"
 
-    if ctx in {SelectContext.DISCARD, SelectContext.DISCARD_CARD_OR_ATTACHED_CARD}:
-        if cid == ARCHALUDON_EX and score < 0:
-            return 9000, "Crustle: discard Archaludon ex"
+        if opt.type == OptionType.ATTACH:
+            target = option_target(obs, opt)
+            tid = target.id if target else None
+            if getattr(opt, 'inPlayArea', None) == AreaType.BENCH and tid == DURALUDON:
+                return score + 10000, "Crustle: bench Duraludon energy priority"
+            if getattr(opt, 'inPlayArea', None) == AreaType.ACTIVE:
+                active = active_pokemon(obs)
+                if active and energy_count(active) >= 2:
+                    return score + 3000, "Crustle: Active 3rd energy"
+
+        if ctx == SelectContext.TO_HAND and opt.type == OptionType.CARD and cid == ARCHALUDON_EX:
+            return -3000, "Crustle: skip Archaludon ex"
+
+        if ctx in {SelectContext.DISCARD, SelectContext.DISCARD_CARD_OR_ATTACHED_CARD}:
+            if cid == ARCHALUDON_EX and score < 0:
+                return 9000, "Crustle: discard Archaludon ex"
+
+    # ── Alakazam overrides ──
+    if matchup == "alakazam":
+        card = option_card(obs, opt)
+        cid = card.id if card else getattr(opt, 'cardId', None)
+        ctx = obs.select.context
+
+        # Stay single-prize Duraludon — don't evolve to 2-prize Archaludon ex
+        if opt.type == OptionType.EVOLVE and cid == ARCHALUDON_EX:
+            return -10000, "Alakazam: stay single-prize, don't evolve to ex"
+
+        if opt.type == OptionType.ATTACK:
+            aid = getattr(opt, 'attackId', None)
+            # Metal Defender (220) is worse than scaling Raging Hammer vs single-prize
+            if aid == METAL_DEFENDER:
+                return -5000, "Alakazam: use Raging Hammer, not Metal Defender"
+            if aid == RAGING_HAMMER:
+                rh_dmg = 80 + damage_on(active_pokemon(obs)) // 10 * 10
+                return max(score, 200), "Alakazam: Raging Hammer scales with damage"
+
+        if opt.type == OptionType.PLAY:
+            if cid == RELICANTH:
+                return -5000, "Alakazam: skip Relicanth, use Duraludon directly"
+
+        if opt.type == OptionType.ATTACH:
+            target = option_target(obs, opt)
+            tid = target.id if target else None
+            # Prioritize bench Duraludon energy for backup attackers
+            if getattr(opt, 'inPlayArea', None) == AreaType.BENCH and tid == DURALUDON:
+                return score + 10000, "Alakazam: bench Duraludon energy priority"
+
+        if ctx == SelectContext.TO_HAND and opt.type == OptionType.CARD and cid == ARCHALUDON_EX:
+            return -3000, "Alakazam: skip Archaludon ex"
+
+        if ctx in {SelectContext.DISCARD, SelectContext.DISCARD_CARD_OR_ATTACHED_CARD}:
+            if cid == ARCHALUDON_EX and score < 0:
+                return 9000, "Alakazam: discard Archaludon ex"
 
     return score, reason
 
@@ -549,6 +598,9 @@ _ICE_CREAM_HP_THRESHOLD = {
     "starmie": 210,
     "crustle": 120,
     "hop": 220,
+    "alakazam": 320,  # Alakazam can hit for 300+; heal only if HP well above ceiling
+    "dragapult": 200,
+    "abomasnow": 280,
     "generic": 230,
 }
 
