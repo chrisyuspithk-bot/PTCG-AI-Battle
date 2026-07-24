@@ -475,7 +475,7 @@ def apply_overrides(obs, opt, score, reason):
             return -5000, "hard: don't Explorer with low deck"
 
     matchup = detect_matchup(obs)
-    if matchup != "crustle":
+    if matchup not in ("crustle", "alakazam"):
         return score, reason
 
     # ── Crustle overrides ──
@@ -533,6 +533,41 @@ def apply_overrides(obs, opt, score, reason):
         if ctx in {SelectContext.DISCARD, SelectContext.DISCARD_CARD_OR_ATTACHED_CARD}:
             if cid == ARCHALUDON_EX and score < 0:
                 return 9000, "Crustle: discard Archaludon ex"
+
+    # ── Alakazam overrides ──
+    if matchup == "alakazam":
+        card = option_card(obs, opt)
+        cid = card.id if card else getattr(opt, 'cardId', None)
+        ctx = obs.select.context
+
+        # Stay single-prize Duraludon — don't evolve to 2-prize Archaludon ex
+        if opt.type == OptionType.EVOLVE and cid == ARCHALUDON_EX:
+            return -10000, "Alakazam: stay single-prize, don't evolve to ex"
+
+        if opt.type == OptionType.ATTACK:
+            aid = getattr(opt, 'attackId', None)
+            if aid == METAL_DEFENDER:
+                return -5000, "Alakazam: use Raging Hammer, not Metal Defender"
+            if aid == RAGING_HAMMER:
+                rh_dmg = 80 + damage_on(active_pokemon(obs)) // 10 * 10
+                return max(score, 200), "Alakazam: Raging Hammer scales with damage"
+
+        if opt.type == OptionType.PLAY:
+            if cid == RELICANTH:
+                return -5000, "Alakazam: skip Relicanth, use Duraludon directly"
+
+        if opt.type == OptionType.ATTACH:
+            target = option_target(obs, opt)
+            tid = target.id if target else None
+            if getattr(opt, 'inPlayArea', None) == AreaType.BENCH and tid == DURALUDON:
+                return score + 10000, "Alakazam: bench Duraludon energy priority"
+
+        if ctx == SelectContext.TO_HAND and opt.type == OptionType.CARD and cid == ARCHALUDON_EX:
+            return -3000, "Alakazam: skip Archaludon ex"
+
+        if ctx in {SelectContext.DISCARD, SelectContext.DISCARD_CARD_OR_ATTACHED_CARD}:
+            if cid == ARCHALUDON_EX and score < 0:
+                return 9000, "Alakazam: discard Archaludon ex"
 
 
 
@@ -771,11 +806,11 @@ def score_evolve(obs, opt):
             if mc >= 2:
                 return 28000 + mc * 2000, "evolve Active Duraludon"
             if mc == 1:
-                return 18000, "evolve Active Duraludon"
-            return 5000, "evolve Active: no Metal yet"
-        if mc >= 1:
-            return 16000 + mc * 1500, "evolve Bench Duraludon"
-        return 5000, "evolve Bench: no Metal yet"
+                return 8000, "delay Active evolve: 1 Metal"
+            return -500, "hold: no Metal in discard"
+        if mc >= 2:
+            return 14000 + mc * 1000, "evolve Bench Duraludon"
+        return -1000, "hold: evolve Active first"
     return 10000, "generic evolution"
 
 
