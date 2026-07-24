@@ -475,7 +475,7 @@ def apply_overrides(obs, opt, score, reason):
             return -5000, "hard: don't Explorer with low deck"
 
     matchup = detect_matchup(obs)
-    if matchup not in ("crustle", "alakazam"):
+    if matchup != "crustle":
         return score, reason
 
     # ── Crustle overrides ──
@@ -534,45 +534,7 @@ def apply_overrides(obs, opt, score, reason):
             if cid == ARCHALUDON_EX and score < 0:
                 return 9000, "Crustle: discard Archaludon ex"
 
-    # ── Alakazam overrides ──
-    # Alakazam's Powerful Hand scales with hand size (20×cards).
-    # Duraludon dies in 1-2 hits even with Cape. RACE, don't stall.
-    # Get Archaludon ex + Cape online and KO them before hand builds.
-    if matchup == "alakazam":
-        card = option_card(obs, opt)
-        cid = card.id if card else getattr(opt, 'cardId', None)
-        ctx = obs.select.context
 
-        if opt.type == OptionType.EVOLVE and cid == ARCHALUDON_EX:
-            extra = 5000 if getattr(opt, 'inPlayArea', None) == AreaType.ACTIVE else 0
-            return score + 15000 + extra, "Alakazam: rush Archaludon ex"
-
-        if opt.type == OptionType.ATTACK:
-            aid = getattr(opt, 'attackId', None)
-            active = active_pokemon(obs)
-            if active and active.id == ARCHALUDON_EX and aid == METAL_DEFENDER:
-                return score + 10000, "Alakazam: Metal Defender KOs Alakazam line"
-            if active and active.id == DURALUDON and aid == RAGING_HAMMER:
-                rh_dmg = 80 + damage_on(active) // 10 * 10
-                return max(score, 200), "Alakazam: Raging Hammer last resort"
-
-        if opt.type == OptionType.ATTACH:
-            target = option_target(obs, opt)
-            tid = target.id if target else None
-            card = option_card(obs, opt)
-            cid2 = card.id if card else None
-            if cid2 == HERO_CAPE and getattr(opt, 'inPlayArea', None) == AreaType.ACTIVE:
-                return score + 25000, "Alakazam: Cape on active to survive Powerful Hand"
-            if getattr(opt, 'inPlayArea', None) == AreaType.BENCH and tid == DURALUDON:
-                return score + 10000, "Alakazam: bench Duraludon energy priority"
-
-        if opt.type == OptionType.PLAY:
-            if cid == RELICANTH:
-                return -5000, "Alakazam: skip Relicanth"
-
-        if ctx in {SelectContext.DISCARD, SelectContext.DISCARD_CARD_OR_ATTACHED_CARD}:
-            if cid == ARCHALUDON_EX and score < 0:
-                return 9000, "Alakazam: discard Archaludon ex"
 
     return score, reason
 
