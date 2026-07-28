@@ -656,11 +656,8 @@ def score_play(obs, opt):
                 return 300, "Ultra Ball: bench empty (donk risk)"
             metal_in_hand = sum(1 for c in (my_state(obs).hand or []) if c and c.id == METAL_ENERGY)
             metal_in_trash = metal_in_discard(obs)
-            missing_arch = not has_in_play(obs, ARCHALUDON_EX) and ARCHALUDON_EX not in ids
             if metal_in_trash == 0 and metal_in_hand >= 1:
                 return 20000, "Ultra Ball: fuel Alloy"
-            if missing_arch and has_in_play(obs, DURALUDON):
-                return 24000, "Ultra Ball: search Arch ex"
             if safe_discard_count(obs) >= 2 and (need_archaludon(obs) or need_duraludon(obs)):
                 return 20000, "Ultra Ball: search line"
             return -1000, "skip Ultra Ball"
@@ -669,8 +666,6 @@ def score_play(obs, opt):
     if cid == EXPLORER:
         if obs.current.supporterPlayed:
             return -1000, "Supporter already used"
-        if not has_in_play(obs, ARCHALUDON_EX) and ARCHALUDON_EX not in ids:
-            return 28000, "Explorer: dig for Arch ex"
         return 16000, "play Explorer"
 
     if cid == LILLIE:
@@ -678,8 +673,6 @@ def score_play(obs, opt):
             return -1000, "Supporter already used"
         if BOSS in ids and planned_archaludon_attacks(obs):
             return -500, "save Lillie: Boss in hand with attacker ready"
-        if not has_in_play(obs, ARCHALUDON_EX) and ARCHALUDON_EX not in ids:
-            return 25000, "Lillie: draw for Arch ex"
         return 5000, "play Lillie"
 
     if cid == BOSS:
