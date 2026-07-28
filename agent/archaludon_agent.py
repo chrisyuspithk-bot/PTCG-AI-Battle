@@ -617,18 +617,8 @@ def score_play(obs, opt):
     cid = card.id if card else None
     ids = hand_ids(obs)
 
-    if cid == DURALUDON:
-        return 18000, "play Duraludon"
-    if cid == RELICANTH:
-        has_dura = any(p.id in (DURALUDON, ARCHALUDON_EX) for p in all_my_pokemon(obs))
-        if not has_dura:
-            return -3000, "skip Relicanth: need Duraludon first"
-        return 8000, "play Relicanth"
-    if cid == FULL_METAL_LAB:
-        active = active_pokemon(obs)
-        if active and active.id not in {DURALUDON, ARCHALUDON_EX}:
-            return -200, "skip FML: Active not Metal"
-        return 20000, "play Full Metal Lab"
+    if cid in {DURALUDON, RELICANTH}:
+        return 18000, "play Pokemon"
 
     # ââ Items: default 20000, only negative exceptions ââ
     if cid in ITEMS:
@@ -650,8 +640,6 @@ def score_play(obs, opt):
                     and sum(1 for c in (my_state(obs).hand or []) if c and c.id == METAL_ENERGY) == 0
                     and any(p and p.id in (DURALUDON, ARCHALUDON_EX) and energy_count(p) == 2 for p in all_my_pokemon(obs)))
             )
-            if ARCHALUDON_EX in disc and ARCHALUDON_EX not in ids and has_in_play(obs, DURALUDON):
-                return 25000, "Night Stretcher: rescue Arch ex"
             if not has_urgent:
                 return -500, "save Night Stretcher"
         if cid == ULTRA_BALL:
@@ -792,8 +780,6 @@ def attach_target_score(obs, target, area):
         return -5000
     if cid == CINDERACE and e >= 1:
         return -3000
-    if cid == RELICANTH:
-        return -2000
 
     score = 0
     if cid == CINDERACE:
