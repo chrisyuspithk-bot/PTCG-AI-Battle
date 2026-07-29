@@ -622,7 +622,7 @@ def score_play(obs, opt):
     if cid == RELICANTH:
         has_dura = any(p.id in (DURALUDON, ARCHALUDON_EX) for p in all_my_pokemon(obs))
         if not has_dura:
-            return -3000, "skip Relicanth: need Duraludon first"
+            return -5000, "skip Relicanth: need Duraludon first"
         return 8000, "play Relicanth"
 
     # ââ Items: default 20000, only negative exceptions ââ
@@ -646,7 +646,7 @@ def score_play(obs, opt):
                     and any(p and p.id in (DURALUDON, ARCHALUDON_EX) and energy_count(p) == 2 for p in all_my_pokemon(obs)))
             )
             if ARCHALUDON_EX in disc and ARCHALUDON_EX not in ids and has_in_play(obs, DURALUDON):
-                return 25000, "Night Stretcher: rescue Arch ex"
+                return 28000, "Night Stretcher: rescue Arch ex"
             if not has_urgent:
                 return -500, "save Night Stretcher"
         if cid == ULTRA_BALL:
@@ -788,7 +788,7 @@ def attach_target_score(obs, target, area):
     if cid == CINDERACE and e >= 1:
         return -3000
     if cid == RELICANTH:
-        return -2000
+        return -3000
 
     score = 0
     if cid == CINDERACE:
