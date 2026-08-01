@@ -19,6 +19,9 @@ benchable Basic in hand that the guard could fix. Explorer-skip-Metal-when-bench
 - Why re-upload: Final Submissions = 2 most recent COMPLETE uploads unless manually selected. Current pair
   would be v32(740)+v31(792.5) — the worst of the line. Re-uploading v28-restore makes the proven peak (856.2)
   the most-recent upload so it's auto-selected Final (or user pins it manually before deadline 2026-08-16).
+- **Uploaded:** `55154635` (v28-restore, PENDING → track after COMPLETE; 3 submissions remaining today).
+- Kaggle CLI note: direct `KaggleApi.competition_submit` returns 403 on `StartSubmissionUpload`; use
+  `python -m kaggle competitions submit ...` with `KAGGLE_API_TOKEN=$(cat .kaggle/access_token)`.
 
 ## As of 2026-08-01 Session v32 (donk fix implemented, packaged, gated — resubmit pending)
 
