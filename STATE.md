@@ -28,10 +28,12 @@
 
 ### THE SINGLE NEXT ACTION
 
-Commit v32, push, upload `dist/candidates/archaludon_v32_donk.tar.gz` via
-`kaggle competitions submit -c pokemon-tcg-ai-battle -f dist/candidates/archaludon_v32_donk.tar.gz -m "v32 donk fix ..."`,
-then `git push origin main` and set `main` as default branch (repo PTCG-AI-Battle). After COMPLETE:
-`track_ladder.py` → 2nd μ reading ≥40 min apart, then replay stats for v32.
+Wait ≥40 min → `python scripts/track_ladder.py` for **55150803** (v32, uploaded 2026-08-01T01:19
+UTC, initial μ 600.0). Log 2nd reading + replay stats (`analyze_submission.py --ref 55150803`).
+**Blocker:** set `main` as default branch — the `openhands-ai` GitHub App token lacks the
+`administration` permission (`PATCH /repos/... {"default_branch":"main"}` → 403). Do manually in
+GitHub UI (Settings → General → Default branch → `main`) or supply an admin token. `main` is pushed
+and current (a7033e4); the repo default is still `expanded-matchups-v3`.
 
 ---
 
