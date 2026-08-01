@@ -25,10 +25,10 @@ AGENT_SRC = os.path.join(ROOT, "agent", "archaludon_agent.py")
 BENCH_GUARD_SRC = os.path.join(ROOT, "agent", "archaludon_bench_guard.py")
 EMPTY_GUARD_SRC = os.path.join(ROOT, "agent", "empty_bench_guard.py")
 DECK_SRC = os.path.join(ROOT, "agent_decks", "archaludon_judge.csv")
-NAME = "archaludon_v32_donk"
-LADDER_REF = "55083287"
-LADDER_MU = 0.0  # v31 μ still settling; v30/v31 replay stats in report/submission_stats/
-KAGGLE_UPLOAD_ALIASES = ("archaludon_v32_donk_guard",)
+NAME = "archaludon_v28_restore"
+LADDER_REF = "55057258"
+LADDER_MU = 856.2  # v28 peak: best μ of the recent line (v29 821.6, v31 792.5, v32 740.0)
+KAGGLE_UPLOAD_ALIASES = ("archaludon_v28_restore",)
 BUILD_DIR = os.path.join(ROOT, "dist", "submission_build", NAME)
 CAND_DIR = os.path.join(ROOT, "dist", "candidates")
 TARBALL = os.path.join(CAND_DIR, NAME + ".tar.gz")
@@ -106,7 +106,7 @@ def build() -> None:
 
     manifest = {
         "name": NAME,
-        "agent": "agent/archaludon_agent.py (community v5 + R7 empty-bench guard + v32 donk fix)",
+        "agent": "agent/archaludon_agent.py (community v5 + R7 empty-bench guard, v28 restore)",
         "deck": "agent_decks/archaludon_judge.csv",
         "ladder_benchmark_mu": LADDER_MU,
         "ladder_benchmark_ref": LADDER_REF,
@@ -122,18 +122,17 @@ def build() -> None:
             "submitted_at": "",
             "mu_readings": [],
             "status": "PENDING_UPLOAD",
-            "local_gate_overall_pct": 65.3,
-            "local_ab_vs_v31_pct": "74.0 vs 70.0 @ n=300 controlled",
+            "local_gate_overall_pct": 68.7,
+            "local_ab_vs_v31_pct": "68.7 vs 65.3 @ n=150 controlled (v28-restore vs v32, judge deck)",
             "replay_stats": {
-                "v30_no_active_after_fix": 11,
-                "v31_no_active_after_fix": 18,
-                "v31_wr": 51.4,
-                "v30_wr": 49.06,
+                "v32_mu": 740.0,
+                "v31_mu": 792.5,
+                "v28_mu": 856.2,
             },
             "kaggle_message": (
-                "archaludon v32 donk fix: wire empty-bench guard into agent(); bench Relicanth/"
-                "Duraludon when bench empty; Ultra Ball/Lillie/Explorer prioritize finding a basic; "
-                "prize-vs-no_active reason fix in episode_stats"
+                "archaludon v28 restore: revert v31 bolder numbers (Relicanth bench block -3000, "
+                "Relicanth energy block -2000, NS rescue 25000) — v32 donk fix did NOT transfer "
+                "(740.0 vs v31 792.5); v28 is the proven peak (856.2). Same deck archaludon_judge.csv."
             ),
         },
     }

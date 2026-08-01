@@ -4,6 +4,22 @@
 
 ---
 
+## As of 2026-08-01 Session v32→v28-restore (v32 settled 740.0 — NOT an improvement; restored v28 peak)
+
+**v32 verdict (user's "seems not an improvement lol" is CONFIRMED):** v32 55150803 settled at **740.0 μ** <
+v31 792.5 < v28 856.2. The local A/B (+4pp, 74.0 vs 70.0) did NOT transfer — R2: local WR is not truth.
+The donk fix never reduced local no_active (4 vs 4); only 1 of 7 audited ladder no_active replays had a
+benchable Basic in hand that the guard could fix. Explorer-skip-Metal-when-bench-empty is a likely regression.
+
+**v28 restore (this action):**
+- v31 commit message documents v28 = v31 minus 3 bolder numbers: Relicanth bench block **-3000**, Relicanth
+  energy block **-2000**, Night Stretcher Arch ex rescue **25000**. Verified diff against v31 is exactly those 3 lines.
+- `agent/archaludon_agent.py` restored to v28 logic; deck unchanged (`archaludon_judge.csv`).
+- Built `dist/candidates/archaludon_v28_restore.tar.gz`; dry-run OK; judge-deck gate **68.7%** (n=150) vs v32 65.3%.
+- Why re-upload: Final Submissions = 2 most recent COMPLETE uploads unless manually selected. Current pair
+  would be v32(740)+v31(792.5) — the worst of the line. Re-uploading v28-restore makes the proven peak (856.2)
+  the most-recent upload so it's auto-selected Final (or user pins it manually before deadline 2026-08-16).
+
 ## As of 2026-08-01 Session v32 (donk fix implemented, packaged, gated — resubmit pending)
 
 **Leader:** **54083197** @ **1196.1 μ** (R12 — do not re-upload). **Latest ladder refs:** v31 **55083287** @ **792.5 μ** (COMPLETE), v30 **55071568** @ **771.0 μ** (COMPLETE) — v31>v30 confirmed both on μ and replay stats.

@@ -617,15 +617,12 @@ def score_play(obs, opt):
     cid = card.id if card else None
     ids = hand_ids(obs)
 
-    bench_empty = not [p for p in (my_state(obs).bench or []) if p]
     if cid == DURALUDON:
-        return (28000 if bench_empty else 18000), "play Duraludon"
+        return 18000, "play Duraludon"
     if cid == RELICANTH:
-        if bench_empty:
-            return 26000, "play Relicanth (donk shield)"
         has_dura = any(p.id in (DURALUDON, ARCHALUDON_EX) for p in all_my_pokemon(obs))
         if not has_dura:
-            return -5000, "skip Relicanth: need Duraludon first"
+            return -3000, "skip Relicanth: need Duraludon first"
         return 8000, "play Relicanth"
 
     # ââ Items: default 20000, only negative exceptions ââ
@@ -649,13 +646,13 @@ def score_play(obs, opt):
                     and any(p and p.id in (DURALUDON, ARCHALUDON_EX) and energy_count(p) == 2 for p in all_my_pokemon(obs)))
             )
             if ARCHALUDON_EX in disc and ARCHALUDON_EX not in ids and has_in_play(obs, DURALUDON):
-                return 28000, "Night Stretcher: rescue Arch ex"
+                return 25000, "Night Stretcher: rescue Arch ex"
             if not has_urgent:
                 return -500, "save Night Stretcher"
         if cid == ULTRA_BALL:
             bench_empty = len([p for p in my_state(obs).bench if p]) == 0
             if bench_empty:
-                return 30000, "Ultra Ball: bench empty — search basic"
+                return 300, "Ultra Ball: bench empty (donk risk)"
             metal_in_hand = sum(1 for c in (my_state(obs).hand or []) if c and c.id == METAL_ENERGY)
             metal_in_trash = metal_in_discard(obs)
             if metal_in_trash == 0 and metal_in_hand >= 1:
@@ -673,8 +670,6 @@ def score_play(obs, opt):
     if cid == LILLIE:
         if obs.current.supporterPlayed:
             return -1000, "Supporter already used"
-        if not [p for p in (my_state(obs).bench or []) if p]:
-            return 24000, "Lillie: draw for basic (bench empty)"
         if BOSS in ids and planned_archaludon_attacks(obs):
             return -500, "save Lillie: Boss in hand with attacker ready"
         return 5000, "play Lillie"
@@ -793,7 +788,7 @@ def attach_target_score(obs, target, area):
     if cid == CINDERACE and e >= 1:
         return -3000
     if cid == RELICANTH:
-        return -3000
+        return -2000
 
     score = 0
     if cid == CINDERACE:
@@ -919,9 +914,6 @@ def score_to_hand(obs, opt):
         has_ready = any(p and p.id in (DURALUDON, ARCHALUDON_EX) and energy_count(p) >= 3
                         for p in all_my_pokemon(obs))
         metal_in_hand = sum(1 for c in (my_state(obs).hand or []) if c and c.id == METAL_ENERGY)
-        bench_empty = not [p for p in (my_state(obs).bench or []) if p]
-        if bench_empty and cid in (DURALUDON, RELICANTH):
-            return 33000, "Explorer: take basic (bench empty)"
 
         if cid == HERO_CAPE:
             has_target = any(p.id == ARCHALUDON_EX and not has_tool(p) for p in all_my_pokemon(obs))
@@ -1105,46 +1097,6 @@ def choose_options(obs):
     return selected
 
 
-def _legal_fallback(obs_dict: dict) -> list[int]:
-    sel = obs_dict.get("select")
-    if sel is None:
-        return []
-    n = len(sel.get("option", []))
-    min_c = int(sel.get("minCount") or 0)
-    max_c = int(sel.get("maxCount") or 0)
-    if n == 0 or max_c == 0:
-        return []
-    k = min_c if min_c > 0 else min(1, max_c)
-    k = min(k, max_c, n)
-    return list(range(k))
-
-
-def _is_legal(out, obs_dict: dict) -> bool:
-    sel = obs_dict.get("select")
-    if sel is None:
-        return isinstance(out, list) and len(out) == 60
-    if not isinstance(out, list):
-        return False
-    n = len(sel.get("option", []))
-    min_c = int(sel.get("minCount") or 0)
-    max_c = int(sel.get("maxCount") or 0)
-    if len(out) != len(set(out)):
-        return False
-    if not all(isinstance(i, int) and 0 <= i < n for i in out):
-        return False
-    return min_c <= len(out) <= max_c
-
-
-try:
-    from archaludon_bench_guard import apply_bench_guard
-except ImportError:
-    try:
-        from agent.archaludon_bench_guard import apply_bench_guard
-    except ImportError:
-        def apply_bench_guard(obs_dict, selection):
-            return selection
-
-
 def agent(obs_dict):
     obs = to_observation_class(obs_dict)
     if obs.select is None:
@@ -1156,12 +1108,6 @@ def agent(obs_dict):
     if not obs.select.option:
         return []
     try:
-        raw = choose_options(obs)
-        bench_on = os.environ.get("ARCHALUDON_BENCH_GUARD", "1") != "0"
-        guarded = apply_bench_guard(obs_dict, raw) if bench_on else raw
-        out = guarded if _is_legal(guarded, obs_dict) else raw
-        if not _is_legal(out, obs_dict):
-            out = _legal_fallback(obs_dict)
-        return out
+        return choose_options(obs)
     except Exception:
-        return _legal_fallback(obs_dict)
+        return random.sample(list(range(len(obs.select.option))), obs.select.maxCount)
