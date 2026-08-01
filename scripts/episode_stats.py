@@ -147,6 +147,11 @@ def infer_result_reason(winner: int, players: list[dict]) -> str:
             if w_prizes < l_prizes or w_prizes == 0:
                 return "prize"
             if not (lp.get("active") or []):
+                # Winner one prize away: the KO that emptied the loser's board
+                # also took the winner's final prize → prize win, not no_active.
+                # (Terminal snapshots can capture the state before the prize moves.)
+                if w_prizes <= 1:
+                    return "prize"
                 return "no_active"
         return "prize"
     return "draw" if winner == 2 else "unknown"

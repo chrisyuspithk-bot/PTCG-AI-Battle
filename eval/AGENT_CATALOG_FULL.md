@@ -54,6 +54,9 @@ Every submission is **`brain × deck`** packaged for Kaggle `main.agent(obs)`.
 | 54109826 | R7+R10 | 62.0% | 854.0 | |
 | 54089078 | R8+R9 | 68.0% | 841.0 | |
 | 54138853 | R7+R11 | 58.7% | 535.6 | Latest probe |
+| 55071568 | v30 (FML spam block) | — | 771.0 | replay no_active 11 (after prize-win fix) |
+| 55083287 | v31 (stronger numbers) | — | 792.5 | replay no_active 18 (after prize-win fix); v31>v30 |
+| v32_donk | v32: guard wired into `agent()` + bench-empty search priorities | 65.3% / +4.0pp A/B n=300 | pending | donk fix; upload gate exit 0 |
 
 Full sorted table: [`report/LADDER_BEST_SO_FAR.md`](../report/LADDER_BEST_SO_FAR.md). **Posture:** probes are data — refine levers, don't treat low μ as permanent ban.
 

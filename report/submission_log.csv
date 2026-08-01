@@ -9,3 +9,5 @@ ref,date,scorer,deck,mu_initial,mu_24h,episodes_total,wins,losses,draws,win_rate
 53856590,2026-06-19,LearnedScorer,pool_dragapult.csv,600.0,468.9,,,,,,,,,,,Learned spread meta probe
 53885445,2026-06-20,LucarioMCTSScorer,real_mega_lucario_ex.csv,600.0,324.6,,,,,,,,,,8.3,Early RL iter-0; empty bench retired
 53890064,2026-06-20,SearchScorer,top_mined_alakazam.csv,600.0,,,,,,,,,,,Leader Alakazam probe #5 today; COMPLETE @600 validation — analyze ladder @40min,
+55071568,2026-07-29,ArchaludonRules,archaludon_judge.csv,,,106,52,54,0,49.06,13.92,13.0,61.11,prize,,v30: replayed 55071568 with ChrisYU2021 seat; no_active=11 after prize-win fix
+55083287,2026-07-30,ArchaludonRules,archaludon_judge.csv,,,107,55,52,0,51.4,13.26,13,71.15,prize,,v31: replayed 55083287 with ChrisYU2021 seat; no_active=18 after prize-win fix; v31>v30

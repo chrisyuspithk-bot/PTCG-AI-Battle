@@ -25,10 +25,10 @@ AGENT_SRC = os.path.join(ROOT, "agent", "archaludon_agent.py")
 BENCH_GUARD_SRC = os.path.join(ROOT, "agent", "archaludon_bench_guard.py")
 EMPTY_GUARD_SRC = os.path.join(ROOT, "agent", "empty_bench_guard.py")
 DECK_SRC = os.path.join(ROOT, "agent_decks", "archaludon_judge.csv")
-NAME = "archaludon_v31"
-LADDER_REF = "54903381"
-LADDER_MU = 761.9
-KAGGLE_UPLOAD_ALIASES = ("archaludon_v31_v28_stronger",)
+NAME = "archaludon_v32_donk"
+LADDER_REF = "55083287"
+LADDER_MU = 0.0  # v31 μ still settling; v30/v31 replay stats in report/submission_stats/
+KAGGLE_UPLOAD_ALIASES = ("archaludon_v32_donk_guard",)
 BUILD_DIR = os.path.join(ROOT, "dist", "submission_build", NAME)
 CAND_DIR = os.path.join(ROOT, "dist", "candidates")
 TARBALL = os.path.join(CAND_DIR, NAME + ".tar.gz")
@@ -106,8 +106,8 @@ def build() -> None:
 
     manifest = {
         "name": NAME,
-        "agent": "agent/archaludon_agent.py (community v5 + R7 empty-bench guard)",
-        "deck": "agent_decks/archaludon_ex_cinderace.csv",
+        "agent": "agent/archaludon_agent.py (community v5 + R7 empty-bench guard + v32 donk fix)",
+        "deck": "agent_decks/archaludon_judge.csv",
         "ladder_benchmark_mu": LADDER_MU,
         "ladder_benchmark_ref": LADDER_REF,
         "kaggle_upload_aliases": list(KAGGLE_UPLOAD_ALIASES),
@@ -119,13 +119,21 @@ def build() -> None:
         "tarball_sha256": _sha(TARBALL, "sha256"),
         "submission": {
             "ref": LADDER_REF,
-            "submitted_at": "2026-06-26T16:15:56.833000",
-            "mu_readings": [600.0, 731.3, LADDER_MU],
-            "status": "COMPLETE",
-            "local_gate_overall_pct": 72.7,
+            "submitted_at": "",
+            "mu_readings": [],
+            "status": "PENDING_UPLOAD",
+            "local_gate_overall_pct": 65.3,
+            "local_ab_vs_v31_pct": "74.0 vs 70.0 @ n=300 controlled",
+            "replay_stats": {
+                "v30_no_active_after_fix": 11,
+                "v31_no_active_after_fix": 18,
+                "v31_wr": 51.4,
+                "v30_wr": 49.06,
+            },
             "kaggle_message": (
-                "archaludon_rules x archaludon_ex_cinderace: community v5 + R7 empty-bench guard; "
-                "local 72.7% full n=30"
+                "archaludon v32 donk fix: wire empty-bench guard into agent(); bench Relicanth/"
+                "Duraludon when bench empty; Ultra Ball/Lillie/Explorer prioritize finding a basic; "
+                "prize-vs-no_active reason fix in episode_stats"
             ),
         },
     }
@@ -148,7 +156,7 @@ def dry_run() -> None:
             main_src = open(os.path.join(tmp, "main.py"), encoding="utf-8").read()
             env: dict = {"__builtins__": __builtins__}
             exec(compile(main_src, "main.py", "exec"), env)
-            out = env["agent"]({"select": None, "current": None})
+            out = env["agent"]({"select": None, "current": None, "logs": []})
         finally:
             os.chdir(old_cwd)
         if not isinstance(out, list) or len(out) != 60:

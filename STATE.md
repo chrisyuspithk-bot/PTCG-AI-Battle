@@ -4,6 +4,37 @@
 
 ---
 
+## As of 2026-08-01 Session v32 (donk fix implemented, packaged, gated — resubmit pending)
+
+**Leader:** **54083197** @ **1196.1 μ** (R12 — do not re-upload). **Latest ladder refs:** v31 **55083287** @ **792.5 μ** (COMPLETE), v30 **55071568** @ **771.0 μ** (COMPLETE) — v31>v30 confirmed both on μ and replay stats.
+
+**v32 donk fix (this session):**
+- Root cause from v30/v31 replays: `archaludon_agent.py` never called `apply_bench_guard`; in-agent
+  guards (`_empty_bench_block_tempo` R8b, `_mandatory_promote_score` R8a) were missing from v31 code,
+  so empty-bench stalls produced no_active ladder losses (v31: 18 no_active after prize-vs-no_active reason fix).
+- Fix in `agent/archaludon_agent.py`: bench-empty score boosts (Duraludon→28000, Ultra Ball→search priority,
+  Lillie→16000), Explorer effect skips Metal when bench empty, `agent()` now calls `apply_bench_guard`
+  (env `ARCHALUDON_BENCH_GUARD`, default on) with `_legal_fallback`.
+- `scripts/episode_stats.py`: `infer_result_reason` now classifies "winner one prize away + loser active empty"
+  as **prize** (was no_active) — v31 no_active 22→18, v30 14→11.
+- `scripts/analyze_submission.py`: `OUR_TEAM_NAME` → ChrisYU2021 (seat resolution was wrong → 51/54 vs 52/54).
+- `scripts/package_archaludon.py`: NAME `archaludon_v32_donk`; dry-run passes `logs: []` to `agent()`.
+
+**Measured:**
+- Controlled A/B n=300 (same seed stream): baseline v31 **70.0%** vs v32 fixed **74.0%** (+4.0pp).
+- Final gate 30 games/opp: **65.3%** overall [57.4, 72.5].
+- Replay audit: 89075272 fixed (Relicanth benched); 6 other no_active replays had no benchable Basic
+  in hand (genuine bad draws).
+
+### THE SINGLE NEXT ACTION
+
+Commit v32, push, upload `dist/candidates/archaludon_v32_donk.tar.gz` via
+`kaggle competitions submit -c pokemon-tcg-ai-battle -f dist/candidates/archaludon_v32_donk.tar.gz -m "v32 donk fix ..."`,
+then `git push origin main` and set `main` as default branch (repo PTCG-AI-Battle). After COMPLETE:
+`track_ladder.py` → 2nd μ reading ≥40 min apart, then replay stats for v32.
+
+---
+
 ## As of 2026-06-28 Session 57d (R12 probe uploaded — handoff)
 
 **Leader:** **54083197** @ **1196.1 μ** (R12 — do not re-upload). **Latest probe:** **54139502** R7+R12 dead-active tempo — **PENDING** (local **70.7%** n=150, uploaded 2026-06-28T12:13 UTC). R11 **54138853** reading 2: **632.9 μ**.

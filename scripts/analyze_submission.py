@@ -64,7 +64,7 @@ LEADER_REF_TEAMS: dict[str, str] = {
     "53800247": "カドラバ Kadoraba",
 }
 
-OUR_TEAM_NAME = "TomBombadyl"
+OUR_TEAM_NAME = "ChrisYU2021"
 
 
 def _replay_path(episode_id: str) -> Path | None:
